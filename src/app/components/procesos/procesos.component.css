@@ -1,0 +1,52 @@
+.procesos{
+    max-width: 100vw;
+    height: auto;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.container{
+    width: 90%;
+    display: block;
+    align-items: center;
+    align-content: center;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.procesos-pasos{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item-paso{
+    max-width: 25%;
+    text-align: center;
+}
+
+.back-green{
+    background-color: #42B483;
+    padding: 10px;
+    border-radius: 50%;
+    width: 20px;
+    margin: 10px auto;
+    color: white;
+}
+.back-blue{
+    background-color: #1E3A8A;
+    padding: 10px;
+    border-radius: 50%;
+    width: 20px;
+    margin: 10px auto;
+    color: white;
+}
+
+span{
+    font-weight: 800;
+    font-size: medium;
+}
+
+.descrip{
+    font-size: 18px;
+}

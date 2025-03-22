@@ -1,0 +1,27 @@
+.beneficios{
+    max-width: 100vw;
+    text-align: center;
+    margin: 50px 0;
+}
+
+.container{
+    width: 90%;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.group-beneficios{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px 20px;
+    margin: 0 auto;
+    align-content: center;
+}
+
+.item-beneficios{
+    max-width: 30%;
+    text-align: justify;
+    align-items: center;
+}
