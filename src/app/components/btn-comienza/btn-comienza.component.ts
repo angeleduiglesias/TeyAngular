@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-btn-comienza',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './btn-comienza.component.css'
 })
 export class BtnComienzaComponent {
+  @Output() mostrarFormulario = new EventEmitter<void>();
 
+  showForm() {
+    this.mostrarFormulario.();
+  }emit
 }

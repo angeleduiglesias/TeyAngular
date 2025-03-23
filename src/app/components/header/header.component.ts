@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { BtnComienzaComponent } from "../btn-comienza/btn-comienza.component";
 
 @Component({
@@ -8,13 +8,14 @@ import { BtnComienzaComponent } from "../btn-comienza/btn-comienza.component";
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  menuOpen = false;
+  @Output() mostrarFormulario = new EventEmitter<void>(); //Evento para emitir el mostrar formulario
+  @Output() mostrarLogin = new EventEmitter<void>(); //Evento para emitier el mostara Login.
 
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
+  recibirEvento() {
+    this.mostrarFormulario.emit(); // Reemitimos el evento hacia AppComponent
   }
 
-  closeMenu() {
-    this.menuOpen = false;
+  eventoLogin(){
+    this.mostrarLogin.emit();
   }
 }
