@@ -11,6 +11,6 @@ export class BtnComienzaComponent {
   @Output() mostrarFormulario = new EventEmitter<void>();
 
   showForm() {
-    this.mostrarFormulario.();
-  }emit
+    this.mostrarFormulario.emit();
+  }
 }
