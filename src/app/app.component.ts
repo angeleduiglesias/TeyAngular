@@ -32,13 +32,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class AppComponent {
   title = 'Tu Empresa Ya';
 
-  mostrarFormulario: boolean = false;
-  Login: boolean = true;
-
-  mostrarComponentLogin(){
-    this.Login = !this.Login;
-  }
-
+  mostrarFormulario: boolean = true;
+  
   recibirEventoDesdeHeader() {
     this.mostrarFormulario = !this.mostrarFormulario;
   }

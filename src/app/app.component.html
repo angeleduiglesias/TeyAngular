@@ -9,15 +9,15 @@
 
 
 <main>
-    <app-header (mostrarFormulario)="recibirEventoDesdeHeader()" (mostrarLogin)="mostrarComponentLogin()" ></app-header>
-    <app-banner *ngIf="mostrarFormulario, Login" @fadeInOut></app-banner>
-    <app-procesos *ngIf="mostrarFormulario, Login" @fadeInOut></app-procesos>
-    <app-servicios *ngIf="mostrarFormulario, Login" @fadeInOut></app-servicios>
-    <app-beneficios *ngIf="mostrarFormulario, Login" @fadeInOut></app-beneficios>
-    <app-preguntas *ngIf="mostrarFormulario, Login" @fadeInOut></app-preguntas>
-    <app-footer *ngIf="mostrarFormulario, Login" @fadeInOut></app-footer>
+    <app-header (mostrarFormulario)="recibirEventoDesdeHeader()"  ></app-header>
+    <app-banner *ngIf="mostrarFormulario"></app-banner>
+    <app-procesos *ngIf="mostrarFormulario"></app-procesos>
+    <app-servicios *ngIf="mostrarFormulario"></app-servicios>
+    <app-beneficios *ngIf="mostrarFormulario"></app-beneficios>
+    <app-preguntas *ngIf="mostrarFormulario"></app-preguntas>
+    <app-footer *ngIf="mostrarFormulario"></app-footer>
 
-    <app-pre-form *ngIf="mostrarFormulario, Login" @fadeInOut></app-pre-form>
+    <app-pre-form *ngIf="!mostrarFormulario"></app-pre-form>
 </main>
 
 
