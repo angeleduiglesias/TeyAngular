@@ -1,0 +1,25 @@
+<div [formGroup]="formGroup" class="step-container">
+    <div class="form-field">
+      <label for="firstName">Nombre:</label>
+      <input type="text" id="firstName" formControlName="firstName">
+      <div class="error" *ngIf="formGroup.get('firstName')?.invalid && (formGroup.get('firstName')?.touched || formGroup.get('firstName')?.dirty)">
+        El nombre es obligatorio.
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="lastName">Apellido:</label>
+      <input type="text" id="lastName" formControlName="lastName">
+      <div class="error" *ngIf="formGroup.get('lastName')?.invalid && (formGroup.get('lastName')?.touched || formGroup.get('lastName')?.dirty)">
+        El apellido es obligatorio.
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email">
+      <div class="error" *ngIf="formGroup.get('email')?.invalid && (formGroup.get('email')?.touched || formGroup.get('email')?.dirty)">
+        Email inválido.
+      </div>
+    </div>
+  </div>

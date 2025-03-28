@@ -1,1 +1,31 @@
-<p>pre-form works!</p>
+
+    <h1>no se porque no se muestra</h1>
+    <div class="multi-step-form">
+        <!-- componente de paso 1 -->
+        <app-step-one 
+          *ngIf="currentStep === 0" 
+          [formGroup]="personalDetails">
+        </app-step-one>
+      
+        <!-- componente de paso 2 -->
+        <app-step-two 
+          *ngIf="currentStep === 1" 
+          [formGroup]="addressDetails">
+        </app-step-two>
+      
+        <!-- Botones de navegación -->
+
+        <div class="navigation-buttons">
+          <button type="button" (click)="previousStep()" *ngIf="currentStep > 0">
+            Anterior
+          </button>
+          <button type="button" (click)="nextStep()" *ngIf="currentStep < 1">
+            Siguiente
+          </button>
+          <button type="button" (click)="submitForm()" *ngIf="currentStep === 1">
+            Enviar
+          </button>
+        </div>
+      </div>
+
+  

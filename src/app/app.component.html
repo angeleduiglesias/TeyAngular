@@ -1,38 +1,5 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-
 <main>
-    <app-header (mostrarFormulario)="recibirEventoDesdeHeader()"  ></app-header>
-    <app-banner *ngIf="mostrarFormulario"></app-banner>
-    <app-procesos *ngIf="mostrarFormulario"></app-procesos>
-    <app-servicios *ngIf="mostrarFormulario"></app-servicios>
-    <app-beneficios *ngIf="mostrarFormulario"></app-beneficios>
-    <app-preguntas *ngIf="mostrarFormulario"></app-preguntas>
-    <app-footer *ngIf="mostrarFormulario"></app-footer>
-
-    <app-pre-form *ngIf="!mostrarFormulario"></app-pre-form>
+    <app-header  ></app-header>
+    <router-outlet></router-outlet>
+    <app-footer ></app-footer>
 </main>
-
-
-
-
-
-
-
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-
-<router-outlet />

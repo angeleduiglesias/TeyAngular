@@ -1,0 +1,25 @@
+<div [formGroup]="formGroup" class="step-container">
+    <div class="form-field">
+      <label for="street">Calle:</label>
+      <input type="text" id="street" formControlName="street">
+      <div class="error" *ngIf="formGroup.get('street')?.invalid && (formGroup.get('street')?.touched || formGroup.get('street')?.dirty)">
+        La calle es obligatoria.
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="city">Ciudad:</label>
+      <input type="text" id="city" formControlName="city">
+      <div class="error" *ngIf="formGroup.get('city')?.invalid && (formGroup.get('city')?.touched || formGroup.get('city')?.dirty)">
+        La ciudad es obligatoria.
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="zipCode">Código Postal:</label>
+      <input type="text" id="zipCode" formControlName="zipCode">
+      <div class="error" *ngIf="formGroup.get('zipCode')?.invalid && (formGroup.get('zipCode')?.touched || formGroup.get('zipCode')?.dirty)">
+        El código postal es obligatorio.
+      </div>
+    </div>
+  </div>

@@ -2,18 +2,19 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "./components/header/header.component";
-import { BannerComponent } from "./components/banner/banner.component";
-import { ProcesosComponent } from "./components/procesos/procesos.component";
-import { ServiciosComponent } from "./components/servicios/servicios.component";
-import { BeneficiosComponent } from "./components/beneficios/beneficios.component";
-import { PreguntasComponent } from "./components/preguntas/preguntas.component";
 import { FooterComponent } from "./components/footer/footer.component";
-import { PreFormComponent } from "./components/pre-form/pre-form.component";
+
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, HeaderComponent, BannerComponent, ProcesosComponent, ServiciosComponent, BeneficiosComponent, PreguntasComponent, FooterComponent, PreFormComponent],
+  imports: [
+    CommonModule, 
+    RouterOutlet, 
+    HeaderComponent, 
+    // Removemos HomeComponent de aquí ya que se maneja por el router
+    FooterComponent, 
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   animations: [
@@ -30,11 +31,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ]
 })
 export class AppComponent {
-  title = 'Tu Empresa Ya';
-
-  mostrarFormulario: boolean = true;
-  
-  recibirEventoDesdeHeader() {
-    this.mostrarFormulario = !this.mostrarFormulario;
+  title = 'Tey';
   }
-}
+

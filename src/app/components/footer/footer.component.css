@@ -1,17 +1,18 @@
-footer{
+.footer{
     max-width: 100vw;
     height: auto;
     padding: 10px 0;
 }
 
 .container{
-    width: 90%;
+    width: 100%;
     height: auto;
     display: flex;
     justify-content: space-between;
     text-align: center;
     align-content: center;
     margin: auto;
+    background-color: #f7f7f7;
 }
 
 .left, .right{
