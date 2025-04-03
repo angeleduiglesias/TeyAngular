@@ -13,7 +13,8 @@ import { Router, ActivatedRoute} from '@angular/router';
 export class StepTwoComponent implements OnInit {
   tipoEmpresaForm: FormGroup;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute
   ) {

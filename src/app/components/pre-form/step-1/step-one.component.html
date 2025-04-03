@@ -42,10 +42,14 @@
       Esta información será utilizada para contactarlo respecto a su trámite de constitución de empresa.
     </div>
 
+    <div *ngIf="error" class="error-message global-error">
+      {{ error }}
+    </div>
+
     <div class="form-actions">
-      
-      <button type="button" class="primary-button" (click)="siguiente()" [disabled]="datosPersonalesForm.invalid">
-        Siguiente >
+      <button type="button" class="primary-button" (click)="siguiente()" [disabled]="enviando">
+        <span *ngIf="!enviando">Siguiente ›</span>
+        <span *ngIf="enviando">Enviando...</span>
       </button>
     </div>
   </form>

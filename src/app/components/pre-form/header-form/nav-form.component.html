@@ -1,12 +1,18 @@
 <div class="header-container">
-    <div class="progress-bar">
-      <ul class="progress-steps">
-        <li class="step active">Datos Personales</li>
-        <li class="step">Tipo de Empresa</li>
-        <li class="step">Información Fiscal</li>
-        <li class="step">Información Adicional</li>
-        <li class="step">Revisión</li>
-        <li class="step">Pago</li>
-      </ul>
+  <div class="progress-bar">
+    <div class="progress-steps">
+      <div class="step" [class.active]="currentStep >= 1">
+        Datos Personales
+      </div>
+      <div class="step" [class.active]="currentStep >= 2">
+        Tipo de Empresa
+      </div>
+      <div class="step" [class.active]="currentStep >= 3">
+        Confirmación
+      </div>
+    </div>
+    <div class="progress-line">
+      <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
     </div>
   </div>
+</div>

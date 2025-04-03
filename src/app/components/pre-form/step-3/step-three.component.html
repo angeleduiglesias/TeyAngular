@@ -1,0 +1,53 @@
+<div class="confirmacion-container">
+  <h2>Confirmación</h2>
+  
+  <div class="resumen">
+    <h3>Resumen de tu solicitud</h3>
+    <p>Estás a punto de enviar tu solicitud para constituir tu empresa. Por favor, revisa que todos los datos sean correctos.</p>
+    
+    <div class="resumen-seccion">
+      <h4>Datos Personales</h4>
+      <p>Los datos de contacto que proporcionaste serán utilizados para mantenerte informado sobre el proceso.</p>
+    </div>
+    
+    <div class="resumen-seccion">
+      <h4>Tipo de Empresa</h4>
+      <p>Has seleccionado el tipo de empresa y proporcionado información sobre la actividad empresarial.</p>
+    </div>
+  </div>
+
+  <form [formGroup]="confirmacionForm">
+    <div class="form-group checkbox-group">
+      <div class="checkbox-container">
+        <input type="checkbox" id="terminosCondiciones" formControlName="terminosCondiciones">
+        <label for="terminosCondiciones">Acepto los <a href="#" target="_blank">Términos y Condiciones</a> <span class="required">*</span></label>
+      </div>
+      <div *ngIf="confirmacionForm.get('terminosCondiciones')?.invalid && confirmacionForm.get('terminosCondiciones')?.touched" class="error-message">
+        Debes aceptar los términos y condiciones para continuar.
+      </div>
+    </div>
+
+    <div class="form-group checkbox-group">
+      <div class="checkbox-container">
+        <input type="checkbox" id="politicaPrivacidad" formControlName="politicaPrivacidad">
+        <label for="politicaPrivacidad">Acepto la <a href="#" target="_blank">Política de Privacidad</a> <span class="required">*</span></label>
+      </div>
+      <div *ngIf="confirmacionForm.get('politicaPrivacidad')?.invalid && confirmacionForm.get('politicaPrivacidad')?.touched" class="error-message">
+        Debes aceptar la política de privacidad para continuar.
+      </div>
+    </div>
+
+    <div class="info-message">
+      Al enviar este formulario, nuestro equipo se pondrá en contacto contigo para iniciar el proceso de constitución de tu empresa.
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="secondary-button" (click)="anterior()">
+        ‹ Anterior
+      </button>
+      <button type="button" class="primary-button" (click)="enviar()" [disabled]="confirmacionForm.invalid">
+        Enviar Solicitud
+      </button>
+    </div>
+  </form>
+</div>

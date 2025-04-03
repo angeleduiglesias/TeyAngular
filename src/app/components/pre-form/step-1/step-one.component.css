@@ -115,7 +115,13 @@ input::placeholder {
 .secondary-button:hover {
   background-color: #e9ecef;
 }
-
+.global-error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
 /* =======================
    MEDIA QUERY PARA PANTALLAS PEQUEÑAS
    (por debajo de 768px)

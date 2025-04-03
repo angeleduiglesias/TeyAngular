@@ -51,23 +51,52 @@ label {
   transition: all 0.2s ease;
 }
 
-.option:hover {
-  border-color: #4dabf7;
-  background-color: #f8f9fa;
-}
-
-/* Escondemos el radio button original */
+/* Hacer que el radio button cubra toda la casilla */
 .option input[type="radio"] {
   position: absolute;
   opacity: 0;
   cursor: pointer;
-  height: 0;
-  width: 0;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  z-index: 1;
+}
+
+.option:hover {
+  border-color: #28a745;
+  background-color: #f8f9fa;
+}
+
+/* Escondemos el radio button original y lo hacemos clickeable en toda la casilla */
+.option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  z-index: 2; /* Aumentamos el z-index para asegurar que esté por encima */
+}
+
+/* Estilo para la opción completa cuando está seleccionada */
+.option input[type="radio"]:checked {
+  border-color: #28a745;
+}
+
+.option input[type="radio"]:checked ~ .option,
+.option:has(input[type="radio"]:checked) {
+  border-color: #28a745;
+  background-color: #f8f9fa;
+  box-shadow: 0 0 0 2px #28a745;
 }
 
 /* Estilo para opciones seleccionadas */
 .option input[type="radio"]:checked + label {
-  color: #228be6;
+  color: #28a745;
 }
 
 .option input[type="radio"]:checked ~ p {
@@ -79,7 +108,7 @@ label {
   position: absolute;
   right: 10px;
   top: 10px;
-  color: #228be6;
+  color: #28a745;
   font-weight: bold;
 }
 
@@ -118,6 +147,7 @@ textarea {
   color: #495057;
   background-color: #fff;
   box-sizing: border-box;
+  font-family: inherit; /* Esto asegura que use la misma fuente que el resto del formulario */
 }
 
 textarea {
@@ -159,7 +189,7 @@ textarea {
 
 .primary-button {
   padding: 8px 16px;
-  background-color: #adb5bd;
+  background-color: #28a745;
   color: white;
   border: none;
   border-radius: 4px;
@@ -169,14 +199,20 @@ textarea {
   align-items: center;
 }
 
+
 .primary-button:hover {
-  background-color: #868e96;
+  background-color: #218838;
 }
 
 .secondary-button:hover {
   background-color: #f8f9fa;
 }
 
+
+.primary-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
 /* Media query para móviles */
 @media screen and (max-width: 767px) {
   .tipo-empresa-container {
@@ -197,5 +233,39 @@ textarea {
   .secondary-button {
     font-size: 13px;
     padding: 7px 14px;
+    /* Eliminamos el width: 100% que estaba causando problemas */
+  }
+
+  .form-actions {
+    /* Cambiamos de column a row para mantener los botones en línea */
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}
+
+/* Media query para tablets (iPad Mini) */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .tipo-empresa-container {
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 90%;
+  }
+  
+  .form-options {
+    gap: 15px;
+  }
+  
+  .option {
+    padding: 15px;
+  }
+  
+  .form-actions {
+    margin-top: 25px;
+  }
+  
+  .primary-button,
+  .secondary-button {
+    padding: 10px 20px;
   }
 }
