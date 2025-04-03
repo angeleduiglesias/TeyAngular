@@ -25,7 +25,7 @@ export class StepOneComponent implements OnInit {
     this.datosPersonalesForm = this.fb.group({
       nombre: ['', Validators.required],
       apellidos: ['', Validators.required],
-      correoElectronico: ['', [Validators.required, Validators.email]],
+      Email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern(/^9\d{8}$/)]]
     });
   }

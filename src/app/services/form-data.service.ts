@@ -17,7 +17,7 @@ export class FormDataService {
       'Content-Type': 'application/json'
     });
     
-    return this.http.post(`${this.apiUrl}/api/datos-personales`, datos, { headers });
+    return this.http.post(`${this.apiUrl}/api/cliente/store`, datos, { headers });
   }
 
   // Método para enviar datos de empresa (Step Two)

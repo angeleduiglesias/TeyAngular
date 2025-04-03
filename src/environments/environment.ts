@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8000' // Cambia esto a la URL de tu API Laravel
+  apiUrl: 'http://0.0.0.0:8000' // URL base de la API Laravel
 };

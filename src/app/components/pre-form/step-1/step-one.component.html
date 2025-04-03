@@ -21,11 +21,11 @@
     </div>
 
     <div class="form-group">
-      <label for="correoElectronico">Correo Electrónico <span class="required">*</span></label>
-      <input type="email" id="correoElectronico" formControlName="correoElectronico" placeholder="ejemplo@correo.com">
-      <div *ngIf="datosPersonalesForm.get('correoElectronico')?.invalid && (datosPersonalesForm.get('correoElectronico')?.dirty || datosPersonalesForm.get('correoElectronico')?.touched)" class="error-message">
-        <div *ngIf="datosPersonalesForm.get('correoElectronico')?.errors?.['required']">Campo obligatorio.</div>
-        <div *ngIf="datosPersonalesForm.get('correoElectronico')?.errors?.['email']">Ingrese un correo electrónico válido.</div>
+      <label for="Email">Correo Electrónico <span class="required">*</span></label>
+      <input type="email" id="Email" formControlName="Email" placeholder="ejemplo@correo.com">
+      <div *ngIf="datosPersonalesForm.get('Email')?.invalid && (datosPersonalesForm.get('Email')?.dirty || datosPersonalesForm.get('Email')?.touched)" class="error-message">
+        <div *ngIf="datosPersonalesForm.get('Email')?.errors?.['required']">Campo obligatorio.</div>
+        <div *ngIf="datosPersonalesForm.get('Email')?.errors?.['email']">Ingrese un correo electrónico válido.</div>
       </div>
     </div>
 
