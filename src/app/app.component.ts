@@ -39,10 +39,11 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         const rutaActual = event.url;
 
-        // Ocultar el footer y el header si la ruta comienza con '/pre-form'
+        // Ocultar el footer y el header si la ruta comienza con '/pre-form' o es '/login'
         const esRutaPreForm = rutaActual.startsWith('/pre-form');
-        this.mostrarFooter = !esRutaPreForm;
-        this.mostrarHeader = !esRutaPreForm;
+        const esRutaLogin = rutaActual.startsWith('/login');
+        this.mostrarFooter = !(esRutaPreForm || esRutaLogin);
+        this.mostrarHeader = !(esRutaPreForm || esRutaLogin);
       }
     });
   }

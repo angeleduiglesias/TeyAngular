@@ -4,9 +4,11 @@ import { PreFormComponent } from './components/pre-form/pre-form.component';
 import { StepOneComponent } from './components/pre-form/step-1/step-one.component';
 import { StepTwoComponent } from './components/pre-form/step-2/step-two.component';
 import { StepThreeComponent } from './components/pre-form/step-3/step-three.component';
+import { LoginComponent } from './components/login/login.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'pre-form',
     component: PreFormComponent,

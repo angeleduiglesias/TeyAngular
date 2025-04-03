@@ -1,0 +1,200 @@
+/* Contenedor principal */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px); /* Ajusta según la altura de tu header */
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+/* Tarjeta de login */
+.login-card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 450px;
+  padding: 35px;
+  box-sizing: border-box;
+}
+
+/* Encabezado del login */
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-header h2 {
+  color: #343a40;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.login-header p {
+  color: #6c757d;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Grupos de formulario */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #495057;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.required {
+  color: #dc3545;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 15px;
+  color: #495057;
+  transition: border-color 0.2s ease;
+}
+
+input::placeholder {
+  color: #adb5bd;
+}
+
+input:focus {
+  outline: none;
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+.invalid-input {
+  border-color: #dc3545 !important;
+}
+
+/* Contenedor de input de contraseña */
+.password-input-container {
+  position: relative;
+}
+
+/* Modificación para el botón de mostrar/ocultar contraseña */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #28a745;
+  cursor: pointer;
+  padding: 0;
+  font-size: 12px;
+}
+
+/* Opciones de formulario */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+}
+
+.remember-me input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.forgot-password {
+  color: #28a745;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+/* Mensaje de error */
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.error-alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+/* Botón de login */
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.login-button:hover {
+  background-color: #218838;
+}
+
+.login-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Footer del login */
+.login-footer {
+  text-align: center;
+  margin-top: 25px;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.login-footer a {
+  color: #28a745;
+  text-decoration: none;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Media query para móviles */
+@media screen and (max-width: 767px) {
+  .login-card {
+    padding: 25px;
+  }
+  
+  .login-header h2 {
+    font-size: 22px;
+  }
+  
+  .login-button {
+    font-size: 15px;
+  }
+}
