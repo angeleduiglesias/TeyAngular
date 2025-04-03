@@ -1,24 +1,201 @@
-.step-container {
-    display: block;
-    animation: fadeIn 0.5s;
+/* =======================
+   ESTILOS GENERALES OPTIMIZADOS
+======================= */
+.tipo-empresa-container {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 800px;
+  margin: 15px auto;
+  box-sizing: border-box;
+}
+
+h2 {
+  color: #333;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+/* Opciones de tipo de empresa con selección de toda la casilla */
+.form-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.option {
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 12px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 70px;
+  transition: all 0.2s ease;
+}
+
+.option:hover {
+  border-color: #4dabf7;
+  background-color: #f8f9fa;
+}
+
+/* Escondemos el radio button original */
+.option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Estilo para opciones seleccionadas */
+.option input[type="radio"]:checked + label {
+  color: #228be6;
+}
+
+.option input[type="radio"]:checked ~ p {
+  color: #495057;
+}
+
+.option input[type="radio"]:checked + label::before {
+  content: '✓';
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: #228be6;
+  font-weight: bold;
+}
+
+/* Estilo para la opción completa cuando está seleccionada */
+.option input[type="radio"]:checked ~ .option,
+.option input[type="radio"]:checked {
+  border-color: #228be6;
+  background-color: #e7f5ff;
+  box-shadow: 0 0 0 1px #228be6;
+}
+
+.option label {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 3px;
+  font-size: 15px;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.option p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+/* Inputs y textareas */
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 15px;
+  color: #495057;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Campo requerido */
+.required {
+  color: #dc3545;
+  margin-left: 2px;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+/* Botones */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.secondary-button {
+  padding: 8px 16px;
+  background-color: #fff;
+  color: #6c757d;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.primary-button {
+  padding: 8px 16px;
+  background-color: #adb5bd;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.primary-button:hover {
+  background-color: #868e96;
+}
+
+.secondary-button:hover {
+  background-color: #f8f9fa;
+}
+
+/* Media query para móviles */
+@media screen and (max-width: 767px) {
+  .tipo-empresa-container {
+    padding: 15px;
+    margin: 8px;
+    max-width: calc(100% - 16px);
   }
-  .form-field {
-    margin-bottom: 1rem;
+ 
+  .form-options {
+    grid-template-columns: 1fr;
   }
-  label {
-    display: block;
-    margin-bottom: 0.25rem;
+ 
+  h2 {
+    font-size: 18px;
   }
-  input {
-    width: 100%;
-    padding: 0.5rem;
-    box-sizing: border-box;
+ 
+  .primary-button,
+  .secondary-button {
+    font-size: 13px;
+    padding: 7px 14px;
   }
-  .error {
-    color: red;
-    font-size: 0.875rem;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+}

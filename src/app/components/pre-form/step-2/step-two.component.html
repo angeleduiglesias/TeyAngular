@@ -1,25 +1,63 @@
-<div [formGroup]="formGroup" class="step-container">
-    <div class="form-field">
-      <label for="street">Calle:</label>
-      <input type="text" id="street" formControlName="street">
-      <div class="error" *ngIf="formGroup.get('street')?.invalid && (formGroup.get('street')?.touched || formGroup.get('street')?.dirty)">
-        La calle es obligatoria.
+<div class="tipo-empresa-container">
+  <h2>Tipo de Empresa</h2>
+  <form [formGroup]="tipoEmpresaForm">
+    <div class="form-group">
+      <label>Tipo de Empresa <span class="required">*</span></label>
+     
+      <div class="form-options">
+        <div class="option">
+          <input type="radio" id="sa" formControlName="tipoEmpresa" value="SA">
+          <label for="sa">Sociedad Anónima (S.A.)</label>
+          <p>Para empresas con accionistas y capital dividido en acciones</p>
+        </div>
+        
+        <div class="option">
+          <input type="radio" id="srl" formControlName="tipoEmpresa" value="SRL">
+          <label for="srl">Sociedad de Resp. Limitada (S.R.L.)</label>
+          <p>Para empresas con socios y capital dividido en participaciones</p>
+        </div>
+        
+        <div class="option">
+          <input type="radio" id="empresario" formControlName="tipoEmpresa" value="Empresario">
+          <label for="empresario">Empresario Individual</label>
+          <p>Para autónomos y profesionales independientes</p>
+        </div>
+        
+        <div class="option">
+          <input type="radio" id="otro" formControlName="tipoEmpresa" value="Otro">
+          <label for="otro">Otro tipo</label>
+          <p>Cooperativas, asociaciones, etc.</p>
+        </div>
+      </div>
+     
+      <div *ngIf="tipoEmpresaForm.get('tipoEmpresa')?.invalid && (tipoEmpresaForm.get('tipoEmpresa')?.dirty || tipoEmpresaForm.get('tipoEmpresa')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('tipoEmpresa')?.errors?.['required']">Campo obligatorio.</div>
       </div>
     </div>
-
-    <div class="form-field">
-      <label for="city">Ciudad:</label>
-      <input type="text" id="city" formControlName="city">
-      <div class="error" *ngIf="formGroup.get('city')?.invalid && (formGroup.get('city')?.touched || formGroup.get('city')?.dirty)">
-        La ciudad es obligatoria.
+   
+    <div class="form-group">
+      <label for="nombreEmpresa">Nombre de la Empresa <span class="required">*</span></label>
+      <input type="text" id="nombreEmpresa" formControlName="nombreEmpresa" placeholder="Ingrese el nombre de su empresa">
+      <div *ngIf="tipoEmpresaForm.get('nombreEmpresa')?.invalid && (tipoEmpresaForm.get('nombreEmpresa')?.dirty || tipoEmpresaForm.get('nombreEmpresa')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('nombreEmpresa')?.errors?.['required']">Campo obligatorio.</div>
       </div>
     </div>
-
-    <div class="form-field">
-      <label for="zipCode">Código Postal:</label>
-      <input type="text" id="zipCode" formControlName="zipCode">
-      <div class="error" *ngIf="formGroup.get('zipCode')?.invalid && (formGroup.get('zipCode')?.touched || formGroup.get('zipCode')?.dirty)">
-        El código postal es obligatorio.
+   
+    <div class="form-group">
+      <label for="actividadEmpresarial">Actividad Empresarial <span class="required">*</span></label>
+      <textarea id="actividadEmpresarial" formControlName="actividadEmpresarial" placeholder="Describa la actividad principal de su empresa"></textarea>
+      <div *ngIf="tipoEmpresaForm.get('actividadEmpresarial')?.invalid && (tipoEmpresaForm.get('actividadEmpresarial')?.dirty || tipoEmpresaForm.get('actividadEmpresarial')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('actividadEmpresarial')?.errors?.['required']">Campo obligatorio.</div>
       </div>
     </div>
-  </div>
+    
+    <div class="form-actions">
+      <button type="button" class="secondary-button" (click)="anterior()">
+        ‹ Anterior
+      </button>
+      <button type="button" class="primary-button" (click)="siguiente()" [disabled]="tipoEmpresaForm.invalid">
+        Siguiente ›
+      </button>
+    </div>
+  </form>
+</div>

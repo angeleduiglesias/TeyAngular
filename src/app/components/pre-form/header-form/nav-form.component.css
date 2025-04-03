@@ -1,0 +1,67 @@
+/* =======================
+   ESTILOS GENERALES (Pantallas grandes)
+======================= */
+.header-container {
+  color: white;
+  padding: 10px 20px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  position: relative; /* Asegura que no se vea afectado por el scroll */
+  z-index: 1000; /* Lo mantiene por encima de otros elementos */
+}
+
+.progress-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+
+.progress-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.step {
+  font-size: 0.85em;
+  color: #ccc;
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+}
+
+.step.active {
+  color: white;
+  border-bottom-color: white;
+  font-weight: bold;
+}
+
+/* =======================
+   MEDIA QUERY PARA PANTALLAS PEQUEÑAS
+   (Por debajo de 768px)
+======================= */
+@media screen and (max-width: 767px) {
+  /* Oculta completamente los pasos */
+  .progress-steps {
+    display: none;
+  }
+  
+  /* Puedes ajustar el tamaño del título u otros elementos si lo deseas */
+  .progress-title {
+    font-size: 1.2em;
+  }
+}

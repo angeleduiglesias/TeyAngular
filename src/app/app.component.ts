@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from "./components/header/header.component";
 import { FooterComponent } from "./components/footer/footer.component";
@@ -9,17 +9,16 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 @Component({
   selector: 'app-root',
   imports: [
-    CommonModule, 
-    RouterOutlet, 
-    HeaderComponent, 
-    // Removemos HomeComponent de aquí ya que se maneja por el router
-    FooterComponent, 
+    CommonModule,
+    RouterOutlet,
+    HeaderComponent,
+    FooterComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   animations: [
     trigger('fadeInOut', [
-      state('void', style({ opacity: 0 })), 
+      state('void', style({ opacity: 0 })),
       transition(':enter', [
         style({ opacity: 0 }),
         animate('500ms ease-in-out', style({ opacity: 1 }))
@@ -30,7 +29,22 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ])
   ]
 })
-export class AppComponent {
+export class AppComponent { 
   title = 'Tey';
+  mostrarFooter = true;
+  mostrarHeader = true;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const rutaActual = event.url;
+
+        // Ocultar el footer y el header si la ruta comienza con '/pre-form'
+        const esRutaPreForm = rutaActual.startsWith('/pre-form');
+        this.mostrarFooter = !esRutaPreForm;
+        this.mostrarHeader = !esRutaPreForm;
+      }
+    });
   }
+}
 

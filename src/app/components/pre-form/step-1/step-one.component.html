@@ -1,25 +1,52 @@
-<div [formGroup]="formGroup" class="step-container">
-    <div class="form-field">
-      <label for="firstName">Nombre:</label>
-      <input type="text" id="firstName" formControlName="firstName">
-      <div class="error" *ngIf="formGroup.get('firstName')?.invalid && (formGroup.get('firstName')?.touched || formGroup.get('firstName')?.dirty)">
-        El nombre es obligatorio.
+<div class="datos-personales-container">
+  <h2>Datos Personales</h2>
+
+  <form [formGroup]="datosPersonalesForm">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="nombre">Nombre <span class="required">*</span></label>
+        <input type="text" id="nombre" formControlName="nombre" placeholder="Ingrese su nombre">
+        <div *ngIf="datosPersonalesForm.get('nombre')?.invalid && (datosPersonalesForm.get('nombre')?.dirty || datosPersonalesForm.get('nombre')?.touched)" class="error-message">
+          <div *ngIf="datosPersonalesForm.get('nombre')?.errors?.['required']">Campo obligatorio.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="apellidos">Apellidos <span class="required">*</span></label>
+        <input type="text" id="apellidos" formControlName="apellidos" placeholder="Ingrese sus apellidos">
+        <div *ngIf="datosPersonalesForm.get('apellidos')?.invalid && (datosPersonalesForm.get('apellidos')?.dirty || datosPersonalesForm.get('apellidos')?.touched)" class="error-message">
+          <div *ngIf="datosPersonalesForm.get('apellidos')?.errors?.['required']">Campo obligatorio.</div>
+        </div>
       </div>
     </div>
 
-    <div class="form-field">
-      <label for="lastName">Apellido:</label>
-      <input type="text" id="lastName" formControlName="lastName">
-      <div class="error" *ngIf="formGroup.get('lastName')?.invalid && (formGroup.get('lastName')?.touched || formGroup.get('lastName')?.dirty)">
-        El apellido es obligatorio.
+    <div class="form-group">
+      <label for="correoElectronico">Correo Electrónico <span class="required">*</span></label>
+      <input type="email" id="correoElectronico" formControlName="correoElectronico" placeholder="ejemplo@correo.com">
+      <div *ngIf="datosPersonalesForm.get('correoElectronico')?.invalid && (datosPersonalesForm.get('correoElectronico')?.dirty || datosPersonalesForm.get('correoElectronico')?.touched)" class="error-message">
+        <div *ngIf="datosPersonalesForm.get('correoElectronico')?.errors?.['required']">Campo obligatorio.</div>
+        <div *ngIf="datosPersonalesForm.get('correoElectronico')?.errors?.['email']">Ingrese un correo electrónico válido.</div>
       </div>
     </div>
 
-    <div class="form-field">
-      <label for="email">Email:</label>
-      <input type="email" id="email" formControlName="email">
-      <div class="error" *ngIf="formGroup.get('email')?.invalid && (formGroup.get('email')?.touched || formGroup.get('email')?.dirty)">
-        Email inválido.
+    <div class="form-group">
+      <label for="telefono">Teléfono <span class="required">*</span></label>
+      <input type="tel" id="telefono" formControlName="telefono" placeholder="Ej: 912345678">
+      <div *ngIf="datosPersonalesForm.get('telefono')?.invalid && (datosPersonalesForm.get('telefono')?.dirty || datosPersonalesForm.get('telefono')?.touched)" class="error-message">
+        <div *ngIf="datosPersonalesForm.get('telefono')?.errors?.['required']">Campo obligatorio.</div>
+        <div *ngIf="datosPersonalesForm.get('telefono')?.errors?.['pattern']">Ingrese un teléfono válido "Ej: 912345678".</div>
       </div>
     </div>
-  </div>
+
+    <div class="info-message">
+      Esta información será utilizada para contactarlo respecto a su trámite de constitución de empresa.
+    </div>
+
+    <div class="form-actions">
+      
+      <button type="button" class="primary-button" (click)="siguiente()" [disabled]="datosPersonalesForm.invalid">
+        Siguiente >
+      </button>
+    </div>
+  </form>
+</div>

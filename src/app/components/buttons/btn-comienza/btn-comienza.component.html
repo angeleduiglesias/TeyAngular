@@ -1,1 +1,20 @@
+<!-- Botón que abre el popup -->
 <button class="btn-primary" (click)="navigateToForm()">Comienza</button>
+
+<!-- Popup (se muestra solo si mostrarPopup es true) -->
+<div *ngIf="mostrarPopup" class="popup-overlay">
+  <div class="popup-content">
+    <h1>Atención</h1>
+    <p>Antes de empezar, debe haber realizado la búsqueda del nombre previamente.</p>
+    
+    <div class="sunarp-section">
+      Sección de Ubicaciones de la SUNARP:  
+      <a href="https://www.sunarp.gob.pe/" target="_blank">Ubique la oficina más cercana a usted</a>
+    </div>
+
+    <div class="popup-buttons">
+      <button class="btn-close" (click)="cerrarPopup()">Cerrar</button>
+      <button class="btn-continue" (click)="confirmarNavegacion()">Continuar</button>
+    </div>
+  </div>
+</div>

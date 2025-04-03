@@ -1,27 +1,11 @@
-
-.multi-step-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 1rem;
-    font-family: Arial, sans-serif;
-  }
-  
-  .navigation-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
-  }
-  
-  button {
-    padding: 0.5rem 1rem;
-    background-color: #007acc;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #005fa3;
-  }
+.app-background {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #283F51;
+  padding: 20px 0;
+  box-sizing: border-box;
+}

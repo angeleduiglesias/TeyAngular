@@ -1,7 +1,8 @@
 .banner{
   max-width: 100vw;
-  height: 90vh;
+  height: 70vh;
   background-color: #283F51;
+  border-radius: 0px 0px 10px 10px;
   align-content: center;
 }
 
@@ -40,4 +41,5 @@
 
 img{
   width: 100%;
+  border-radius: 10px;
 }
