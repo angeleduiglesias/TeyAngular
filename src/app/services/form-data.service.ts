@@ -15,6 +15,7 @@ export class FormDataService {
   enviarDatosPersonales(datos: any): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
+      
     });
     
     return this.http.post(`${this.apiUrl}/api/cliente/store`, datos, { headers });
