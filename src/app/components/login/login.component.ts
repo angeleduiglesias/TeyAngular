@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { AuthService } from '../../services/auth-service';
 
+// Componente para la pantalla de inicio de sesión
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -14,16 +14,18 @@ import { environment } from '../../../environments/environment';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  loading = false;
-  submitted = false;
-  error = '';
-  showPassword = false;
+  loading = false;      // Controla el estado de carga
+  submitted = false;    // Indica si el formulario fue enviado
+  error = '';           // Almacena mensajes de error
+  showPassword = false; // Controla la visibilidad de la contraseña
 
+  // Inyecta servicios necesarios para el formulario, navegación y autenticación
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private http: HttpClient
+    private authService: AuthService
   ) {
+    // Inicializa el formulario con validaciones
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -31,6 +33,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  // Se ejecuta al inicializar el componente
   ngOnInit(): void {
     // Verificar si hay credenciales guardadas
     const savedEmail = localStorage.getItem('rememberedEmail');
@@ -42,13 +45,15 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // Getter para acceder fácilmente a los campos del formulario
+  // Getter para facilitar el acceso a los campos del formulario
   get f() { return this.loginForm.controls; }
 
+  // Alterna la visibilidad de la contraseña
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
+  // Maneja el envío del formulario
   onSubmit() {
     this.submitted = true;
     this.error = '';
@@ -67,22 +72,31 @@ export class LoginComponent implements OnInit {
       localStorage.removeItem('rememberedEmail');
     }
 
-    // Llamada a la API
-    this.http.post<any>(`${environment.apiUrl}/api/login`, {
-      email: this.loginForm.value.email,
-      password: this.loginForm.value.password
-    }).subscribe({
-      next: (response) => {
-        // Guardar token en localStorage
-        localStorage.setItem('token', response.token);
-        
-        // Redirigir al dashboard o página principal
-        this.router.navigate(['/dashboard']);
-      },
-      error: (error) => {
-        this.error = error?.error?.message || 'Credenciales incorrectas. Por favor, intenta nuevamente.';
-        this.loading = false;
-      }
-    });
+    // Autenticar usuario mediante el servicio
+    this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
+      .subscribe({
+        next: (response) => {
+          // Redirigir según el rol del usuario
+          const userRole = this.authService.getCurrentUserRole();
+          switch(userRole) {
+            case 'admin':
+              this.router.navigate(['/admin/dashboard']);
+              break;
+            case 'notario':
+              this.router.navigate(['/notario/dashboard']);
+              break;
+            case 'cliente':
+              this.router.navigate(['/cliente/dashboard']);
+              break;
+            default:
+              this.router.navigate(['/dashboard']);
+          }
+        },
+        error: (error) => {
+          // Maneja errores de autenticación
+          this.error = error?.message || 'Credenciales incorrectas. Por favor, intenta nuevamente.';
+          this.loading = false;
+        }
+      });
   }
 }

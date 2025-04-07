@@ -10,3 +10,4 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient() // Añade esto para habilitar las peticiones HTTP
   ]
 };
+

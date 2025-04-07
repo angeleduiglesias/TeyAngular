@@ -1,0 +1,91 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Panel de Notario</h1>
+    <div class="user-info">
+      <span *ngIf="userData">Bienvenido, {{ userData.nombre }}</span>
+      <button class="logout-btn" (click)="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div class="dashboard-stats">
+    <div class="stat-card">
+      <div class="stat-value">{{ tramitesPendientes }}</div>
+      <div class="stat-label">Trámites pendientes</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">{{ documentosPorRevisar }}</div>
+      <div class="stat-label">Documentos por revisar</div>
+    </div>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="dashboard-card">
+      <h2>Trámites Pendientes</h2>
+      <p>Trámites que requieren tu atención.</p>
+      <div class="tramites-list">
+        <div class="tramite-item">
+          <div class="tramite-info">
+            <h3>Escritura de Propiedad</h3>
+            <p>Cliente: Juan Pérez</p>
+            <p class="tramite-date">Recibido: 15/05/2023</p>
+          </div>
+          <button class="action-btn">Revisar</button>
+        </div>
+        <div class="tramite-item">
+          <div class="tramite-info">
+            <h3>Testamento</h3>
+            <p>Cliente: María González</p>
+            <p class="tramite-date">Recibido: 18/05/2023</p>
+          </div>
+          <button class="action-btn">Revisar</button>
+        </div>
+        <div class="tramite-item">
+          <div class="tramite-info">
+            <h3>Poder Notarial</h3>
+            <p>Cliente: Carlos Rodríguez</p>
+            <p class="tramite-date">Recibido: 20/05/2023</p>
+          </div>
+          <button class="action-btn">Revisar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Documentos por Revisar</h2>
+      <p>Documentos que requieren tu validación.</p>
+      <div class="documentos-list">
+        <div class="documento-item">
+          <div class="documento-info">
+            <h3>Identificación oficial</h3>
+            <p>Cliente: Juan Pérez</p>
+          </div>
+          <button class="action-btn">Validar</button>
+        </div>
+        <div class="documento-item">
+          <div class="documento-info">
+            <h3>Comprobante de domicilio</h3>
+            <p>Cliente: María González</p>
+          </div>
+          <button class="action-btn">Validar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Calendario de Citas</h2>
+      <p>Próximas citas programadas.</p>
+      <div class="citas-list">
+        <div class="cita-item">
+          <div class="cita-fecha">28 Mayo, 2023</div>
+          <div class="cita-hora">10:00 AM</div>
+          <div class="cita-cliente">Juan Pérez - Firma de Escritura</div>
+        </div>
+        <div class="cita-item">
+          <div class="cita-fecha">30 Mayo, 2023</div>
+          <div class="cita-hora">2:30 PM</div>
+          <div class="cita-cliente">María González - Testamento</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
