@@ -11,21 +11,18 @@ export class RoleGuard implements CanActivate {
   
   // Método que determina si un usuario puede acceder a una ruta
   canActivate(route: ActivatedRouteSnapshot): boolean {
-    // Obtiene el rol esperado de la ruta
+    // Comentado temporalmente para permitir acceso directo a los componentes
+    /*
     const expectedRole = route.data['expectedRole'];
-    // Obtiene el rol actual del usuario desde el servicio de autenticación
     const userRole = this.authService.getCurrentUserRole();
     
-    // Verifica si el usuario está autenticado y si su rol coincide con el esperado
     if (this.authService.isLoggedIn() && userRole === expectedRole) {
       return true;
     }
     
-    // Redirige al login si el usuario no está autenticado
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
     } else {
-      // Redirigir a la página correspondiente según el rol actual
       switch(userRole) {
         case 'admin':
           this.router.navigate(['/admin/dashboard']);
@@ -41,7 +38,11 @@ export class RoleGuard implements CanActivate {
       }
     }
     
-    // Bloquea el acceso a la ruta solicitada
     return false;
+    */
+    
+    // Temporalmente retornamos true para permitir acceso a todas las rutas
+    // IMPORTANTE: Recordar revertir este cambio antes de pasar a producción
+    return true;
   }
 }

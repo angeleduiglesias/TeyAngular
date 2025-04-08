@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   submitted = false;    // Indica si el formulario fue enviado
   error = '';           // Almacena mensajes de error
   showPassword = false; // Controla la visibilidad de la contraseña
+  errorMessage = '';    // Mensaje de error amigable para el usuario
 
   // Inyecta servicios necesarios para el formulario, navegación y autenticación
   constructor(
@@ -57,6 +58,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     this.error = '';
+    this.errorMessage = '';
 
     // Detener si el formulario es inválido
     if (this.loginForm.invalid) {
@@ -76,26 +78,33 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
       .subscribe({
         next: (response) => {
+          this.loading = false;
           // Redirigir según el rol del usuario
           const userRole = this.authService.getCurrentUserRole();
-          switch(userRole) {
-            case 'admin':
-              this.router.navigate(['/admin/dashboard']);
-              break;
-            case 'notario':
-              this.router.navigate(['/notario/dashboard']);
-              break;
-            case 'cliente':
-              this.router.navigate(['/cliente/dashboard']);
-              break;
-            default:
-              this.router.navigate(['/dashboard']);
+          if (userRole) {
+            this.router.navigate([`/${userRole}/dashboard`]);
+          } else {
+            this.router.navigate(['/']);
           }
         },
         error: (error) => {
-          // Maneja errores de autenticación
-          this.error = error?.message || 'Credenciales incorrectas. Por favor, intenta nuevamente.';
           this.loading = false;
+          
+          // Mensajes de error más amigables
+          if (error.status === 0) {
+            this.errorMessage = 'No se pudo conectar con el servidor. Por favor, verifica tu conexión a internet o inténtalo más tarde.';
+          } else if (error.status === 401) {
+            this.errorMessage = 'Correo electrónico o contraseña incorrectos.';
+          } else if (error.status === 403) {
+            this.errorMessage = 'No tienes permiso para acceder. Contacta al administrador.';
+          } else if (error.status === 500) {
+            this.errorMessage = 'Error en el servidor. Por favor, inténtalo más tarde.';
+          } else {
+            this.errorMessage = 'Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.';
+          }
+          
+          this.error = this.errorMessage; // Actualiza también la variable error original
+          console.error('Error de inicio de sesión:', error);
         }
       });
   }

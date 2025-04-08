@@ -11,13 +11,18 @@ export class AuthGuard implements CanActivate {
   
   // Método que determina si una ruta puede ser activada
   canActivate(): boolean {
-    // Verifica si el usuario está autenticado
+    // Comentado temporalmente para permitir acceso directo a los componentes
+    /*
     if (this.authService.isLoggedIn()) {
-      return true; // Permite acceso a la ruta
+      return true;
     }
     
-    // Redirige al login si no está autenticado
     this.router.navigate(['/login']);
-    return false; // Bloquea acceso a la ruta
+    return false;
+    */
+    
+    // Temporalmente retornamos true para permitir acceso a todas las rutas
+    // IMPORTANTE: Recordar revertir este cambio antes de pasar a producción
+    return true;
   }
 }

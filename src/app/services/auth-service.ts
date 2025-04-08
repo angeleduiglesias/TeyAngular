@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap, catchError, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // Interfaces para seguridad de tipos
 export interface User {
@@ -10,9 +11,13 @@ export interface User {
   rol: string;
 }
 
+/**
+ * Interfaz que define la estructura de la respuesta de autenticación
+ * recibida desde el backend al iniciar sesión
+ */
 export interface AuthResponse {
-  token: string;
-  user: User;
+  token: string;  // Token Sanctum para autenticación
+  user: User;     // Información del usuario autenticado
 }
 
 @Injectable({
@@ -22,7 +27,7 @@ export class AuthService {
   // Observable para mantener el estado del usuario actual
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
-  private apiUrl = 'http://localhost/TeyLaravel/public/api'; // URL base de la API
+  private apiUrl = environment.apiUrl; // Obtiene la URL base desde el environment
   
   constructor(private http: HttpClient) {
     // Carga el usuario desde localStorage al iniciar el servicio
@@ -40,7 +45,7 @@ export class AuthService {
   
   // Autentica al usuario y almacena su información
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
+    return this.http.post<any>(`${this.apiUrl}/api/login`, { email, password })
       .pipe(
         tap(response => {
           if (response && response.token) {
@@ -56,7 +61,7 @@ export class AuthService {
   
   // Cierra la sesión del usuario y limpia los datos almacenados
   logout(): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/logout`, {})
+    return this.http.post<any>(`${this.apiUrl}/api/logout`, {})
       .pipe(
         tap(() => {
           // Elimina datos de sesión del almacenamiento local
