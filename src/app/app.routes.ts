@@ -4,6 +4,8 @@ import { PreFormComponent } from './components/pre-form/pre-form.component';
 import { StepOneComponent } from './components/pre-form/step-1/step-one.component';
 import { StepTwoComponent } from './components/pre-form/step-2/step-two.component';
 import { StepThreeComponent } from './components/pre-form/step-3/step-three.component';
+import { StepFourComponent } from './components/pre-form/step-4/step-four.component';
+import { StepFiveComponent } from './components/pre-form/step-5/step-five.component';
 import { LoginComponent } from './components/login/login.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AuthGuard } from './guards/auth-guard';
@@ -21,7 +23,9 @@ export const routes: Routes = [
       { path: '', redirectTo: 'step-one', pathMatch: 'full' },
       { path: 'step-one', component: StepOneComponent },
       { path: 'step-two', component: StepTwoComponent },
-      {path:'step-three', component: StepThreeComponent}
+      {path:'step-three', component: StepThreeComponent},
+      {path:'step-four', component: StepFourComponent},
+      {path:'step-five', component: StepFiveComponent}
     ]
   },
   // Rutas protegidas por rol

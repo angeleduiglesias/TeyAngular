@@ -109,13 +109,24 @@ input:focus {
   margin-bottom: 20px;
 }
 
+/* Mejora del alineamiento del checkbox */
 .remember-me {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 
 .remember-me input[type="checkbox"] {
-  margin-right: 8px;
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.remember-label {
+  margin: 0;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .forgot-password {
@@ -201,4 +212,30 @@ input:focus {
   .login-button {
     font-size: 15px;
   }
+}
+
+/* Estilos para el spinner del botón */
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.button-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+.spinner-text {
+  font-size: 14px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }

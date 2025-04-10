@@ -41,7 +41,7 @@
       <div class="form-options">
         <div class="remember-me">
           <input type="checkbox" id="rememberMe" formControlName="rememberMe">
-          <label for="rememberMe">Recordarme</label>
+          <label for="rememberMe" class="remember-label">Recordarme</label>
         </div>
       </div>
       
@@ -54,12 +54,15 @@
         class="login-button" 
         [disabled]="loading"
       >
-        <span *ngIf="loading">Cargando...</span>
+        <span *ngIf="loading" class="spinner-container">
+          <span class="button-spinner"></span>
+          <span class="spinner-text">Iniciando sesión...</span>
+        </span>
         <span *ngIf="!loading">Iniciar Sesión</span>
       </button>
       
       <div class="login-footer">
-        <p>¿No tienes una cuenta? <a href="#">Regístrate aquí</a></p>
+        <p>¿Olvidaste tu contraseña? <a href="#">Recuperar contraseña</a></p>
       </div>
     </form>
   </div>

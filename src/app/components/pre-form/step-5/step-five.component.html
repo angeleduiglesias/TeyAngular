@@ -1,0 +1,85 @@
+<div class="pago-container">
+  <h2>Pago del servicio</h2>
+  
+  <div class="cuotas-container">
+    <div class="cuota" *ngFor="let cuota of cuotas">
+      <div class="cuota-info">
+        <div class="cuota-nombre">{{ cuota.nombre }}</div>
+        <div class="cuota-descripcion">{{ cuota.descripcion }}</div>
+      </div>
+      <div class="cuota-monto">{{ cuota.monto }}</div>
+    </div>
+    
+    <div class="costo-total">
+      <div class="total-label">Costo total</div>
+      <div class="total-monto">{{ costoTotal }}</div>
+    </div>
+  </div>
+  
+  <div class="que-recibiras">
+    <h3>¿Qué recibirás por el pago de cada cuota?</h3>
+  </div>
+  
+  <form [formGroup]="pagoForm">
+    <div class="metodo-pago-section">
+      <h3>Selecciona tu método de pago</h3>
+      
+      <div class="metodo-pago-options">
+        <div class="metodo-option">
+          <input type="radio" id="tarjeta" name="metodoPago" value="tarjeta" formControlName="metodoPago">
+          <label for="tarjeta" class="metodo-label">
+            <div class="metodo-title">Pago con tarjeta de crédito o débito</div>
+            <div class="metodo-description">Paga de forma segura con las siguientes tarjetas.</div>
+            <div class="tarjetas-icons">
+              <img src="assets/visa.png" alt="Visa">
+              <img src="assets/mastercard.png" alt="Mastercard">
+              <img src="assets/amex.png" alt="American Express">
+              <img src="assets/diners.png" alt="Diners">
+            </div>
+          </label>
+        </div>
+
+        <div class="tarjeta-info" *ngIf="pagoForm.get('metodoPago')?.value === 'tarjeta'">
+          <p>Con este método de pago, te enviaremos a la pasarela de pagos. Paga con tu tarjeta preferida.</p>
+        </div>
+        
+        <div class="metodo-option">
+          <input type="radio" id="transferencia" name="metodoPago" value="transferencia" formControlName="metodoPago">
+          <label for="transferencia" class="metodo-label">
+            <div class="metodo-title">Pago con transferencia bancaria</div>
+            <div class="metodo-description">Paga desde tu app o agente de cualquier banco a nuestra cuenta BCP</div>
+            <div class="bancos-icons">
+              <img src="assets/bcp.png" alt="BCP">
+              <img src="assets/interbank.png" alt="Interbank">
+              <img src="assets/bbva.png" alt="BBVA">
+              <img src="assets/scotiabank.png" alt="Scotiabank">
+            </div>
+          </label>
+        </div>
+        
+        <div class="transferencia-info" *ngIf="pagoForm.get('metodoPago')?.value === 'transferencia'">
+          <p>Con este método de pago, te mostraremos nuestro número de cuenta. No olvides enviarnos el comprobante de pago.</p>
+        </div>
+      </div>
+      
+      <div *ngIf="pagoForm.get('metodoPago')?.invalid && pagoForm.get('metodoPago')?.touched" class="error-message">
+        Por favor, selecciona un método de pago.
+      </div>
+    </div>
+    
+    <div *ngIf="error" class="error-message global-error">
+      {{ error }}
+    </div>
+    
+    <div class="form-actions">
+      <button type="button" class="primary-button" (click)="pagar()" [disabled]="enviando || pagoForm.invalid">
+        <span *ngIf="!enviando">Pagar constitución</span>
+        <span *ngIf="enviando">Procesando...</span>
+      </button>
+    </div>
+  </form>
+  
+  <div class="ayuda-section">
+    <p>¿Tienes alguna duda? Ingresa <a href="#">aquí</a></p>
+  </div>
+</div>

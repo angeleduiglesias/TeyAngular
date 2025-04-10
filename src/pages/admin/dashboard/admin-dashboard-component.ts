@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../app/services/auth-service';
 
 @Component({
@@ -15,7 +16,10 @@ export class AdminDashboardComponent implements OnInit {
   tramitesPendientes: number = 15;
   notariosActivos: number = 8;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router  // Añadido Router al constructor
+  ) {}
 
   ngOnInit(): void {
     // Obtener información del usuario actual
@@ -24,14 +28,8 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  logout(): void {
-    this.authService.logout().subscribe({
-      next: () => {
-        console.log('Sesión cerrada correctamente');
-      },
-      error: (error) => {
-        console.error('Error al cerrar sesión:', error);
-      }
-    });
+  logout() {
+    // Redirigir al componente de logout
+    this.router.navigate(['/logout']);
   }
 }

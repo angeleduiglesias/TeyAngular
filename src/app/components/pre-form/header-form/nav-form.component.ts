@@ -11,7 +11,7 @@ import { filter } from 'rxjs/operators';
 })
 export class NavFormComponent implements OnInit {
   currentStep: number = 1;
-  totalSteps: number = 3; // Actualizado a 3 pasos
+  totalSteps: number = 5; // Actualizado a 5 pasos
 
   constructor(private router: Router) {}
 
@@ -34,7 +34,11 @@ export class NavFormComponent implements OnInit {
       this.currentStep = 2;
     } else if (url.includes('step-three')) {
       this.currentStep = 3;
-    }
+    } else if (url.includes('step-four')) {
+      this.currentStep = 4; 
+    } else if (url.includes('step-five')) {
+      this.currentStep = 5; 
+    } 
   }
 
   getProgressPercentage(): number {

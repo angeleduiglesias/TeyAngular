@@ -43,8 +43,9 @@ export class AppComponent {
         const esRutaPreForm = rutaActual.startsWith('/pre-form');
         const esRutaLogin = rutaActual.startsWith('/login');
         const esRutaDashboard = rutaActual.includes('/dashboard');
-        this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaDashboard);
-        this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaDashboard);
+        const esRutaLogout = rutaActual.includes('/logout');
+        this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaDashboard || esRutaLogout);
+        this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaDashboard || esRutaLogout);
       }
     });
   }

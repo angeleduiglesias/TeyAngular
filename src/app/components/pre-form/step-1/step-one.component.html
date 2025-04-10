@@ -1,55 +1,91 @@
-<div class="datos-personales-container">
-  <h2>Datos Personales</h2>
-
-  <form [formGroup]="datosPersonalesForm">
-    <div class="form-row">
-      <div class="form-group">
-        <label for="nombre">Nombre <span class="required">*</span></label>
-        <input type="text" id="nombre" name="nombre" formControlName="nombre" placeholder="Ingrese su nombre">
-        <div *ngIf="datosPersonalesForm.get('nombre')?.invalid && (datosPersonalesForm.get('nombre')?.dirty || datosPersonalesForm.get('nombre')?.touched)" class="error-message">
-          <div *ngIf="datosPersonalesForm.get('nombre')?.errors?.['required']">Campo obligatorio.</div>
+<div class="tipo-empresa-container">
+  <h2>Datos de Empresa</h2>
+  <form [formGroup]="tipoEmpresaForm">
+    <div class="form-group">
+      <label>Tipo de Empresa <span class="required">*</span></label>
+     
+      <div class="form-options">
+        <div class="option">
+          <input type="radio" id="sa" formControlName="tipoEmpresa" value="SA">
+          <label for="sa">Sociedad Anónima (S.A.)</label>
+          <p>Para empresas con accionistas y capital dividido en acciones</p>
+        </div>
+        
+        <div class="option">
+          <input type="radio" id="srl" formControlName="tipoEmpresa" value="SRL">
+          <label for="srl">Sociedad de Resp. Limitada (S.R.L.)</label>
+          <p>Para empresas con socios y capital dividido en participaciones</p>
+        </div>
+        
+        <div class="option">
+          <input type="radio" id="empresario" formControlName="tipoEmpresa" value="Empresario">
+          <label for="empresario">Empresario Individual</label>
+          <p>Para autónomos y profesionales independientes</p>
+        </div>
+        
+        <div class="option">
+          <input type="radio" id="otro" formControlName="tipoEmpresa" value="Otro">
+          <label for="otro">Otro tipo</label>
+          <p>Cooperativas, asociaciones, etc.</p>
         </div>
       </div>
-
-      <div class="form-group">
-        <label for="apellidos">Apellidos <span class="required">*</span></label>
-        <input type="text" id="apellidos" name="apellidos" formControlName="apellidos" placeholder="Ingrese sus apellidos">
-        <div *ngIf="datosPersonalesForm.get('apellidos')?.invalid && (datosPersonalesForm.get('apellidos')?.dirty || datosPersonalesForm.get('apellidos')?.touched)" class="error-message">
-          <div *ngIf="datosPersonalesForm.get('apellidos')?.errors?.['required']">Campo obligatorio.</div>
+     
+      <div *ngIf="tipoEmpresaForm.get('tipoEmpresa')?.invalid && (tipoEmpresaForm.get('tipoEmpresa')?.dirty || tipoEmpresaForm.get('tipoEmpresa')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('tipoEmpresa')?.errors?.['required']">Campo obligatorio.</div>
+      </div>
+    </div>
+   
+    <!-- Campo de número de socios que aparece solo cuando se selecciona SA -->
+    <div class="form-group socios-group" *ngIf="tipoEmpresaForm.get('tipoEmpresa')?.value === 'SA'">
+      <label for="numeroSocios">Número de Socios <span class="required">*</span></label>
+      
+      <div class="socios-options">
+        <div class="option-buttons">
+          <button 
+            type="button" 
+            *ngFor="let opcion of opcionesSocios" 
+            class="option-btn" 
+            [class.selected]="tipoEmpresaForm.get('numeroSocios')?.value === opcion && !mostrarInputPersonalizado"
+            (click)="tipoEmpresaForm.get('numeroSocios')?.setValue(opcion); mostrarInputPersonalizado = false">
+            {{ opcion }}
+          </button>
+          <button 
+            type="button" 
+            class="option-btn custom-btn" 
+            [class.selected]="mostrarInputPersonalizado"
+            (click)="cambiarTipoInput(true)">
+            Otro
+          </button>
+        </div>
+        
+        <div *ngIf="mostrarInputPersonalizado" class="custom-input-container">
+          <input 
+            type="number" 
+            class="custom-socios-input" 
+            placeholder="Ingrese número personalizado" 
+            min="1"
+            (input)="onCustomSociosInput($event)"
+          >
         </div>
       </div>
-    </div>
-
-    <div class="form-group">
-      <label for="email">Correo Electrónico <span class="required">*</span></label>
-      <input type="email" id="email" name="email" formControlName="email" placeholder="ejemplo@correo.com">
-      <div *ngIf="datosPersonalesForm.get('email')?.invalid && (datosPersonalesForm.get('email')?.dirty || datosPersonalesForm.get('email')?.touched)" class="error-message">
-        <div *ngIf="datosPersonalesForm.get('email')?.errors?.['required']">Campo obligatorio.</div>
-        <div *ngIf="datosPersonalesForm.get('email')?.errors?.['email']">Ingrese un correo electrónico válido.</div>
+      
+      <div *ngIf="tipoEmpresaForm.get('numeroSocios')?.invalid && (tipoEmpresaForm.get('numeroSocios')?.dirty || tipoEmpresaForm.get('numeroSocios')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('numeroSocios')?.errors?.['required']">Campo obligatorio.</div>
+        <div *ngIf="tipoEmpresaForm.get('numeroSocios')?.errors?.['min']">Debe ser al menos 1.</div>
       </div>
     </div>
-
+   
     <div class="form-group">
-      <label for="telefono">Teléfono <span class="required">*</span></label>
-      <input type="tel" id="telefono" formControlName="telefono" placeholder="Ej: 912345678">
-      <div *ngIf="datosPersonalesForm.get('telefono')?.invalid && (datosPersonalesForm.get('telefono')?.dirty || datosPersonalesForm.get('telefono')?.touched)" class="error-message">
-        <div *ngIf="datosPersonalesForm.get('telefono')?.errors?.['required']">Campo obligatorio.</div>
-        <div *ngIf="datosPersonalesForm.get('telefono')?.errors?.['pattern']">Ingrese un teléfono válido "Ej: 912345678".</div>
+      <label for="nombreEmpresa">Nombre de la Empresa <span class="required">*</span></label>
+      <input type="text" id="nombreEmpresa" formControlName="nombreEmpresa" placeholder="Ingrese el nombre de su empresa">
+      <div *ngIf="tipoEmpresaForm.get('nombreEmpresa')?.invalid && (tipoEmpresaForm.get('nombreEmpresa')?.dirty || tipoEmpresaForm.get('nombreEmpresa')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('nombreEmpresa')?.errors?.['required']">Campo obligatorio.</div>
       </div>
     </div>
-
-    <div class="info-message">
-      Esta información será utilizada para contactarlo respecto a su trámite de constitución de empresa.
-    </div>
-
-    <div *ngIf="error" class="error-message global-error">
-      {{ error }}
-    </div>
-
+    
     <div class="form-actions">
-      <button type="button" class="primary-button" (click)="siguiente()" [disabled]="enviando">
-        <span *ngIf="!enviando">Siguiente ›</span>
-        <span *ngIf="enviando">Enviando...</span>
+      <button type="button" class="primary-button" (click)="siguiente()" [disabled]="tipoEmpresaForm.invalid">
+        Siguiente ›
       </button>
     </div>
   </form>
