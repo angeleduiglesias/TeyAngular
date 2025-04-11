@@ -3,17 +3,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormDataService } from '../../../services/form-data.service';
 
 @Component({
   selector: 'app-step-three',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './step-three.component.html',
-  styleUrl: './step-three.component.css',
-  standalone: true
+  styleUrl: './step-three.component.css'
 })
 export class StepThreeComponent implements OnInit {
   capitalForm: FormGroup;
   enviando = false;
+  error = '';
+  
 
   tiposAporte = [
     { id: 'dinero', nombre: 'Dinero' },
@@ -32,7 +34,8 @@ export class StepThreeComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private formDataService: FormDataService
   ) {
     this.capitalForm = this.fb.group({
       tipoAporte: ['', Validators.required],
@@ -49,6 +52,22 @@ export class StepThreeComponent implements OnInit {
   siguiente(): void {
     if (this.capitalForm.valid) {
       this.enviando = true;
+      this.error = '';
+
+      this.formDataService.enviarCapital(this.capitalForm.value)
+       .subscribe({
+         next: (response) => {
+          console.log ('Capital Registrado', response);
+          this.enviando = false;
+
+          this.router.navigate(['step-four'], { relativeTo: this.route.parent });
+         },
+         error: (error) => {
+          console.error('Error al guardar capital', error);
+          this.enviando = false;
+          this.error = 'Error al guardar capital';
+         }
+       })
       
       
     } else {
