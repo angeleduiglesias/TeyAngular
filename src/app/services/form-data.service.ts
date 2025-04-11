@@ -11,6 +11,13 @@ export class FormDataService {
 
   constructor(private http: HttpClient) { }
 
+  enviarCapital(datos: any): Observable<any> {
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
+  return this.http.post(`${this.apiUrl}/api/capital`, datos, { headers });
+  }
+
   // Método para enviar datos personales (Step One)
   enviarDatosPersonales(datos: any): Observable<any> {
     const headers = new HttpHeaders({
