@@ -42,8 +42,10 @@ export class AppComponent {
         // Ocultar el footer y el header si la ruta comienza con '/pre-form' o es '/login'
         const esRutaPreForm = rutaActual.startsWith('/pre-form');
         const esRutaLogin = rutaActual.startsWith('/login');
-        this.mostrarFooter = !(esRutaPreForm || esRutaLogin);
-        this.mostrarHeader = !(esRutaPreForm || esRutaLogin);
+        const esRutaDashboard = rutaActual.includes('/dashboard');
+        const esRutaLogout = rutaActual.includes('/logout');
+        this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaDashboard || esRutaLogout);
+        this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaDashboard || esRutaLogout);
       }
     });
   }

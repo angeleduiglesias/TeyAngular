@@ -12,16 +12,31 @@ import { Router, ActivatedRoute } from '@angular/router';
   standalone: true
 })
 export class StepThreeComponent implements OnInit {
-  confirmacionForm: FormGroup;
+  capitalForm: FormGroup;
+  enviando = false;
+
+  tiposAporte = [
+    { id: 'dinero', nombre: 'Dinero' },
+    { id: 'bienes', nombre: 'Bienes' },
+    { id: 'mixto', nombre: 'Mixto (Dinero y Bienes)' }
+  ];
+
+  rangosCapital = [
+    { id: 'rango1', nombre: 'S/ 500 - S/ 1,000' },
+    { id: 'rango2', nombre: 'S/ 1,001 - S/ 5,000' },
+    { id: 'rango3', nombre: 'S/ 5,001 - S/ 10,000' },
+    { id: 'rango4', nombre: 'S/ 10,001 - S/ 50,000' },
+    { id: 'rango5', nombre: 'Más de S/ 50,000' }
+  ];
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.confirmacionForm = this.fb.group({
-      terminosCondiciones: [false, Validators.requiredTrue],
-      politicaPrivacidad: [false, Validators.requiredTrue]
+    this.capitalForm = this.fb.group({
+      tipoAporte: ['', Validators.required],
+      rangoCapital: ['', Validators.required]
     });
   }
 
@@ -31,15 +46,13 @@ export class StepThreeComponent implements OnInit {
     this.router.navigate(['step-two'], { relativeTo: this.route.parent });
   }
 
-  enviar(): void {
-    if (this.confirmacionForm.valid) {
-      console.log('Formulario enviado correctamente');
-      // Aquí puedes agregar la lógica para enviar los datos al servidor
-      alert('¡Gracias! Tu solicitud ha sido enviada correctamente.');
-      // Redirigir al home o a una página de confirmación
-      this.router.navigate(['/']);
+  siguiente(): void {
+    if (this.capitalForm.valid) {
+      this.enviando = true;
+      
+      
     } else {
-      this.markFormGroupTouched(this.confirmacionForm);
+      this.markFormGroupTouched(this.capitalForm);
     }
   }
 

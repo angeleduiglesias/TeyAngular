@@ -1,18 +1,13 @@
 <div class="header-container">
-  <div class="progress-bar">
-    <div class="progress-steps">
-      <div class="step" [class.active]="currentStep >= 1">
-        Datos Personales
-      </div>
-      <div class="step" [class.active]="currentStep >= 2">
-        Tipo de Empresa
-      </div>
-      <div class="step" [class.active]="currentStep >= 3">
-        Confirmación
-      </div>
+  <div class="progress-wrapper">
+    <div class="step-indicator">
+      <span class="current-step">Paso {{ currentStep }}</span>
+      <span class="total-steps">de 5</span>
     </div>
-    <div class="progress-line">
-      <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+    <div class="progress-bar">
+      <div class="progress-line">
+        <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+      </div>
     </div>
   </div>
 </div>

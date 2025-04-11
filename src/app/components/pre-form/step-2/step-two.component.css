@@ -1,9 +1,9 @@
 /* =======================
    ESTILOS GENERALES OPTIMIZADOS
 ======================= */
-.tipo-empresa-container {
-  padding: 20px;
-  border-radius: 8px;
+.actividades-empresa-container {
+  padding: 30px;
+  border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   width: 100%;
@@ -14,145 +14,55 @@
 
 h2 {
   color: #333;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 25px;
 }
 
 label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   color: #333;
   font-weight: 500;
-  font-size: 15px;
+  font-size: 16px;
 }
 
-/* Opciones de tipo de empresa con selección de toda la casilla */
-.form-options {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 8px;
-}
-
-.option {
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
+/* Estilos para el campo de actividades */
+.actividades-field textarea {
+  width: 100%;
   padding: 12px;
-  cursor: pointer;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 70px;
-  transition: all 0.2s ease;
-}
-
-/* Hacer que el radio button cubra toda la casilla */
-.option input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  margin: 0;
-  z-index: 1;
-}
-
-.option:hover {
-  border-color: #28a745;
-  background-color: #f8f9fa;
-}
-
-/* Escondemos el radio button original y lo hacemos clickeable en toda la casilla */
-.option input[type="radio"] {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  margin: 0;
-  z-index: 2; /* Aumentamos el z-index para asegurar que esté por encima */
-}
-
-/* Estilo para la opción completa cuando está seleccionada */
-.option input[type="radio"]:checked {
-  border-color: #28a745;
-}
-
-.option input[type="radio"]:checked ~ .option,
-.option:has(input[type="radio"]:checked) {
-  border-color: #28a745;
-  background-color: #f8f9fa;
-  box-shadow: 0 0 0 2px #28a745;
-}
-
-/* Estilo para opciones seleccionadas */
-.option input[type="radio"]:checked + label {
-  color: #28a745;
-}
-
-.option input[type="radio"]:checked ~ p {
-  color: #495057;
-}
-
-.option input[type="radio"]:checked + label::before {
-  content: '✓';
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  color: #28a745;
-  font-weight: bold;
-}
-
-/* Estilo para la opción completa cuando está seleccionada */
-.option input[type="radio"]:checked ~ .option,
-.option input[type="radio"]:checked {
-  border-color: #228be6;
-  background-color: #e7f5ff;
-  box-shadow: 0 0 0 1px #228be6;
-}
-
-.option label {
-  font-weight: 500;
-  color: #333;
-  margin-bottom: 3px;
-  font-size: 15px;
-  line-height: 1.2;
-  cursor: pointer;
-}
-
-.option p {
-  margin: 0;
-  color: #6c757d;
-  font-size: 13px;
-  line-height: 1.2;
-}
-
-/* Inputs y textareas */
-input[type="text"],
-textarea {
-  width: 100%;
-  padding: 10px;
   border: 1px solid #ced4da;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 15px;
   color: #495057;
   background-color: #fff;
   box-sizing: border-box;
-  font-family: inherit; /* Esto asegura que use la misma fuente que el resto del formulario */
+  font-family: inherit;
+  min-height: 100px;
+  resize: vertical;
 }
 
-textarea {
-  min-height: 80px;
-  resize: vertical;
+.actividades-field textarea:focus {
+  outline: none;
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+}
+
+/* Estilos para las notas y advertencias */
+.notes-list {
+  margin-top: 15px;
+  padding-left: 20px;
+}
+
+.notes-list li {
+  color: #6c757d;
+  font-size: 14px;
+  margin-bottom: 8px;
+  line-height: 1.4;
 }
 
 /* Campo requerido */
@@ -163,42 +73,44 @@ textarea {
 
 .error-message {
   color: #dc3545;
-  font-size: 12px;
-  margin-left: 5px;
+  font-size: 15px;
   margin-top: 5px;
+  padding: 5px 10px;
+  border-radius: 4px;
 }
 
 /* Botones */
 .form-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .secondary-button {
-  padding: 8px 16px;
+  padding: 12px 24px;
   background-color: #fff;
   color: #6c757d;
   border: 1px solid #ced4da;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 50px;
+  font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: all 0.2s ease;
 }
 
 .primary-button {
-  padding: 8px 16px;
+  padding: 12px 24px;
   background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 50px;
+  font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: all 0.2s ease;
 }
-
 
 .primary-button:hover {
   background-color: #218838;
@@ -208,56 +120,45 @@ textarea {
   background-color: #f8f9fa;
 }
 
-
 .primary-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
 /* Media query para móviles */
 @media screen and (max-width: 767px) {
-  .tipo-empresa-container {
-    padding: 15px;
+  .actividades-empresa-container {
+    padding: 20px;
     margin: 8px;
     max-width: calc(100% - 16px);
   }
  
-  .form-options {
-    grid-template-columns: 1fr;
-  }
- 
   h2 {
-    font-size: 18px;
+    font-size: 20px;
+    margin-bottom: 20px;
   }
  
   .primary-button,
   .secondary-button {
-    font-size: 13px;
-    padding: 7px 14px;
-    /* Eliminamos el width: 100% que estaba causando problemas */
+    font-size: 14px;
+    padding: 10px 20px;
   }
 
   .form-actions {
-    /* Cambiamos de column a row para mantener los botones en línea */
     flex-direction: row;
     justify-content: space-between;
     gap: 10px;
   }
+  
+
 }
 
-/* Media query para tablets (iPad Mini) */
+/* Media query para tablets */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .tipo-empresa-container {
-    padding: 20px;
+  .actividades-empresa-container {
+    padding: 25px;
     margin: 15px auto;
     max-width: 90%;
-  }
-  
-  .form-options {
-    gap: 15px;
-  }
-  
-  .option {
-    padding: 15px;
   }
   
   .form-actions {
@@ -269,3 +170,4 @@ textarea {
     padding: 10px 20px;
   }
 }
+

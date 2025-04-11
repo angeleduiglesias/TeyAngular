@@ -1,9 +1,9 @@
 /* =======================
-   ESTILOS GENERALES OPTIMIZADOS
+   ESTILOS GENERALES
 ======================= */
-.confirmacion-container {
-  padding: 20px;
-  border-radius: 8px;
+.capital-container {
+  padding: 30px;
+  border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   width: 100%;
@@ -14,71 +14,72 @@
 
 h2 {
   color: #333;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
-  margin-bottom: 15px;
-}
-
-h3 {
-  color: #333;
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-
-h4 {
-  color: #333;
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-
-.resumen {
-  background-color: #f8f9fa;
-  padding: 15px;
-  border-radius: 6px;
-  margin-bottom: 20px;
-}
-
-.resumen-seccion {
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #e9ecef;
+  margin-bottom: 25px;
+  text-align: center;
 }
 
 .form-group {
-  margin-bottom: 18px;
-}
-
-.checkbox-group {
-  margin-bottom: 10px;
-}
-
-.checkbox-container {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.checkbox-container input[type="checkbox"] {
-  margin-top: 3px;
+  margin-bottom: 25px;
 }
 
 label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
   color: #333;
   font-weight: 500;
+  font-size: 16px;
+}
+
+/* Estilos para los selects */
+.form-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
   font-size: 15px;
+  color: #495057;
+  background-color: #fff;
+  box-sizing: border-box;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23495057' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 12px;
 }
 
-a {
-  color: #007bff;
-  text-decoration: none;
+.form-select:focus {
+  outline: none;
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
 }
 
-a:hover {
-  text-decoration: underline;
+/* Estilos para las notas y advertencias */
+.notes-list {
+  margin-top: 15px;
+  padding-left: 20px;
+  margin-bottom: 25px;
+}
+
+.notes-list li {
+  color: #6c757d;
+  font-size: 14px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* Estilos para el precio total */
+.total-price {
+  margin-top: 30px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.total-price span {
+  font-weight: 700;
+  color: #28a745;
 }
 
 /* Campo requerido */
@@ -89,49 +90,43 @@ a:hover {
 
 .error-message {
   color: #dc3545;
-  font-size: 12px;
-  margin-left: 5px;
+  font-size: 15px;
   margin-top: 5px;
-}
-
-.info-message {
-  background-color: #e7f5ff;
-  color: #1c64b3;
-  padding: 15px;
-  border-radius: 6px;
-  margin-bottom: 25px;
-  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 4px;
 }
 
 /* Botones */
 .form-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .secondary-button {
-  padding: 8px 16px;
+  padding: 12px 24px;
   background-color: #fff;
   color: #6c757d;
   border: 1px solid #ced4da;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 50px;
+  font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: all 0.2s ease;
 }
 
 .primary-button {
-  padding: 8px 16px;
+  padding: 12px 24px;
   background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 50px;
+  font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  transition: all 0.2s ease;
 }
 
 .primary-button:hover {
@@ -149,28 +144,21 @@ a:hover {
 
 /* Media query para móviles */
 @media screen and (max-width: 767px) {
-  .confirmacion-container {
-    padding: 15px;
+  .capital-container {
+    padding: 20px;
     margin: 8px;
     max-width: calc(100% - 16px);
   }
  
   h2 {
-    font-size: 18px;
-  }
-  
-  h3 {
-    font-size: 16px;
-  }
-  
-  h4 {
-    font-size: 14px;
+    font-size: 20px;
+    margin-bottom: 20px;
   }
  
   .primary-button,
   .secondary-button {
-    font-size: 13px;
-    padding: 7px 14px;
+    font-size: 14px;
+    padding: 10px 20px;
   }
 
   .form-actions {
@@ -178,12 +166,16 @@ a:hover {
     justify-content: space-between;
     gap: 10px;
   }
+  
+  .total-price {
+    font-size: 16px;
+  }
 }
 
-/* Media query para tablets (iPad Mini) */
+/* Media query para tablets */
 @media screen and (min-width: 768px) and (max-width: 1024px) {
-  .confirmacion-container {
-    padding: 20px;
+  .capital-container {
+    padding: 25px;
     margin: 15px auto;
     max-width: 90%;
   }
