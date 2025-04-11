@@ -12,7 +12,7 @@ export class RoleGuard implements CanActivate {
   // Método que determina si un usuario puede acceder a una ruta
   canActivate(route: ActivatedRouteSnapshot): boolean {
     // Comentado temporalmente para permitir acceso directo a los componentes
-    /*
+
     const expectedRole = route.data['expectedRole'];
     const userRole = this.authService.getCurrentUserRole();
     
@@ -39,10 +39,10 @@ export class RoleGuard implements CanActivate {
     }
     
     return false;
-    */
+
     
     // Temporalmente retornamos true para permitir acceso a todas las rutas
     // IMPORTANTE: Recordar revertir este cambio antes de pasar a producción
-    return true;
+    // return true;
   }
 }
