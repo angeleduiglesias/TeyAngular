@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class FormDataService {
-  private apiUrl = environment.apiUrl; // Asegúrate de configurar esto en tu environment
+  private apiUrl = environment.apiUrl; 
 
   constructor(private http: HttpClient) { }
 

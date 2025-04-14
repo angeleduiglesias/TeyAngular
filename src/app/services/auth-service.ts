@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
+
 // Interfaces para seguridad de tipos
 export interface User {
   id: number;
-  name: string;
   email: string;
   rol: string;
 }
@@ -61,7 +61,12 @@ export class AuthService {
   
   // Cierra la sesión del usuario y limpia los datos almacenados
   logout(): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/api/logout`, {})
+    // Configurar los headers con el token de autenticación
+    const headers = {
+      'Authorization': `Bearer ${this.getToken()}`
+    };
+
+    return this.http.post<any>(`${this.apiUrl}/api/logout`, {}, { headers })
       .pipe(
         tap(() => {
           // Elimina datos de sesión del almacenamiento local
@@ -69,6 +74,13 @@ export class AuthService {
           localStorage.removeItem('user');
           // Actualiza el observable para indicar que no hay usuario activo
           this.currentUserSubject.next(null);
+        }),
+        catchError(error => {
+          // Si hay un error en la petición, limpiamos los datos locales de todos modos
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          this.currentUserSubject.next(null);
+          return throwError(() => error);
         })
       );
   }

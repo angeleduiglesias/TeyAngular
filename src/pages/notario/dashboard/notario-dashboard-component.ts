@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../app/services/auth-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notario-dashboard',
@@ -14,7 +15,9 @@ export class NotarioDashboardComponent implements OnInit {
   tramitesPendientes: number = 3;
   documentosPorRevisar: number = 5;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     // Obtener información del usuario actual
@@ -23,14 +26,8 @@ export class NotarioDashboardComponent implements OnInit {
     });
   }
 
-  logout(): void {
-    this.authService.logout().subscribe({
-      next: () => {
-        console.log('Sesión cerrada correctamente');
-      },
-      error: (error) => {
-        console.error('Error al cerrar sesión:', error);
-      }
-    });
+  logout() {
+    // Redirigir al componente de logout
+    this.router.navigate(['/logout']);
   }
 }

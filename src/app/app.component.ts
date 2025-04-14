@@ -31,23 +31,36 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class AppComponent { 
   title = 'Tey';
-  mostrarFooter = true;
-  mostrarHeader = true;
+  mostrarFooter = false; // Inicialmente oculto
+  mostrarHeader = false; // Inicialmente oculto
+  cargaInicial = true;   // Indicador de carga inicial
 
   constructor(private router: Router) {
+    // Verificar la ruta actual al inicio
+    this.verificarRuta(this.router.url);
+    
+    // Suscribirse a cambios de ruta
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        const rutaActual = event.url;
-
-        // Ocultar el footer y el header si la ruta comienza con '/pre-form' o es '/login'
-        const esRutaPreForm = rutaActual.startsWith('/pre-form');
-        const esRutaLogin = rutaActual.startsWith('/login');
-        const esRutaDashboard = rutaActual.includes('/dashboard');
-        const esRutaLogout = rutaActual.includes('/logout');
-        this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaDashboard || esRutaLogout);
-        this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaDashboard || esRutaLogout);
+        this.verificarRuta(event.url);
       }
     });
+    
+    // Marcar como cargado después de un breve retraso
+    setTimeout(() => {
+      this.cargaInicial = false;
+    }, 100);
+  }
+  
+  private verificarRuta(rutaActual: string): void {
+    // Ocultar el footer y el header en rutas específicas
+    const esRutaPreForm = rutaActual.startsWith('/pre-form');
+    const esRutaLogin = rutaActual.startsWith('/login');
+    const esRutaDashboard = rutaActual.includes('/dashboard');
+    const esRutaLogout = rutaActual.includes('/logout');
+    
+    this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaDashboard || esRutaLogout);
+    this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaDashboard || esRutaLogout);
   }
 }
 
