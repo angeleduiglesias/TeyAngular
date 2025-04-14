@@ -15,6 +15,7 @@ export class StepOneComponent implements OnInit {
   tipoEmpresaForm: FormGroup;
   opcionesSocios = [2, 3, 5, 10, 100];
   mostrarInputPersonalizado = false;
+  datosPersonalesForm: any;
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +44,7 @@ export class StepOneComponent implements OnInit {
       numeroSociosControl?.updateValueAndValidity();
     });
   }
+  
   cambiarTipoInput(esPersonalizado: boolean): void {
     this.mostrarInputPersonalizado = esPersonalizado;
     if (esPersonalizado) {
