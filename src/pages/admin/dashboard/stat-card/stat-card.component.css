@@ -1,0 +1,81 @@
+.stat-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.blue {
+  border-left: 4px solid #1E3A8A;
+}
+
+.stat-card.green {
+  border-left: 4px solid #218838;
+}
+
+.stat-card.default {
+  border-left: 4px solid #283F51;
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  font-size: 20px;
+}
+
+.stat-card.blue .stat-icon {
+  background-color: rgba(30, 58, 138, 0.1);
+  color: #1E3A8A;
+}
+
+.stat-card.green .stat-icon {
+  background-color: rgba(33, 136, 56, 0.1);
+  color: #218838;
+}
+
+.stat-card.default .stat-icon {
+  background-color: rgba(40, 63, 81, 0.1);
+  color: #283F51;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.stat-card.blue .stat-value {
+  color: #1E3A8A;
+}
+
+.stat-card.green .stat-value {
+  color: #218838;
+}
+
+.stat-card.default .stat-value {
+  color: #283F51;
+}
+
+.stat-title {
+  font-size: 14px;
+  color: #6c757d;
+  text-transform: capitalize;
+}

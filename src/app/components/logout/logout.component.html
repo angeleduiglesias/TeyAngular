@@ -1,0 +1,10 @@
+<div class="logout-container">
+  <div class="logout-card">
+    <div class="spinner-container" *ngIf="estaDesconectando">
+      <div class="spinner"></div>
+    </div>
+    <h2 class="logout-message">{{ mensaje }}</h2>
+    <p class="logout-submessage">{{ submensaje }}</p>
+    <button *ngIf="!estaDesconectando" class="login-button" (click)="irAlLogin()">Ir a inicio de sesión</button>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="stat-card" [ngClass]="colorClass">
+  <div class="stat-icon">
+    <i class="fa" [ngClass]="getIconClass()"></i>
+  </div>
+  <div class="stat-content">
+    <div class="stat-value">{{ value | number }}</div>
+    <div class="stat-title">{{ title }}</div>
+  </div>
+</div>

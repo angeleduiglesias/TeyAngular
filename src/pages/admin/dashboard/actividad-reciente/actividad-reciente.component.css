@@ -1,0 +1,103 @@
+.actividad-reciente-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  border-top: 4px solid #218838;
+  /* Se retira height: 80% para que el contenedor se ajuste al contenido */
+}
+
+.card-title {
+  color: #283F51;
+  font-size: 18px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Se fija una altura mínima para que cada fila sea uniforme */
+.actividad-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  min-height: 50px; /* Ajusta este valor según el contenido */
+}
+
+/* El contenedor de la lista muestra 4 filas (4 x (50px + 1px de borde)) y aplica scroll vertical */
+.actividad-list {
+  max-height: calc((50px + 1px) * 4);
+  overflow-y: auto;
+}
+
+/* Estilos existentes para el ícono y contenido */
+.actividad-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.actividad-icon.login {
+  background-color: rgba(30, 58, 138, 0.1);
+  color: #1E3A8A;
+}
+
+.actividad-icon.documento {
+  background-color: rgba(33, 136, 56, 0.1);
+  color: #218838;
+}
+
+.actividad-icon.cliente {
+  background-color: rgba(30, 58, 138, 0.1);
+  color: #1E3A8A;
+}
+
+.actividad-icon.notificacion {
+  background-color: rgba(33, 136, 56, 0.1);
+  color: #218838;
+}
+
+.actividad-content {
+  flex: 1;
+}
+
+.actividad-text {
+  margin: 0 0 5px 0;
+  color: #283F51;
+  font-size: 14px;
+}
+
+.actividad-time {
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px 0;
+  color: #6c757d;
+}
+
+/* Estilos para el scrollbar */
+.actividad-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.actividad-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.actividad-list::-webkit-scrollbar-thumb {
+  background: #1E3A8A;
+  border-radius: 10px;
+}
+
+.actividad-list::-webkit-scrollbar-thumb:hover {
+  background: #218838;
+}

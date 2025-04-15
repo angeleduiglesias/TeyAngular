@@ -1,0 +1,67 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: #ffffff;
+  position: relative; /* Añadido para posicionamiento */
+}
+
+.admin-content {
+  flex: 1;
+  margin-left: 190px;
+  padding: 0;
+  overflow-x: hidden;
+  transition: margin-left 0.3s ease;
+}
+
+.admin-content.sidebar-collapsed {
+  margin-left: 70px;
+}
+
+/* Botón de hamburguesa para móviles */
+.mobile-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .admin-content {
+    margin-left: 0 !important; /* Forzamos margen 0 en móviles */
+    width: 100%;
+    padding-top: 10px; /* Espacio para el botón */
+  }
+  
+  /* Mostrar botón de hamburguesa en móviles */
+  .mobile-toggle {
+    display: block;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1100; /* Mayor que el sidebar */
+    background-color: #222222;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Aseguramos que el botón mobile-menu-toggle no interfiera */
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+}
+
+
+/* Ajustes específicos para iPhone */
+@media (max-width: 428px) { /* iPhone 14 Pro Max width */
+  .mobile-toggle {
+    top: 20px;
+    left: 20px;
+    width: 44px;
+    height: 44px;
+  }
+}

@@ -1,86 +1,32 @@
-<div class="dashboard-container">
+<div class="admin-dashboard-container">
+
+  <!-- Contenido principal -->
+  <div class="main-content">
     <div class="dashboard-header">
-      <h1>Panel de Administración</h1>
-      <div class="user-info">
-        <span *ngIf="userData">Bienvenido, {{ userData.nombre }}</span>
-        <button class="logout-btn" (click)="logout()">Cerrar sesión</button>
-      </div>
+      <h1>Hola Jerry</h1>
+      <button class="logout-btn" (click)="logout()">cerrar sesion</button>
     </div>
-  
-    <div class="dashboard-stats">
-      <div class="stat-card">
-        <div class="stat-value">{{ totalUsuarios }}</div>
-        <div class="stat-label">Usuarios registrados</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">{{ tramitesPendientes }}</div>
-        <div class="stat-label">Trámites pendientes</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">{{ notariosActivos }}</div>
-        <div class="stat-label">Notarios activos</div>
-      </div>
+
+    <!-- Tarjetas de estadísticas -->
+    <div class="stats-row">
+      <app-stat-card title="clientes registrados" [value]="totalUsuarios"></app-stat-card>
+      <app-stat-card title="tramites pendientes" [value]="tramitesPendientes"></app-stat-card>
+      <app-stat-card title="clientes activos" [value]="clientesActivos"></app-stat-card>
     </div>
-  
+
+    <!-- Contenido de dashboard -->
     <div class="dashboard-content">
-      <div class="dashboard-card">
-        <h2>Gestión de Usuarios</h2>
-        <p>Administra los usuarios del sistema.</p>
-        <div class="action-buttons">
-          <button class="action-btn">Ver todos los usuarios</button>
-          <button class="action-btn">Añadir nuevo usuario</button>
+      <div class="content-row">
+        <app-tramites-recientes></app-tramites-recientes>
+        <div class="right-column">
+          <app-pagos-recientes></app-pagos-recientes>
+          <app-actividad-reciente></app-actividad-reciente>
         </div>
       </div>
-  
-      <div class="dashboard-card">
-        <h2>Gestión de Notarios</h2>
-        <p>Administra los notarios registrados en el sistema.</p>
-        <div class="action-buttons">
-          <button class="action-btn">Ver todos los notarios</button>
-          <button class="action-btn">Añadir nuevo notario</button>
-        </div>
-      </div>
-  
-      <div class="dashboard-card">
-        <h2>Trámites Recientes</h2>
-        <p>Últimos trámites registrados en el sistema.</p>
-        <div class="tramites-list">
-          <div class="tramite-item">
-            <div class="tramite-info">
-              <h3>Constitución de Empresa</h3>
-              <p>Cliente: Juan Pérez</p>
-              <p class="tramite-date">Recibido: 15/05/2023</p>
-            </div>
-            <span class="status-badge pending">Pendiente</span>
-          </div>
-          <div class="tramite-item">
-            <div class="tramite-info">
-              <h3>Testamento</h3>
-              <p>Cliente: María González</p>
-              <p class="tramite-date">Recibido: 18/05/2023</p>
-            </div>
-            <span class="status-badge in-progress">En proceso</span>
-          </div>
-          <div class="tramite-item">
-            <div class="tramite-info">
-              <h3>Poder Notarial</h3>
-              <p>Cliente: Carlos Rodríguez</p>
-              <p class="tramite-date">Recibido: 20/05/2023</p>
-            </div>
-            <span class="status-badge completed">Completado</span>
-          </div>
-        </div>
-      </div>
-  
-      <div class="dashboard-card">
-        <h2>Configuración del Sistema</h2>
-        <p>Administra la configuración general del sistema.</p>
-        <div class="config-options">
-          <button class="config-btn">Parámetros generales</button>
-          <button class="config-btn">Tipos de trámites</button>
-          <button class="config-btn">Tarifas</button>
-          <button class="config-btn">Respaldo de datos</button>
-        </div>
-      </div>
+    </div>
+
+    <div class="dashboard-footer">
+      Tey - 2025 Todos los derechos reservados
     </div>
   </div>
+</div>

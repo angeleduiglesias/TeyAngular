@@ -1,0 +1,138 @@
+.tramites-recientes-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  margin-bottom: 0px;
+  border-left: 4px solid #218838;
+}
+
+.card-title {
+  color: #283F51;
+  font-size: 18px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  text-transform: capitalize;
+}
+
+/* Se asigna una altura mínima para cada fila de trámite */
+.tramite-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 0 ;
+  border-bottom: 1px solid #f0f0f0;
+  min-height: 60px; /* Ajusta este valor de acuerdo al contenido real */
+}
+
+/* El contenedor de la lista mostrará 4 filas y aplicará scroll vertical para el resto */
+.tramites-list {
+  max-height: calc((80px + 1px) * 6); /* 60px de altura mínima + 1px de borde por fila, multiplicado por 4 filas */
+  overflow-y: auto;
+}
+
+.tramite-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.tramite-icon.pendiente {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
+}
+
+.tramite-icon.en {
+  background-color: rgba(30, 58, 138, 0.1);
+  color: #1E3A8A;
+}
+
+.tramite-icon.completado {
+  background-color: rgba(33, 136, 56, 0.1);
+  color: #218838;
+}
+
+.tramite-info {
+  flex: 1;
+}
+
+.tramite-tipo {
+  margin: 0 0 5px 0;
+  color: #283F51;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.tramite-cliente {
+  margin: 0 0 8px 0;
+  color: #495057;
+  font-size: 14px;
+}
+
+.tramite-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tramite-date {
+  margin: 0;
+  color: #6c757d;
+  font-size: 13px;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-badge.pendiente {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #d39e00;
+  border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.status-badge.en {
+  background-color: rgba(30, 58, 138, 0.1);
+  color: #1E3A8A;
+  border: 1px solid rgba(30, 58, 138, 0.3);
+}
+
+.status-badge.completado {
+  background-color: rgba(33, 136, 56, 0.1);
+  color: #218838;
+  border: 1px solid rgba(33, 136, 56, 0.3);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px 0;
+  color: #6c757d;
+}
+
+/* Scrollbar styling */
+.tramites-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tramites-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.tramites-list::-webkit-scrollbar-thumb {
+  background: #1E3A8A;
+  border-radius: 10px;
+}
+
+.tramites-list::-webkit-scrollbar-thumb:hover {
+  background: #218838;
+}

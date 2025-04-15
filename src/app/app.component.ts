@@ -56,11 +56,11 @@ export class AppComponent {
     // Ocultar el footer y el header en rutas específicas
     const esRutaPreForm = rutaActual.startsWith('/pre-form');
     const esRutaLogin = rutaActual.startsWith('/login');
-    const esRutaDashboard = rutaActual.includes('/dashboard');
+    const esRutaAdmin = rutaActual.includes('/admin');
     const esRutaLogout = rutaActual.includes('/logout');
     
-    this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaDashboard || esRutaLogout);
-    this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaDashboard || esRutaLogout);
+    this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaAdmin || esRutaLogout);
+    this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaAdmin || esRutaLogout);
   }
 }
 

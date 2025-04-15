@@ -1,0 +1,104 @@
+.pagos-recientes-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  border-top: 4px solid #1E3A8A;
+}
+
+.card-title {
+  color: #283F51;
+  font-size: 18px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  text-transform: capitalize;
+}
+
+.pagos-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.pago-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pago-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(33, 136, 56, 0.1);
+  color: #218838;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.pago-info {
+  flex: 1;
+}
+
+.pago-concepto {
+  margin: 0 0 5px 0;
+  color: #283F51;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.pago-cliente {
+  margin: 0 0 8px 0;
+  color: #495057;
+  font-size: 14px;
+}
+
+.pago-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pago-monto {
+  margin: 0;
+  color: #218838;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.pago-fecha {
+  font-size: 12px;
+  color: #6c757d;
+  background-color: #f8f9fa;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 30px 0;
+  color: #6c757d;
+}
+
+/* Scrollbar styling */
+.pagos-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pagos-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.pagos-list::-webkit-scrollbar-thumb {
+  background: #218838;
+  border-radius: 10px;
+}
+
+.pagos-list::-webkit-scrollbar-thumb:hover {
+  background: #1E3A8A;
+}

@@ -1,0 +1,22 @@
+<div class="pagos-recientes-card">
+  <h2 class="card-title">Pagos Recientes</h2>
+  <div class="pagos-list">
+    <div class="pago-item" *ngFor="let pago of pagosRecientes">
+      <div class="pago-icon">
+        <i class="fa fa-money-bill-wave"></i>
+      </div>
+      <div class="pago-info">
+        <h3 class="pago-concepto">{{ pago.concepto }}</h3>
+        <p class="pago-cliente">Cliente: {{ pago.cliente }}</p>
+        <div class="pago-details">
+          <p class="pago-monto">Monto: ${{ pago.monto | number:'1.2-2' }}</p>
+          <span class="pago-fecha">{{ pago.fecha }}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="empty-state" *ngIf="pagosRecientes.length === 0">
+      <p>No hay pagos recientes para mostrar</p>
+    </div>
+  </div>
+</div>

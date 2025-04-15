@@ -7,6 +7,7 @@ import { StepThreeComponent } from './components/pre-form/step-3/step-three.comp
 import { StepFourComponent } from './components/pre-form/step-4/step-four.component';
 import { StepFiveComponent } from './components/pre-form/step-5/step-five.component';
 import { LoginComponent } from './components/login/login.component';
+import { AdminDashboardComponent } from '../pages/admin/dashboard/admin-dashboard-component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { AuthGuard } from './guards/auth-guard';
 import { RoleGuard } from './guards/role-guard';
@@ -30,10 +31,17 @@ export const routes: Routes = [
   },
   // Rutas protegidas por rol
   { 
-    path: 'admin/dashboard', 
-    loadComponent: () => import('../pages/admin/dashboard/admin-dashboard-component').then(c => c.AdminDashboardComponent),
+    path: 'admin', 
+    loadComponent: () => import('../pages/admin/admin.component').then(c => c.AdminComponent),
     canActivate: [RoleGuard],
-    data: { expectedRole: 'admin' }
+    data: { expectedRole: 'admin' },
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: AdminDashboardComponent },
+      // Aquí puedes agregar más rutas hijas para el panel admin
+      // { path: 'clientes', component: ClientesComponent },
+      // { path: 'tramites', component: TramitesComponent },
+    ]
   },
   { 
     path: 'notario/dashboard', 

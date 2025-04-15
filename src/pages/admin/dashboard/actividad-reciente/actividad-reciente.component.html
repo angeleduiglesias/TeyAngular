@@ -1,0 +1,19 @@
+<div class="actividad-reciente-card">
+  <h2 class="card-title">Actividad Reciente</h2>
+  
+  <div class="actividad-list">
+    <div class="actividad-item" *ngFor="let actividad of actividades">
+      <div class="actividad-icon" [ngClass]="actividad.tipo">
+        <i class="fa" [ngClass]="getIconClass(actividad.tipo)"></i>
+      </div>
+      <div class="actividad-content">
+        <p class="actividad-text">{{ actividad.descripcion }}</p>
+        <span class="actividad-time">{{ actividad.tiempo }}</span>
+      </div>
+    </div>
+    
+    <div class="empty-state" *ngIf="actividades.length === 0">
+      <p>No hay actividades recientes para mostrar</p>
+    </div>
+  </div>
+</div>

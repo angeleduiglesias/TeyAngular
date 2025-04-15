@@ -2,22 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../app/services/auth-service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+
+// Importar componentes
+import { StatCardComponent } from './stat-card/stat-card.component';
+import { TramitesRecientesComponent } from './tramites-recientes/tramites-recientes.component';
+import { PagosRecientesComponent } from './pagos-recientes/pagos-recientes.component';
+import { ActividadRecienteComponent } from './actividad-reciente/actividad-reciente.component';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [
+    CommonModule,
+    StatCardComponent,
+    TramitesRecientesComponent,
+    PagosRecientesComponent,
+    ActividadRecienteComponent
+  ],
   templateUrl: './admin-dashboard-component.html',
-  styleUrl: './admin-dashboard-component.css'
+  styleUrls: ['./admin-dashboard-component.css']
 })
 export class AdminDashboardComponent implements OnInit {
   userData: any = null;
-  totalUsuarios: number = 42;
-  tramitesPendientes: number = 15;
-  notariosActivos: number = 8;
-
+  totalUsuarios: number = 0;
+  tramitesPendientes: number = 0;
+  clientesActivos: number = 0;
+  
   constructor(
     private authService: AuthService,
-    private router: Router  // Añadido Router al constructor
+    private router: Router,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -25,9 +41,19 @@ export class AdminDashboardComponent implements OnInit {
     this.authService.currentUser$.subscribe(user => {
       this.userData = user;
     });
+    
+    // Cargar estadísticas (simuladas por ahora)
+    this.cargarEstadisticas();
   }
-
-  logout() {
+  
+  cargarEstadisticas(): void {
+    // Aquí se cargarían los datos reales desde un servicio
+    this.totalUsuarios = 125;
+    this.tramitesPendientes = 18;
+    this.clientesActivos = 87;
+  }
+    
+  logout(): void {
     // Redirigir al componente de logout
     this.router.navigate(['/logout']);
   }
