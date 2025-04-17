@@ -14,6 +14,7 @@ export class StepFourComponent implements OnInit{
   datosPersonalesForm: FormGroup;
   enviando = false;
   error = '';
+  datosEmpresa: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -25,22 +26,36 @@ export class StepFourComponent implements OnInit{
       nombre: ['', Validators.required],
       apellidos: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required, Validators.pattern(/^9\d{8}$/)]]
+      telefono: ['', [Validators.required, Validators.pattern(/^9\d{8}$/)]],
+      dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]]
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const datosGuardados = localStorage.getItem('datos_empresa_completo');
+    if (datosGuardados) {
+      this.datosEmpresa = JSON.parse(datosGuardados);
+      console.log('Datos recuperados de pasos anteriores:', this.datosEmpresa);
+    }
+  }
 
   siguiente(): void {
     if (this.datosPersonalesForm.valid) {
       this.enviando = true;
       this.error = '';
+
+      const datosPersonales = this.datosPersonalesForm.value;
       
-      this.formDataService.enviarDatosPersonales(this.datosPersonalesForm.value)
+      this.formDataService.enviarFormularioCompleto(this.datosEmpresa, datosPersonales)
         .subscribe({
           next: (response) => {
-            console.log('Datos personales guardados:', response);
+            console.log('Datos Completos guardados:', response);
             this.enviando = false;
+            const datosCompletos = {
+              empresa: this.datosEmpresa,
+              personal: datosPersonales};
+            localStorage.setItem('datos_completos', JSON.stringify(datosCompletos));
+
             // Navega a la ruta hija "step-two" relativa al componente padre
             this.router.navigate(['step-five'], { relativeTo: this.route.parent });
           },

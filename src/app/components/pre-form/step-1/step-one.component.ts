@@ -62,9 +62,13 @@ export class StepOneComponent implements OnInit {
 
   siguiente(): void {
     if (this.tipoEmpresaForm.valid) {
+      // Guardar datos en localStorage
+      const formData = this.tipoEmpresaForm.value;
+      localStorage.setItem('step_one_data', JSON.stringify(formData));
+      
       console.log('Datos de tipo de empresa guardados:', this.tipoEmpresaForm.value);
       console.log('Ir al siguiente paso');
-      // Navegar al siguiente paso (step-three)
+      // Navegar al siguiente paso (step-two)
       this.router.navigate(['step-two'], { relativeTo: this.route.parent });
     } else {
       this.markFormGroupTouched(this.tipoEmpresaForm);

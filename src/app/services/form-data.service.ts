@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -10,39 +10,31 @@ export class FormDataService {
   private apiUrl = environment.apiUrl; 
 
   constructor(private http: HttpClient) { }
-
-  enviarCapital(datos: any): Observable<any> {
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json'
-  });
-  return this.http.post(`${this.apiUrl}/api/capital`, datos, { headers });
-  }
-
-  // Método para enviar datos personales (Step One)
-  enviarDatosPersonales(datos: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-      
-    });
-    
-    return this.http.post(`${this.apiUrl}/api/cliente/store`, datos, { headers });
-  }
-
-  // Método para enviar datos de empresa (Step Two)
-  enviarDatosEmpresa(datos: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    
-    return this.http.post(`${this.apiUrl}/api/datos-empresa`, datos, { headers });
-  }
-
+  
   // Método para enviar formulario completo
-  enviarFormularioCompleto(datos: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
+  enviarFormularioCompleto(datosEmpresa: any, datosPersonales: any) {
+    // Crear un objeto que contenga ambos conjuntos de datos
+    const datosCompletos = {
+      empresa: datosEmpresa,
+      personal: datosPersonales
+    };
     
-    return this.http.post(`${this.apiUrl}/api/formulario-completo`, datos, { headers });
+    // Enviar al backend y limpiar localStorage después de éxito
+    return this.http.post<any>(`${this.apiUrl}/formulario-completo`, datosCompletos)
+      .pipe(
+        tap(response => {
+          // Si la respuesta es exitosa, limpiar localStorage
+          if (response) {
+            // Guardar solo los datos completos finales
+            localStorage.setItem('datos_completos', JSON.stringify(datosCompletos));
+            
+            // Eliminar datos temporales
+            localStorage.removeItem('step_one_data');
+            localStorage.removeItem('datos_formulario_completo');
+            localStorage.removeItem('datos_empresa_completo');
+            console.log('Datos temporales eliminados del localStorage');
+          }
+        })
+      );
   }
 }

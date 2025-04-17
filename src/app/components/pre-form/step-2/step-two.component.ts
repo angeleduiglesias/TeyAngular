@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class StepTwoComponent implements OnInit {
   actividadesForm: FormGroup;
   enviando = false;
+  datosPasoAnterior: any = {};
 
   constructor(
     private fb: FormBuilder,
@@ -25,7 +26,12 @@ export class StepTwoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Aquí puedes cargar datos previos si es necesario
+    // Recuperar datos del paso anterior desde localStorage
+    const datosGuardados = localStorage.getItem('step_one_data');
+    if (datosGuardados) {
+      this.datosPasoAnterior = JSON.parse(datosGuardados);
+      console.log('Datos recuperados del paso 1:', this.datosPasoAnterior);
+    }
   }
 
   anterior(): void {
@@ -36,10 +42,17 @@ export class StepTwoComponent implements OnInit {
     if (this.actividadesForm.valid) {
       this.enviando = true;
       
-      // Aquí puedes guardar los datos en un servicio si es necesario
+      // Combinar datos del paso 1 con los datos actuales
+      const datosCombinados = {
+        ...this.datosPasoAnterior,
+        ...this.actividadesForm.value
+      };
       
-      // Simulamos un pequeño retraso para mostrar el estado de "enviando"
+      // Guardar datos combinados en localStorage
+      localStorage.setItem('datos_empresa', JSON.stringify(datosCombinados));
+      console.log('Datos combinados guardados:', datosCombinados);
       
+        this.router.navigate(['step-three'], { relativeTo: this.route.parent });
     } else {
       // Marca todos los campos como tocados para mostrar errores
       Object.keys(this.actividadesForm.controls).forEach(key => {

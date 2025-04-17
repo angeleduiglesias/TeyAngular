@@ -37,6 +37,17 @@
           <div *ngIf="datosPersonalesForm.get('telefono')?.errors?.['pattern']">Ingrese un teléfono válido "Ej: 912345678".</div>
         </div>
       </div>
+
+      <div class="form-group">
+        <label for="dni">DNI <span class="required">*</span></label>
+        <input type="dni" id="dni" formControlName="dni" placeholder="Ej: 78679846">
+        <div *ngIf="datosPersonalesForm.get('dni')?.invalid && (datosPersonalesForm.get('dni')?.dirty || datosPersonalesForm.get('dni')?.touched)" class="error-message">
+          <div *ngIf="datosPersonalesForm.get('dni')?.errors?.['required']">Campo obligatorio.</div>
+          <div *ngIf="datosPersonalesForm.get('dni')?.errors?.['pattern']">Ingrese su numero de dni "Ej: 78679846".</div>
+        </div>
+      </div>
+
+
   
       <div class="info-message">
         Esta información será utilizada para contactarlo respecto a su trámite de constitución de empresa.

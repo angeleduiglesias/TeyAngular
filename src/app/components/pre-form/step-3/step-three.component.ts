@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormDataService } from '../../../services/form-data.service';
 
 @Component({
   selector: 'app-step-three',
@@ -15,15 +14,15 @@ export class StepThreeComponent implements OnInit {
   capitalForm: FormGroup;
   enviando = false;
   error = '';
-  
+  datosAnteriores: any = {};
 
-  tiposAporte = [
+  tipo_aporte = [
     { id: 'dinero', nombre: 'Dinero' },
     { id: 'bienes', nombre: 'Bienes' },
     { id: 'mixto', nombre: 'Mixto (Dinero y Bienes)' }
   ];
 
-  rangosCapital = [
+  rango_capital = [
     { id: 'rango1', nombre: 'S/ 500 - S/ 1,000' },
     { id: 'rango2', nombre: 'S/ 1,001 - S/ 5,000' },
     { id: 'rango3', nombre: 'S/ 5,001 - S/ 10,000' },
@@ -35,15 +34,21 @@ export class StepThreeComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private formDataService: FormDataService
   ) {
     this.capitalForm = this.fb.group({
-      tipoAporte: ['', Validators.required],
-      rangoCapital: ['', Validators.required]
+      tipo_aporte: ['', Validators.required],
+      rango_capital: ['', Validators.required]
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Recuperar datos combinados de los pasos anteriores
+    const datosGuardados = localStorage.getItem('datos_empresa');
+    if (datosGuardados) {
+      this.datosAnteriores = JSON.parse(datosGuardados);
+      console.log('Datos recuperados de pasos anteriores:', this.datosAnteriores);
+    }
+  }
 
   anterior(): void {
     this.router.navigate(['step-two'], { relativeTo: this.route.parent });
@@ -54,25 +59,17 @@ export class StepThreeComponent implements OnInit {
       this.enviando = true;
       this.error = '';
 
-      this.formDataService.enviarCapital(this.capitalForm.value)
-       .subscribe({
-         next: (response) => {
-          console.log ('Capital Registrado', response);
-          this.enviando = false;
-
+      // Combinar datos de todos los pasos
+      const datosCombinados = {
+        ...this.datosAnteriores,
+        ...this.capitalForm.value
+      };
+      
+      localStorage.setItem('datos_empresa_completo', JSON.stringify(datosCombinados));
+      console.log('Datos combinados actualizados:', datosCombinados);
           this.router.navigate(['step-four'], { relativeTo: this.route.parent });
-         },
-         error: (error) => {
-          console.error('Error al guardar capital', error);
-          this.enviando = false;
-          this.error = 'Error al guardar capital';
-         }
-       })
-      
-      
-    } else {
-      this.markFormGroupTouched(this.capitalForm);
-    }
+         
+       }
   }
 
   markFormGroupTouched(formGroup: FormGroup) {

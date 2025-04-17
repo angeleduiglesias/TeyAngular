@@ -63,10 +63,12 @@ label {
 }
 
 .notes-list li {
-  color: #6c757d;
-  font-size: 14px;
-  margin-bottom: 8px;
-  line-height: 1.4;
+  background-color: #e7f5ff;
+    color: #1c64b3;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 3px;
+    font-size: 14px;
 }
 
 /* Estilos para el precio total */
