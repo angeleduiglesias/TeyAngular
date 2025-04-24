@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 80px); /* Ajusta según la altura de tu header */
+  min-height: 100vh; /* Ajusta según la altura de tu header */
   background-color: #f8f9fa;
   padding: 20px;
 }

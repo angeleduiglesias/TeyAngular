@@ -4,13 +4,13 @@
   align-items: center;
   padding: 15px 0;
   background-color: #f7f7f7;
-  height: 50px;
+  height: 100px;
   position: sticky;
   top: 0;
 }
 
 .container{
-  width: 90%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -46,7 +46,7 @@
 
 .stats-row {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   margin-bottom: 20px;
 }
 
@@ -56,7 +56,7 @@
 
 .content-row {
   display: flex;
-  gap: 30px;
+  gap: 25px;
   height: 100%;
 }
 
@@ -67,25 +67,30 @@
   width: 40%;
 }
 
+app-stats-card {
+  flex: 1;
+  margin-bottom: 20px;
+}
+
 app-tramites-recientes {
   flex: 1;
   width: 50%;
   margin-bottom: 10px;
   margin-top: 50px;
-  margin-right: -25px;
+  margin-right: 0px;
 }
 
 app-pagos-recientes {
   flex: 1;
-  margin-bottom: 10px;
-  margin-left: 20px;
+  margin-bottom: 7px;
+  margin-left: 0px;
   margin-top: -115px;
 }
 
 app-actividad-reciente {
   flex: 1;
   margin-bottom: 20px;
-  margin-left: 20px;
+  margin-left: 0px;
   margin-top: 0px;
 }
 

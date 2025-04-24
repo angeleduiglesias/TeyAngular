@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
+    background-color: #ffff; /* Aplica el color de fondo aquí también como respaldo */
+  }
+  
+  *, *::before, *::after {
+    box-sizing: inherit; /* Hereda box-sizing */
+  }
+  
+  /* Asegúrate que app-root (o tu selector raíz) ocupe todo el espacio */
+  app-root {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
