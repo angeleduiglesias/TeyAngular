@@ -7,7 +7,7 @@
       <div class="form-options">
         <div class="option">
           <div class="option-content">
-            <input type="radio" id="sac" formControlName="tipoEmpresa" value="SAC">
+            <input type="radio" id="sac" formControlName="tipo_empresa" value="SAC">
             
             <label for="sac">2 a 5 Socios (S.A.C.)</label>
             <svg
@@ -30,20 +30,20 @@
         </div>
         
         <div class="option">
-          <input type="radio" id="eirl" formControlName="tipoEmpresa" value="EIRL">
+          <input type="radio" id="eirl" formControlName="tipo_empresa" value="EIRL">
           <label for="eirl">Solo tu (E.I.R.L.)</label>
           <p>Empresa Individual de Responsabilidad Limitada: Serás el titular y representante de la empresa</p>
         </div>
       </div>
      
-      <div *ngIf="tipoEmpresaForm.get('tipoEmpresa')?.invalid && (tipoEmpresaForm.get('tipoEmpresa')?.dirty || tipoEmpresaForm.get('tipoEmpresa')?.touched)" class="error-message">
-        <div *ngIf="tipoEmpresaForm.get('tipoEmpresa')?.errors?.['required']">Campo obligatorio.</div>
+      <div *ngIf="tipoEmpresaForm.get('tipo_empresa')?.invalid && (tipoEmpresaForm.get('tipo_empresa')?.dirty || tipoEmpresaForm.get('tipo_empresa')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('tipo_empresa')?.errors?.['required']">Campo obligatorio.</div>
       </div>
     </div>
    
     <!-- Campo de número de socios que aparece solo cuando se selecciona SA -->
-    <div class="form-group socios-group" *ngIf="tipoEmpresaForm.get('tipoEmpresa')?.value === 'SAC'">
-      <label for="numeroSocios">Número de Socios <span class="required">*</span></label>
+    <div class="form-group socios-group" *ngIf="tipoEmpresaForm.get('tipo_empresa')?.value === 'SAC'">
+      <label for="numero_socios">Número de Socios <span class="required">*</span></label>
       
       <div class="socios-options">
         <div class="option-buttons">
@@ -51,8 +51,8 @@
             type="button" 
             *ngFor="let opcion of opcionesSocios" 
             class="option-btn" 
-            [class.selected]="tipoEmpresaForm.get('numeroSocios')?.value === opcion && !mostrarInputPersonalizado"
-            (click)="tipoEmpresaForm.get('numeroSocios')?.setValue(opcion); mostrarInputPersonalizado = false">
+            [class.selected]="tipoEmpresaForm.get('numero_socios')?.value === opcion && !mostrarInputPersonalizado"
+            (click)="tipoEmpresaForm.get('numero_socios')?.setValue(opcion); mostrarInputPersonalizado = false">
             {{ opcion }}
           </button>
           <button 
@@ -75,42 +75,42 @@
         </div>
       </div>
       
-      <div *ngIf="tipoEmpresaForm.get('numeroSocios')?.invalid && (tipoEmpresaForm.get('numeroSocios')?.dirty || tipoEmpresaForm.get('numeroSocios')?.touched)" class="error-message">
-        <div *ngIf="tipoEmpresaForm.get('numeroSocios')?.errors?.['required']">Campo obligatorio.</div>
-        <div *ngIf="tipoEmpresaForm.get('numeroSocios')?.errors?.['min']">Debe ser al menos 1.</div>
+      <div *ngIf="tipoEmpresaForm.get('numero_socios')?.invalid && (tipoEmpresaForm.get('numero_socios')?.dirty || tipoEmpresaForm.get('numero_socios')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('numero_socios')?.errors?.['required']">Campo obligatorio.</div>
+        <div *ngIf="tipoEmpresaForm.get('numero_socios')?.errors?.['min']">Debe ser al menos 1.</div>
       </div>
     </div>
    
     <div class="form-group">
-      <label for="nombreEmpresa">Nombre de la Empresa <span class="required">*</span></label>
-      <input type="text" id="nombreEmpresa" formControlName="nombreEmpresa" placeholder="Ingrese el nombre de su empresa">
-      <div *ngIf="tipoEmpresaForm.get('nombreEmpresa')?.invalid && (tipoEmpresaForm.get('nombreEmpresa')?.dirty || tipoEmpresaForm.get('nombreEmpresa')?.touched)" class="error-message">
-        <div *ngIf="tipoEmpresaForm.get('nombreEmpresa')?.errors?.['required']">Campo obligatorio.</div>
+      <label for="nombre_empresa">Nombre de la Empresa <span class="required">*</span></label>
+      <input type="text" id="nombre_empresa" formControlName="nombre_empresa" placeholder="Ingrese el nombre de su empresa">
+      <div *ngIf="tipoEmpresaForm.get('nombre_empresa')?.invalid && (tipoEmpresaForm.get('nombre_empresa')?.dirty || tipoEmpresaForm.get('nombre_empresa')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('nombre_empresa')?.errors?.['required']">Campo obligatorio.</div>
       </div>
     </div>
     <div class="form-group">
-      <label for="posiblesNombre1">Nombres Opcionales <span class="required">*</span></label>
+      <label for="posible_nombre1">Nombres Opcionales <span class="required">*</span></label>
       <label class="info-label">En caso el nombre no esté disponible se escogerá uno de estos nombres por orden de colocación</label>
-      <input type="text1" id="posiblesNombre1" formControlName="posiblesNombre1" placeholder="Ingrese posible nombre 1">
-      <input type="text1" id="posiblesNombre2" formControlName="posiblesNombre2" placeholder="Ingrese posible nombre 2">
-      <input type="text1" id="posiblesNombre3" formControlName="posiblesNombre3" placeholder="Ingrese posible nombre 3">
-      <input type="text1" id="posiblesNombre4" formControlName="posiblesNombre4" placeholder="Ingrese posible nombre 4">
-      <div *ngIf="(tipoEmpresaForm.get('posiblesNombre1')?.invalid ||
-                     tipoEmpresaForm.get('posiblesNombre2')?.invalid ||
-                     tipoEmpresaForm.get('posiblesNombre3')?.invalid ||
-                     tipoEmpresaForm.get('posiblesNombre4')?.invalid) &&
-                    (tipoEmpresaForm.get('posiblesNombre1')?.dirty ||
-                     tipoEmpresaForm.get('posiblesNombre2')?.dirty ||
-                     tipoEmpresaForm.get('posiblesNombre3')?.dirty ||
-                     tipoEmpresaForm.get('posiblesNombre4')?.dirty ||
-                     tipoEmpresaForm.get('posiblesNombre1')?.touched ||
-                     tipoEmpresaForm.get('posiblesNombre2')?.touched ||
-                     tipoEmpresaForm.get('posiblesNombre3')?.touched ||
-                     tipoEmpresaForm.get('posiblesNombre4')?.touched)" class="error-message">
-        <div *ngIf="tipoEmpresaForm.get('posiblesNombre1')?.errors?.['required'] ||
-                       tipoEmpresaForm.get('posiblesNombre2')?.errors?.['required'] ||
-                       tipoEmpresaForm.get('posiblesNombre3')?.errors?.['required'] ||
-                       tipoEmpresaForm.get('posiblesNombre4')?.errors?.['required']">Todos los nombres son obligatorios.</div>
+      <input type="text1" id="posible_nombre1" formControlName="posible_nombre1" placeholder="Ingrese posible nombre 1">
+      <input type="text1" id="posible_nombre2" formControlName="posible_nombre2" placeholder="Ingrese posible nombre 2">
+      <input type="text1" id="posible_nombre3" formControlName="posible_nombre3" placeholder="Ingrese posible nombre 3">
+      <input type="text1" id="posible_nombre4" formControlName="posible_nombre4" placeholder="Ingrese posible nombre 4">
+      <div *ngIf="(tipoEmpresaForm.get('posible_nombre1')?.invalid ||
+                     tipoEmpresaForm.get('posible_nombre2')?.invalid ||
+                     tipoEmpresaForm.get('posible_nombre3')?.invalid ||
+                     tipoEmpresaForm.get('posible_nombre4')?.invalid) &&
+                    (tipoEmpresaForm.get('posible_nombre1')?.dirty ||
+                     tipoEmpresaForm.get('posible_nombre2')?.dirty ||
+                     tipoEmpresaForm.get('posible_nombre3')?.dirty ||
+                     tipoEmpresaForm.get('posible_nombre4')?.dirty ||
+                     tipoEmpresaForm.get('posible_nombre1')?.touched ||
+                     tipoEmpresaForm.get('posible_nombre2')?.touched ||
+                     tipoEmpresaForm.get('posible_nombre3')?.touched ||
+                     tipoEmpresaForm.get('posible_nombre4')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('posible_nombre1')?.errors?.['required'] ||
+                       tipoEmpresaForm.get('posible_nombre2')?.errors?.['required'] ||
+                       tipoEmpresaForm.get('posible_nombre3')?.errors?.['required'] ||
+                       tipoEmpresaForm.get('posible_nombre4')?.errors?.['required']">Todos los nombres son obligatorios.</div>
       </div>
     </div>
     

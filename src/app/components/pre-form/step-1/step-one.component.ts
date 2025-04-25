@@ -23,20 +23,20 @@ export class StepOneComponent implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.tipoEmpresaForm = this.fb.group({
-      tipoEmpresa: ['', Validators.required],
-      nombreEmpresa: ['', Validators.required],
-      posiblesNombre1: ['', Validators.required],
-      posiblesNombre2: ['', Validators.required],
-      posiblesNombre3: ['', Validators.required],
-      posiblesNombre4: ['', Validators.required],
-      numeroSocios: [null]
+      tipo_empresa: ['', Validators.required],
+      nombre_empresa: ['', Validators.required],
+      posible_nombre1: ['', Validators.required],  //recomendacion de poner posibles_Nombre1 y asi para todos los demas
+      posible_nombre2: ['', Validators.required],
+      posible_nombre3: ['', Validators.required],
+      posible_nombre4: ['', Validators.required],
+      numero_socios: [null]
     });
   }
 
   ngOnInit(): void {
     // Escuchar cambios en el tipo de empresa para añadir validadores dinámicamente
-    this.tipoEmpresaForm.get('tipoEmpresa')?.valueChanges.subscribe(value => {
-      const numeroSociosControl = this.tipoEmpresaForm.get('numeroSocios');
+    this.tipoEmpresaForm.get('tipo_empresa')?.valueChanges.subscribe(value => {
+      const numeroSociosControl = this.tipoEmpresaForm.get('numero_socios');
       
       if (value === 'SAC') {
         numeroSociosControl?.setValidators([Validators.required, Validators.min(1)]);
@@ -52,7 +52,7 @@ export class StepOneComponent implements OnInit {
   cambiarTipoInput(esPersonalizado: boolean): void {
     this.mostrarInputPersonalizado = esPersonalizado;
     if (esPersonalizado) {
-      this.tipoEmpresaForm.get('numeroSocios')?.setValue(null);
+      this.tipoEmpresaForm.get('numero_socios')?.setValue(null);
     }
   }
 
@@ -60,7 +60,7 @@ export class StepOneComponent implements OnInit {
   onCustomSociosInput(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
     if (inputValue) {
-      this.tipoEmpresaForm.get('numeroSocios')?.setValue(parseInt(inputValue, 10));
+      this.tipoEmpresaForm.get('numero_socios')?.setValue(parseInt(inputValue, 10));
     }
   }
 
