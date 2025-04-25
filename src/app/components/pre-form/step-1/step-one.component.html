@@ -6,27 +6,33 @@
      
       <div class="form-options">
         <div class="option">
-          <input type="radio" id="sa" formControlName="tipoEmpresa" value="SA">
-          <label for="sa">Sociedad Anónima (S.A.)</label>
-          <p>Para empresas con accionistas y capital dividido en acciones</p>
+          <div class="option-content">
+            <input type="radio" id="sac" formControlName="tipoEmpresa" value="SAC">
+            
+            <label for="sac">2 a 5 Socios (S.A.C.)</label>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20" height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="icon icon-tabler icons-tabler-outline icon-tabler-user"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+              <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+            </svg>
+          </div>
+          <p>Sociedad Anónima Cerrada: De 2 a 5 socios. Requiere un Gerente General.</p>
         </div>
         
         <div class="option">
-          <input type="radio" id="srl" formControlName="tipoEmpresa" value="SRL">
-          <label for="srl">Sociedad de Resp. Limitada (S.R.L.)</label>
-          <p>Para empresas con socios y capital dividido en participaciones</p>
-        </div>
-        
-        <div class="option">
-          <input type="radio" id="empresario" formControlName="tipoEmpresa" value="Empresario">
-          <label for="empresario">Empresario Individual</label>
-          <p>Para autónomos y profesionales independientes</p>
-        </div>
-        
-        <div class="option">
-          <input type="radio" id="otro" formControlName="tipoEmpresa" value="Otro">
-          <label for="otro">Otro tipo</label>
-          <p>Cooperativas, asociaciones, etc.</p>
+          <input type="radio" id="eirl" formControlName="tipoEmpresa" value="EIRL">
+          <label for="eirl">Solo tu (E.I.R.L.)</label>
+          <p>Empresa Individual de Responsabilidad Limitada: Serás el titular y representante de la empresa</p>
         </div>
       </div>
      
@@ -36,7 +42,7 @@
     </div>
    
     <!-- Campo de número de socios que aparece solo cuando se selecciona SA -->
-    <div class="form-group socios-group" *ngIf="tipoEmpresaForm.get('tipoEmpresa')?.value === 'SA'">
+    <div class="form-group socios-group" *ngIf="tipoEmpresaForm.get('tipoEmpresa')?.value === 'SAC'">
       <label for="numeroSocios">Número de Socios <span class="required">*</span></label>
       
       <div class="socios-options">
@@ -80,6 +86,31 @@
       <input type="text" id="nombreEmpresa" formControlName="nombreEmpresa" placeholder="Ingrese el nombre de su empresa">
       <div *ngIf="tipoEmpresaForm.get('nombreEmpresa')?.invalid && (tipoEmpresaForm.get('nombreEmpresa')?.dirty || tipoEmpresaForm.get('nombreEmpresa')?.touched)" class="error-message">
         <div *ngIf="tipoEmpresaForm.get('nombreEmpresa')?.errors?.['required']">Campo obligatorio.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="posiblesNombre1">Nombres Opcionales <span class="required">*</span></label>
+      <label class="info-label">En caso el nombre no esté disponible se escogerá uno de estos nombres por orden de colocación</label>
+      <input type="text1" id="posiblesNombre1" formControlName="posiblesNombre1" placeholder="Ingrese posible nombre 1">
+      <input type="text1" id="posiblesNombre2" formControlName="posiblesNombre2" placeholder="Ingrese posible nombre 2">
+      <input type="text1" id="posiblesNombre3" formControlName="posiblesNombre3" placeholder="Ingrese posible nombre 3">
+      <input type="text1" id="posiblesNombre4" formControlName="posiblesNombre4" placeholder="Ingrese posible nombre 4">
+      <div *ngIf="(tipoEmpresaForm.get('posiblesNombre1')?.invalid ||
+                     tipoEmpresaForm.get('posiblesNombre2')?.invalid ||
+                     tipoEmpresaForm.get('posiblesNombre3')?.invalid ||
+                     tipoEmpresaForm.get('posiblesNombre4')?.invalid) &&
+                    (tipoEmpresaForm.get('posiblesNombre1')?.dirty ||
+                     tipoEmpresaForm.get('posiblesNombre2')?.dirty ||
+                     tipoEmpresaForm.get('posiblesNombre3')?.dirty ||
+                     tipoEmpresaForm.get('posiblesNombre4')?.dirty ||
+                     tipoEmpresaForm.get('posiblesNombre1')?.touched ||
+                     tipoEmpresaForm.get('posiblesNombre2')?.touched ||
+                     tipoEmpresaForm.get('posiblesNombre3')?.touched ||
+                     tipoEmpresaForm.get('posiblesNombre4')?.touched)" class="error-message">
+        <div *ngIf="tipoEmpresaForm.get('posiblesNombre1')?.errors?.['required'] ||
+                       tipoEmpresaForm.get('posiblesNombre2')?.errors?.['required'] ||
+                       tipoEmpresaForm.get('posiblesNombre3')?.errors?.['required'] ||
+                       tipoEmpresaForm.get('posiblesNombre4')?.errors?.['required']">Todos los nombres son obligatorios.</div>
       </div>
     </div>
     

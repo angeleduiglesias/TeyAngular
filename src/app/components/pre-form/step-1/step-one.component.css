@@ -4,19 +4,23 @@
 .tipo-empresa-container {
   padding: 20px;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #f8f9fa;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   width: 100%;
   max-width: 800px;
   margin: 15px auto;
   box-sizing: border-box;
+  margin-top: 0px;
 }
 
 h2 {
-  color: #333;
-  font-size: 20px;
+  color: #0c4280;
+  text-align: center;
+  font-size: 30px;
   font-weight: 600;
   margin-bottom: 15px;
+  font-family: 'Monserrat', sans-serif;
+ 
 }
 
 .form-group {
@@ -26,9 +30,9 @@ h2 {
 label {
   display: block;
   margin-bottom: 6px;
-  color: #333;
-  font-weight: 500;
-  font-size: 15px;
+  color: #0c4280;
+  font-weight: bold;
+  font-size: 17px;
 }
 
 /* Opciones de tipo de empresa con selección de toda la casilla */
@@ -40,15 +44,28 @@ label {
 }
 
 .option {
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
   padding: 12px;
   cursor: pointer;
   position: relative;
-  display: flex;
   flex-direction: column;
   min-height: 70px;
   transition: all 0.2s ease;
+}
+.option-content {
+  display: flex;
+  align-items: center; /* Alinea verticalmente el icono y el label */
+  gap: 8px; /* Espacio entre el icono y el label */
+  margin-bottom: 5px; /* Espacio entre el icono/label y el párrafo */
+}
+.option svg {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background-color: #28a74677;
+  border-radius: 30px;
+  margin-left: 140px;
 }
 
 /* Hacer que el radio button cubra toda la casilla */
@@ -66,7 +83,7 @@ label {
 
 .option:hover {
   border-color: #28a745;
-  background-color: #f8f9fa;
+  background-color: #28a74613;
 }
 
 /* Escondemos el radio button original y lo hacemos clickeable en toda la casilla */
@@ -84,14 +101,14 @@ label {
 
 /* Estilo para la opción completa cuando está seleccionada */
 .option input[type="radio"]:checked {
-  border-color: #28a745;
+  border: 1px solid #28a745;
 }
 
 .option input[type="radio"]:checked ~ .option,
 .option:has(input[type="radio"]:checked) {
   border-color: #28a745;
   background-color: #f8f9fa;
-  box-shadow: 0 0 0 2px #28a745;
+  box-shadow: 0 0 0 1px #28a745;
 }
 
 /* Estilo para opciones seleccionadas */
@@ -109,45 +126,77 @@ label {
 }
 
 .option label {
-  font-weight: 500;
-  color: #333;
+  font-weight:bold;
+  color: #212529;
   margin-bottom: 3px;
   font-size: 15px;
-  line-height: 1.2;
+  line-height: 1.5;
   cursor: pointer;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .option p {
   margin: 0;
-  color: #6c757d;
+  color: #212529;
   font-size: 13px;
-  line-height: 1.2;
+  margin-top: 10px;
+  line-height: 1.7;
 }
 
-/* Inputs y textareas */
-input[type="text"],
-textarea {
+/* Inputs */
+input[type="text"]
+{
   width: 100%;
   padding: 10px;
   border: 1px solid #ced4da;
-  border-radius: 4px;
+  border-radius: 10px;
   font-size: 15px;
-  color: #495057;
-  background-color: #fff;
+  color: black;
+  background-color: #f8f9fa;
   box-sizing: border-box;
   font-family: inherit;
 }
+input[type="text"]::placeholder {
+  color:#6c757d ;
+}
 
-input[type="text"]:focus,
-textarea:focus {
+input[type="text"]:focus
+ {
   outline: none;
   border-color: #28a745;
   box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
 }
 
-textarea {
-  min-height: 80px;
-  resize: vertical;
+input[type="text1"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 3px;
+  border: 1px solid #ced4da;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  font-size: 16px;
+  color: black;
+}
+
+input[type="text1"]:focus {
+  border-color: #4CAF50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+  outline: none;
+}
+input[type="text1"]:last-of-type {
+  margin-bottom: 16px;
+}
+input[type="text1"]::placeholder {
+  color:#6c757d ;
+}
+
+.info-label {
+  display: block;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: normal;
 }
 
 /* Campo requerido */
@@ -158,10 +207,11 @@ textarea {
 
 .error-message {
   color: #dc3545;
-  font-size: 15px;
+  font-size: 12px;
   margin-top: 5px;
   padding: 5px 10px;
   border-radius: 4px;
+  font-family: 'Monserrat', sans-serif;
 }
 
 /* Botones */
@@ -192,12 +242,17 @@ textarea {
 }
 
 .primary-button:disabled {
-  background-color: #cccccc;
+  background-color: #ced4da;
   color: #888888;
   cursor: not-allowed;
   opacity: 0.7;
 }
-/* Media query para móviles */
+
+
+
+
+
+/* Media query para móvile  s */
 @media screen and (max-width: 767px) {
   .tipo-empresa-container {
     padding: 15px;

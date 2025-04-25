@@ -13,7 +13,7 @@ import { FormDataService } from '../../../services/form-data.service';
 })
 export class StepOneComponent implements OnInit {
   tipoEmpresaForm: FormGroup;
-  opcionesSocios = [2, 3, 5, 10, 100];
+  opcionesSocios = [2, 3, 5, 10];
   mostrarInputPersonalizado = false;
   datosPersonalesForm: any;
 
@@ -25,6 +25,10 @@ export class StepOneComponent implements OnInit {
     this.tipoEmpresaForm = this.fb.group({
       tipoEmpresa: ['', Validators.required],
       nombreEmpresa: ['', Validators.required],
+      posiblesNombre1: ['', Validators.required],
+      posiblesNombre2: ['', Validators.required],
+      posiblesNombre3: ['', Validators.required],
+      posiblesNombre4: ['', Validators.required],
       numeroSocios: [null]
     });
   }
@@ -34,7 +38,7 @@ export class StepOneComponent implements OnInit {
     this.tipoEmpresaForm.get('tipoEmpresa')?.valueChanges.subscribe(value => {
       const numeroSociosControl = this.tipoEmpresaForm.get('numeroSocios');
       
-      if (value === 'SA') {
+      if (value === 'SAC') {
         numeroSociosControl?.setValidators([Validators.required, Validators.min(1)]);
       } else {
         numeroSociosControl?.clearValidators();

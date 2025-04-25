@@ -4,6 +4,12 @@
   <h2>¿A qué actividades se dedicará tu empresa?</h2>
   
   <form [formGroup]="actividadesForm" (ngSubmit)="siguiente()">
+    <select formControlName="rubro" id="rubro">
+      <option value="">Seleccione un rubro</option>
+      <option *ngFor="let rubro of rubrosDisponibles" [value]="rubro.id">
+        {{ rubro.nombre }}
+      </option>
+    </select>
     <div class="form-group actividades-field">
       <label for="actividades">Descríbelas de manera detallada <span class="required">*</span></label>
       <textarea 
@@ -18,7 +24,8 @@
       
       <ul class="notes-list">
         <li>No hay un mínimo de rubros. Puede ser rubros específicos o detallados</li>
-        <li>Los rubros no permitidos son: casinos o casa de apuestas, casas de cambio, constructoras, inmobiliarias y mineras.</li>
+        <li>Los rubros no permitidos son:casinos o casa de apuestas, casas de cambio, constructoras, inmobiliarias y mineras.
+          <a href="javascript:void(0)" (click)="mostrarActividadesNoPermitidas()">Ver lista completa</a></li>
       </ul>
     </div>
     
@@ -32,4 +39,41 @@
       </button>
     </div>
   </form>
+</div>
+
+<!-- Modal de actividades no permitidas -->
+<div class="modal-overlay" *ngIf="mostrarModal" (click)="cerrarModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3>Actividades no permitidas</h3>
+    <div class="modal-body">
+      <p>Revisa la lista de las 24 actividades:</p>
+      <ol class="actividades-prohibidas-lista">
+        <li>Mineras</li>
+        <li>Casa de Cambio / Cambistas</li>
+        <li>Fintech</li>
+        <li>Constructoras o actividades inmobiliarias</li>
+        <li>Comerciantes de Armas y municiones</li>
+        <li>Fideicomisos</li>
+        <li>Transmisores de dinero</li>
+        <li>Remesadoras locales</li>
+        <li>ONGs</li>
+        <li>Empresas de donaciones</li>
+        <li>Comerciantes de Cannabis</li>
+        <li>Bancos Pantallas</li>
+        <li>Trata de Personas</li>
+        <li>Empresas extranjeras no domiciliadas</li>
+        <li>Cooperativas</li>
+        <li>Casinos/Juegos de azar/Loterías</li>
+        <li>Criptomonedas o monedas virtuales</li>
+        <li>Empresas de factoring</li>
+        <li>Empresas de préstamos</li>
+        <li>Empresas de seguros</li>
+        <li>Empresas de valores</li>
+        <li>Empresas de inversión</li>
+        <li>Empresas de crowdfunding</li>
+        <li>Empresas de comercio exterior</li>
+      </ol>
+      <button class="btn-entendido" (click)="cerrarModal()">Entendido</button>
+    </div>
+  </div>
 </div>
