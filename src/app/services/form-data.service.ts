@@ -20,7 +20,7 @@ export class FormDataService {
     };
     
     // Enviar al backend y limpiar localStorage después de éxito
-    return this.http.post<any>(`${this.apiUrl}/formulario-completo`, datosCompletos)
+    return this.http.post<any>(`${this.apiUrl}/pre-form`, datosCompletos)
       .pipe(
         tap(response => {
           // Si la respuesta es exitosa, limpiar localStorage
