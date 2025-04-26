@@ -1,18 +1,28 @@
 <header class="header">
     <div class="container">
-        <div class="logo">
-            <img src="assets/logo.jpeg" alt="Logo">
-        </div>
-        <nav>
-            <ul class="nav-links">
-                <li><a routerLink="/servicios">Servicios</a></li>
-                <li><a routerLink="/procesos">Procesos</a></li>
-                <li><a routerLink="/contacto">Contacto</a></li>
-            </ul>
-        </nav>
-        <div class="buttons">
-            <button class="btn-outline" routerLink="/login">Ingresar</button>
-            <app-btn-comienza ></app-btn-comienza>
-        </div>
+      <div class="logo">
+        <img src="assets/logo.jpeg" alt="Logo">
+      </div>
+  
+      <!-- Botón hamburguesa -->
+      <button class="menu-toggle" (click)="toggleMenu()">
+        {{ isMenuOpen ? '✖' : '☰' }}
+      </button>
+  
+      <!-- Navegación -->
+      <nav>
+        <ul class="nav-links" [class.open]="isMenuOpen">
+          <li><a routerLink="/servicios" (click)="closeMenu()">Servicios</a></li>
+          <li><a routerLink="/procesos" (click)="closeMenu()">Procesos</a></li>
+          <li><a routerLink="/contacto" (click)="closeMenu()">Contacto</a></li>
+        </ul>
+      </nav>
+  
+      <!-- Botones -->
+      <div class="buttons">
+        <button class="btn-outline" routerLink="/login">Ingresar</button>
+        <app-btn-comienza></app-btn-comienza>
+      </div>
     </div>
-</header>
+  </header>
+  
