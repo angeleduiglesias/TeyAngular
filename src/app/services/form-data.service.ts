@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -15,8 +15,8 @@ export class FormDataService {
   enviarFormularioCompleto(datosEmpresa: any, datosPersonales: any) {
     // Crear un objeto que contenga ambos conjuntos de datos
     const datosCompletos = {
-      empresa: datosEmpresa,
-      personal: datosPersonales
+      ...datosEmpresa,
+      ...datosPersonales
     };
     
     // Enviar al backend y limpiar localStorage después de éxito
@@ -34,6 +34,10 @@ export class FormDataService {
             localStorage.removeItem('datos_empresa_completo');
             console.log('Datos temporales eliminados del localStorage');
           }
+        }),
+        catchError(error => {
+          console.error('Error al enviar formulario:', error);
+          return throwError(() => new Error('Error al enviar el formulario. Por favor, inténtalo de nuevo.'));
         })
       );
   }

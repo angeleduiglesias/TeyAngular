@@ -11,6 +11,14 @@
   min-height: 100vh; /* Usa min-height: 100% si :host tiene height: 100% */
   width: 100%;
   background-color: #283F51;
+  background-image: radial-gradient(circle,
+      #45698a 0%,     /* Un tono ligeramente más claro al inicio */
+      #3a5875 20%,    /* El color inicial que tenías */
+      #2e4764 40%,    /* Un tono intermedio */
+      #283F51 60%,    /* Tu color de fondo base */
+      #1f3042 80%,    /* Otro tono intermedio más oscuro */
+      #1e2d3d 100%    /* El color final que tenías */ /* Un color final aún más oscuro */
+  );
   padding: 20px 0;
   box-sizing: border-box; /* Mantenlo por si acaso */
 }

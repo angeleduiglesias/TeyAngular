@@ -3,21 +3,23 @@
 ======================= */
 .tipo-empresa-container {
   padding: 20px;
-  border-radius: 8px;
-  background-color: #f8f9fa;
+  border-radius: 20px;
+  background-color: #f5f7fa;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   width: 100%;
   max-width: 800px;
   margin: 15px auto;
   box-sizing: border-box;
   margin-top: 0px;
+  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.05),
+  4px 8px 12px rgba(0, 0, 0, 0.03);
 }
 
 h2 {
-  color: #0c4280;
+  color: #3a5875;
   text-align: center;
   font-size: 30px;
-  font-weight: 600;
+  font-weight: bold;
   margin-bottom: 15px;
   font-family: 'Monserrat', sans-serif;
  
@@ -30,9 +32,10 @@ h2 {
 label {
   display: block;
   margin-bottom: 6px;
-  color: #0c4280;
+  color: #3a5875;
   font-weight: bold;
   font-size: 17px;
+  margin-left: 5px;
 }
 
 /* Opciones de tipo de empresa con selección de toda la casilla */
@@ -46,26 +49,28 @@ label {
 .option {
   border: 1px solid #ced4da;
   border-radius: 10px;
+  border-left: 4px solid #3a5875;
   padding: 12px;
   cursor: pointer;
   position: relative;
+  background-color: #ffffff;
   flex-direction: column;
   min-height: 70px;
   transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 .option-content {
   display: flex;
   align-items: center; /* Alinea verticalmente el icono y el label */
   gap: 8px; /* Espacio entre el icono y el label */
   margin-bottom: 5px; /* Espacio entre el icono/label y el párrafo */
+  justify-content: space-between;
 }
 .option svg {
   width: 30px;
-  height: 30px;
+  height: 40px;
   padding: 0;
-  background-color: #28a74677;
   border-radius: 30px;
-  margin-left: 140px;
 }
 
 /* Hacer que el radio button cubra toda la casilla */
@@ -107,22 +112,13 @@ label {
 .option input[type="radio"]:checked ~ .option,
 .option:has(input[type="radio"]:checked) {
   border-color: #28a745;
-  background-color: #f8f9fa;
+  background-color: #28a74622;
   box-shadow: 0 0 0 1px #28a745;
 }
 
 /* Estilo para opciones seleccionadas */
 .option input[type="radio"]:checked + label {
   color: #28a745;
-}
-
-.option input[type="radio"]:checked + label::before {
-  content: '✓';
-  position: absolute;
-  right: 10px;
-  top: 10px;
-  color: #28a745;
-  font-weight: bold;
 }
 
 .option label {
@@ -149,40 +145,52 @@ input[type="text"]
   width: 100%;
   padding: 10px;
   border: 1px solid #ced4da;
+
   border-radius: 10px;
   font-size: 15px;
   color: black;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   box-sizing: border-box;
-  font-family: inherit;
 }
 input[type="text"]::placeholder {
   color:#6c757d ;
+}
+
+input[type="text"]:hover
+ {
+  border-color: #28a745;
+  background-color: #28a74613;
 }
 
 input[type="text"]:focus
  {
   outline: none;
   border-color: #28a745;
-  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
 
 input[type="text1"] {
   display: block;
   width: 100%;
   padding: 10px;
-  margin-bottom: 3px;
+  margin-bottom: 6px;
   border: 1px solid #ced4da;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   border-radius: 10px;
   font-size: 16px;
   color: black;
+
 }
 
 input[type="text1"]:focus {
-  border-color: #4CAF50;
   box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
   outline: none;
+}
+
+input[type="text1"]:hover
+ {
+  border-color: #28a745;
+  background-color: #28a74613;
 }
 input[type="text1"]:last-of-type {
   margin-bottom: 16px;
@@ -194,11 +202,16 @@ input[type="text1"]::placeholder {
 .info-label {
   display: block;
   font-size: 0.85rem;
-  color: #666;
+  color: #212529;
   margin-bottom: 8px;
-  font-weight: normal;
+  font-weight:lighter;
+  margin-left: 5px;
+  transition: color 0.3s ease-in-out; 
 }
 
+.info-label:hover {
+  color:#dc3545;
+}
 /* Campo requerido */
 .required {
   color: #dc3545;
@@ -222,19 +235,52 @@ input[type="text1"]::placeholder {
   margin-top: 30px;
 }
 
+/* Estilos para la sección de número de socios */
+.socios-group {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f5f7fa;
+  border-radius: 8px;
+  border-left: 4px solid #3a5875;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.socios-options {
+  margin-top: 12px;
+  padding: 10px;
+  justify-content: space-around;
+}
+
+.custom-socios-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px 12px;
+  border: 10px solid #82b212;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.custom-socios-input:focus {
+  outline: none;
+  border-color: #28a745;
+  background-color: #28a74613;
+  box-shadow: 0 0 0 3px rgba(58, 88, 117, 0.2);
+}
+
 .primary-button {
   padding: 12px 24px;
   background-color: #28a745;
   color: white;
   border: none;
-  border-radius: 50px;
+  border-radius: 20px;
   font-size: 16px;
   cursor: pointer;
   display: flex;
+  margin-right: 3px;
   align-items: center;
   justify-content: center;
   min-width: 120px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .primary-button:hover {
@@ -247,10 +293,6 @@ input[type="text1"]::placeholder {
   cursor: not-allowed;
   opacity: 0.7;
 }
-
-
-
-
 
 /* Media query para móvile  s */
 @media screen and (max-width: 767px) {

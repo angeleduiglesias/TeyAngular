@@ -3,7 +3,7 @@
   max-width: 1200px;  /* Aumentado de 800px a 1200px */
   margin: 0 auto 20px;
   padding: 15px 20px;
-  margin-top: 5px;
+  margin-top: 7px;
   box-sizing: border-box;
 }
 
@@ -37,13 +37,13 @@
 
 .progress-bar {
   width: 80%;  /* Cambiado de 100% a 80% */
-  min-width: 500px;  /* Ancho mínimo para asegurar que sea más grande */
+  min-width: 600px;  /* Ancho mínimo para asegurar que sea más grande */
 }
 
 .progress-line {
-  height: 8px;
+  height: 12px;
   background-color: #e9ecef;
-  border-radius: 4px;
+  border-radius: 20px;
   overflow: hidden;
 }
 
@@ -51,6 +51,7 @@
   height: 100%;
   background-color: #28a745;
   transition: width 0.5s ease;
+  border-radius: 20px;
 }
 
 /* Media query for mobile devices */

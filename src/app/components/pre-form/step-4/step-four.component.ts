@@ -27,7 +27,7 @@ export class StepFourComponent implements OnInit{
       apellidos: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern(/^9\d{8}$/)]],
-      dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]]
+      dni: ['', [Validators.required, Validators.pattern(/^9\d{8}$/)]]
     });
   }
 
