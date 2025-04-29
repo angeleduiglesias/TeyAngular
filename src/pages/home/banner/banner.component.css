@@ -1,8 +1,15 @@
 .banner{
   max-width: 100vw;
   height: 70vh;
-  background-color: #283F51;
-  border-radius: 0px 0px 10px 10px;
+  background-image: radial-gradient(circle,
+  #45698a 0%,     /* Un tono ligeramente más claro al inicio */
+  #3a5875 20%,    /* El color inicial que tenías */
+  #2e4764 40%,    /* Un tono intermedio */
+  #283F51 60%,    /* Tu color de fondo base */
+  #1f3042 80%,    /* Otro tono intermedio más oscuro */
+  #1e2d3d 100%    /* El color final que tenías */ /* Un color final aún más oscuro */
+);
+  border-radius: 0px 0px 0px 0px;
   align-content: center;
 }
 
@@ -42,4 +49,5 @@
 img{
   width: 100%;
   border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }

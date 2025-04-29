@@ -4,7 +4,7 @@ html, body {
     height: 100%;
     width: 100%;
     box-sizing: border-box; /* Incluye padding y borde en el tamaño total */
-    background-color: #ffff; /* Aplica el color de fondo aquí también como respaldo */
+    background-color: #f9f9f9;; /* Aplica el color de fondo aquí también como respaldo */
   }
   
   *, *::before, *::after {
