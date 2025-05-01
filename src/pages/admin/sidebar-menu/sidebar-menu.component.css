@@ -89,13 +89,21 @@
   font-weight: 500;
   font-size: 14px;
   text-align: left;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   color: #e0e0e0;
   background-color: transparent;
   border-radius: 8px;
   display: flex;
   align-items: center;
   white-space: nowrap;
+  outline: none;
+}
+
+/* Mejora para navegación por teclado */
+.menu-item:focus-visible {
+  outline: 2px solid #28a745;
+  outline-offset: -2px;
+  box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.25);
 }
 
 .sidebar.collapsed .menu-item {
@@ -106,12 +114,14 @@
 .menu-item:hover {
   background-color: #333333;
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .menu-item.active {
   background-color: #444444;
   color: white;
   position: relative;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .menu-item.active::before {
@@ -145,11 +155,30 @@
 }
 
 /* Media queries para responsividad */
+/* Overlay para el fondo cuando el sidebar está abierto en móviles */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.show {
+  opacity: 1;
+  display: block;
+}
+
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    width: 190px; /* Ancho completo para mejor visualización */
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    width: 240px; /* Ancho aumentado para mejor visualización */
     padding: 24px 16px;
     z-index: 1050;
     position: fixed;
@@ -160,10 +189,16 @@
     overflow-y: auto;
   }
   
-  /* Ocultar el logo en dispositivos móviles sin afectar el layout */
-  .logo-container .logo {
-    margin-left: 40px;
-  }
+  /* Mejorar la visibilidad del logo en dispositivos móviles */
+    .logo-container {
+      margin-bottom: 30px;
+    }
+    
+    .logo-container .logo {
+      max-width: 120px;
+      margin: 0 auto;
+      display: block;
+    }
 
   .sidebar.show {
     transform: translateX(0);

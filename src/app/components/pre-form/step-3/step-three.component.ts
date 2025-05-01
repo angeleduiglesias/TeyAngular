@@ -43,7 +43,7 @@ export class StepThreeComponent implements OnInit {
 
   ngOnInit(): void {
     // Recuperar datos combinados de los pasos anteriores
-    const datosGuardados = localStorage.getItem('datos_empresa');
+    const datosGuardados = localStorage.getItem('step_two_data');
     if (datosGuardados) {
       this.datosAnteriores = JSON.parse(datosGuardados);
       console.log('Datos recuperados de pasos anteriores:', this.datosAnteriores);
@@ -65,7 +65,7 @@ export class StepThreeComponent implements OnInit {
         ...this.capitalForm.value
       };
       
-      localStorage.setItem('datos_empresa_completo', JSON.stringify(datosCombinados));
+      localStorage.setItem('step_three_data', JSON.stringify(datosCombinados));
       console.log('Datos combinados actualizados:', datosCombinados);
           this.router.navigate(['step-four'], { relativeTo: this.route.parent });
          

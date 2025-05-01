@@ -27,12 +27,12 @@ export class StepFourComponent implements OnInit{
       apellidos: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required, Validators.pattern(/^9\d{8}$/)]],
-      dni: ['', [Validators.required, Validators.pattern(/^9\d{8}$/)]]
+      dni: ['', [Validators.required, Validators.pattern(/^\d{8}$/)]]
     });
   }
 
   ngOnInit(): void {
-    const datosGuardados = localStorage.getItem('datos_empresa_completo');
+    const datosGuardados = localStorage.getItem('step_three_data');
     if (datosGuardados) {
       this.datosEmpresa = JSON.parse(datosGuardados);
       console.log('Datos recuperados de pasos anteriores:', this.datosEmpresa);
@@ -45,15 +45,18 @@ export class StepFourComponent implements OnInit{
       this.error = '';
 
       const datosPersonales = this.datosPersonalesForm.value;
+
+      const datosCompletos = {
+        ...this.datosEmpresa,
+        ...datosPersonales
+      };
       
-      this.formDataService.enviarFormularioCompleto(this.datosEmpresa, datosPersonales)
+      this.formDataService.enviarFormularioCompleto(datosCompletos)
         .subscribe({
           next: (response) => {
             console.log('Datos Completos guardados:', response);
             this.enviando = false;
-            const datosCompletos = {
-              empresa: this.datosEmpresa,
-              personal: datosPersonales};
+            
             localStorage.setItem('datos_completos', JSON.stringify(datosCompletos));
 
             // Navega a la ruta hija "step-two" relativa al componente padre

@@ -12,12 +12,7 @@ export class FormDataService {
   constructor(private http: HttpClient) { }
   
   // Método para enviar formulario completo
-  enviarFormularioCompleto(datosEmpresa: any, datosPersonales: any) {
-    // Crear un objeto que contenga ambos conjuntos de datos
-    const datosCompletos = {
-      ...datosEmpresa,
-      ...datosPersonales
-    };
+  enviarFormularioCompleto(datosCompletos:any) {
     
     // Enviar al backend y limpiar localStorage después de éxito
     return this.http.post<any>(`${this.apiUrl}/pre-form`, datosCompletos)
@@ -30,8 +25,9 @@ export class FormDataService {
             
             // Eliminar datos temporales
             localStorage.removeItem('step_one_data');
-            localStorage.removeItem('datos_formulario_completo');
-            localStorage.removeItem('datos_empresa_completo');
+            localStorage.removeItem('step_two_data');
+            localStorage.removeItem('step_three_data');
+            localStorage.removeItem('datos_completos');
             console.log('Datos temporales eliminados del localStorage');
           }
         }),
