@@ -51,3 +51,41 @@ img{
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
+.banner-image-responsive{
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .banner{
+    height: 90vh;
+  }
+  .container {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0px;
+  }
+  .banner-content {
+    text-align: center;
+    width: 100%;
+  }
+  .banner-content h1 {
+    font-size: 40px;
+  }
+  .banner-content p {
+    font-size: 16px;
+  }
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  .banner-image-responsive{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .banner-image{
+    display: none;
+  }
+}

@@ -1,53 +1,102 @@
-.services{
+.wow-services {
     max-width: 100vw;
-    padding: 30px 0;
-    background: #f9f9f9;
-}
-
-.container{
-    width: 90%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
+    padding: 40px 30px;
+    background: linear-gradient(135deg, #2c4156, #406382, #101b2c);
     text-align: center;
 }
-.subtitle{
-    color: #283F51;
+
+.container {
+    width: 95%;
+    margin: 0 auto;
 }
-.group-services{
+
+.wow-services h2 {
+    color: #ffffff;
+    font-size: 30px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.wow-services .subtitle {
+    color: #d7d7d7;
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.85); /* Blanco ligeramente menos opaco */
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde aún más sutil */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra aún más suave */
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Añadimos transición al background */
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.95); /* Ligeramente más sólido al hacer hover */
+}
+
+.card-content {
+    padding: 30px;
     display: flex;
-    justify-content: space-between;
-    gap: 0 50px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
-.item-service{
-    width: 33.3%;
+.card-content i {
+    font-size: 2.2rem;
+    color: #64b5f6;
+    margin-bottom: 15px;
 }
 
-.item-service span>p{
-    color: black;
-    font-weight: 700;
+.card-content h3 {
+    color: #37474f;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    font-weight: 500;
 }
 
-.item-service p{
-    text-align: justify;
-    color: #283F51;
+.card-content p {
+    color: #546e7a;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
 }
 
-.btn-service{
-    width: 100%;
-    padding: 10px 0;
-    border-radius: 8px;
-    border: none;
-    color: white;
-    font-size: medium;
-}
+/* Diseño Responsive */
+@media (max-width: 768px) {
+    .wow-services h2 {
+        font-size: 2.5rem;
+    }
 
-.back-green{
-    background-color: #42B685;
-}
+    .wow-services .subtitle {
+        font-size: 1.1rem;
+    }
 
-.back-blue{
-    background-color: #1E3A8A;
-}
+    .card-content {
+        padding: 25px;
+    }
 
+    .card-content i {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+
+    .card-content h3 {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+    }
+
+    
+}
