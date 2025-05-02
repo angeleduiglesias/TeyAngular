@@ -27,13 +27,36 @@ h3 {
   background-size: cover;
   background-position: center;
   position: relative;
-  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
   transition: transform 0.3s ease-in-out;
   overflow: hidden;
   /* Asegura que la capa semitransparente no se salga del contenedor */
 }
 
-.diagonal-step::before {
+.step-center{
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+}
+
+.step-left{
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+}
+
+.step-right{
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.diagonal-step::before, .step-center::before, .step-left::before, .step-right::before {
   content: "";
   position: absolute;
   top: 0;
@@ -58,7 +81,7 @@ h3 {
   clip-path: polygon(10% 0, 100% 0, 100% 100%, 10% 100%);
 }
 
-.diagonal-step:hover {
+.diagonal-step:hover, .step-left:hover, .step-right:hover, .step-center:hover {
   transform: scale(1.03);
   z-index: 2;
 }
