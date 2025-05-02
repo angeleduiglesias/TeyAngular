@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, PLATFORM_ID, Inject, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -17,6 +17,7 @@ export class SidebarMenuComponent implements OnInit {
   @Input() show = false;
   @Output() toggleSidebar = new EventEmitter<void>();
   window: Window;
+  isLargeScreen = false;
   
   constructor(
     private router: Router,
@@ -24,6 +25,10 @@ export class SidebarMenuComponent implements OnInit {
   ) {
     // Asignar window solo si estamos en el navegador
     this.window = isPlatformBrowser(this.platformId) ? window : {} as Window;
+    // Inicializar el valor de isLargeScreen
+    if (isPlatformBrowser(this.platformId)) {
+      this.isLargeScreen = window.innerWidth > 768;
+    }
   }
   
   ngOnInit() {
@@ -36,6 +41,14 @@ export class SidebarMenuComponent implements OnInit {
     ).subscribe((event: any) => {
       this.detectCurrentRoute();
     });
+  }
+  
+  // Escuchar cambios en el tamaño de la ventana
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.isLargeScreen = window.innerWidth > 768;
+    }
   }
   
   // Método para detectar la ruta actual y aplicar la clase active
@@ -63,6 +76,18 @@ export class SidebarMenuComponent implements OnInit {
   }
   
   toggle(): void {
+    // En dispositivos móviles, toggle controla show, en desktop controla collapsed
+    if (!this.isLargeScreen) {
+      this.show = !this.show;
+      // Prevenir scroll cuando el menú está abierto en móviles
+      if (this.show && isPlatformBrowser(this.platformId)) {
+        document.body.style.overflow = 'hidden';
+      } else if (isPlatformBrowser(this.platformId)) {
+        document.body.style.overflow = '';
+      }
+    } else {
+      this.collapsed = !this.collapsed;
+    }
     this.toggleSidebar.emit();
   }
 }

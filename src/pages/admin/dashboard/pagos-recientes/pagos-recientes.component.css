@@ -4,7 +4,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 20px;
   border-top: 4px solid #1E3A8A;
-  
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .card-title {
@@ -19,6 +20,7 @@
 .pagos-list {
   max-height: 300px;
   overflow-y: auto;
+  width: 100%;
 }
 
 .pago-item {
@@ -62,6 +64,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .pago-monto {
@@ -100,6 +104,45 @@
   border-radius: 10px;
 }
 
-.pagos-list::-webkit-scrollbar-thumb:hover {
-  background: #1E3A8A;
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .pagos-recientes-card {
+    padding: 15px;
+  }
+  
+  .pago-item {
+    padding: 12px 0;
+  }
+  
+  .pago-icon {
+    width: 35px;
+    height: 35px;
+  }
 }
+
+@media (max-width: 480px) {
+  .pagos-recientes-card {
+    padding: 12px;
+  }
+  
+  .card-title {
+    font-size: 16px;
+  }
+  
+  .pago-concepto {
+    font-size: 14px;
+  }
+  
+  .pago-cliente {
+    font-size: 13px;
+  }
+  
+  .pago-monto {
+    font-size: 14px;
+  }
+
+}
+
+/*.pagos-list::-webkit-scrollbar-thumb:hover {
+  background: #1E3A8A;
+}*/

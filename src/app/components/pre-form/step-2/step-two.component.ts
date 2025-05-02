@@ -82,7 +82,7 @@ export class StepTwoComponent implements OnInit {
       };
       
       // Guardar datos combinados en localStorage
-      localStorage.setItem('datos_empresa', JSON.stringify(datosCombinados));
+      localStorage.setItem('step_two_data', JSON.stringify(datosCombinados));
       console.log('Datos combinados guardados:', datosCombinados);
       
         this.router.navigate(['step-three'], { relativeTo: this.route.parent });
