@@ -45,7 +45,7 @@ export class AuthService {
   
   // Autentica al usuario y almacena su información
   login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/api/login`, { email, password })
+    return this.http.post<any>(`${this.apiUrl}/login`, { email, password })
       .pipe(
         tap(response => {
           if (response && response.token) {
