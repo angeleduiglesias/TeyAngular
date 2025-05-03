@@ -1,0 +1,101 @@
+<div class="client-container">
+  <div class="header">
+    <h2>Gestión de Clientes</h2>
+    <div class="actions">
+      <button class="btn-add">
+        <i class="fas fa-plus"></i> Nuevo Cliente
+      </button>
+      <div class="search-container">
+        <input type="text" placeholder="Buscar cliente..." [(ngModel)]="searchTerm" (keyup)="applyFilter()">
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="client-table">
+      <thead>
+        <tr>
+          <th (click)="sortTable('nombre')">
+            Nombre
+            <i class="fas" [ngClass]="getSortIcon('nombre')"></i>
+          </th>
+          <th (click)="sortTable('dni')">
+            DNI
+            <i class="fas" [ngClass]="getSortIcon('dni')"></i>
+          </th>
+          <th (click)="sortTable('tipoEmpresa')">
+            Tipo de empresa
+            <i class="fas" [ngClass]="getSortIcon('tipoEmpresa')"></i>
+          </th>
+          <th (click)="sortTable('progreso')">
+            Progreso
+            <i class="fas" [ngClass]="getSortIcon('progreso')"></i>
+          </th>
+          <th (click)="sortTable('pagos')">
+            Pagos
+            <i class="fas" [ngClass]="getSortIcon('pagos')"></i>
+          </th>
+          <th>Contacto</th>
+
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of filteredClients">
+          <td>{{ client.nombre }}</td>
+          <td>{{ client.dni }}</td>
+          <td>{{ client.tipoEmpresa }}</td>
+          <td>
+            <div class="progress-container">
+              <div class="progress-bar" [style.width.%]="client.progreso"></div>
+              <span>{{ client.progreso }}%</span>
+            </div>
+          </td>
+          <td>
+            <div class="payment-status">
+              <span class="payment-badge" [ngClass]="{'paid': client.pago1, 'unpaid': !client.pago1}">
+                Pago 1
+              </span>
+              <span class="payment-badge" [ngClass]="{'paid': client.pago2, 'unpaid': !client.pago2}">
+                Pago 2
+              </span>
+            </div>
+          </td>
+          <td class="contact-icons">
+            <a [href]="'https://wa.me/' + client.telefono" target="_blank" class="icon-whatsapp" title="Contactar por WhatsApp">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+            <a [href]="'mailto:' + client.email" class="icon-email" title="Enviar correo electrónico">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </td>
+          <td class="actions-cell">
+            <button class="btn-action edit" (click)="editClient(client)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-action delete" (click)="deleteClient(client.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+            <button class="btn-action view" (click)="viewClientDetails(client.id)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="filteredClients.length === 0">
+          <td colspan="7" class="no-data">No se encontraron clientes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+    <button [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>

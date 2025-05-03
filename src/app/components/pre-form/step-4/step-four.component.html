@@ -40,7 +40,7 @@
 
       <div class="form-group">
         <label for="dni">DNI <span class="required">*</span></label>
-        <input type="dni" id="dni" formControlName="dni" placeholder="Ej: 78679846">
+        <input type="text" id="dni" formControlName="dni" placeholder="Ej: 78679846">
         <div *ngIf="datosPersonalesForm.get('dni')?.invalid && (datosPersonalesForm.get('dni')?.dirty || datosPersonalesForm.get('dni')?.touched)" class="error-message">
           <div *ngIf="datosPersonalesForm.get('dni')?.errors?.['required']">Campo obligatorio.</div>
           <div *ngIf="datosPersonalesForm.get('dni')?.errors?.['pattern']">Ingrese su numero de dni "Ej: 78679846".</div>

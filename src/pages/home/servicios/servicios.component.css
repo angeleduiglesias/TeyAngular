@@ -32,7 +32,7 @@
 
 .service-card {
     background: rgba(255, 255, 255, 0.85); /* Blanco ligeramente menos opaco */
-    border-radius: 12px;
+    border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.2); /* Borde aún más sutil */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra aún más suave */
     overflow: hidden;
@@ -56,7 +56,7 @@
 
 .card-content i {
     font-size: 2.2rem;
-    color: #64b5f6;
+    color: #42B483;
     margin-bottom: 15px;
 }
 

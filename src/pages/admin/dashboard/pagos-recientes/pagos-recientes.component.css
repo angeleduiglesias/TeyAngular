@@ -89,20 +89,7 @@
   color: #6c757d;
 }
 
-/* Scrollbar styling */
-.pagos-list::-webkit-scrollbar {
-  width: 6px;
-}
 
-.pagos-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.pagos-list::-webkit-scrollbar-thumb {
-  background: #218838;
-  border-radius: 10px;
-}
 
 /* Media queries para responsividad */
 @media (max-width: 768px) {

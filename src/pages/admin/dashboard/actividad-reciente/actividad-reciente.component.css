@@ -10,7 +10,7 @@
 .card-title {
   color: #283F51;
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #e0e0e0;
 }
@@ -26,7 +26,7 @@
 
 /* El contenedor de la lista muestra 4 filas (4 x (50px + 1px de borde)) y aplica scroll vertical */
 .actividad-list {
-  max-height: calc((50px + 1px) * 4);
+  max-height: calc((50px + 1px) * 5);
   overflow-y: auto;
 }
 
@@ -83,21 +83,3 @@
   color: #6c757d;
 }
 
-/* Estilos para el scrollbar */
-.actividad-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.actividad-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.actividad-list::-webkit-scrollbar-thumb {
-  background: #1E3A8A;
-  border-radius: 10px;
-}
-
-.actividad-list::-webkit-scrollbar-thumb:hover {
-  background: #218838;
-}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap, catchError, throwError } from 'rxjs';
+import { tap, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class FormDataService {
   enviarFormularioCompleto(datosCompletos:any) {
     
     // Enviar al backend y limpiar localStorage después de éxito
-    return this.http.post<any>(`${this.apiUrl}/pre-form`, datosCompletos)
+    return this.http.post<any>(`${this.apiUrl}/api/pre-form`, datosCompletos)
       .pipe(
         tap(response => {
           // Si la respuesta es exitosa, limpiar localStorage
@@ -27,7 +27,6 @@ export class FormDataService {
             localStorage.removeItem('step_one_data');
             localStorage.removeItem('step_two_data');
             localStorage.removeItem('step_three_data');
-            localStorage.removeItem('datos_completos');
             console.log('Datos temporales eliminados del localStorage');
           }
         }),

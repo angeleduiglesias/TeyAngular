@@ -2,9 +2,9 @@
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 20px;
-  margin-bottom: 0px;
+  padding: 30px;
   border-top: 4px solid #218838;
+  height:100%;
 }
 
 .card-title {
@@ -16,11 +16,16 @@
   text-transform: capitalize;
 }
 
+.tramites-list {
+  max-height: calc((82px + 1px) * 8);
+  overflow-y: auto;
+}
+
 /* Se asigna una altura mínima para cada fila de trámite */
 .tramite-item {
   display: flex;
   align-items: flex-start;
-  padding: 12px 0 ;
+  padding: 12px;
   border-bottom: 1px solid #f0f0f0;
   min-height: 60px; /* Ajusta este valor de acuerdo al contenido real */
 }
@@ -113,21 +118,3 @@
   color: #6c757d;
 }
 
-/* Scrollbar styling */
-.tramites-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-.tramites-list::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.tramites-list::-webkit-scrollbar-thumb {
-  background: #1E3A8A;
-  border-radius: 10px;
-}
-
-.tramites-list::-webkit-scrollbar-thumb:hover {
-  background: #218838;
-}

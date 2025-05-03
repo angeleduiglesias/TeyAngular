@@ -8,8 +8,12 @@ import { StepFourComponent } from './components/pre-form/step-4/step-four.compon
 import { StepFiveComponent } from './components/pre-form/step-5/step-five.component';
 import { LoginComponent } from './components/login/login.component';
 import { AdminDashboardComponent } from '../pages/admin/dashboard/admin-dashboard-component';
+import { AdminClientComponent } from '../pages/admin/client/admin-client-component';
+import { AdminNotaryComponent } from '../pages/admin/notary/admin-notary-component';
+import { AdminReportsComponent } from '../pages/admin/reports/admin-reports-component';
+import { AdminConfigurationComponent } from '../pages/admin/configuration/admin-configuration-component';
 import { LogoutComponent } from './components/logout/logout.component';
-import { AuthGuard } from './guards/auth-guard';
+// Remove unused import since AuthGuard is not used in routes
 import { RoleGuard } from './guards/role-guard';
 
 // Define las rutas de la aplicación
@@ -33,14 +37,16 @@ export const routes: Routes = [
   { 
     path: 'admin', 
     loadComponent: () => import('../pages/admin/admin.component').then(c => c.AdminComponent),
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: { expectedRole: 'admin' },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },
-      // Aquí puedes agregar más rutas hijas para el panel admin
-      // { path: 'clientes', component: ClientesComponent },
-      // { path: 'tramites', component: TramitesComponent },
+      {path: 'clientes',component: AdminClientComponent},
+      {path: 'notarios',component: AdminNotaryComponent},
+      {path: 'reportes',component: AdminReportsComponent},
+      {path:'configuracion',component: AdminConfigurationComponent},
+
     ]
   },
   { 

@@ -1,0 +1,48 @@
+<div class="reports-container">
+    <!-- Primera fila: Gráficos -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <h3>Gráfico de Barras de Ingresos por día</h3>
+        <div class="chart-container">
+          <canvas id="incomeChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>Gráfico de tipo de empresas más constituidas</h3>
+        <div class="chart-container">
+          <canvas id="companyTypeChart"></canvas>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Segunda fila: Tarjetas de reportes -->
+    <div class="reports-row">
+      <div class="report-card-container">
+        <div class="report-card">
+          <p class="report-text">REPORTE DE ESTADÍSTICAS (rubro, % de tipo de empresa, distribución geográfica, número de empresas por mes o año)</p>
+        </div>
+        <div class="export-buttons">
+          <button class="btn-export excel" (click)="exportToExcel('statistics')">
+            <i class="fas fa-file-excel"></i> Excel
+          </button>
+          <button class="btn-export pdf" (click)="exportToPDF('statistics')">
+            <i class="fas fa-file-pdf"></i> PDF
+          </button>
+        </div>
+      </div>
+  
+      <div class="report-card-container">
+        <div class="report-card">
+          <p class="report-text">Reporte anual o mensual de ingresos mensuales y anuales, mes de mayor ganancia, mes de menor ganancia y ganancia total</p>
+        </div>
+        <div class="export-buttons">
+          <button class="btn-export excel" (click)="exportToExcel('income')">
+            <i class="fas fa-file-excel"></i> Excel
+          </button>
+          <button class="btn-export pdf" (click)="exportToPDF('income')">
+            <i class="fas fa-file-pdf"></i> PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
