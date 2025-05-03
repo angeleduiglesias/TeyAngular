@@ -115,23 +115,31 @@ h3 {
     height: auto;
   }
 
-  .diagonal-step {
+  .diagonal-step,
+  .step-center,
+  .step-left,
+  .step-right {
     clip-path: none !important;
-    height: 300px;
-    margin-bottom: 10px;
+    height: 250px;
+    margin-bottom: 15px;
+    border-radius: 8px;
   }
 
-  .step_title {
-    position: relative;
-    top: auto;
-    padding-top: 20px;
-    font-size: 1.4rem;
-  }
-
+  .step_title,
   .step_description {
     position: relative;
     top: auto;
-    padding: 10px 20px;
+    transform: none;
+    padding: 10px 16px;
+    text-align: center;
+  }
+
+  .step_title {
+    font-size: 1.4rem;
+    margin-top: 20px;
+  }
+
+  .step_description {
     font-size: 1rem;
   }
 }
