@@ -18,7 +18,11 @@ export class TramitesRecientesComponent implements OnInit {
       { tipo: 'Testamento', cliente: 'María González', fecha: '18/05/2023', estado: 'En proceso' },
       { tipo: 'Poder Notarial', cliente: 'Carlos Rodríguez', fecha: '20/05/2023', estado: 'Completado' },
       { tipo: 'Escritura Pública', cliente: 'Ana Martínez', fecha: '22/05/2023', estado: 'Pendiente' },
-      { tipo: 'Contrato de Arrendamiento', cliente: 'Luis Sánchez', fecha: '25/05/2023', estado: 'En proceso' }
+      { tipo: 'Contrato de Arrendamiento', cliente: 'Luis Sánchez', fecha: '25/05/2023', estado: 'En proceso' },
+      { tipo: 'Constitución de Empresa', cliente: 'Juan Pérez', fecha: '15/05/2023', estado: 'Pendiente' },
+      { tipo: 'Testamento', cliente: 'María González', fecha: '18/05/2023', estado: 'En proceso' },
+      { tipo: 'Poder Notarial', cliente: 'Carlos Rodríguez', fecha: '20/05/2023', estado: 'Completado' }, 
+      { tipo: 'Escritura Pública', cliente: 'Ana Martínez', fecha: '22/05/2023', estado: 'Pendiente' },
     ];
   }
 

@@ -1,0 +1,65 @@
+<div class="notary-container">
+  <div class="header">
+    <h2>Gestión de Notarios</h2>
+    <div class="actions">
+      <button class="btn-add">
+        <i class="fas fa-plus"></i> Nuevo Notario
+      </button>
+      <div class="search-container">
+        <input type="text" placeholder="Buscar notario..." [(ngModel)]="searchTerm" (keyup)="applyFilter()">
+        <i class="fas fa-search"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="notary-table">
+      <thead>
+        <tr>
+          <th>Notario</th>
+          <th>Nombre completo</th>
+          <th>Contacto</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let notary of filteredNotaries">
+          <td class="notary-cell">{{ notary.notarioNombre }}</td>
+          <td>{{ notary.nombreCompleto }}</td>
+          <td class="contact-icons">
+            <a [href]="'https://wa.me/' + notary.telefono" target="_blank" class="icon-whatsapp" title="Contactar por WhatsApp">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+            <a [href]="'mailto:' + notary.email" class="icon-email" title="Enviar correo electrónico">
+              <i class="fas fa-envelope"></i>
+            </a>
+          </td>
+          <td class="actions-cell">
+            <button class="btn-action edit" (click)="editNotary(notary)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn-action delete" (click)="deleteNotary(notary.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+            <button class="btn-action view" (click)="viewNotaryDetails(notary.id)">
+              <i class="fas fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="filteredNotaries.length === 0">
+          <td colspan="5" class="no-data">No se encontraron notarios</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <span>Página {{ currentPage }} de {{ totalPages }}</span>
+    <button [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 .admin-dashboard-container {
   display: flex;
   min-height: 100vh;
-  background-color: #ffffff;
+  background-color: #f9f9f9;
 }
 
 .main-content {
@@ -80,29 +80,20 @@ app-stat-card {
 app-tramites-recientes {
   flex: 1;
   width: 100%;
-  margin-bottom: 20px;
-  margin-top: 0;
-  margin-right: 0;
 }
 
 app-pagos-recientes {
   flex: 1;
-  margin-bottom: 20px;
-  margin-left: 0;
-  margin-top: 0;
+  margin-bottom: 10px;
 }
 
 app-actividad-reciente {
   flex: 1;
-  margin-bottom: 20px;
-  margin-left: 0;
-  margin-top: 0;
 }
 
 .dashboard-footer {
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  margin-top: 40px;
   width: 100%;
   padding: 10px 0;
   color: black;

@@ -1,0 +1,139 @@
+<div class="config-container">
+  <!-- Sección de Datos Personales -->
+  <div class="personal-data-section">
+    <h2 class="section-title">Datos Personales</h2>
+    
+    <div class="form-container">
+      <div class="form-group">
+        <div class="input-icon">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="input-field">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" placeholder="Ingrese su nombre completo" [(ngModel)]="userData.nombre">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="input-icon">
+          <i class="fas fa-phone"></i>
+        </div>
+        <div class="input-field">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" placeholder="Ingrese su número de teléfono" [(ngModel)]="userData.telefono">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="input-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="input-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Ingrese su correo electrónico" [(ngModel)]="userData.email">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="input-icon">
+          <i class="fas fa-image"></i>
+        </div>
+        <div class="input-field">
+          <label for="cambiar">Cambiar</label>
+          <button id="cambiar" class="btn-cambiar">Cambiar foto de perfil</button>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div class="input-icon">
+          <i class="fas fa-lock"></i>
+        </div>
+        <div class="input-field">
+          <label for="contrasena">Contraseña</label>
+          <input type="password" id="contrasena" placeholder="Cambiar contraseña" [(ngModel)]="userData.contrasena">
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button class="btn-save" (click)="savePersonalData()">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Sección de Configuración del Sistema -->
+  <div class="system-config-section">
+    <h2 class="section-title">Configuración del Sistema</h2>
+    
+    <div class="config-layout">
+      <div class="config-sidebar">
+        <button class="sidebar-item active" (click)="changeConfigTab('general')">
+          <i class="fas fa-cog"></i>
+          <span>General</span>
+        </button>
+        <button class="sidebar-item" (click)="changeConfigTab('appearance')">
+          <i class="fas fa-palette"></i>
+          <span>Apariencia</span>
+        </button>
+        <button class="sidebar-item" (click)="changeConfigTab('security')">
+          <i class="fas fa-shield-alt"></i>
+          <span>Seguridad</span>
+        </button>
+      </div>
+      
+      <div class="config-content">
+        <div class="config-option">
+          <div class="option-label">Cambio de Landing Page</div>
+          <div class="option-control">
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="systemConfig.landingPage">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="config-option">
+          <div class="option-label">Cambio a Página de Mantenimiento</div>
+          <div class="option-control">
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="systemConfig.maintenancePage">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="config-option">
+          <div class="option-label">Modo Oscuro</div>
+          <div class="option-control">
+            <label class="switch">
+              <input type="checkbox" [(ngModel)]="systemConfig.darkMode">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="config-option">
+          <div class="option-label">Idioma</div>
+          <div class="option-control">
+            <select [(ngModel)]="systemConfig.language">
+              <option value="es">Español</option>
+              <option value="en">Inglés</option>
+              <option value="pt">Portugués</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="config-actions">
+          <button class="btn-save" (click)="saveSystemConfig()">Aplicar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast para mensajes -->
+<div class="toast" [ngClass]="{'show': showToast}">
+  <div class="toast-content">
+    <i class="fas" [ngClass]="toastIcon"></i>
+    <span>{{ toastMessage }}</span>
+  </div>
+</div>

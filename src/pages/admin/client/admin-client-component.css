@@ -1,0 +1,367 @@
+.client-container {
+  padding: 30px;
+  margin-left: 30px;
+  margin-right: 20px;
+  margin-top: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  color: #283F51;
+  margin: 0;
+  font-size: 30px;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-add {
+  background-color: #218838;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-add:hover {
+  background-color: #1a6e2e;
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-container input {
+  padding: 8px 12px;
+  padding-right: 35px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 250px;
+}
+
+.search-container i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+.table-container {
+  overflow-x: auto;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  margin-bottom: 25px;
+}
+
+.client-table {
+    width: 100%;
+    table-layout: fixed;          /* fuerza distribución fija de columnas */
+    border-collapse: collapse;    /* elimina espacios entre celdas */
+    margin: 0;
+    border-spacing: 0;
+  }
+  
+  .client-table th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* Contacto */
+  .client-table td.contact-icons {
+    width: 200px;                  /* suficiente para 2 iconos */
+    white-space: nowrap;           /* evita que los iconos se dividan en 2 líneas */          /* centrar los iconos */
+    align-items: start;;      
+  }
+  
+  /* Acciones */
+  .client-table td.actions-cell {
+    width: 140px;                  /* ancho para 3 botones */
+    white-space: nowrap;           /* que no hagan wrap */
+    text-align: center;            /* centrar los botones */             /* reducir el padding horizontal */
+    box-sizing: border-box;        /* incluir padding en el ancho */
+    display: table-cell;           /* asegurar que se comporte como celda de tabla */
+  }
+  
+.client-table th, .client-table td {
+  padding: 30px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e9ecef;
+  box-sizing: border-box;
+}
+
+.client-table th:nth-child(6), /* Columna de Contacto */
+.client-table th:nth-child(7) { /* Columna de Acciones */
+  text-align: center;
+}
+
+.client-table th {
+  background-color: #f8f9fa;
+  color: black;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.client-table th i {
+  margin-left: 2px;
+  font-size: 10px;
+}
+
+.btn-action i {
+  font-size: 12px;
+}
+
+.client-table tbody tr:hover {
+  background-color: #28a74613;
+}
+
+.progress-container {
+  width: 100%;
+  background-color: #75808b;
+  border-radius: 10px;
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #0c59e98a;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.progress-container span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.payment-status {
+  display: flex;
+  gap: 12px;
+}
+
+.payment-badge {
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.payment-badge.paid {
+  background-color: rgba(33, 136, 56, 0.1);
+  color: #218838;
+  border: 1px solid rgba(33, 136, 56, 0.3);
+}
+
+.payment-badge.unpaid {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.contact-icons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.icon-whatsapp, .icon-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.icon-whatsapp {
+  background-color: #25d365c6;
+  color: white;
+  text-decoration: none;
+}
+
+.icon-whatsapp:hover {
+  background-color: #128C7E;
+  transform: scale(1.1);
+}
+
+.icon-email {
+  background-color: #1e3b8ac9;
+  color: white;
+  text-decoration: none;
+}
+
+.icon-email:hover {
+  background-color: #152a63;
+  transform: scale(1.1);
+}
+
+.btn-action {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin: 0 2px;
+}
+
+.btn-action.edit {
+  background-color: #ffc107df;
+  color: white;
+}
+
+.btn-action.edit:hover {
+  background-color: #e0a800;
+}
+
+.btn-action.delete {
+  background-color: #dc3546da;
+  color: white;
+}
+
+.btn-action.delete:hover {
+  background-color: #bd2130;
+}
+
+.btn-action.view {
+  background-color: #1e3b8ad9;
+  color: white;
+}
+
+.btn-action.view:hover {
+  background-color: #152a63;
+}
+
+.no-data {
+  text-align: center;
+  padding: 30px !important;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.pagination button {
+  background-color: white;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pagination button:hover:not([disabled]) {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.pagination button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  color: #495057;
+  font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .actions {
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  .search-container {
+    width: 100%;
+  }
+  
+  .search-container input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .client-table th, .client-table td {
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+  
+  .payment-badge {
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+  
+  .icon-whatsapp, .icon-email {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .btn-action {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .actions-cell {
+    gap: 5px;
+    width: 100px;
+  }
+  
+  .contact-icons {
+    gap: 10px;
+  }
+  
+  .client-table {
+    min-width: 800px; /* Asegura que la tabla no se comprima demasiado */
+  }
+  
+  .table-container {
+    overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
+  }
+}
