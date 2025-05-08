@@ -37,7 +37,7 @@ export const routes: Routes = [
   { 
     path: 'admin', 
     loadComponent: () => import('../pages/admin/admin.component').then(c => c.AdminComponent),
-    canActivate: [RoleGuard],
+    //canActivate: [RoleGuard],
     data: { expectedRole: 'admin' },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

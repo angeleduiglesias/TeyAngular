@@ -9,7 +9,7 @@
 
     <!-- Tarjetas de estadísticas -->
     <div class="stats-row">
-      <app-stat-card title="clientes registrados" [value]="totalUsuarios"></app-stat-card>
+      <app-stat-card title="clientes registrados" [value]="totalClientes"></app-stat-card>
       <app-stat-card title="tramites pendientes" [value]="tramitesPendientes"></app-stat-card>
       <app-stat-card title="clientes activos" [value]="clientesActivos"></app-stat-card>
     </div>
@@ -17,9 +17,9 @@
     <!-- Contenido de dashboard -->
     <div class="dashboard-content">
       <div class="content-row">
-        <app-tramites-recientes></app-tramites-recientes>
+        <app-tramites-recientes [tramitesRecientes]="tramitesRecientes"></app-tramites-recientes>
         <div class="right-column">
-          <app-pagos-recientes></app-pagos-recientes>
+          <app-pagos-recientes [pagosRecientes]="pagosRecientes"></app-pagos-recientes>
           <app-actividad-reciente></app-actividad-reciente>
         </div>
       </div>

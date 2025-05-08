@@ -6,11 +6,11 @@
         <i class="fa fa-money-bill-wave"></i>
       </div>
       <div class="pago-info">
-        <h3 class="pago-concepto">{{ pago.concepto }}</h3>
-        <p class="pago-cliente">Cliente: {{ pago.cliente }}</p>
+        <h3 class="pago-concepto">{{ pago.tipo_pago }}</h3>
+        <p class="pago-cliente">Cliente: {{ pago.nombre_cliente }}</p>
         <div class="pago-details">
-          <p class="pago-monto">Monto: ${{ pago.monto | number:'1.2-2' }}</p>
-          <span class="pago-fecha">{{ pago.fecha }}</span>
+          <p class="pago-monto">Monto: ${{ pago.monto_pago | number:'1.2-2' }}</p>
+          <span class="pago-fecha">{{ pago.fecha_pago }}</span>
         </div>
       </div>
     </div>

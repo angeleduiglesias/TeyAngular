@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../../app/services/auth-service';
+import { environment } from '../../../environments/environment';
 
 interface Client {
   id: number;
@@ -30,77 +33,60 @@ export class AdminClientComponent implements OnInit {
   itemsPerPage: number = 10;
   totalPages: number = 1;
   
+
+  // Variables para control de carga
+  loading: boolean = false;
+  error: string = '';
+
   // Variables para ordenamiento
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     // Aquí cargarías los datos reales desde un servicio
-    this.loadMockData();
+    this.loadClients();
     this.applyFilter();
   }
 
-  loadMockData(): void {
-    // Datos de ejemplo para la tabla
-    this.clients = [
-      {
-        id: 1,
-        nombre: 'Juan Pérez',
-        dni: '12345678',
-        tipoEmpresa: 'SAC',
-        progreso: 75,
-        pago1: true,
-        pago2: false,
-        telefono: '51987654321',
-        email: 'juan.perez@example.com'
-      },
-      {
-        id: 2,
-        nombre: 'María González',
-        dni: '87654321',
-        tipoEmpresa: 'EIRL',
-        progreso: 100,
-        pago1: true,
-        pago2: true,
-        telefono: '51987123456',
-        email: 'maria.gonzalez@example.com'
-      },
-      {
-        id: 3,
-        nombre: 'Carlos Rodríguez',
-        dni: '45678912',
-        tipoEmpresa: 'SAC',
-        progreso: 30,
-        pago1: true,
-        pago2: false,
-        telefono: '51912345678',
-        email: 'carlos.rodriguez@example.com'
-      },
-      {
-        id: 4,
-        nombre: 'Ana Martínez',
-        dni: '78912345',
-        tipoEmpresa: 'SRL',
-        progreso: 50,
-        pago1: false,
-        pago2: false,
-        telefono: '51956781234',
-        email: 'ana.martinez@example.com'
-      },
-      {
-        id: 5,
-        nombre: 'Luis Sánchez',
-        dni: '32165498',
-        tipoEmpresa: 'SAC',
-        progreso: 90,
-        pago1: true,
-        pago2: true,
-        telefono: '51978563412',
-        email: 'luis.sanchez@example.com'
-      }
-    ];
+  loadClients(): void {
+    //Datos traidos desde el backend
+    this.loading = true;
+    this.error = '';
+
+    //Obtener el token del servicio de autenticación
+    const token = this.authService.getToken();
+
+    //Establecer encabezados de autorización
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+    // Realizar la petición al endpoint
+    this.http.get<Client[]>(`${environment.apiUrl}/api/cliente`, { headers })
+      .subscribe({
+        next: (response) => {
+          console.log('Clientes recibidos:', response);
+          this.clients = response;
+          this.applyFilter();
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error al cargar clientes:', error);
+          this.error = 'No se pudieron cargar los clientes. Por favor, intenta nuevamente.';
+          this.loading = false;
+          
+          // Si hay un error de autenticación (401), redirigir al login
+          if (error.status === 401) {
+            this.router.navigate(['/login']);
+          }
+        }
+      });
   }
 
   applyFilter(): void {
