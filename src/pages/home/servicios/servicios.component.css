@@ -1,8 +1,10 @@
+/* Estilos Generales y del Contenedor Principal */
 .wow-services {
     max-width: 100vw;
     padding: 40px 30px;
     background: linear-gradient(135deg, #2c4156, #406382, #101b2c);
     text-align: center;
+    overflow-y: hidden; /* Evitar scroll horizontal */
 }
 
 .container {
@@ -20,49 +22,115 @@
 .wow-services .subtitle {
     color: #d7d7d7;
     font-size: 1.2rem;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     font-weight: 300;
 }
 
+/* Estilos de la Rejilla de Servicios */
 .service-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 40px;
 }
 
-.service-card {
-    background: rgba(255, 255, 255, 0.85); /* Blanco ligeramente menos opaco */
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde aún más sutil */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra aún más suave */
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Añadimos transición al background */
+/* --- Estilos para el EFECTO FLIP --- */
+
+/* Contenedor principal de la tarjeta volteable */
+.flip-card {
+    background-color: transparent;
+    min-height: 420px;
+    height: auto; 
+    perspective: 1000px; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-    border-color: rgba(255, 255, 255, 0.4);
-    background-color: rgba(255, 255, 255, 0.95); /* Ligeramente más sólido al hacer hover */
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.7s; 
+    transform-style: preserve-3d; 
+    border-radius: 12px;
 }
 
+
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; 
+    backface-visibility: hidden; 
+    border-radius: 12px; 
+    display: flex;
+    flex-direction: column; 
+    overflow: hidden; 
+}
+
+
+.flip-card-front {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+/* Estilo del Reverso (Cara Oculta Inicialmente) */
+.flip-card-back {
+    color: #333;
+    transform: rotateY(180deg); 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    padding: 20px; 
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Colores específicos para el fondo del reverso (opcional) */
+.card-one-back { background: linear-gradient(to bottom right, #e1f5fe, #b3e5fc); }
+.card-two-back { background: linear-gradient(to bottom right, #e8f5e9, #c8e6c9); }
+.card-three-back { background: linear-gradient(to bottom right, #fff3e0, #ffe0b2); }
+
+
+/* --- Estilos del Contenido (Aplicado dentro de Front/Back) --- */
+
+/* Imagen (dentro de .flip-card-front) */
+.service-card .img-card { 
+    width: 100%;
+    height: 75%; 
+    object-fit: cover;
+    display: block;
+}
+
+/* Contenedor del contenido en el FRENTE */
 .card-content {
-    padding: 30px;
+    height: 50%; 
+    padding: 15px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
+    box-sizing: border-box;
 }
 
 .card-content i {
-    font-size: 2.2rem;
-    color: #42B483;
-    margin-bottom: 15px;
+    font-size: 2rem;
+    color: #64b5f6;
+    margin-bottom: 10px;
 }
 
 .card-content h3 {
     color: #37474f;
     font-size: 1.6rem;
+    margin-top: 0;
     margin-bottom: 10px;
     font-weight: 500;
 }
@@ -70,33 +138,78 @@
 .card-content p {
     color: #546e7a;
     font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 25px;
+    line-height: 1.5;
+    margin-bottom: 0;
 }
 
-/* Diseño Responsive */
+/* Contenedor del contenido en el REVERSO */
+.card-content-back {
+    text-align: left;
+    width: 100%;
+    max-height: 100%;
+    overflow-y: auto; 
+    padding: 5px; 
+}
+
+.card-content-back h4 {
+    color: #101b2c;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.card-content-back ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.card-content-back li {
+    color: #444;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.card-content-back li strong {
+    color: #2c4156;
+}
+
+
+/* --- Diseño Responsive --- */
 @media (max-width: 768px) {
     .wow-services h2 {
-        font-size: 2.5rem;
+        font-size: 2rem; 
     }
 
     .wow-services .subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem; 
     }
 
-    .card-content {
-        padding: 25px;
+     .flip-card {
+        min-height: 400px; 
     }
 
     .card-content i {
-        font-size: 2rem;
-        margin-bottom: 12px;
-    }
-
-    .card-content h3 {
-        font-size: 1.5rem;
+        font-size: 1.8rem; 
         margin-bottom: 8px;
     }
 
-    
+     .card-content h3 {
+        font-size: 1.4rem; 
+    }
+     .card-content p {
+        font-size: 0.9rem; 
+    }
+
+    /* Puedes ajustar tamaños de fuente del reverso si se ven muy grandes */
+    .card-content-back h4 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+     .card-content-back li {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+    }
 }
