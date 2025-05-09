@@ -29,6 +29,7 @@ export interface PagosReciente {
 
 
 interface DashboardInformation {
+  nombre_admin: string;
 
   clientes_registrados: number;
   clientes_activos: number;
@@ -52,24 +53,26 @@ interface DashboardInformation {
 export class AdminDashboardComponent implements OnInit {
   userData: any = null;
 
-  //Variables para tarjetas de estadisticas
-  totalClientes: number = 0;
-  clientesActivos: number = 0;
-  tramitesPendientes: number = 0;
-  
-  // Variables para listas
- 
-  tramitesRecientes: TramiteReciente[] = [];
-  pagosRecientes: PagosReciente[] = [];
+  // Variable para el nombre del administrador
+  nombre_admin: string = '';
 
-   // Variable para controlar estado de carga
-   cargando: boolean = true;
-   error: string = '';
-  constructor( 
+  //Variables para tarjetas de estadisticas
+  clientes_registrados: number = 0;
+  clientes_activos: number = 0;
+  tramites_pendientes: number = 0;
+
+  // Variables para listas
+  tramites_recientes: TramiteReciente[] = [];
+  pagos_recientes: PagosReciente[] = [];
+
+  // Variable para controlar estado de carga
+  cargando: boolean = true;
+  error: string = '';
+  constructor(
     private authService: AuthService,
     private router: Router,
     private http: HttpClient
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Obtener información del usuario actual
@@ -78,18 +81,18 @@ export class AdminDashboardComponent implements OnInit {
 
       this.cargarData();
     });
-    
+
     // Cargar datos del dashboard desde el backend
-    
+
   }
-  
+
   cargarData(): void {
 
     // Obtener el token de autenticación
     const token = this.authService.getToken();
-    console.log('Token usado en la petición:', token);
-     // Configurar headers con el token
-     const headers = {
+    // console.log('Token usado en la petición:', token);
+    // Configurar headers con el token
+    const headers = {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     };
@@ -98,16 +101,19 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe({
         next: (response) => {
           console.log('Datos del dashboard recibidos:', response);
-          
+
+          // Asignar el nombre del administrador al título
+          this.nombre_admin = response.nombre_admin || 'Administrador';
+
           // Asignar datos a las variables del componente
-          this.pagosRecientes = response.pagos_recientes || [];
-          this.tramitesRecientes = response.tramites_recientes || [];  
-          
+          this.pagos_recientes = response.pagos_recientes || [];
+          this.tramites_recientes = response.tramites_recientes || [];
+
           // Asignar estadísticas
-          this.totalClientes = response.clientes_registrados || 0;
-          this.clientesActivos = response.clientes_activos || 0;
-          this.tramitesPendientes = response.tramites_pendientes || 0;
-          
+          this.clientes_registrados = response.clientes_registrados || 0;
+          this.clientes_activos = response.clientes_activos || 0;
+          this.tramites_pendientes = response.tramites_pendientes || 0;
+
           // Actualizar estado de carga
           this.cargando = false;
         },
@@ -115,7 +121,7 @@ export class AdminDashboardComponent implements OnInit {
           console.error('Error al cargar datos del dashboard:', error);
           this.error = 'No se pudieron cargar los datos del dashboard. Por favor, intenta nuevamente.';
           this.cargando = false;
-          
+
           // Si hay un error de autenticación (401), redirigir al login
           if (error.status === 401) {
             this.router.navigate(['/login']);
@@ -123,7 +129,7 @@ export class AdminDashboardComponent implements OnInit {
         }
       });
   }
-    
+
   logout(): void {
     // Redirigir al componente de logout
     this.router.navigate(['/logout']);

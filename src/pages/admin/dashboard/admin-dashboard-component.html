@@ -3,23 +3,24 @@
   <!-- Contenido principal -->
   <div class="main-content">
     <div class="dashboard-header">
-      <h1>Hola Jerry</h1>
+      <!-- nombre del admin -->
+      <h1>Hola {{ nombre_admin }}</h1>
       <button class="logout-btn" (click)="logout()">cerrar sesion</button>
     </div>
 
     <!-- Tarjetas de estadísticas -->
     <div class="stats-row">
-      <app-stat-card title="clientes registrados" [value]="totalClientes"></app-stat-card>
-      <app-stat-card title="tramites pendientes" [value]="tramitesPendientes"></app-stat-card>
-      <app-stat-card title="clientes activos" [value]="clientesActivos"></app-stat-card>
+      <app-stat-card title="clientes registrados" [value]="clientes_registrados"></app-stat-card>
+      <app-stat-card title="tramites pendientes" [value]="tramites_pendientes"></app-stat-card>
+      <app-stat-card title="clientes activos" [value]="clientes_activos"></app-stat-card>
     </div>
 
     <!-- Contenido de dashboard -->
     <div class="dashboard-content">
       <div class="content-row">
-        <app-tramites-recientes [tramitesRecientes]="tramitesRecientes"></app-tramites-recientes>
+        <app-tramites-recientes [tramitesRecientes]="tramites_recientes"></app-tramites-recientes>
         <div class="right-column">
-          <app-pagos-recientes [pagosRecientes]="pagosRecientes"></app-pagos-recientes>
+          <app-pagos-recientes [pagosRecientes]="pagos_recientes"></app-pagos-recientes>
           <app-actividad-reciente></app-actividad-reciente>
         </div>
       </div>
