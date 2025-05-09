@@ -75,23 +75,26 @@ export class AdminDashboardComponent implements OnInit {
     // Obtener información del usuario actual
     this.authService.currentUser$.subscribe(user => {
       this.userData = user;
+
+      this.cargarData();
     });
     
     // Cargar datos del dashboard desde el backend
-    this.cargarData();
+    
   }
   
   cargarData(): void {
 
     // Obtener el token de autenticación
     const token = this.authService.getToken();
+    console.log('Token usado en la petición:', token);
      // Configurar headers con el token
      const headers = {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     };
     // Realizar la petición al endpoint del dashboard
-    this.http.get<DashboardInformation>(`${environment.apiUrl}/admin/dashboard`, { headers })
+    this.http.get<DashboardInformation>(`${environment.apiUrl}/api/admin/dashboard`, { headers })
       .subscribe({
         next: (response) => {
           console.log('Datos del dashboard recibidos:', response);
