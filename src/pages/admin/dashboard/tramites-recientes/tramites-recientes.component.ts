@@ -8,20 +8,24 @@ import { TramiteReciente } from '../admin-dashboard-component';
   styleUrl: './tramites-recientes.component.css'
 })
 export class TramitesRecientesComponent implements OnInit {
-  @Input() tramitesRecientes: TramiteReciente[] = [];
+  @Input() tramites_recientes: TramiteReciente[] = [];
 
   ngOnInit(): void {
     // Aquí se cargarían los datos reales desde un servicio
-   if (this.tramitesRecientes.length === 0) {
-     this.tramitesRecientes = [
-       
-       
-     ]
-   }
+    if (this.tramites_recientes.length === 0) {
+      this.tramites_recientes = [
+
+
+      ]
+    }
   }
 
-  getIconClass(estado: string): string {
-    switch (estado.toLowerCase()) {
+  getIconClass(estado: string | null | undefined): string {
+    if (!estado) {
+      return 'fa-question-circle'; // o cualquier ícono por defecto
+    }
+
+    switch (estado) {
       case 'pendiente':
         return 'fa-clock';
       case 'en proceso':
@@ -32,4 +36,5 @@ export class TramitesRecientesComponent implements OnInit {
         return 'fa-file-alt';
     }
   }
+
 }
