@@ -2,6 +2,7 @@
 .header {
   max-width: 100vw;
   align-items: center;
+  display: flex;
   padding: 15px 0;
   background-color: #f7f7f7;
   position: sticky;
@@ -19,7 +20,7 @@
 }
 
 .logo img {
-  height: 50px;
+  height: 60px;
 }
 
 .nav-links {
@@ -32,7 +33,8 @@
   text-decoration: none;
   color: var(--azulLetra);
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
+
 }
 
 .nav-links li a:hover {

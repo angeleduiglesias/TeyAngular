@@ -1,215 +1,354 @@
 /* Estilos Generales y del Contenedor Principal */
 .wow-services {
     max-width: 100vw;
-    padding: 40px 30px;
-    background: linear-gradient(135deg, #2c4156, #406382, #101b2c);
+    padding: 30px 0;
     text-align: center;
-    overflow-y: hidden; /* Evitar scroll horizontal */
+    overflow-x: hidden;
+    background: #1e293b;  
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
 .container {
     width: 95%;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
 .wow-services h2 {
-    color: #ffffff;
-    font-size: 30px;
+    font-size: 32px;
     margin-bottom: 20px;
-    letter-spacing: 1px;
+    color: white;
+    font-weight: 600;
 }
 
 .wow-services .subtitle {
-    color: #d7d7d7;
+    color: white;
     font-size: 1.2rem;
     margin-bottom: 50px;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 /* Estilos de la Rejilla de Servicios */
 .service-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
 }
 
-/* --- Estilos para el EFECTO FLIP --- */
-
-/* Contenedor principal de la tarjeta volteable */
-.flip-card {
-    background-color: transparent;
-    min-height: 420px;
-    height: auto; 
-    perspective: 1000px; 
-    border-radius: 12px; 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-
-.flip-card-inner {
+/* Estilos de las Tarjetas */
+.service-card {
     position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.7s; 
-    transform-style: preserve-3d; 
+    height: 420px;
+    perspective: 1500px;
     border-radius: 12px;
+    transition: transform 0.3s ease;
 }
 
-
-
-.flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-}
-
-
-.flip-card-front,
-.flip-card-back {
+.card-front, .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    -webkit-backface-visibility: hidden; 
-    backface-visibility: hidden; 
-    border-radius: 12px; 
+    backface-visibility: hidden;
+    transition: transform 0.8s ease;
+    border-radius: 12px;
+    padding: 30px 20px;
     display: flex;
-    flex-direction: column; 
-    overflow: hidden; 
-}
-
-
-.flip-card-front {
-    background: rgba(255, 255, 255, 0.85);
-}
-
-/* Estilo del Reverso (Cara Oculta Inicialmente) */
-.flip-card-back {
-    color: #333;
-    transform: rotateY(180deg); 
-    display: flex; 
-    align-items: center;
-    justify-content: center;
-    padding: 20px; 
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.9);
-}
-
-/* Colores específicos para el fondo del reverso (opcional) */
-.card-one-back { background: linear-gradient(to bottom right, #e1f5fe, #b3e5fc); }
-.card-two-back { background: linear-gradient(to bottom right, #e8f5e9, #c8e6c9); }
-.card-three-back { background: linear-gradient(to bottom right, #fff3e0, #ffe0b2); }
-
-
-/* --- Estilos del Contenido (Aplicado dentro de Front/Back) --- */
-
-/* Imagen (dentro de .flip-card-front) */
-.service-card .img-card { 
-    width: 100%;
-    height: 75%; 
-    object-fit: cover;
-    display: block;
-}
-
-/* Contenedor del contenido en el FRENTE */
-.card-content {
-    height: 50%; 
-    padding: 15px 20px;
-    display: flex;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    box-sizing: border-box;
 }
 
-.card-content i {
-    font-size: 2rem;
-    color: #64b5f6;
-    margin-bottom: 10px;
+/* Colores específicos para cada tarjeta */
+.service-card:nth-child(1) .card-front {
+    background-color: white;
+    
 }
 
-.card-content h3 {
-    color: #37474f;
-    font-size: 1.6rem;
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-weight: 500;
+.service-card:nth-child(2) .card-front {
+    background-color: white; 
 }
 
-.card-content p {
-    color: #546e7a;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin-bottom: 0;
+.service-card:nth-child(3) .card-front {
+    background-color: white; 
 }
 
-/* Contenedor del contenido en el REVERSO */
-.card-content-back {
+/* Configuración base para todas las tarjetas frontales */
+.card-front {
+    transform: rotateY(0deg);
+}
+
+/* Configuración base para todas las tarjetas traseras */
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* Colores para los reversos */
+.service-card:nth-child(1) .card-back {
+    background: white;
     text-align: left;
-    width: 100%;
-    max-height: 100%;
-    overflow-y: auto; 
-    padding: 5px; 
+    justify-content: flex-start;
 }
 
-.card-content-back h4 {
-    color: #101b2c;
-    text-align: center;
-    margin-top: 0;
+.service-card:nth-child(2) .card-back {
+    background: white;
+    text-align: left;
+    justify-content: flex-start;
+}
+
+.service-card:nth-child(3) .card-back {
+    background: white;
+    text-align: left;
+    justify-content: flex-start;
+}
+
+/* Efecto hover para girar la tarjeta - CORREGIDO */
+.service-card:hover .card-front {
+    transform: rotateY(180deg);
+}
+
+.service-card:hover .card-back {
+    transform: rotateY(0deg);
+}
+
+/* Estilos del Frente de la Tarjeta */
+.card-icon {
+    width: 140px;
+    height: 140px;
     margin-bottom: 15px;
-    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.card-content-back ul {
+/* Colores específicos para los iconos */
+.service-card:nth-child(1) .card-icon i {
+    font-size: 70px;
+    color: #047857; 
+}
+
+.service-card:nth-child(2) .card-icon i {
+    font-size: 70px;
+    color:#0369a1; /* Verde para E.I.R.L */
+}
+
+.service-card:nth-child(3) .card-icon i {
+    font-size: 70px;
+    color: #bb631a; 
+}
+
+.card-front h3 {
+    font-size: 30px;
+    margin: 10px 0;
+}
+
+/* Colores específicos para los títulos */
+.service-card:nth-child(1) h3 {
+    color: #308168; 
+}
+
+.service-card:nth-child(2) h3 {
+    color: #3a7fa3;
+}
+
+.service-card:nth-child(3) h3 {
+    color: #9d521e;
+}
+
+/* Colores específicos para los párrafos de cada tarjeta */
+/* SAC - Primer párrafo */
+.service-card:nth-child(1) .card-front p:nth-of-type(1) {
+    color: #308168;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 5px 0;
+}
+
+/* SAC - Segundo párrafo (descripción) */
+.service-card:nth-child(1) .card-front p:nth-of-type(2) {
+    color: #178564;
+    margin: 5px 0;
+}
+
+/* EIRL - Primer párrafo */
+.service-card:nth-child(2) .card-front p:nth-of-type(1) {
+    color: #3a7fa3;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 5px 0;
+}
+
+/* EIRL - Segundo párrafo (descripción) */
+.service-card:nth-child(2) .card-front p:nth-of-type(2) {
+    color: #1b6791;
+    margin: 5px 0;
+}
+
+/* SRL - Segundo párrafo (descripción) */
+.service-card:nth-child(3) .card-front p:nth-of-type(1) {
+    color: #9d521e;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 5px 0;
+}
+.service-card:nth-child(3) .card-front p:nth-of-type(2) {
+    color: #cc863f;
+    margin: 5px 0;
+}
+
+
+.card-description {
+    margin: 15px 0 25px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Colores específicos para "Ver detalles" */
+.service-card:nth-child(1) .details-text {
+    color: #308168; /* Azul para S.A.C */
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.service-card:nth-child(2) .details-text {
+    color: #3a7fa3; /* Verde para E.I.R.L */
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.service-card:nth-child(3) .details-text {
+    color: #9d521e; /* Azul oscuro para S.R.L */
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.feature-list {
     list-style: none;
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
-.card-content-back li {
-    color: #444;
+.feature-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.service-card:nth-child(1) .feature-list i {
+    color: #178564;
+    font-size: 1.2rem;
+    margin-top: 3px;
+}
+.service-card:nth-child(2) .feature-list i {
+    color: #1b6791;
+    font-size: 1.2rem;
+    margin-top: 3px;
+}
+.service-card:nth-child(3) .feature-list i {
+    color: #cc863f;
+    font-size: 1.2rem;
+    margin-top: 3px;
+}
+
+
+.feature-list div {
+    flex: 1;
+}
+
+.service-card:nth-child(1) .feature-list strong {
+    display: block;
+    color: #308168;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.service-card:nth-child(2) .feature-list strong {
+    display: block;
+    color: #3a7fa3;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+.service-card:nth-child(3) .feature-list strong {
+    display: block;
+    color: #9d521e;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.service-card:nth-child(1) .feature-list p {
+    margin: 0;
+    color: #178564;
     font-size: 0.9rem;
-    margin-bottom: 8px;
     line-height: 1.4;
 }
-
-.card-content-back li strong {
-    color: #2c4156;
+.service-card:nth-child(2)  .feature-list p {
+    margin: 0;
+    color: #1b6791;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+.service-card:nth-child(3) .feature-list p {
+    margin: 0;
+    color: #cc863f;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+.note {
+    font-size: 0.8rem;
+    color: #546e7a;
+    font-style: italic;
+    margin-top: auto;
+    align-self: flex-start;
 }
 
-
-/* --- Diseño Responsive --- */
+/* Diseño Responsive */
 @media (max-width: 768px) {
     .wow-services h2 {
-        font-size: 2rem; 
+        font-size: 28px;
     }
 
     .wow-services .subtitle {
-        font-size: 1rem; 
+        font-size: 1rem;
     }
 
-     .flip-card {
-        min-height: 400px; 
+    .service-card {
+        height: 400px;
     }
 
-    .card-content i {
-        font-size: 1.8rem; 
-        margin-bottom: 8px;
+    .card-front h3 {
+        font-size: 22px;
     }
 
-     .card-content h3 {
-        font-size: 1.4rem; 
-    }
-     .card-content p {
-        font-size: 0.9rem; 
+    .feature-list strong {
+        font-size: 0.95rem;
     }
 
-    /* Puedes ajustar tamaños de fuente del reverso si se ven muy grandes */
-    .card-content-back h4 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-    }
-     .card-content-back li {
+    .feature-list p {
         font-size: 0.85rem;
-        margin-bottom: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-grid {
+        grid-template-columns: 1fr;
     }
 }

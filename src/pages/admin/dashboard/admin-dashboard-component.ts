@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../app/services/auth-service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { AdminDashboardService } from '../../../app/services/admin/admin-dashboard.service';
 
 // Importar componentes
 import { StatCardComponent } from './stat-card/stat-card.component';
@@ -27,17 +26,6 @@ export interface PagosReciente {
   fecha_pago: Date;
 }
 
-
-interface DashboardInformation {
-  nombre_admin: string;
-
-  clientes_registrados: number;
-  clientes_activos: number;
-  tramites_pendientes: number;
-  tramites_recientes: TramiteReciente[];
-  pagos_recientes: PagosReciente[];
-}
-
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
@@ -52,7 +40,6 @@ interface DashboardInformation {
 })
 export class AdminDashboardComponent implements OnInit {
   userData: any = null;
-
   // Variable para el nombre del administrador
   nombre_admin: string = '';
 
@@ -68,10 +55,11 @@ export class AdminDashboardComponent implements OnInit {
   // Variable para controlar estado de carga
   cargando: boolean = true;
   error: string = '';
+
   constructor(
     private authService: AuthService,
     private router: Router,
-    private http: HttpClient
+    private adminDashboardService: AdminDashboardService
   ) { }
 
   ngOnInit(): void {
@@ -81,39 +69,25 @@ export class AdminDashboardComponent implements OnInit {
 
       this.cargarData();
     });
-
-    // Cargar datos del dashboard desde el backend
-
   }
 
   cargarData(): void {
-
-    // Obtener el token de autenticación
-    const token = this.authService.getToken();
-    // console.log('Token usado en la petición:', token);
-    // Configurar headers con el token
-    const headers = {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    };
-    // Realizar la petición al endpoint del dashboard
-    this.http.get<DashboardInformation>(`${environment.apiUrl}/api/admin/dashboard`, { headers })
+    this.cargando = true;
+    this.error = '';
+    
+    this.adminDashboardService.getDashboardData()
       .subscribe({
         next: (response) => {
           console.log('Datos del dashboard recibidos:', response);
 
-          // Asignar el nombre del administrador al título
-          this.nombre_admin = response.nombre_admin || 'Administrador';
-
-          // Asignar datos a las variables del componente
-          this.pagos_recientes = response.pagos_recientes || [];
-          this.tramites_recientes = response.tramites_recientes || [];
-
-          // Asignar estadísticas
-          this.clientes_registrados = response.clientes_registrados || 0;
-          this.clientes_activos = response.clientes_activos || 0;
-          this.tramites_pendientes = response.tramites_pendientes || 0;
-
+       
+        // Asignar directamente los datos procesados
+        this.nombre_admin = response.nombre_admin;
+        this.pagos_recientes = response.pagos_recientes;
+        this.tramites_recientes = response.tramites_recientes;
+        this.clientes_registrados = response.clientes_registrados;
+        this.clientes_activos = response.clientes_activos;
+        this.tramites_pendientes = response.tramites_pendientes;
           // Actualizar estado de carga
           this.cargando = false;
         },

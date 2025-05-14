@@ -2,27 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AdminClientService, Client } from '../../../app/services/admin/admin-client.service';
 import { AuthService } from '../../../app/services/auth-service';
-import { environment } from '../../../environments/environment';
-
-interface Client {
-  id: number;
-  nombre: string;
-  dni: string;
-  tipoEmpresa: string;
-  progreso: number;
-  pago1: boolean;
-  pago2: boolean;
-  telefono: string;
-  email: string;
-}
 
 @Component({
   selector: 'app-admin-client',
   templateUrl: './admin-client-component.html',
   styleUrls: ['./admin-client-component.css'],
-  standalone: true,
   imports: [CommonModule, FormsModule]
 })
 export class AdminClientComponent implements OnInit {
@@ -33,7 +19,6 @@ export class AdminClientComponent implements OnInit {
   itemsPerPage: number = 10;
   totalPages: number = 1;
   
-
   // Variables para control de carga
   loading: boolean = false;
   error: string = '';
@@ -44,7 +29,7 @@ export class AdminClientComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private http: HttpClient,
+    private adminClientService: AdminClientService,
     private authService: AuthService
   ) {}
 
@@ -59,23 +44,13 @@ export class AdminClientComponent implements OnInit {
     this.loading = true;
     this.error = '';
 
-    //Obtener el token del servicio de autenticación
-    const token = this.authService.getToken();
-
-    //Establecer encabezados de autorización
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    // Realizar la petición al endpoint
-    this.http.get<Client[]>(`${environment.apiUrl}/api/cliente`, { headers })
-      .subscribe({
-        next: (response) => {
-          console.log('Clientes recibidos:', response);
-          this.clients = response;
-          this.applyFilter();
-          this.loading = false;
-        },
+    this.adminClientService.getClients()
+    .subscribe({
+      next: (response) => {
+        this.clients = response;
+        this.applyFilter();
+        this.loading = false;
+      },
         error: (error) => {
           console.error('Error al cargar clientes:', error);
           this.error = 'No se pudieron cargar los clientes. Por favor, intenta nuevamente.';
@@ -166,11 +141,21 @@ export class AdminClientComponent implements OnInit {
   deleteClient(id: number): void {
     // Implementar lógica para eliminar cliente
     if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
-      console.log('Eliminar cliente con ID:', id);
-      this.clients = this.clients.filter(client => client.id !== id);
-      this.applyFilter();
+      this.adminClientService.deleteClient(id)
+        .subscribe({
+          next: () => {
+            console.log('Cliente eliminado con éxito:', id);
+            this.clients = this.clients.filter(client => client.id !== id);
+            this.applyFilter();
+          },
+          error: (error) => {
+            console.error('Error al eliminar cliente:', error);
+            alert('No se pudo eliminar el cliente. Por favor, intenta nuevamente.');
+          }
+        });
     }
   }
+
 
   viewClientDetails(id: number): void {
     // Implementar lógica para ver detalles del cliente

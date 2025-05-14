@@ -93,8 +93,8 @@
     <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
       <i class="fas fa-chevron-left"></i>
     </button>
-    <span>Página {{ currentPage }} de {{ totalPages }}</span>
-    <button [disabled]="currentPage === totalPages" (click)="changePage(currentPage + 1)">
+    <span>Página {{ currentPage }} de {{ totalPages > 0 ? totalPages : 1 }}</span>
+    <button [disabled]="currentPage === totalPages || totalPages === 0" (click)="changePage(currentPage + 1)">
       <i class="fas fa-chevron-right"></i>
     </button>
   </div>

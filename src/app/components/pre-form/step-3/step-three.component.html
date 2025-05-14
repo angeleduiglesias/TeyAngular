@@ -1,11 +1,11 @@
 <div class="capital-container">
-  <h2>Capital Social de la empresa</h2>
+  <h2>Capital Social de la Empresa</h2>
   
   <form [formGroup]="capitalForm" (ngSubmit)="siguiente()">
     <div class="form-group">
       <label for="tipo_aporte">¿Con qué tipo de aporte de capital deseas constituir tu empresa? <span class="required">*</span></label>
       <select id="tipo_aporte" formControlName="tipo_aporte" class="form-select">
-        <option value="" disabled selected>Seleccione</option>
+        <option value="" disabled selected hidden>Seleccione</option>
         <option *ngFor="let tipo of tipo_aporte" [value]="tipo.id">{{ tipo.nombre }}</option>
       </select>
       <div *ngIf="capitalForm.get('tipo_aporte')?.invalid && capitalForm.get('tipo_aporte')?.touched" class="error-message">
@@ -16,7 +16,7 @@
     <div class="form-group">
       <label for="rango_capital">¿Cuál es el rango del capital social total de la empresa? <span class="required">*</span></label>
       <select id="rango_capital" formControlName="rango_capital" class="form-select">
-        <option value="" disabled selected>Seleccione</option>
+        <option value="" disabled selected hidden>Seleccione</option>
         <option *ngFor="let rango of rango_capital" [value]="rango.id">{{ rango.nombre }}</option>
       </select>
       <div *ngIf="capitalForm.get('rango_capital')?.invalid && capitalForm.get('rango_capital')?.touched" class="error-message">

@@ -37,7 +37,7 @@
    
     <!-- Campo de número de socios que aparece solo cuando se selecciona SA -->
     <div class="form-group socios-group" *ngIf="tipoEmpresaForm.get('tipo_empresa')?.value === 'SAC'">
-      <label for="numero_socios">Número de Socios <span class="required">*</span></label>
+      <label for="numero_socios">Elige el numero de Socios <span class="required">*</span></label>
       
       <div class="socios-options">
         <div class="option-buttons">
@@ -112,6 +112,9 @@
       <button type="button" class="primary-button" (click)="siguiente()" [disabled]="tipoEmpresaForm.invalid">
         Siguiente ›
       </button>
+    </div>
+    <div class="info-message">
+      Esta información será utilizada para la elaboración de la minuta de constitución de su empresa.
     </div>
   </form>
 </div>

@@ -58,9 +58,10 @@ export class AppComponent {
     const esRutaLogin = rutaActual.startsWith('/login');
     const esRutaAdmin = rutaActual.includes('/admin');
     const esRutaLogout = rutaActual.includes('/logout');
+    const esRutaTerminos = rutaActual.includes('/terminos');
     
-    this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaAdmin || esRutaLogout);
-    this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaAdmin || esRutaLogout);
+    this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaAdmin || esRutaLogout );
+    this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaAdmin || esRutaLogout || esRutaTerminos);
   }
 }
 

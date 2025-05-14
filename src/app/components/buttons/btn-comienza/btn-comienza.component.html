@@ -4,12 +4,24 @@
 <!-- Popup (se muestra solo si mostrarPopup es true) -->
 <div *ngIf="mostrarPopup" class="popup-overlay">
   <div class="popup-content">
-    <h1>Atención</h1>
+    <div class="popup-header">
+      <div class="info-icon">
+        <i class="fas fa-info-circle"></i>
+      </div>
+      <button class="close-icon" (click)="cerrarPopup()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <h2>Información importante</h2>
     <p>Antes de empezar, debe haber realizado la búsqueda del nombre previamente.</p>
     
     <div class="sunarp-section">
-      Sección de Ubicaciones de la SUNARP:  
-      <a href="https://www.sunarp.gob.pe/" target="_blank">Ubique la oficina más cercana a usted</a>
+      <i class="fas fa-map-marker-alt location-icon"></i>
+      <div class="sunarp-text">
+        <span>Ubicaciones SUNARP:</span>
+        <a href="https://www.sunarp.gob.pe/" target="_blank">Ubique la oficina más cercana a usted</a>
+      </div>
     </div>
 
     <div class="popup-buttons">

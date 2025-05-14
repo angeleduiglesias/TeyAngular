@@ -63,7 +63,7 @@
   
   .progress-bar {
     width: 100%;
-    min-width: unset; /* Eliminar el ancho mínimo fijo que causa desbordamiento */
+    min-width: 330px; /* Eliminar el ancho mínimo fijo que causa desbordamiento */
   }
   
   .step-indicator {

@@ -2,63 +2,52 @@
    ESTILOS GENERALES OPTIMIZADOS
 ======================= */
 .tipo-empresa-container {
-  padding: 20px;
-  border-radius: 20px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  border-radius: 10px;
+  background-color: #ffffff;
   width: 100%;
   max-width: 800px;
   margin: 15px auto;
   box-sizing: border-box;
   margin-top: 0px;
-  box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.05),
-  4px 8px 12px rgba(0, 0, 0, 0.03);
 }
 
 h2 {
-  color: #3a5875;
-  text-align: center;
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 15px;
-  font-family: 'Monserrat', sans-serif;
- 
+  color: #020817;
+  text-align: left;
+  font-size: 20px;
+  margin-bottom: 25px;
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 30px;
 }
 
 label {
   display: block;
-  margin-bottom: 6px;
-  color: #3a5875;
-  font-weight: bold;
-  font-size: 17px;
-  margin-left: 5px;
+  margin-bottom: 14px;
+  color: #020817;
+  font-size: 15px;
 }
 
 /* Opciones de tipo de empresa con selección de toda la casilla */
 .form-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 8px;
+  gap: 20px;
 }
 
 .option {
-  border: 1px solid #ced4da;
-  border-radius: 10px;
-  border-left: 4px solid #3a5875;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 5px;
   padding: 12px;
   cursor: pointer;
   position: relative;
   background-color: #ffffff;
   flex-direction: column;
   min-height: 70px;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+
 .option-content {
   display: flex;
   align-items: center; /* Alinea verticalmente el icono y el label */
@@ -66,11 +55,16 @@ label {
   margin-bottom: 5px; /* Espacio entre el icono/label y el párrafo */
   justify-content: space-between;
 }
-.option svg {
-  width: 30px;
+
+.option-content svg {
+  width: 25px;
   height: 40px;
   padding: 0;
-  border-radius: 30px;
+  stroke:#64748B; 
+  transition: stroke 0.3s ease;
+}
+.option-content input[type="radio"]:checked ~ svg {
+  stroke: #2563EB; 
 }
 
 /* Hacer que el radio button cubra toda la casilla */
@@ -86,10 +80,6 @@ label {
   z-index: 1;
 }
 
-.option:hover {
-  border-color: #28a745;
-  background-color: #28a74613;
-}
 
 /* Escondemos el radio button original y lo hacemos clickeable en toda la casilla */
 .option input[type="radio"] {
@@ -104,39 +94,36 @@ label {
   z-index: 2; /* Aumentamos el z-index para asegurar que esté por encima */
 }
 
-/* Estilo para la opción completa cuando está seleccionada */
-.option input[type="radio"]:checked {
-  border: 1px solid #28a745;
-}
 
 .option input[type="radio"]:checked ~ .option,
 .option:has(input[type="radio"]:checked) {
-  border-color: #28a745;
-  background-color: #28a74622;
-  box-shadow: 0 0 0 1px #28a745;
+  background-color: #2564eb17;
+  outline: 2.5px solid #2563EB;   /* “borde” extra */
+  outline-offset: 2px;  
+  transition: opacity 0.4s ease; /* ← aquí la “magia” en una línea */
+  opacity: 1;
 }
 
-/* Estilo para opciones seleccionadas */
+
 .option input[type="radio"]:checked + label {
-  color: #28a745;
+  color: #2563EB;
 }
 
 .option label {
-  font-weight:bold;
-  color: #212529;
+  color: #020817;
   margin-bottom: 3px;
-  font-size: 15px;
+  font-size: 14.5px;
   line-height: 1.5;
   cursor: pointer;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .option p {
   margin: 0;
-  color: #212529;
-  font-size: 13px;
+  color: #020817;
+  font-size: 13.5px;
   margin-top: 10px;
-  line-height: 1.7;
+  line-height: 1.5;
+
 }
 
 /* Inputs */
@@ -144,139 +131,80 @@ input[type="text"]
 {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ced4da;
-
-  border-radius: 10px;
-  font-size: 15px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 5px;
   color: black;
-  background-color: #ffffff;
   box-sizing: border-box;
 }
 input[type="text"]::placeholder {
-  color:#6c757d ;
+  color:#64748B; 
 }
-
-input[type="text"]:hover
- {
-  border-color: #28a745;
-  background-color: #28a74613;
+input[type="text1"]::placeholder {
+  color:#64748B; 
 }
 
 input[type="text"]:focus
  {
-  outline: none;
-  border-color: #28a745;
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+  outline: 2.5px solid #2563EB;    /* “borde” extra */
+  outline-offset: 2px;  
 }
 
 input[type="text1"] {
   display: block;
   width: 100%;
   padding: 10px;
-  margin-bottom: 6px;
-  border: 1px solid #ced4da;
-  background-color: #ffffff;
-  border-radius: 10px;
-  font-size: 16px;
-  color: black;
+  margin-bottom: 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #020817;
 
 }
 
 input[type="text1"]:focus {
-  box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
-  outline: none;
+  outline: 2.5px solid #2563EB;   /* “borde” extra */
+  outline-offset: 2px;  
 }
 
-input[type="text1"]:hover
- {
-  border-color: #28a745;
-  background-color: #28a74613;
-}
-input[type="text1"]:last-of-type {
-  margin-bottom: 16px;
-}
-input[type="text1"]::placeholder {
-  color:#6c757d ;
-}
 
 .info-label {
   display: block;
   font-size: 0.85rem;
-  color: #212529;
-  margin-bottom: 8px;
-  font-weight:lighter;
-  margin-left: 5px;
+  color: #64748B;
+  margin-bottom: 14px;
+  margin-top: 10px;
   transition: color 0.3s ease-in-out; 
 }
 
-.info-label:hover {
-  color:#dc3545;
-}
 /* Campo requerido */
 .required {
   color: #dc3545;
-  margin-left: 2px;
 }
 
 .error-message {
   color: #dc3545;
   font-size: 12px;
-  margin-top: 5px;
   padding: 5px 10px;
-  border-radius: 4px;
   font-family: 'Monserrat', sans-serif;
 }
 
-/* Botones */
-/* Button styling for step one */
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 30px;
-}
-
-/* Estilos para la sección de número de socios */
-.socios-group {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f5f7fa;
-  border-radius: 8px;
-  border-left: 4px solid #3a5875;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.socios-options {
-  margin-top: 12px;
-  padding: 10px;
-  justify-content: space-around;
-}
-
-.custom-socios-input {
-  width: 100%;
-  max-width: 300px;
-  padding: 10px 12px;
-  border: 10px solid #82b212;
-  border-radius: 6px;
-  font-size: 14px;
-}
-
-.custom-socios-input:focus {
-  outline: none;
-  border-color: #28a745;
-  background-color: #28a74613;
-  box-shadow: 0 0 0 3px rgba(58, 88, 117, 0.2);
+  margin-top: 40px;
 }
 
 .primary-button {
   padding: 12px 24px;
-  background-color: #28a745;
+  background-color: #3362c7; 
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
   display: flex;
-  margin-right: 3px;
   align-items: center;
   justify-content: center;
   min-width: 120px;
@@ -284,7 +212,7 @@ input[type="text1"]::placeholder {
 }
 
 .primary-button:hover {
-  background-color: #218838;
+  background-color:#2563EB; 
 }
 
 .primary-button:disabled {
@@ -293,6 +221,120 @@ input[type="text1"]::placeholder {
   cursor: not-allowed;
   opacity: 0.7;
 }
+
+.info-message {
+  background-color: #f0f7ff;
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 20px;
+  color: #2563EB;
+  font-size: 13px;
+  text-align: left;
+}
+
+.socios-group {
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1.5px solid #e2e8f0;
+  background-color: #fff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.socios-group label {
+  margin-bottom: 20px;
+  color: #020817;
+  font-size: 14px;
+}
+
+.socios-options {
+  margin-top: 20px;
+}
+
+.option-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.option-btn {
+  min-width: 60px;
+  height: 40px;
+  padding: 8px 15px;
+  background-color: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #64748B;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option-btn:hover {  
+  background-color: #2564eb17;
+}
+
+.option-btn.selected {
+  background-color: #2563EB; 
+  color: white;
+  border-color: #2563EB; 
+}
+
+.custom-btn {
+  background-color: #ffff;
+  min-width: 80px;
+}
+
+.custom-input-container {
+  margin-top: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.custom-socios-input::placeholder {
+  color:#64748B; 
+}
+
+.custom-socios-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 15px;
+  color: #64748B;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.custom-socios-input:focus {
+  outline: 2.5px solid #2563EB;   /* “borde” extra */
+  outline-offset: 2px;  
+}
+
+/* Aseguramos que el input personalizado tenga el estilo correcto */
+input[type="number"].custom-socios-input {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"].custom-socios-input::-webkit-outer-spin-button,
+input[type="number"].custom-socios-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 
 /* Media query para móvile  s */
 @media screen and (max-width: 767px) {
@@ -319,7 +361,7 @@ input[type="text1"]::placeholder {
   .form-actions {
     /* Cambiamos de column a row para mantener los botones en línea */
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 10px;
   }
 }
@@ -350,100 +392,4 @@ input[type="text1"]::placeholder {
 }
 
 /* Estilos para el campo de socios */
-.socios-group {
-  margin-top: 20px;
-  animation: fadeIn 0.3s ease-in-out;
-}
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.socios-group label {
-  display: block;
-  margin-bottom: 12px;
-  color: #333;
-  font-weight: 500;
-  font-size: 15px;
-}
-
-.socios-options {
-  margin-top: 10px;
-}
-
-.option-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.option-btn {
-  min-width: 60px;
-  height: 40px;
-  padding: 8px 15px;
-  background-color: #f8f9fa;
-  border: 1px solid #ced4da;
-  border-radius: 6px;
-  font-size: 14px;
-  color: #495057;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.option-btn:hover {
-  background-color: #e9ecef;
-}
-
-.option-btn.selected {
-  background-color: #28a745;
-  color: white;
-  border-color: #28a745;
-}
-
-.custom-btn {
-  background-color: #f1f1f1;
-  min-width: 80px;
-}
-
-.custom-input-container {
-  margin-top: 10px;
-  animation: fadeIn 0.3s ease-in-out;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.custom-socios-input {
-  width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #ced4da;
-  border-radius: 6px;
-  font-size: 15px;
-  color: #495057;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-.custom-socios-input:focus {
-  outline: none;
-  border-color: #28a745;
-  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
-}
-
-/* Aseguramos que el input personalizado tenga el estilo correcto */
-input[type="number"].custom-socios-input {
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
-
-input[type="number"].custom-socios-input::-webkit-outer-spin-button,
-input[type="number"].custom-socios-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}

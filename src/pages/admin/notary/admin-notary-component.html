@@ -24,8 +24,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let notary of filteredNotaries">
-          <td class="notary-cell">{{ notary.notarioNombre }}</td>
-          <td>{{ notary.nombreCompleto }}</td>
+          <td class="notary-cell">{{ notary.nombre }}</td>
+          <td>{{ notary.nombre }}</td>
           <td class="contact-icons">
             <a [href]="'https://wa.me/' + notary.telefono" target="_blank" class="icon-whatsapp" title="Contactar por WhatsApp">
               <i class="fab fa-whatsapp"></i>

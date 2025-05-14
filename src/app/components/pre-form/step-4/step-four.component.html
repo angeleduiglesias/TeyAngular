@@ -45,13 +45,13 @@
           <div *ngIf="datosPersonalesForm.get('dni')?.errors?.['required']">Campo obligatorio.</div>
           <div *ngIf="datosPersonalesForm.get('dni')?.errors?.['pattern']">Ingrese su numero de dni "Ej: 78679846".</div>
         </div>
-      </div>
-
-
-  
+      </div>   
       <div class="info-message">
         Esta información será utilizada para contactarlo respecto a su trámite de constitución de empresa.
       </div>
+
+  
+  
   
       <div *ngIf="error" class="error-message global-error">
         {{ error }}

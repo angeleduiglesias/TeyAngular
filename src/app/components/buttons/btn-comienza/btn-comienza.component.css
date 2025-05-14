@@ -1,21 +1,7 @@
-.btn-primary {
-    padding: 8px 16px;
-    background: #2ecc71;
-    color: white;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    padding: 11px;
-  }
-  
-  .btn-primary:hover {
-    background: #27ae60;
-  }
 
- /* Estilos para el botón principal */
+/* Estilos para el botón principal */
 .btn-primary {
-  background-color: #28a745;
+  background-color: #42b483;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -25,8 +11,8 @@
   transition: 0.3s;
 }
 
-.btn-:hover {
-  background-color: #218838;
+.btn-primary:hover {
+  background-color: #22cd83;
 }
 
 /* Fondo del popup con desenfoque */
@@ -35,53 +21,126 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Fondo oscuro semi-transparente */
-  backdrop-filter: blur(10px); /* Aplica desenfoque */
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 2000;
+  overflow: hidden;
 }
 
 /* Estilos del contenido del popup */
 .popup-content {
-  background: rgba(255, 255, 255, 0.9); /* Blanco con transparencia */
-  padding: 25px;
-  border-radius: 15px;
-  text-align: center;
-  max-width: 420px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: white;
+  padding: 0;
+  border-radius: 12px;
+  text-align: left;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Header del popup con onda */
+.popup-header {
+  background: linear-gradient(135deg, #37d18e, #42b483);
+  height: 100px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.popup-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: white;
+  border-radius: 100% 100% 0 0;
+  transform: translateY(50%);
+}
+
+/* Icono de información */
+.info-icon {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.info-icon i {
+  color:#42b483;
+  font-size: 24px;
+}
+
+/* Botón de cierre */
+.close-icon {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1;
 }
 
 /* Título del popup */
-.popup-content h1 {
-  color: #28a745;
-  font-size: 26px;
-  font-weight: bold;
-  margin-bottom: 10px;
+.popup-content h2 {
+  color: #333;
+  font-size: 22px;
+  font-weight: 600;
+  margin: 20px 25px 15px;
 }
 
 /* Mensaje dentro del popup */
 .popup-content p {
   font-size: 16px;
-  color: #333;
-  margin-bottom: 15px;
+  color: #555;
+  margin: 0 25px 20px;
+  line-height: 1.5;
 }
 
 /* Sección de Sunarp */
 .sunarp-section {
-  font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  background-color: #42b48329;
+  padding: 15px 25px;
+  margin: 20px 20px 20px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.location-icon {
+  color: #42b483;
+  font-size: 20px;
+  margin-top: 3px;
+}
+
+.sunarp-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sunarp-text span {
+  font-weight: 600;
+  color: #42b483;
+  margin-bottom: 5px;
 }
 
 .sunarp-section a {
-  color: #007bff;
+  color: #42b483;
   text-decoration: none;
-  font-weight: normal;
+  font-weight: 500;
 }
 
 .sunarp-section a:hover {
@@ -91,36 +150,40 @@
 /* Botones */
 .popup-buttons {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 10px;
+  padding: 15px 25px 25px;
 }
 
 .btn-close {
-  background-color: #dc3545;
+  background-color: #dd1c32;
   color: white;
-  padding: 10px 15px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.3s ease;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .btn-close:hover {
-  background-color: #b52b3a;
+  background-color: #f50b26;
 }
 
 .btn-continue {
-  background-color: #6c757d;
+  background-color: #42b483;
   color: white;
-  padding: 10px 15px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.3s ease;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .btn-continue:hover {
-  background-color: #5a6268;
+  background-color: #2cc683;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }

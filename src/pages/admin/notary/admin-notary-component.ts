@@ -2,14 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
-interface Notary {
-  id: number;
-  notarioNombre: string;
-  nombreCompleto: string;
-  telefono: string;
-  email: string;
-}
+import { AdminNotaryService, Notary } from '../../../app/services/admin/admin-notary.service';
+import { AuthService } from '../../../app/services/auth-service';
 
 @Component({
   selector: 'app-admin-notary',
@@ -25,54 +19,48 @@ export class AdminNotaryComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 1;
+  
+  // Variables para control de carga
+  loading: boolean = false;
+  error: string = '';
 
-  constructor(private router: Router) {}
+  // Variables para ordenamiento
+  sortColumn: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
+  constructor(
+    private router: Router,
+    private adminNotaryService: AdminNotaryService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    // Aquí cargarías los datos reales desde un servicio
-    this.loadMockData();
-    this.applyFilter();
+    // Cargar datos desde el servicio
+    this.loadNotaries();
   }
 
-  loadMockData(): void {
-    // Datos de ejemplo para la tabla
-    this.notaries = [
-      {
-        id: 1,
-        notarioNombre: 'Notaría Lima Centro',
-        nombreCompleto: 'Juan Pérez Rodríguez',
-        telefono: '51987654321',
-        email: 'juan.perez@notaria.com'
-      },
-      {
-        id: 2,
-        notarioNombre: 'Notaría Miraflores',
-        nombreCompleto: 'María González López',
-        telefono: '51987123456',
-        email: 'maria.gonzalez@notaria.com'
-      },
-      {
-        id: 3,
-        notarioNombre: 'Notaría San Isidro',
-        nombreCompleto: 'Carlos Rodríguez Vargas',
-        telefono: '51912345678',
-        email: 'carlos.rodriguez@notaria.com'
-      },
-      {
-        id: 4,
-        notarioNombre: 'Notaría Surco',
-        nombreCompleto: 'Ana Martínez Flores',
-        telefono: '51956781234',
-        email: 'ana.martinez@notaria.com'
-      },
-      {
-        id: 5,
-        notarioNombre: 'Notaría La Molina',
-        nombreCompleto: 'Luis Sánchez Torres',
-        telefono: '51978563412',
-        email: 'luis.sanchez@notaria.com'
-      }
-    ];
+  loadNotaries(): void {
+    this.loading = true;
+    this.error = '';
+
+    this.adminNotaryService.getNotaries()
+      .subscribe({
+        next: (response) => {
+          this.notaries = response;
+          this.applyFilter();
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error al cargar notarios:', error);
+          this.error = 'No se pudieron cargar los notarios. Por favor, intenta nuevamente.';
+          this.loading = false;
+          
+          // Si hay un error de autenticación (401), redirigir al login
+          if (error.status === 401) {
+            this.router.navigate(['/login']);
+          }
+        }
+      });
   }
 
   applyFilter(): void {
@@ -81,11 +69,14 @@ export class AdminNotaryComponent implements OnInit {
     } else {
       const term = this.searchTerm.toLowerCase();
       this.filteredNotaries = this.notaries.filter(notary => 
-        notary.notarioNombre.toLowerCase().includes(term) ||
-        notary.nombreCompleto.toLowerCase().includes(term) ||
+        notary.nombre.toLowerCase().includes(term) ||
+        notary.apellidos.toLowerCase().includes(term) ||
         notary.email.toLowerCase().includes(term)
       );
     }
+    
+    // Aplicar ordenamiento si existe
+    this.sortData();
     
     // Calcular páginas
     this.totalPages = Math.ceil(this.filteredNotaries.length / this.itemsPerPage);
@@ -98,30 +89,75 @@ export class AdminNotaryComponent implements OnInit {
     this.filteredNotaries = this.filteredNotaries.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
+  sortTable(column: string): void {
+    if (this.sortColumn === column) {
+      // Si ya estamos ordenando por esta columna, cambiamos la dirección
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Si es una nueva columna, establecemos la dirección a ascendente
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    
+    this.applyFilter();
+  }
+
+  sortData(): void {
+    if (!this.sortColumn) return;
+    
+    this.filteredNotaries.sort((a: any, b: any) => {
+      const valueA = a[this.sortColumn];
+      const valueB = b[this.sortColumn];
+      
+      if (typeof valueA === 'string') {
+        const comparison = valueA.localeCompare(valueB);
+        return this.sortDirection === 'asc' ? comparison : -comparison;
+      } else {
+        const comparison = valueA - valueB;
+        return this.sortDirection === 'asc' ? comparison : -comparison;
+      }
+    });
+  }
+
+  getSortIcon(column: string): string {
+    if (this.sortColumn !== column) {
+      return 'fa-sort';
+    }
+    return this.sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down';
+  }
+
   changePage(page: number): void {
     this.currentPage = page;
     this.applyFilter();
   }
 
-
   editNotary(notary: Notary): void {
-    // Implementar lógica para editar cliente
-    console.log('Editar cliente:', notary);
-    // this.router.navigate(['/admin/clientes/editar', client.id]);
+    // Implementar lógica para editar notario
+    console.log('Editar notario:', notary);
+    // this.router.navigate(['/admin/notarios/editar', notary.id]);
   }
 
   deleteNotary(id: number): void {
-    // Implementar lógica para eliminar cliente
-    if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
-      console.log('Eliminar cliente con ID:', id);
-      this.notaries = this.notaries.filter(notary => notary.id !== id);
-      this.applyFilter();
+    // Implementar lógica para eliminar notario
+    if (confirm('¿Estás seguro de que deseas eliminar este notario?')) {
+      this.adminNotaryService.deleteNotary(id)
+        .subscribe({
+          next: () => {
+            console.log('Notario eliminado con éxito:', id);
+            this.notaries = this.notaries.filter(notary => notary.id !== id);
+            this.applyFilter();
+          },
+          error: (error) => {
+            console.error('Error al eliminar notario:', error);
+            alert('No se pudo eliminar el notario. Por favor, intenta nuevamente.');
+          }
+        });
     }
   }
 
   viewNotaryDetails(id: number): void {
-    // Implementar lógica para ver detalles del cliente
-    console.log('Ver detalles del cliente con ID:', id);
-    // this.router.navigate(['/admin/clientes/detalles', id]);
+    // Implementar lógica para ver detalles del notario
+    console.log('Ver detalles del notario con ID:', id);
+    // this.router.navigate(['/admin/notarios/detalles', id]);
   }
 }

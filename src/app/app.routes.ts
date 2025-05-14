@@ -13,6 +13,7 @@ import { AdminNotaryComponent } from '../pages/admin/notary/admin-notary-compone
 import { AdminReportsComponent } from '../pages/admin/reports/admin-reports-component';
 import { AdminConfigurationComponent } from '../pages/admin/configuration/admin-configuration-component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { TermsConditionsComponent } from '../pages/terms-conditions/terms-conditions.component';
 // Remove unused import since AuthGuard is not used in routes
 import { RoleGuard } from './guards/role-guard';
 
@@ -21,6 +22,10 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },   
+  {
+    path: 'terminos-condiciones',component:TermsConditionsComponent
+  },
+
   {
     path: 'pre-form',
     component: PreFormComponent,

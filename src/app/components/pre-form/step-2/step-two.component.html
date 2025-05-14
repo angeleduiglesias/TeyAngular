@@ -1,15 +1,21 @@
 
 
 <div class="actividades-empresa-container">
-  <h2>¿A qué actividades se dedicará tu empresa?</h2>
+  <h2>¿En qué áreas operará tu empresa?</h2>
   
   <form [formGroup]="actividadesForm" (ngSubmit)="siguiente()">
-    <select formControlName="rubro" id="rubro">
-      <option value="">Seleccione un rubro</option>
-      <option *ngFor="let rubro of rubrosDisponibles" [value]="rubro.id">
-        {{ rubro.nombre }}
-      </option>
-    </select>
+    <div class="form-group">
+      <label for="rubro">Rubro<span class="required">*</span></label>
+      <select formControlName="rubro" id="rubro" class="form-control">
+        <option value="" disabled selected hidden>Selecciona un rubro</option>
+        <option *ngFor="let rubro of rubrosDisponibles" [value]="rubro.id">
+          {{ rubro.nombre }}
+        </option>
+      </select>
+      <div *ngIf="actividadesForm.get('rubro')?.invalid && actividadesForm.get('rubro')?.touched" class="error-message">
+        Por favor selecciona un rubro
+      </div>
+    </div>
     <div class="form-group actividades-field">
       <label for="actividades">Descríbelas de manera detallada <span class="required">*</span></label>
       <textarea 
@@ -25,7 +31,7 @@
       <ul class="notes-list">
         <li>No hay un mínimo de rubros. Puede ser rubros específicos o detallados</li>
         <li>Los rubros no permitidos son:casinos o casa de apuestas, casas de cambio, constructoras, inmobiliarias y mineras.
-          <a href="javascript:void(0)" (click)="mostrarActividadesNoPermitidas()">Ver lista completa</a></li>
+          <a href="javascript:void(0)" (click)="mostrarActividadesNoPermitidas()"><br><br>Ver lista completa</a></li>
       </ul>
     </div>
     
@@ -47,7 +53,7 @@
     <h3>Actividades no permitidas</h3>
     <div class="modal-body">
       <p>Revisa la lista de las 24 actividades:</p>
-      <ol class="actividades-prohibidas-lista">
+      <ul class="actividades-prohibidas-lista">
         <li>Mineras</li>
         <li>Casa de Cambio / Cambistas</li>
         <li>Fintech</li>
@@ -72,7 +78,7 @@
         <li>Empresas de inversión</li>
         <li>Empresas de crowdfunding</li>
         <li>Empresas de comercio exterior</li>
-      </ol>
+      </ul>
       <button class="btn-entendido" (click)="cerrarModal()">Entendido</button>
     </div>
   </div>
