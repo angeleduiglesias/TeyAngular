@@ -1,21 +1,21 @@
 <div class="tramites-recientes-card">
   <h2 class="card-title">Trámites Recientes</h2>
   <div class="tramites-list">
-    <div class="tramite-item" *ngFor="let tramite of tramitesRecientes">
-      <div class="tramite-icon" [ngClass]="tramite.estado_tramite.toLowerCase()">
-        <i class="fa" [ngClass]="getIconClass(tramite.estado_tramite)"></i>
+    <div class="tramite-item" *ngFor="let tramite of tramites_recientes">
+      <div class="tramite-icon" [ngClass]="tramite.estado_tramite">
+        <i class="fas" [ngClass]="getIconClass(tramite.estado_tramite)"></i>
       </div>
       <div class="tramite-info">
         <h3 class="tramite-tipo">{{ tramite.nombre_empresa }}</h3>
         <p class="tramite-cliente">Cliente: {{ tramite.nombre_cliente }}</p>
         <div class="tramite-details">
           <p class="tramite-date">Recibido: {{ tramite.fecha_tramite }}</p>
-          <span class="status-badge" [ngClass]="tramite.estado_tramite.toLowerCase()">{{ tramite.estado_tramite }}</span>
+          <span class="status-badge" [ngClass]="tramite.estado_tramite">{{ tramite.estado_tramite }}</span>
         </div>
       </div>
     </div>
     
-    <div class="empty-state" *ngIf="tramitesRecientes.length === 0">
+    <div class="empty-state" *ngIf="tramites_recientes.length === 0">
       <p>No hay trámites recientes para mostrar</p>
     </div>
   </div>
