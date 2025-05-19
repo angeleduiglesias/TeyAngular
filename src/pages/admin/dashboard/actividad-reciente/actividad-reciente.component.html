@@ -1,19 +1,132 @@
 <div class="actividad-reciente-card">
-  <h2 class="card-title">Actividad Reciente</h2>
+  <h2 class="card-title">Reserva Minuta</h2>
   
   <div class="actividad-list">
-    <div class="actividad-item" *ngFor="let actividad of actividades">
-      <div class="actividad-icon" [ngClass]="actividad.tipo">
-        <i class="fa" [ngClass]="getIconClass(actividad.tipo)"></i>
-      </div>
+    <div class="actividad-item" *ngFor="let reserva of reservasMinuta">
       <div class="actividad-content">
-        <p class="actividad-text">{{ actividad.descripcion }}</p>
-        <span class="actividad-time">{{ actividad.tiempo }}</span>
+        <div class="reserva-info">
+          <p class="cliente-nombre"><strong>Cliente:</strong> {{ reserva.nombre_cliente }}</p>
+          
+          <div *ngIf="empresaEditando !== reserva.id" class="empresa-info">
+            <p class="empresa-nombre"><strong>Empresa:</strong> {{ reserva.nombre_empresa }}</p>
+          </div>
+          
+          <div *ngIf="empresaEditando === reserva.id" class="empresa-edicion">
+            <div class="edicion-campo">
+              <label for="nombreEmpresa"><strong>Empresa:</strong></label>
+              <input 
+                type="text" 
+                id="nombreEmpresa"
+                [(ngModel)]="nuevoNombreEmpresa" 
+                class="edicion-input"
+                placeholder="Nombre de empresa"
+                autocomplete="off"
+              >
+            </div>
+            <div class="edicion-botones">
+              <button class="btn-guardar" (click)="guardarEdicion(reserva.id)">Guardar</button>
+              <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="reserva-acciones">
+          <button class="btn-ver" *ngIf="empresaEditando !== reserva.id" (click)="verDetalles(reserva.id)">
+            <i class="fa fa-eye"></i> Ver
+          </button>
+          
+          <button *ngIf="empresaEditando !== reserva.id" class="btn-editar" (click)="iniciarEdicion(reserva.id, reserva.nombre_empresa)">
+            <i class="fa fa-edit"></i> Editar
+          </button>
+        </div>
       </div>
     </div>
     
-    <div class="empty-state" *ngIf="actividades.length === 0">
-      <p>No hay actividades recientes para mostrar</p>
+    <div class="empty-state" *ngIf="reservasMinuta.length === 0">
+      <p>No hay reservas de minutas para mostrar</p>
     </div>
   </div>
+</div>
+
+<!-- Modal para ver detalles -->
+<div class="modal-overlay" *ngIf="mostrarModal" (click)="cerrarModal()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Detalles de Reserva Minuta</h3>
+      <button class="modal-close" (click)="cerrarModal()">×</button>
+    </div>
+    <div class="modal-body" *ngIf="reservaSeleccionada">
+      <div class="detalle-item">
+        <span class="detalle-label">Cliente:</span>
+        <div class="detalle-valor-container">
+          <span class="detalle-valor">{{ reservaSeleccionada.nombre_cliente }}</span>
+          <button class="btn-copiar" (click)="copiarAlPortapapeles(reservaSeleccionada.nombre_cliente)" title="Copiar">
+            <i class="fa fa-copy"></i>
+          </button>
+        </div>
+      </div>
+      <div class="detalle-item">
+        <span class="detalle-label">Empresa:</span>
+        <div class="detalle-valor-container">
+          <span class="detalle-valor">{{ reservaSeleccionada.nombre_empresa }}</span>
+          <button class="btn-copiar" (click)="copiarAlPortapapeles(reservaSeleccionada.nombre_empresa)" title="Copiar">
+            <i class="fa fa-copy"></i>
+          </button>
+        </div>
+      </div>
+      <div class="detalle-item">
+        <span class="detalle-label">Tipo de Empresa:</span>
+        <div class="detalle-valor-container">
+          <span class="detalle-valor">{{ reservaSeleccionada.tipo_empresa }}</span>
+          <button class="btn-copiar" (click)="copiarAlPortapapeles(reservaSeleccionada.tipo_empresa)" title="Copiar">
+            <i class="fa fa-copy"></i>
+          </button>
+        </div>
+      </div>
+      <div class="detalle-item">
+        <span class="detalle-label">Posible Nombre 1:</span>
+        <div class="detalle-valor-container">
+          <span class="detalle-valor">{{ reservaSeleccionada.posible_nombre1 }}</span>
+          <button class="btn-copiar" (click)="copiarAlPortapapeles(reservaSeleccionada.posible_nombre1)" title="Copiar">
+            <i class="fa fa-copy"></i>
+          </button>
+        </div>
+      </div>
+      <div class="detalle-item">
+        <span class="detalle-label">Posible Nombre 2:</span>
+        <div class="detalle-valor-container">
+          <span class="detalle-valor">{{ reservaSeleccionada.posible_nombre2 }}</span>
+          <button class="btn-copiar" (click)="copiarAlPortapapeles(reservaSeleccionada.posible_nombre2)" title="Copiar">
+            <i class="fa fa-copy"></i>
+          </button>
+        </div>
+      </div>
+      <div class="detalle-item">
+        <span class="detalle-label">Posible Nombre 3:</span>
+        <div class="detalle-valor-container">
+          <span class="detalle-valor">{{ reservaSeleccionada.posible_nombre3 }}</span>
+          <button class="btn-copiar" (click)="copiarAlPortapapeles(reservaSeleccionada.posible_nombre3)" title="Copiar">
+            <i class="fa fa-copy"></i>
+          </button>
+        </div>
+      </div>
+      <div class="detalle-item">
+        <span class="detalle-label">Posible Nombre 4:</span>
+        <div class="detalle-valor-container">
+          <span class="detalle-valor">{{ reservaSeleccionada.posible_nombre4 }}</span>
+          <button class="btn-copiar" (click)="copiarAlPortapapeles(reservaSeleccionada.posible_nombre4)" title="Copiar">
+            <i class="fa fa-copy"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cerrar" (click)="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Mensaje de copiado -->
+<div class="copy-message" *ngIf="mensajeCopia">
+  {{ mensajeCopia }}
 </div>

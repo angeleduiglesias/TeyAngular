@@ -1,0 +1,9 @@
+<div class="payment-card">
+  <h2>Estado de Pagos</h2>
+  <div class="payment-status">
+    <div class="payment-badge" [ngClass]="estadoPago === 'Completado' ? 'completed' : 'pending'">
+      {{estadoPago === 'Completado' ? 'Pago ' + pagoActual + ' de ' + pagoTotal + ' realizado' : 
+        pagoActual > 0 ? 'Pago ' + pagoActual + ' de ' + pagoTotal + ' realizado' : 'Pago pendiente'}}
+    </div>
+  </div>
+</div>

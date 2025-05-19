@@ -12,6 +12,9 @@ import { AdminClientComponent } from '../pages/admin/client/admin-client-compone
 import { AdminNotaryComponent } from '../pages/admin/notary/admin-notary-component';
 import { AdminReportsComponent } from '../pages/admin/reports/admin-reports-component';
 import { AdminConfigurationComponent } from '../pages/admin/configuration/admin-configuration-component';
+import { ClienteConfigurationComponent } from '../pages/cliente/configuration/cliente-configuration.component';
+import { ClienteDashboardComponent } from '../pages/cliente/dashboard/cliente-dashboard-component';
+import { ClienteNotifyComponent } from '../pages/cliente/notificaciones/cliente-notify.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { TermsConditionsComponent } from '../pages/terms-conditions/terms-conditions.component';
 // Remove unused import since AuthGuard is not used in routes
@@ -42,7 +45,7 @@ export const routes: Routes = [
   { 
     path: 'admin', 
     loadComponent: () => import('../pages/admin/admin.component').then(c => c.AdminComponent),
-    //canActivate: [RoleGuard],
+    canActivate: [RoleGuard],
     data: { expectedRole: 'admin' },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -60,11 +63,19 @@ export const routes: Routes = [
     canActivate: [RoleGuard],
     data: { expectedRole: 'notario' }
   },
+  
   { 
-    path: 'cliente/dashboard', 
-    loadComponent: () => import('../pages/cliente/dashboard/cliente-dashboard-component').then(c => c.ClienteDashboardComponent),
+    path: 'cliente', 
+    loadComponent: () => import('../pages/cliente/cliente.component').then(c => c.ClienteComponent),
     canActivate: [RoleGuard],
-    data: { expectedRole: 'cliente' }
+    data: { expectedRole: 'cliente' },
+    children:[
+      {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      {path: 'dashboard', component: ClienteDashboardComponent},
+      {path: 'notificaciones', component: ClienteNotifyComponent},
+      {path: 'configuracion', component: ClienteConfigurationComponent},
+      
+    ]
   },
   // Ruta de fallback
   { path: '**', redirectTo: '', pathMatch: 'full' }

@@ -1,0 +1,18 @@
+<div class="cliente-container">
+  <!-- Navbar superior -->
+  <app-cliente-navbar 
+    [userData]="userData" 
+    [notificaciones]="notificaciones" 
+    [activeTab]="activeTab"
+    (tabChange)="changeTab($event)"
+    (logoutEvent)="logout()">
+  </app-cliente-navbar>
+
+  <!-- Contenido principal - Router outlet para cargar componentes hijos -->
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="footer">
+    Tey - 2025 Todos los derechos reservados
+  </div>
+</div>

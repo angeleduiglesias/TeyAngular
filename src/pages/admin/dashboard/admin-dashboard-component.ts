@@ -26,6 +26,17 @@ export interface PagosReciente {
   fecha_pago: Date;
 }
 
+export interface ReservaMinuta {
+  id: number;
+  nombre_cliente: string;
+  nombre_empresa: string;
+  tipo_empresa: string;
+  posible_nombre1:string;
+  posible_nombre2:string;
+  posible_nombre3:string;
+  posible_nombre4:string;
+}
+
 @Component({
   selector: 'app-admin-dashboard',
   imports: [
@@ -51,6 +62,7 @@ export class AdminDashboardComponent implements OnInit {
   // Variables para listas
   tramites_recientes: TramiteReciente[] = [];
   pagos_recientes: PagosReciente[] = [];
+  reserva_minuta: ReservaMinuta[] = [];
 
   // Variable para controlar estado de carga
   cargando: boolean = true;
@@ -88,6 +100,7 @@ export class AdminDashboardComponent implements OnInit {
         this.clientes_registrados = response.clientes_registrados;
         this.clientes_activos = response.clientes_activos;
         this.tramites_pendientes = response.tramites_pendientes;
+        this.reserva_minuta = response.reserva_minuta;
           // Actualizar estado de carga
           this.cargando = false;
         },

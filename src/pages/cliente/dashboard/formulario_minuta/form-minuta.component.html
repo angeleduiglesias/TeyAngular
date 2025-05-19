@@ -1,0 +1,118 @@
+<div class="form-card">
+  <h2>Formulario de Minuta</h2>
+  
+  <!-- Estado inicial: deshabilitado -->
+  <div *ngIf="!nombreEmpresa" class="form-disabled">
+    <p>Una vez tengamos el nombre de tu empresa te notificaremos y podrás acceder al formulario.</p>
+  </div>
+  
+  <!-- Formulario habilitado -->
+  <div *ngIf="nombreEmpresa && !formularioEnviado" class="form-enabled">
+    <!-- Pasos del formulario -->
+    <div class="form-steps">
+      <div class="step" *ngFor="let step of pasos; let i = index" 
+          [ngClass]="{'active': pasoActual === i, 'completed': pasoActual > i}">
+        {{i + 1}}
+      </div>
+    </div>
+    
+    <!-- Contenido del paso actual -->
+    <div class="step-content" [ngSwitch]="pasoActual">
+      <div *ngSwitchCase="0">
+        <h3>Información Básica</h3>
+        <!-- Campos del paso 1 -->
+        <div class="form-group">
+          <label>Nombre de la Empresa</label>
+          <input type="text" [(ngModel)]="datosFormulario.nombreEmpresa" [value]="nombreEmpresa" readonly>
+        </div>
+        <div class="form-group">
+          <label>Tipo de Sociedad</label>
+          <select [(ngModel)]="datosFormulario.tipoSociedad">
+            <option value="sas">Sociedad por Acciones Simplificada (SAS)</option>
+            <option value="ltda">Sociedad de Responsabilidad Limitada (Ltda)</option>
+            <option value="sa">Sociedad Anónima (SA)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div *ngSwitchCase="1">
+        <h3>Socios y Participación</h3>
+        <!-- Campos del paso 2 -->
+        <div class="form-group" *ngFor="let socio of datosFormulario.socios; let i = index">
+          <div class="socio-row">
+            <div>
+              <label>Nombre del Socio {{i+1}}</label>
+              <input type="text" [(ngModel)]="socio.nombre">
+            </div>
+            <div>
+              <label>Participación (%)</label>
+              <input type="number" [(ngModel)]="socio.participacion">
+            </div>
+            <button *ngIf="i > 0" class="btn-remove" (click)="eliminarSocio(i)">X</button>
+          </div>
+        </div>
+        <button class="btn-add" (click)="agregarSocio()">Agregar Socio</button>
+      </div>
+      
+      <div *ngSwitchCase="2">
+        <h3>Objeto Social</h3>
+        <!-- Campos del paso 3 -->
+        <div class="form-group">
+          <label>Actividad Principal</label>
+          <textarea [(ngModel)]="datosFormulario.objetoSocial" rows="4"></textarea>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Navegación entre pasos -->
+    <div class="form-navigation">
+      <button *ngIf="pasoActual > 0" class="btn-prev" (click)="pasoAnterior()">Anterior</button>
+      <button *ngIf="pasoActual < pasos.length - 1" class="btn-next" (click)="pasoSiguiente()">Siguiente</button>
+      <button *ngIf="pasoActual === pasos.length - 1" class="btn-submit" (click)="mostrarResumen()">Finalizar</button>
+    </div>
+  </div>
+  
+  <!-- Resumen del formulario -->
+  <div *ngIf="nombreEmpresa && mostrandoResumen && !formularioEnviado" class="form-summary">
+    <h3>Resumen de la Información</h3>
+    <div class="summary-content">
+      <p><strong>Nombre de la Empresa:</strong> {{datosFormulario.nombreEmpresa}}</p>
+      <p><strong>Tipo de Sociedad:</strong> {{getTipoSociedadTexto(datosFormulario.tipoSociedad)}}</p>
+      <p><strong>Socios:</strong></p>
+      <ul>
+        <li *ngFor="let socio of datosFormulario.socios">
+          {{socio.nombre}} - {{socio.participacion}}%
+        </li>
+      </ul>
+      <p><strong>Objeto Social:</strong> {{datosFormulario.objetoSocial}}</p>
+    </div>
+    <div class="summary-actions">
+      <button class="btn-edit" (click)="editarFormulario()">Editar</button>
+      <button class="btn-confirm" (click)="enviarFormulario()">Enviar</button>
+    </div>
+  </div>
+  
+  <!-- Formulario de pago después de enviar -->
+  <div *ngIf="formularioEnviado && !pagoConfirmado" class="payment-form">
+    <h3>Completar Pago</h3>
+    <div class="payment-methods">
+      <div class="payment-method" *ngFor="let metodo of metodosPago" 
+           [ngClass]="{'selected': metodoPagoSeleccionado === metodo.id}"
+           (click)="seleccionarMetodoPago(metodo.id)">
+        <img [src]="metodo.imagen" [alt]="metodo.nombre">
+        <span>{{metodo.nombre}}</span>
+      </div>
+    </div>
+    <button class="btn-pay" [disabled]="!metodoPagoSeleccionado" (click)="confirmarPago()">
+      Realizar Pago
+    </button>
+  </div>
+  
+  <!-- Mensaje de éxito después del pago -->
+  <div *ngIf="pagoConfirmado" class="success-message">
+    <div class="success-icon">✓</div>
+    <h3>{{userData.nombre}}, felicitaciones</h3>
+    <p>Tu empresa ({{nombreEmpresa}}) será registrada en un plazo no mayor a 10 días.</p>
+    <p>Atento a tu correo, el notario te citará a firmar.</p>
+  </div>
+</div>

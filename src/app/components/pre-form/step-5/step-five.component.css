@@ -1,14 +1,12 @@
 /* =======================
-   ESTILOS GENERALES (Pantallas medianas y grandes)
+    ESTILOS GENERALES
 ======================= */
 .pago-container {
   background-color: #fff;
-  padding: 30px;
+  padding: 25px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  max-width: 700px;
-  margin-top: 10px;
+  width: 700px; /* <<< ANCHO FIJO PARA ESCRITORIO */
+  max-width: 100%; /* Para evitar desbordamiento si 700px es más grande que el viewport */
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
@@ -17,16 +15,32 @@
 h2 {
   color: #343a40;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.subtitulo {
+  color: #6c757d;
+  font-size: 14px;
+  margin-top: 0;
   margin-bottom: 25px;
-  text-align: center;
 }
 
 h3 {
-  color: #495057;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 16px;
+  margin-top: 0;
   margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.metodo-pago-title {
+  margin-top: 25px;
+  margin-bottom: 15px;
+  color: #343a40;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 /* Estilos para las cuotas */
@@ -40,31 +54,59 @@ h3 {
 .cuota {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 15px 0;
+  align-items: flex-start;
+  padding: 12px 0;
+  gap: 20px;
   border-bottom: 1px solid #e9ecef;
 }
 
 .cuota:last-of-type {
   border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.cuota-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.cuota-numero {
+  background-color: #e9ecef;
+  color: #495057;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
 }
 
 .cuota-nombre {
   font-weight: 600;
   color: #343a40;
   font-size: 16px;
+  margin-bottom: 4px;
 }
 
 .cuota-descripcion {
   color: #6c757d;
   font-size: 14px;
-  margin-top: 5px;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .cuota-monto {
   font-weight: 600;
   color: #343a40;
   font-size: 18px;
+  text-align: right;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .costo-total {
@@ -73,7 +115,7 @@ h3 {
   align-items: center;
   padding-top: 15px;
   border-top: 1px solid #dee2e6;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .total-label {
@@ -84,30 +126,94 @@ h3 {
 
 .total-monto {
   font-weight: 700;
-  color: #343a40;
+  color: #0d6efd;
   font-size: 20px;
 }
 
 /* Sección de qué recibirás */
 .que-recibiras {
+  width: 100%;
   margin-bottom: 25px;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
-.que-recibiras h3 {
-  color: #28a745;
+.que-recibiras-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  background-color: #f8f9fa;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.que-recibiras-header h3 {
+  margin: 0;
+  color: #343a40;
   font-size: 16px;
-  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.chevron-icon {
+  color: #6c757d;
+  transition: transform 0.3s ease;
+}
+
+.chevron-icon.rotated { /* Si usas una clase para rotar el ícono con JS/Angular */
+  transform: rotate(180deg);
+}
+
+.que-recibiras-content {
+  padding: 20px;
+  box-sizing: border-box;
+  border-top: 1px solid #e9ecef;
+}
+
+.recibiras-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.recibiras-item:last-child {
+  margin-bottom: 0;
+}
+
+.check-icon {
+  color: #28a745;
+  flex-shrink: 0;
+  margin-top: 3px;
+  font-size: 1.1em;
+}
+
+.recibiras-item strong {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #343a40;
+  overflow-wrap: break-word;
+}
+
+.recibiras-item p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: break-word;
 }
 
 /* Métodos de pago */
-.metodo-pago-section {
-  margin-bottom: 25px;
-}
-
 .metodo-pago-options {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-bottom: 20px;
 }
 
 .metodo-option {
@@ -115,39 +221,58 @@ h3 {
   border: 1px solid #ced4da;
   border-radius: 8px;
   overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.metodo-option.selected {
+  border-color: #0d6efd;
+  background-color: #e7f1ff;
+}
+
+.metodo-option:hover:not(.selected) {
+  border-color: #adb5bd;
 }
 
 .metodo-option input[type="radio"] {
   position: absolute;
   opacity: 0;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
   cursor: pointer;
   z-index: 2;
 }
 
 .metodo-label {
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 15px;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.metodo-option:hover {
-  border-color: #28a745;
+.metodo-icon {
+  width: 40px;
+  height: 40px;
   background-color: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  flex-shrink: 0;
 }
 
-.metodo-option input[type="radio"]:checked + .metodo-label {
-  border-color: #28a745;
-  background-color: #f8f9fa;
+.metodo-icon svg {
+  color: #6c757d;
+  width: 20px;
+  height: 20px;
+}
+.metodo-icon i { /* Para FontAwesome */
+  color: #6c757d;
+  font-size: 1.25rem;
 }
 
-.metodo-option input[type="radio"]:checked ~ .metodo-label,
-.metodo-option:has(input[type="radio"]:checked) {
-  border-color: #28a745;
-  background-color: #f8f9fa;
-  box-shadow: 0 0 0 2px #28a745;
+.metodo-info {
+  flex: 1;
 }
 
 .metodo-title {
@@ -163,76 +288,113 @@ h3 {
   margin-bottom: 10px;
 }
 
-.tarjetas-icons, .bancos-icons {
+/* Estilos para las tarjetas */
+.tarjetas-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.tarjetas-icons i {
+  font-size: 28px;
+}
+
+.fab.fa-cc-visa {
+  color: #1a1f71;
+}
+
+.fab.fa-cc-mastercard {
+  color: #eb001b;
+}
+
+.fab.fa-cc-amex {
+  color: #006fcf;
+}
+
+.fab.fa-cc-diners-club {
+  color: #0079be;
+}
+
+/* Estilos para tarjetas de ejemplo */
+.tarjetas-ejemplo {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border: 1px dashed #ced4da;
+}
+
+.tarjetas-ejemplo h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #495057;
+}
+
+.tarjetas-botones {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
 }
 
-.tarjetas-icons img, .bancos-icons img {
-  height: 30px;
-  width: auto;
-}
-
-.transferencia-info {
-  background-color: #e7f5ff;
-  color: #1c64b3;
-  padding: 15px;
-  border-radius: 6px;
-  margin-top: 10px;
+.btn-tarjeta-ejemplo {
+  padding: 8px 12px;
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  cursor: pointer;
   font-size: 14px;
-  animation: fadeIn 0.3s ease-in-out;
+  transition: all 0.2s;
 }
 
-
-.tarjeta-info {
-  background-color: #e7f5ff;
-  color: #1c64b3;
-  padding: 15px;
-  border-radius: 6px;
-  margin-top: 10px;
-  font-size: 14px;
-  animation: fadeIn 0.3s ease-in-out;
+.btn-tarjeta-ejemplo:hover {
+  background-color: #dee2e6;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Estilos para mensaje de error */
+.error-container {
+  margin: 15px 0;
+}
+
+.error-mensaje-pago {
+  padding: 12px 15px;
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.error-mensaje-pago i {
+  font-size: 18px;
 }
 
 /* Botones y acciones */
-.form-actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  margin-top: 30px;
-}
-
-.primary-button,
-.secondary-button {
+.primary-button {
+  width: 100%;
   padding: 12px 20px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.2s ease;
+  font-weight: 500;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.primary-button {
-  display: 4;       
-  margin: 0 auto;     
-  cursor: pointer;
-  background-color: #28a745;
+  background-color: #ccc;
   color: white;
   border: none;
-  max-width: 250px;
+  margin-top: 20px;
 }
 
+.primary-button:not([disabled]) {
+  background-color: #28a745;
+}
 
-.primary-button:hover {
+.primary-button:not([disabled]):hover {
   background-color: #218838;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .primary-button:disabled {
@@ -240,31 +402,28 @@ h3 {
   cursor: not-allowed;
 }
 
-
-.error-message {
-  color: #dc3545;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.global-error {
-  background-color: #f8d7da;
-  color: #721c24;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-}
-
 .ayuda-section {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid #e9ecef;
   color: #6c757d;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.question-icon {
+  color: #0d6efd;
+  font-size: 1.1em;
 }
 
 .ayuda-section a {
-  color: #28a745;
+  color: #0d6efd;
   text-decoration: none;
+  font-weight: 500;
 }
 
 .ayuda-section a:hover {
@@ -272,26 +431,36 @@ h3 {
 }
 
 /* =======================
-   MEDIA QUERY PARA PANTALLAS PEQUEÑAS
-   (por debajo de 768px)
+    MEDIA QUERY PARA PANTALLAS PEQUEÑAS
+    (por debajo de 768px)
 ======================= */
 @media screen and (max-width: 767px) {
   .pago-container {
+    width: auto; /* Permite que el contenedor se ajuste al contenido y al max-width */
+    max-width: calc(100% - 20px); /* Asume 10px de margen a cada lado del body */
     padding: 20px;
-    margin: 0 auto;
-    max-width: calc(100% - 20px);
+    margin: 10px auto;
   }
   
   h2 {
     font-size: 20px;
+  }
+  
+  .subtitulo {
+    font-size: 14px;
     margin-bottom: 20px;
   }
   
-  h3 {
-    font-size: 16px;
+  .cuotas-container {
+    padding: 15px;
   }
   
-  .cuota-nombre, .total-label {
+  .cuota {
+    padding: 10px 0;
+    gap: 15px;
+  }
+  
+  .cuota-nombre {
     font-size: 15px;
   }
   
@@ -302,10 +471,348 @@ h3 {
   .total-monto {
     font-size: 18px;
   }
+
+  .que-recibiras-header {
+    padding: 12px;
+  }
+  .que-recibiras-content {
+    padding: 15px;
+  }
   
-  .primary-button,
-  .secondary-button {
-    font-size: 14px;
+  .metodo-label {
+    padding: 12px;
+  }
+  
+  .metodo-icon {
+    width: 36px;
+    height: 36px;
+    margin-right: 12px;
+  }
+  
+  .metodo-title {
+    font-size: 15px;
+  }
+  
+  .primary-button {
+    font-size: 15px;
     padding: 10px 16px;
   }
+}
+
+/* Para pantallas muy pequeñas */
+@media screen and (max-width: 480px) {
+  .pago-container {
+    padding: 15px;
+    max-width: calc(100% - 20px); /* Asegura que no sea más ancho que la pantalla menos un pequeño margen */
+  }
+  .cuota-info {
+    gap: 10px;
+  }
+  
+  .cuota-numero {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+  }
+  
+  .cuota-nombre {
+    font-size: 14px;
+  }
+  
+  .cuota-descripcion {
+    font-size: 12px;
+  }
+  
+  .cuota-monto {
+    font-size: 15px;
+  }
+  
+  .total-label {
+    font-size: 15px;
+  }
+  
+  .total-monto {
+    font-size: 17px;
+  }
+  .recibiras-item {
+    gap: 8px;
+  }
+  .metodo-label {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .metodo-icon {
+    margin-right: 0;
+    margin-bottom: 8px; 
+  }
+}
+
+/* Estilos para la pantalla de carga */
+.loading-content {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.4s ease;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #0d6efd;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-content h3 {
+  color: #343a40;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.loading-content p {
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-content {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.popup-icon {
+  color: #28a745;
+  margin-bottom: 20px;
+}
+
+.popup-content h3 {
+  color: #343a40;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.popup-content p {
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.countdown {
+  font-weight: bold;
+  color: #0d6efd;
+}
+
+/* Estilos para campos de tarjeta */
+.tarjeta-campos {
+  padding: 15px;
+  border-top: 1px solid #e9ecef;
+  margin-top: 10px;
+}
+
+.campo-grupo {
+  margin-bottom: 15px;
+}
+
+.campo-grupo:last-child {
+  margin-bottom: 0;
+}
+
+.dos-columnas {
+  display: flex;
+  gap: 15px;
+}
+
+.dos-columnas .campo {
+  flex: 1;
+}
+
+.campo label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #495057;
+  font-weight: 500;
+}
+
+.campo input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+.campo input:focus {
+  border-color: #0d6efd;
+  outline: none;
+}
+
+/* Eliminar estilos para datos de transferencia */
+
+/* Ajustes responsive */
+@media screen and (max-width: 480px) {
+  .dos-columnas {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .dato-bancario {
+    flex-direction: column;
+  }
+  
+  .dato-label {
+    width: 100%;
+    margin-bottom: 3px;
+  }
+}
+
+/* Añade esto al final de tu archivo CSS */
+.error-mensaje {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.campo input.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+.campo input.ng-valid.ng-touched {
+  border-color: #28a745;
+}
+
+/* Estilos para la pantalla de carga */
+.loading-content {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.4s ease;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #0d6efd;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-content h3 {
+  color: #343a40;
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.loading-content p {
+  color: #6c757d;
+  margin-bottom: 0;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-content {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.popup-icon {
+  color: #28a745;
+  margin-bottom: 20px;
+}
+
+.popup-content h3 {
+  color: #343a40;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.popup-content p {
+  color: #6c757d;
+  margin-bottom: 10px;
+}
+
+.countdown {
+  font-weight: bold;
+  color: #0d6efd;
 }

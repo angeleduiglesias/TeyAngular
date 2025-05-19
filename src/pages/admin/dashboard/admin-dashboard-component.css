@@ -9,7 +9,7 @@
   padding: 25px 30px;
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  margin-left: 10px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -89,14 +89,6 @@ app-pagos-recientes {
 
 app-actividad-reciente {
   flex: 1;
-}
-
-.dashboard-footer {
-  text-align: center;
-  margin-top: 40px;
-  width: 100%;
-  padding: 10px 0;
-  color: black;
 }
 
 /* Media queries para responsividad */

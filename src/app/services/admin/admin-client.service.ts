@@ -42,7 +42,7 @@ export class AdminClientService {
         });
 
         // Realizar la petición al endpoint
-    return this.http.get<Client[]>(`${environment.apiUrl}/api/cliente`, { headers })
+    return this.http.get<Client[]>(`${environment.apiUrl}/api//admin/cliente`, { headers })
     .pipe(
       map(response => {
         console.log('Clientes recibidos:', response);

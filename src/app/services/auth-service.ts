@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 
 // Interfaces para seguridad de tipos
 export interface User {
-  id: number;
+  id: string;
   email: string;
   rol: string;
 }

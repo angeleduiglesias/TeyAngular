@@ -1,0 +1,24 @@
+<div class="navbar-container">
+<nav class="navbar">
+  <div class="navbar-brand">
+    <h1 *ngIf="userData">Bienvenido {{ userData.nombre }}</h1>
+  </div>
+  <div class="navbar-menu">
+    <ul class="nav-links">
+      <li [class.active]="activeTab === 'tramite'">
+        <a (click)="changeTab('tramite')">Trámite</a>
+      </li>
+      <li [class.active]="activeTab === 'configuracion'">
+        <a (click)="changeTab('configuracion')">Configuración</a>
+      </li>
+      <li [class.active]="activeTab === 'notificaciones'">
+        <a (click)="changeTab('notificaciones')">
+          Notificaciones
+          <span class="notification-badge" *ngIf="notificaciones && notificaciones.length > 0">{{notificaciones.length}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+    <button class="logout-btn" (click)="logout()">Cerrar sesión</button>
+</nav>
+</div>

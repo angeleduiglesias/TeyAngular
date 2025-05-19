@@ -4,7 +4,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 20px;
   border-top: 4px solid #218838;
-  /* Se retira height: 80% para que el contenedor se ajuste al contenido */
 }
 
 .card-title {
@@ -15,71 +14,333 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-/* Se fija una altura mínima para que cada fila sea uniforme */
 .actividad-item {
   display: flex;
   align-items: flex-start;
   padding: 12px 0;
   border-bottom: 1px solid #f0f0f0;
-  min-height: 50px; /* Ajusta este valor según el contenido */
+  min-height: 50px;
 }
 
-/* El contenedor de la lista muestra 4 filas (4 x (50px + 1px de borde)) y aplica scroll vertical */
 .actividad-list {
-  max-height: calc((50px + 1px) * 5);
+  max-height: calc((80px + 1px) * 5);
   overflow-y: auto;
-}
-
-/* Estilos existentes para el ícono y contenido */
-.actividad-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px;
-  flex-shrink: 0;
-}
-
-.actividad-icon.login {
-  background-color: rgba(30, 58, 138, 0.1);
-  color: #1E3A8A;
-}
-
-.actividad-icon.documento {
-  background-color: rgba(33, 136, 56, 0.1);
-  color: #218838;
-}
-
-.actividad-icon.cliente {
-  background-color: rgba(30, 58, 138, 0.1);
-  color: #1E3A8A;
-}
-
-.actividad-icon.notificacion {
-  background-color: rgba(33, 136, 56, 0.1);
-  color: #218838;
 }
 
 .actividad-content {
   flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.actividad-text {
+.reserva-info {
+  flex: 1;
+}
+
+.cliente-nombre, .empresa-nombre {
   margin: 0 0 5px 0;
   color: #283F51;
   font-size: 14px;
 }
 
-.actividad-time {
+.reserva-acciones {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-ver, .btn-editar, .btn-guardar, .btn-cancelar {
+  padding: 6px 12px;
+  border-radius: 4px;
   font-size: 12px;
-  color: #6c757d;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+}
+
+.btn-ver {
+  background-color: #1E3A8A;
+  color: white;
+}
+
+.btn-editar {
+  background-color: #218838;
+  color: white;
+}
+
+.btn-guardar {
+  background-color: #218838;
+  color: white;
+}
+
+.btn-cancelar {
+  background-color: #dc3545;
+  color: white;
+}
+
+.empresa-edicion {
+  margin-top: 8px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.edicion-campo {
+  margin-bottom: 10px;
+}
+
+.edicion-campo label {
+  display: block;
+  margin-bottom: 5px;
+  color: #283F51;
+  font-size: 14px;
+}
+
+.edicion-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.edicion-input:focus {
+  border-color: #218838;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(33, 136, 56, 0.25);
+}
+
+.edicion-botones {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.btn-guardar, .btn-cancelar {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-guardar {
+  background-color: #218838;
+  color: white;
+}
+
+.btn-guardar:hover {
+  background-color: #1a6e2e;
+}
+
+.btn-cancelar {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-cancelar:hover {
+  background-color: #bd2130;
+}
+
+.btn-guardar:active, .btn-cancelar:active {
+  transform: scale(0.98);
 }
 
 .empty-state {
   text-align: center;
   padding: 30px 0;
   color: #6c757d;
+}
+
+
+/* Estilos para el modal - Versión mejorada */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 550px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: slideIn 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #f8f9fa;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #283F51;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #6c757d;
+  transition: color 0.2s;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.modal-close:hover {
+  color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+.modal-body {
+  padding: 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: flex-end;
+  background-color: #f8f9fa;
+}
+
+.detalle-item {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.detalle-item:hover {
+  background-color: #f8f9fa;
+}
+
+.detalle-label {
+  font-weight: 600;
+  width: 160px;
+  color: #283F51;
+  font-size: 15px;
+}
+
+.detalle-valor-container {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+}
+
+.detalle-valor {
+  flex: 1;
+  font-size: 15px;
+  color: #333;
+  word-break: break-word;
+}
+
+.btn-copiar {
+  background: none;
+  border: none;
+  color: #6c757d;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-copiar:hover {
+  color: #218838;
+  background-color: rgba(33, 136, 56, 0.1);
+}
+
+.btn-cerrar {
+  padding: 10px 20px;
+  background-color: #218838;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-cerrar:hover {
+  background-color: #1a6e2e;
+}
+
+/* Mensaje de copiado */
+.copy-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #218838;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+  animation: fadeInOut 2s ease;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(20px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-20px); }
 }
 

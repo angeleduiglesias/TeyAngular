@@ -1,0 +1,14 @@
+<div class="progress-card">
+  <h2>Progreso del Trámite</h2>
+  <div class="progress-info">
+    <div class="progress-date">
+      <span>Fecha de inicio: {{fechaInicioTramite | date:'dd/MM/yyyy'}}</span>
+    </div>
+    <div class="progress-status">
+      <span [ngClass]="'status-' + estadoTramite.toLowerCase()">{{estadoTramite}}</span>
+    </div>
+  </div>
+  <div class="progress-bar-container">
+    <div class="progress-bar" [style.width.%]="porcentajeProgreso"></div>
+  </div>
+</div>

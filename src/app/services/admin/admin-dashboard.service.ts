@@ -4,7 +4,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth-service';
-import { TramiteReciente, PagosReciente } from '../../../pages/admin/dashboard/admin-dashboard-component';
+import { TramiteReciente, PagosReciente, ReservaMinuta} from '../../../pages/admin/dashboard/admin-dashboard-component';
 
 export interface DashboardInformation {
   nombre_admin: string;
@@ -13,6 +13,7 @@ export interface DashboardInformation {
   tramites_pendientes: number;
   tramites_recientes: TramiteReciente[];
   pagos_recientes: PagosReciente[];
+  reserva_minuta: ReservaMinuta[]; // Añadido para la nueva estructura de datos
 }
 
 @Injectable({
@@ -45,12 +46,14 @@ export class AdminDashboardService {
         map(response => {
           // Procesar la respuesta antes de devolverla
           return {
-            nombre_admin: response.nombre_admin || 'Administrador',
+            nombre_admin: response.nombre_admin || 'admin',
             pagos_recientes: response.pagos_recientes || [],
             tramites_recientes: response.tramites_recientes || [],
             clientes_registrados: response.clientes_registrados || 0,
             clientes_activos: response.clientes_activos || 0,
-            tramites_pendientes: response.tramites_pendientes || 0
+            tramites_pendientes: response.tramites_pendientes || 0,
+            reserva_minuta: response.reserva_minuta || [], // Añadido para la nueva estructura de datos
+            
           };
         }),
         catchError(error => {

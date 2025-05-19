@@ -1,0 +1,31 @@
+<div class="config-container">
+  <div class="config-card">
+    <h2>Configuración de la Cuenta</h2>
+    <div class="config-form">
+      <div class="form-group">
+        <label>Nombre</label>
+        <input type="text" [value]="userData?.nombre || ''" disabled>
+      </div>
+      <div class="form-group">
+        <label>Correo Electrónico</label>
+        <input type="email" [value]="userData?.email || ''" disabled>
+      </div>
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input type="tel" [(ngModel)]="userData.telefono">
+      </div>
+      <div class="form-group">
+        <label>Preferencia de Notificaciones</label>
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" [(ngModel)]="configNotificaciones.email"> Email
+          </label>
+          <label>
+            <input type="checkbox" [(ngModel)]="configNotificaciones.sms"> SMS
+          </label>
+        </div>
+      </div>
+      <button class="btn-save" (click)="guardarConfiguracion()">Guardar Cambios</button>
+    </div>
+  </div>
+</div>
