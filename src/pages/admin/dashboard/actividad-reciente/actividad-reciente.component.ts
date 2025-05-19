@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ReservaMinuta } from '../admin-dashboard-component';
+import { ReservaNombre } from '../admin-dashboard-component';
 
 @Component({
   selector: 'app-actividad-reciente',
@@ -11,18 +11,18 @@ import { ReservaMinuta } from '../admin-dashboard-component';
   styleUrl: './actividad-reciente.component.css'
 })
 export class ActividadRecienteComponent implements OnInit {
-  @Input() reservasMinuta: ReservaMinuta[] = [];
+  @Input() reservasNombre: ReservaNombre[] = [];
   empresaEditando: number | null = null;
   nuevoNombreEmpresa: string = '';
   
   // Variables para el modal
   mostrarModal: boolean = false;
-  reservaSeleccionada: ReservaMinuta | null = null;
+  reservaSeleccionada: ReservaNombre | null = null;
 
   ngOnInit(): void {
     // Si no se reciben datos, usar datos de ejemplo
-    if (this.reservasMinuta.length === 0) {
-      this.reservasMinuta = [
+    if (this.reservasNombre.length === 0) {
+      this.reservasNombre = [
         {
           id: 1,
           nombre_cliente: 'Juan Pérez',
@@ -64,7 +64,7 @@ export class ActividadRecienteComponent implements OnInit {
 
   guardarEdicion(id: number): void {
     // Buscar la reserva por ID
-    const reserva = this.reservasMinuta.find(r => r.id === id);
+    const reserva = this.reservasNombre.find(r => r.id === id);
     if (reserva && this.nuevoNombreEmpresa.trim()) {
       // Actualizar el nombre de la empresa
       reserva.nombre_empresa = this.nuevoNombreEmpresa.trim();
@@ -85,7 +85,7 @@ export class ActividadRecienteComponent implements OnInit {
 
   verDetalles(id: number): void {
     // Buscar la reserva por ID
-    const reserva = this.reservasMinuta.find(r => r.id === id);
+    const reserva = this.reservasNombre.find(r => r.id === id);
     if (reserva) {
       this.reservaSeleccionada = reserva;
       this.mostrarModal = true;

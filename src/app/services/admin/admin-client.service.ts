@@ -11,6 +11,9 @@ export interface Client {
     nombre: string;
     dni: string;
     tipoEmpresa: string;
+    estado: string;
+    apellidos: string;
+    created_at: string;
     progreso: number;
     pago1: boolean;
     pago2: boolean;
@@ -42,11 +45,32 @@ export class AdminClientService {
         });
 
         // Realizar la petición al endpoint
-    return this.http.get<Client[]>(`${environment.apiUrl}/api//admin/cliente`, { headers })
+    return this.http.get<Client[]>(`${environment.apiUrl}/api/admin/clientes`, { headers })
     .pipe(
       map(response => {
         console.log('Clientes recibidos:', response);
-        return response;
+        // Transformar los datos recibidos para adaptarlos a nuestra interfaz
+        return response.map(cliente => {
+          // Crear un objeto que cumpla con nuestra interfaz
+          const clienteFormateado: Client = {
+            id: cliente.id,
+            nombre: cliente.nombre || '',
+            apellidos: cliente.apellidos || '',
+            dni: cliente.dni || '',
+            telefono: cliente.telefono || '',
+            email: cliente.email || 'No especificado',
+            estado: cliente.estado || 'pendiente',
+            // Usar created_at como fechaRegistro
+            created_at: cliente.created_at || new Date().toISOString(),
+            // Campos que podrían no venir del backend
+            tipoEmpresa: cliente.tipoEmpresa || 'No especificado',
+                    progreso: cliente.progreso || 0,
+            pago1: !!cliente.pago1, // Convertir a booleano
+            pago2: !!cliente.pago2, // Convertir a booleano,
+            };
+          
+          return clienteFormateado;
+        });
       }),
       catchError(error => {
         console.error('Error al cargar clientes:', error);
@@ -63,27 +87,6 @@ export class AdminClientService {
         }
         
         // Propagar el error para que el componente pueda manejarlo
-        return throwError(() => error);
-      })
-    );
-}
-
-/**
- * Elimina un cliente por su ID
- * @param id ID del cliente a eliminar
- * @returns Observable con la respuesta del servidor
- */
-deleteClient(id: number): Observable<any> {
-  const token = this.authService.getToken();
-  const headers = new HttpHeaders({
-    'Authorization': `Bearer ${token}`,
-    'Content-Type': 'application/json'
-  });
-  
-  return this.http.delete(`${environment.apiUrl}/api/cliente/${id}`, { headers })
-    .pipe(
-      catchError(error => {
-        console.error(`Error al eliminar cliente con ID ${id}:`, error);
         return throwError(() => error);
       })
     );

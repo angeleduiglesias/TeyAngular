@@ -26,7 +26,7 @@ export interface PagosReciente {
   fecha_pago: Date;
 }
 
-export interface ReservaMinuta {
+export interface ReservaNombre {
   id: number;
   nombre_cliente: string;
   nombre_empresa: string;
@@ -62,7 +62,7 @@ export class AdminDashboardComponent implements OnInit {
   // Variables para listas
   tramites_recientes: TramiteReciente[] = [];
   pagos_recientes: PagosReciente[] = [];
-  reserva_minuta: ReservaMinuta[] = [];
+  reserva_nombre: ReservaNombre[] = [];
 
   // Variable para controlar estado de carga
   cargando: boolean = true;
@@ -100,7 +100,7 @@ export class AdminDashboardComponent implements OnInit {
         this.clientes_registrados = response.clientes_registrados;
         this.clientes_activos = response.clientes_activos;
         this.tramites_pendientes = response.tramites_pendientes;
-        this.reserva_minuta = response.reserva_minuta;
+        this.reserva_nombre = response.reserva_nombre;
           // Actualizar estado de carga
           this.cargando = false;
         },

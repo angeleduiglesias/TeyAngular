@@ -34,7 +34,6 @@ export class AdminClientComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Aquí cargarías los datos reales desde un servicio
     this.loadClients();
     this.applyFilter();
   }
@@ -132,34 +131,46 @@ export class AdminClientComponent implements OnInit {
     this.applyFilter();
   }
 
-  editClient(client: Client): void {
-    // Implementar lógica para editar cliente
-    console.log('Editar cliente:', client);
-    // this.router.navigate(['/admin/clientes/editar', client.id]);
-  }
-
-  deleteClient(id: number): void {
-    // Implementar lógica para eliminar cliente
-    if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
-      this.adminClientService.deleteClient(id)
-        .subscribe({
-          next: () => {
-            console.log('Cliente eliminado con éxito:', id);
-            this.clients = this.clients.filter(client => client.id !== id);
-            this.applyFilter();
-          },
-          error: (error) => {
-            console.error('Error al eliminar cliente:', error);
-            alert('No se pudo eliminar el cliente. Por favor, intenta nuevamente.');
-          }
-        });
+  // Añadir estas propiedades a la clase
+  showClientModal = false;
+  selectedClient: any = null;
+  
+  // Modificar el método existente
+  viewClientDetails(id: number): void {
+    // Buscar el cliente por ID
+    const client = this.filteredClients.find(c => c.id === id);
+    if (client) {
+      this.selectedClient = client;
+      this.showClientModal = true;
     }
   }
-
-
-  viewClientDetails(id: number): void {
-    // Implementar lógica para ver detalles del cliente
-    console.log('Ver detalles del cliente con ID:', id);
-    // this.router.navigate(['/admin/clientes/detalles', id]);
+  
+  // Añadir estos nuevos métodos
+  closeClientModal(): void {
+    this.showClientModal = false;
+    this.selectedClient = null;
+  }
+  
+  getStatusClass(status: string): string {
+    switch (status?.toLowerCase()) {
+      case 'activo':
+        return 'status-active';
+      case 'pendiente':
+        return 'status-pending';
+      case 'inactivo':
+        return 'status-inactive';
+      default:
+        return '';
+    }
+  }
+  
+  contactClient(method: string, contact: string): void {
+    if (!contact) return;
+    
+    if (method === 'whatsapp') {
+      window.open(`https://wa.me/${contact}`, '_blank');
+    } else if (method === 'email') {
+      window.open(`mailto:${contact}`, '_blank');
+    }
   }
 }

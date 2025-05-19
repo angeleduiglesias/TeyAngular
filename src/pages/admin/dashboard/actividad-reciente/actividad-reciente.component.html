@@ -1,8 +1,8 @@
 <div class="actividad-reciente-card">
-  <h2 class="card-title">Reserva Minuta</h2>
+  <h2 class="card-title">Reserva Nombre</h2>
   
   <div class="actividad-list">
-    <div class="actividad-item" *ngFor="let reserva of reservasMinuta">
+    <div class="actividad-item" *ngFor="let reserva of reservasNombre">
       <div class="actividad-content">
         <div class="reserva-info">
           <p class="cliente-nombre"><strong>Cliente:</strong> {{ reserva.nombre_cliente }}</p>
@@ -42,7 +42,7 @@
       </div>
     </div>
     
-    <div class="empty-state" *ngIf="reservasMinuta.length === 0">
+    <div class="empty-state" *ngIf="reservasNombre.length === 0">
       <p>No hay reservas de minutas para mostrar</p>
     </div>
   </div>
