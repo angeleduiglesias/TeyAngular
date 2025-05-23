@@ -2,9 +2,6 @@
   <div class="header">
     <h2>Gestión de Clientes</h2>
     <div class="actions">
-      <button class="btn-add">
-        <i class="fas fa-plus"></i> Nuevo Cliente
-      </button>
       <div class="search-container">
         <input type="text" placeholder="Buscar cliente..." [(ngModel)]="searchTerm" (keyup)="applyFilter()">
         <i class="fas fa-search"></i>
@@ -43,9 +40,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let client of filteredClients">
-          <td>{{ client.nombre }}</td>
+          <td>{{ client.nombre_cliente }}</td>
           <td>{{ client.dni }}</td>
-          <td>{{ client.tipoEmpresa }}</td>
+          <td>{{ client.tipo_empresa }}</td>
           <td>
             <div class="progress-container">
               <div class="progress-bar" [style.width.%]="client.progreso"></div>
@@ -63,7 +60,7 @@
             </div>
           </td>
           <td class="contact-icons">
-            <a [href]="'https://wa.me/' + client.telefono" target="_blank" class="icon-whatsapp" title="Contactar por WhatsApp">
+            <a [href]="'https://wa.me/' + client.contacto" target="_blank" class="icon-whatsapp" title="Contactar por WhatsApp">
               <i class="fab fa-whatsapp"></i>
             </a>
             <a [href]="'mailto:' + client.email" class="icon-email" title="Enviar correo electrónico">
@@ -109,7 +106,7 @@
           
           <div class="info-group">
             <div class="info-label">Nombre:</div>
-            <div class="info-value">{{ selectedClient.nombre }}</div>
+            <div class="info-value">{{ selectedClient.nombre_cliente }}</div>
           </div>
           
           <div class="info-group">
@@ -124,12 +121,12 @@
           
           <div class="info-group">
             <div class="info-label">Teléfono:</div>
-            <div class="info-value">{{ selectedClient.telefono }}</div>
+            <div class="info-value">{{ selectedClient.contacto }}</div>
           </div>
           
           <div class="info-group">
             <div class="info-label">Tipo de Empresa:</div>
-            <div class="info-value">{{ selectedClient.tipoEmpresa }}</div>
+            <div class="info-value">{{ selectedClient.tipo_empresa }}</div>
           </div>
           
           <div class="info-group">

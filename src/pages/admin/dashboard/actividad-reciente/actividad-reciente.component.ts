@@ -23,36 +23,7 @@ export class ActividadRecienteComponent implements OnInit {
     // Si no se reciben datos, usar datos de ejemplo
     if (this.reservasNombre.length === 0) {
       this.reservasNombre = [
-        {
-          id: 1,
-          nombre_cliente: 'Juan Pérez',
-          nombre_empresa: 'Inversiones JP S.A.C.',
-          tipo_empresa: 'SAC',
-          posible_nombre1: 'JP Inversiones',
-          posible_nombre2: 'Grupo JP',
-          posible_nombre3: 'JP Capital',
-          posible_nombre4: 'JP Consulting'
-        },
-        {
-          id: 2,
-          nombre_cliente: 'María López',
-          nombre_empresa: 'Tech Solutions E.I.R.L.',
-          tipo_empresa: 'EIRL',
-          posible_nombre1: 'ML Solutions',
-          posible_nombre2: 'Tech ML',
-          posible_nombre3: 'ML Tech',
-          posible_nombre4: 'Solutions ML'
-        },
-        {
-          id: 3,
-          nombre_cliente: 'Carlos Rodríguez',
-          nombre_empresa: 'Constructora CR S.A.',
-          tipo_empresa: 'SA',
-          posible_nombre1: 'CR Construcciones',
-          posible_nombre2: 'Grupo Constructor CR',
-          posible_nombre3: 'CR Edificaciones',
-          posible_nombre4: 'Constructora Rodríguez'
-        }
+       
       ];
     }
   }

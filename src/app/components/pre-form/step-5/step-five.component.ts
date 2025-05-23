@@ -129,7 +129,15 @@ export class StepFiveComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Recuperar el DNI guardado en localStorage
+    const dniUsuario = localStorage.getItem('dni_usuario');
+    if (dniUsuario) {
+      console.log('DNI recuperado para el paso 5:', dniUsuario);
+      // Aquí puedes usar el DNI como necesites en este paso
+      // Por ejemplo, mostrarlo en algún campo o usarlo para alguna validación
+    }
+  }
 
   toggleQueRecibiras(): void {
     this.mostrarQueRecibiras = !this.mostrarQueRecibiras;
@@ -147,6 +155,7 @@ export class StepFiveComponent implements OnInit {
       
       // Crear objeto con los datos del pago (simplificado)
       const datosPago = {
+        dni_usuario: localStorage.getItem('dni_usuario'),
         estado: 'pagado',
         monto: 100.00,
         fecha: new Date(),
@@ -178,7 +187,7 @@ export class StepFiveComponent implements OnInit {
               this.mostrarCargando = false;
               this.mostrarPopup = true;
               this.iniciarCuentaRegresiva();
-            },
+              },
             error: (error) => {
               console.error('Error al enviar datos al backend:', error);
               // Continuamos con el flujo de éxito para demostración

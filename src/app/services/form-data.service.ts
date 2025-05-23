@@ -23,11 +23,17 @@ export class FormDataService {
             // Guardar solo los datos completos finales
             localStorage.setItem('datos_completos', JSON.stringify(datosCompletos));
             
+            // Guardar el DNI para el paso 5
+            if (datosCompletos.dni) {
+              localStorage.setItem('dni_usuario', datosCompletos.dni);
+            }
+            
             // Eliminar datos temporales
             localStorage.removeItem('step_one_data');
             localStorage.removeItem('step_two_data');
             localStorage.removeItem('step_three_data');
-            console.log('Datos temporales eliminados del localStorage');
+            localStorage.removeItem('step_four_data');
+            console.log('Datos temporales eliminados del localStorage, DNI guardado para paso 5');
           }
         }),
         catchError(error => {

@@ -16,15 +16,15 @@
     <table class="notary-table">
       <thead>
         <tr>
-          <th>Notario</th>
-          <th>Nombre completo</th>
+          <th>Apellidos</th>
+          <th>Nombre</th>
           <th>Contacto</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let notary of filteredNotaries">
-          <td class="notary-cell">{{ notary.nombre }}</td>
+          <td class="notary-cell">{{ notary.apellidos }}</td>
           <td>{{ notary.nombre }}</td>
           <td class="contact-icons">
             <a [href]="'https://wa.me/' + notary.telefono" target="_blank" class="icon-whatsapp" title="Contactar por WhatsApp">

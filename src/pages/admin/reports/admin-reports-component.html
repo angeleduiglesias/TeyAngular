@@ -15,11 +15,29 @@
       </div>
     </div>
   
-    <!-- Segunda fila: Tarjetas de reportes -->
+    <!-- Segunda fila: Tarjetas de reportes con checklist -->
     <div class="reports-row">
       <div class="report-card-container">
         <div class="report-card">
-          <p class="report-text">REPORTE DE ESTADÍSTICAS (rubro, % de tipo de empresa, distribución geográfica, número de empresas por mes o año)</p>
+          <h4>REPORTE DE ESTADÍSTICAS</h4>
+          <div class="checklist-container">
+            <div class="checklist-item">
+              <input type="checkbox" id="rubro" [(ngModel)]="statisticsOptions.rubro" checked>
+              <label for="rubro">Rubro</label>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="tipoEmpresa" [(ngModel)]="statisticsOptions.tipoEmpresa" checked>
+              <label for="tipoEmpresa">Tipo de empresa</label>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ubicacion" [(ngModel)]="statisticsOptions.ubicacion" checked>
+              <label for="ubicacion">Distribución geográfica</label>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="cantidad" [(ngModel)]="statisticsOptions.cantidad" checked>
+              <label for="cantidad">Número de empresas</label>
+            </div>
+          </div>
         </div>
         <div class="export-buttons">
           <button class="btn-export excel" (click)="exportToExcel('statistics')">
@@ -33,7 +51,25 @@
   
       <div class="report-card-container">
         <div class="report-card">
-          <p class="report-text">Reporte anual o mensual de ingresos mensuales y anuales, mes de mayor ganancia, mes de menor ganancia y ganancia total</p>
+          <h4>REPORTE DE INGRESOS</h4>
+          <div class="checklist-container">
+            <div class="checklist-item">
+              <input type="checkbox" id="ingresos" [(ngModel)]="incomeOptions.ingresos" checked>
+              <label for="ingresos">Ingresos mensuales</label>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="gastos" [(ngModel)]="incomeOptions.gastos" checked>
+              <label for="gastos">Gastos mensuales</label>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ganancia" [(ngModel)]="incomeOptions.ganancia" checked>
+              <label for="ganancia">Ganancia mensual</label>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="resumen" [(ngModel)]="incomeOptions.resumen" checked>
+              <label for="resumen">Resumen anual</label>
+            </div>
+          </div>
         </div>
         <div class="export-buttons">
           <button class="btn-export excel" (click)="exportToExcel('income')">

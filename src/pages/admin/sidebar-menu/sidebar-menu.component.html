@@ -47,4 +47,10 @@
   </div>
   
   <div class="menu-item-spacer"></div>
+  
+<!-- Botón de cerrar sesión -->
+<div class="menu-item logout-item" (click)="logout()" tabindex="0" (keydown.enter)="logout()">
+  <i class="fas fa-sign-out-alt"></i>
+  <span *ngIf="!collapsed">Cerrar sesión</span>
+</div>
 </div>

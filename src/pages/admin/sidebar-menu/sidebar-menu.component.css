@@ -257,3 +257,15 @@
     display: none !important; /* Forzar ocultamiento en móviles */
   }
 }
+
+
+/* Estilo para el botón de cerrar sesión */
+.logout-item {
+  margin-bottom: 16px;
+  color: #ff6b6b;
+}
+
+.logout-item:hover {
+  background-color: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+}

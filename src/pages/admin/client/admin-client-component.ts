@@ -30,7 +30,7 @@ export class AdminClientComponent implements OnInit {
   constructor(
     private router: Router,
     private adminClientService: AdminClientService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -69,9 +69,9 @@ export class AdminClientComponent implements OnInit {
     } else {
       const term = this.searchTerm.toLowerCase();
       this.filteredClients = this.clients.filter(client => 
-        client.nombre.toLowerCase().includes(term) ||
+        client.nombre_cliente.toLowerCase().includes(term) ||
         client.dni.includes(term) ||
-        client.tipoEmpresa.toLowerCase().includes(term)
+        client.tipo_empresa.toLowerCase().includes(term)
       );
     }
     

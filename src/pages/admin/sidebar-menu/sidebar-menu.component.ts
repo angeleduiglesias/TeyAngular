@@ -75,6 +75,11 @@ export class SidebarMenuComponent implements OnInit {
     this.router.navigate([route]);
   }
   
+  logout(): void {
+    // Redirigir al componente de logout
+    this.router.navigate(['/logout']);
+  }
+  
   toggle(): void {
     // En dispositivos móviles, toggle controla show, en desktop controla collapsed
     if (!this.isLargeScreen) {

@@ -118,7 +118,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   logout(): void {
-    // Redirigir al componente de logout
-    this.router.navigate(['/logout']);
+    
   }
 }

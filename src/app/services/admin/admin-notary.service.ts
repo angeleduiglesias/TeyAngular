@@ -18,7 +18,7 @@ export interface Notary {
     providedIn: 'root'
   })
   export class AdminNotaryService {
-    private apiUrl = `${environment.apiUrl}/notaries`;
+    private apiUrl = `${environment.apiUrl}/api/admin/notarios`;
   
     constructor(
       private http: HttpClient,

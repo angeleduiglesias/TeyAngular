@@ -59,7 +59,7 @@ export class StepFourComponent implements OnInit{
             
             localStorage.setItem('datos_completos', JSON.stringify(datosCompletos));
 
-            // Navega a la ruta hija "step-two" relativa al componente padre
+            // Navega a la ruta hija "step-five" relativa al componente padre
             this.router.navigate(['step-five'], { relativeTo: this.route.parent });
           },
           error: (error) => {

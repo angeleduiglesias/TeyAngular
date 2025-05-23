@@ -8,16 +8,15 @@ import { AuthService } from '../auth-service';
 // Definimos la interfaz Client aquí para poder reutilizarla
 export interface Client {
     id: number;
-    nombre: string;
+    nombre_cliente: string;
     dni: string;
-    tipoEmpresa: string;
+    tipo_empresa: string;
     estado: string;
-    apellidos: string;
-    created_at: string;
-    progreso: number;
-    pago1: boolean;
+    created_at: string; //o fecha de  registro, si lo modificas
+    progreso: string;  //este seria el estado del tramite, en base a eso yo evaluo
+    pago1: boolean;  // en cuanto a esto, primero necesitamos guardar el pago y luego lo arreglamos
     pago2: boolean;
-    telefono: string;
+    contacto: string;
     email: string;
   }  
 
@@ -54,17 +53,16 @@ export class AdminClientService {
           // Crear un objeto que cumpla con nuestra interfaz
           const clienteFormateado: Client = {
             id: cliente.id,
-            nombre: cliente.nombre || '',
-            apellidos: cliente.apellidos || '',
+            nombre_cliente: cliente.nombre_cliente || '',
             dni: cliente.dni || '',
-            telefono: cliente.telefono || '',
+            contacto: cliente.contacto || '',
             email: cliente.email || 'No especificado',
             estado: cliente.estado || 'pendiente',
             // Usar created_at como fechaRegistro
             created_at: cliente.created_at || new Date().toISOString(),
             // Campos que podrían no venir del backend
-            tipoEmpresa: cliente.tipoEmpresa || 'No especificado',
-                    progreso: cliente.progreso || 0,
+            tipo_empresa: cliente.tipo_empresa || 'No especificado',
+                    progreso: cliente.progreso ||'No se inicio',
             pago1: !!cliente.pago1, // Convertir a booleano
             pago2: !!cliente.pago2, // Convertir a booleano,
             };
