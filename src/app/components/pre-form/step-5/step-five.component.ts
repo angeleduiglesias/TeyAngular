@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-step-five',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,],
   templateUrl: './step-five.component.html',
   styleUrl: './step-five.component.css'
 })
@@ -20,6 +21,7 @@ export class StepFiveComponent implements OnInit {
   mostrarCargando = false;
   mostrarError = false;
   cuentaRegresiva = 3;
+  private apiUrl = environment.apiUrl; 
   
   // Datos de pago
   cuotas = [
@@ -155,10 +157,9 @@ export class StepFiveComponent implements OnInit {
       
       // Crear objeto con los datos del pago (simplificado)
       const datosPago = {
-        dni_usuario: localStorage.getItem('dni_usuario'),
+        dni: localStorage.getItem('dni_usuario'),
         estado: 'pagado',
         monto: 100.00,
-        fecha: new Date(),
         comprobante: null,
         tipo_pago: 'reserva_nombre'
       };
@@ -180,7 +181,7 @@ export class StepFiveComponent implements OnInit {
           console.log('Respuesta del servidor: Pago exitoso');
           
           // Enviar datos simplificados al backend
-          this.http.post('/api/cliente/pagos', datosPago).subscribe({
+          this.http.post<any>(`${this.apiUrl}/api/cliente/pagos`, datosPago).subscribe({
             next: (response) => {
               console.log('Datos enviados al backend:', response);
               this.enviando = false;
