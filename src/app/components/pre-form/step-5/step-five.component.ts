@@ -180,7 +180,7 @@ export class StepFiveComponent implements OnInit {
           console.log('Respuesta del servidor: Pago exitoso');
           
           // Enviar datos simplificados al backend
-          this.http.post('api/pagos', datosPago).subscribe({
+          this.http.post('/api/cliente/pagos', datosPago).subscribe({
             next: (response) => {
               console.log('Datos enviados al backend:', response);
               this.enviando = false;
