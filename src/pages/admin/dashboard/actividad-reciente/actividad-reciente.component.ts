@@ -23,7 +23,7 @@ export class ActividadRecienteComponent implements OnInit {
     // Si no se reciben datos, usar datos de ejemplo
     if (this.reservasNombre.length === 0) {
       this.reservasNombre = [
-       
+        
       ];
     }
   }
