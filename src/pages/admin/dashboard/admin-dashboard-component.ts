@@ -100,7 +100,20 @@ export class AdminDashboardComponent implements OnInit {
         this.clientes_registrados = response.clientes_registrados;
         this.clientes_activos = response.clientes_activos;
         this.tramites_pendientes = response.tramites_pendientes;
-        this.reserva_nombre = response.reserva_nombre;
+
+        // Asegurarse de que reserva_nombre sea un array
+        if (response.reserva_nombre && !Array.isArray(response.reserva_nombre)) {
+          console.log('reserva_nombre no es un array, convirtiendo:', response.reserva_nombre);
+          // Si es un objeto con propiedades numeradas (como {0: {...}, 1: {...}})
+          if (typeof response.reserva_nombre === 'object') {
+            this.reserva_nombre = Object.values(response.reserva_nombre);
+          } else {
+            // Si no se puede convertir, usar un array vacío
+            this.reserva_nombre = [];
+          }
+        } else {
+          this.reserva_nombre = response.reserva_nombre || [];
+        }
           // Actualizar estado de carga
           this.cargando = false;
         },
