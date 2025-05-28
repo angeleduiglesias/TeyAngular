@@ -28,6 +28,7 @@ export interface PagosReciente {
 
 export interface ReservaNombre {
   id: number;
+  cliente_id: number;
   nombre_cliente: string;
   nombre_empresa: string;
   tipo_empresa: string;

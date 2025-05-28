@@ -7,11 +7,11 @@
         <div class="reserva-info">
           <p class="cliente-nombre"><strong>Cliente:</strong> {{ reserva.nombre_cliente }}</p>
           
-          <div *ngIf="empresaEditando !== reserva.id" class="empresa-info">
-            <p class="empresa-nombre"><strong>Empresa:</strong> {{ reserva.nombre_empresa }}</p>
+          <div *ngIf="empresaEditando !== getReservaId(reserva)" class="empresa-info">
+            <p class="empresa-nombre"><strong>Empresa:</strong> {{ reserva.nombre_empresa || 'Sin nombre' }}</p>
           </div>
           
-          <div *ngIf="empresaEditando === reserva.id" class="empresa-edicion">
+          <div *ngIf="empresaEditando === getReservaId(reserva)" class="empresa-edicion">
             <div class="edicion-campo">
               <label for="nombreEmpresa"><strong>Empresa:</strong></label>
               <input 
@@ -24,18 +24,18 @@
               >
             </div>
             <div class="edicion-botones">
-              <button class="btn-guardar" (click)="guardarEdicion(reserva.id)">Guardar</button>
+              <button class="btn-guardar" (click)="guardarEdicion(getReservaId(reserva))">Guardar</button>
               <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
             </div>
           </div>
         </div>
         
         <div class="reserva-acciones">
-          <button class="btn-ver" *ngIf="empresaEditando !== reserva.id" (click)="verDetalles(reserva.id)">
+          <button class="btn-ver" *ngIf="empresaEditando !== getReservaId(reserva)" (click)="verDetalles(getReservaId(reserva))">
             <i class="fa fa-eye"></i> Ver
           </button>
           
-          <button *ngIf="empresaEditando !== reserva.id" class="btn-editar" (click)="iniciarEdicion(reserva.id, reserva.nombre_empresa)">
+          <button *ngIf="empresaEditando !== getReservaId(reserva)" class="btn-editar" (click)="iniciarEdicion(getReservaId(reserva), reserva.nombre_empresa)">
             <i class="fa fa-edit"></i> Editar
           </button>
         </div>
@@ -68,12 +68,13 @@
       <div class="detalle-item">
         <span class="detalle-label">Empresa:</span>
         <div class="detalle-valor-container">
-          <span class="detalle-valor">{{ reservaSeleccionada.nombre_empresa }}</span>
+          <span class="detalle-valor">{{ reservaSeleccionada.nombre_empresa || 'Sin nombre' }}</span>
           <button class="btn-copiar" (click)="copiarAlPortapapeles(reservaSeleccionada.nombre_empresa)" title="Copiar">
             <i class="fa fa-copy"></i>
           </button>
         </div>
       </div>
+      <!-- El resto del modal permanece igual -->
       <div class="detalle-item">
         <span class="detalle-label">Tipo de Empresa:</span>
         <div class="detalle-valor-container">

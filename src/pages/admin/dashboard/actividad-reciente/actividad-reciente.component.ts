@@ -1,3 +1,4 @@
+
 import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -25,6 +26,7 @@ export class ActividadRecienteComponent implements OnInit {
       this.reservasNombre = [
         {
           id: 1,
+          cliente_id: 1,
           nombre_cliente: 'Juan Pérez',
           nombre_empresa: 'Tecnología Innovadora S.A.C.',
           tipo_empresa: 'SAC',
@@ -35,6 +37,7 @@ export class ActividadRecienteComponent implements OnInit {
         },
         {
           id: 2,
+          cliente_id: 2,
           nombre_cliente: 'María García',
           nombre_empresa: 'Consultores Asociados E.I.R.L.',
           tipo_empresa: 'EIRL',
@@ -43,19 +46,25 @@ export class ActividadRecienteComponent implements OnInit {
           posible_nombre3: 'Consultores Expertos E.I.R.L.',
           posible_nombre4: 'Soluciones Empresariales E.I.R.L.'
         }
-        
       ];
     }
+    
+    // Asegurarse de que cada reserva tenga un id si viene del backend con cliente_id
+    this.reservasNombre.forEach(reserva => {
+      if (!reserva.id && reserva.cliente_id) {
+        reserva.id = reserva.cliente_id;
+      }
+    });
   }
 
-  iniciarEdicion(id: number, nombreActual: string): void {
+  iniciarEdicion(id: number, nombreActual: string | null): void {
     this.empresaEditando = id;
-    this.nuevoNombreEmpresa = nombreActual;
+    this.nuevoNombreEmpresa = nombreActual || '';
   }
 
   guardarEdicion(id: number): void {
     // Buscar la reserva por ID
-    const reserva = this.reservasNombre.find(r => r.id === id);
+    const reserva = this.reservasNombre.find(r => r.id === id || r.cliente_id === id);
     if (reserva && this.nuevoNombreEmpresa.trim()) {
       // Actualizar el nombre de la empresa
       reserva.nombre_empresa = this.nuevoNombreEmpresa.trim();
@@ -76,9 +85,10 @@ export class ActividadRecienteComponent implements OnInit {
 
   verDetalles(id: number): void {
     // Buscar la reserva por ID
-    const reserva = this.reservasNombre.find(r => r.id === id);
+    const reserva = this.reservasNombre.find(r => r.id === id || r.cliente_id === id);
     if (reserva) {
-      this.reservaSeleccionada = reserva;
+      // Crear una copia para evitar problemas de referencia
+      this.reservaSeleccionada = {...reserva};
       this.mostrarModal = true;
     }
   }
@@ -88,11 +98,19 @@ export class ActividadRecienteComponent implements OnInit {
     this.reservaSeleccionada = null;
   }
 
-  // Añadir esta nueva propiedad para el mensaje de copiado
+  // Método auxiliar para obtener el ID correcto de la reserva
+  getReservaId(reserva: ReservaNombre): number {
+    // Usar el id si existe, de lo contrario usar cliente_id
+    return reserva.id || reserva.cliente_id || 0;
+  }
+
+  // Propiedad para el mensaje de copiado
   mensajeCopia: string | null = null;
   
-  // Añadir este nuevo método para copiar al portapapeles
-  copiarAlPortapapeles(texto: string): void {
+  // Método para copiar al portapapeles
+  copiarAlPortapapeles(texto: string | null): void {
+    if (texto === null) return;
+    
     navigator.clipboard.writeText(texto).then(() => {
       // Mostrar mensaje de éxito
       this.mensajeCopia = 'Texto copiado al portapapeles';

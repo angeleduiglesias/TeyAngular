@@ -1,9 +1,52 @@
 <div class="payment-card">
   <h2>Estado de Pagos</h2>
-  <div class="payment-status">
-    <div class="payment-badge" [ngClass]="estadoPago === 'Completado' ? 'completed' : 'pending'">
-      {{estadoPago === 'Completado' ? 'Pago ' + pagoActual + ' de ' + pagoTotal + ' realizado' : 
-        pagoActual > 0 ? 'Pago ' + pagoActual + ' de ' + pagoTotal + ' realizado' : 'Pago pendiente'}}
+  
+  <div class="payment-list">
+    <div class="payment-item" *ngFor="let pago of pagos">
+      <div class="payment-info">
+        <div class="payment-name">{{ pago.nombre }}</div>
+        <div class="payment-status-badge" [ngClass]="pago.pagado ? 'paid' : 'pending'">
+          {{ pago.pagado ? 'Pagado' : 'Pendiente' }}
+        </div>
+      </div>
+      <button class="payment-button" *ngIf="!pago.pagado" (click)="irAPagar(pago.id)">
+        Pagar
+      </button>
     </div>
+  </div>
+  
+  <div class="payment-summary" *ngIf="pagoActual > 0">
+    <div class="progress-text">{{ pagoActual }}/{{ pagoTotal }} pagos completados</div>
+  </div>
+</div>
+
+<div class="payment-steps">
+  <div class="step" [ngClass]="{'completed': pagoActual >= 1, 'current': pagoActual === 0}">
+    <div class="step-circle">1</div>
+    <div class="step-name">Reserva de nombre</div>
+  </div>
+  <div class="step-line" [ngClass]="{'completed': pagoActual >= 1}"></div>
+  <div class="step" [ngClass]="{'completed': pagoActual >= 2, 'current': pagoActual === 1}">
+    <div class="step-circle">2</div>
+    <div class="step-name">Entrega de Minuta</div>
+  </div>
+</div>
+
+<div class="payment-status">
+  <div class="payment-badge" [ngClass]="estadoPago === 'Completado' ? 'completed' : (pagoActual > 0 ? 'in-progress' : 'pending')">
+    <ng-container *ngIf="estadoPago === 'Completado'">
+      Todos los pagos completados
+    </ng-container>
+    <ng-container *ngIf="estadoPago !== 'Completado' && pagoActual > 0">
+      {{ getNombrePagoActual() }} completado ({{ pagoActual }}/{{ pagoTotal }})
+    </ng-container>
+    <ng-container *ngIf="estadoPago !== 'Completado' && pagoActual < pagoTotal">
+      <div class="next-payment" *ngIf="pagoActual < pagoTotal">
+        Próximo pago: {{ getNombreSiguientePago() }}
+      </div>
+    </ng-container>
+    <ng-container *ngIf="pagoActual === 0">
+      Pagos pendientes: Reserva de nombre, Entrega de Minuta
+    </ng-container>
   </div>
 </div>
