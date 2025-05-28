@@ -6,25 +6,20 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth-service';
 
 // Definimos la interfaz Client aquí para poder reutilizarla
-export interface Client {
+export interface Tramites {
     id: number;
     nombre_cliente: string;
-    dni: string;
-    tipo_empresa: string;
-    estado: string;
-    created_at: string; //o fecha de  registro, si lo modificas
-    progreso: string;  //este seria el estado del tramite, en base a eso yo evaluo
-    pago1: boolean;  // en cuanto a esto, primero necesitamos guardar el pago y luego lo arreglamos
-    pago2: boolean;
-    nombre_empresa: string; //este seria el nombre de la empresa, si lo modificas, necesitas cambiarlo en el for
-    contacto: string;
-    email: string;
+    fecha_inicio: Date;
+    fecha_fin: Date | null;
+    estado_tramite: string;
+    nombre_empresa: string;
+    estado_pago: string;
   }  
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminClientService {
+export class AdminTramitesService {
     constructor(
         private http: HttpClient,
         private authService: AuthService
@@ -34,7 +29,7 @@ export class AdminClientService {
        * Obtiene los datos del dashboard del administrador
        * @returns Observable con la información del dashboard
        */
-      getClients(): Observable<Client[]> {
+      getTramites(): Observable<Tramites[]> {
         // Obtener el token del servicio de autenticación
         const token = this.authService.getToken();
         
@@ -45,35 +40,28 @@ export class AdminClientService {
         });
 
         // Realizar la petición al endpoint
-    return this.http.get<Client[]>(`${environment.apiUrl}/api/admin/clientes`, { headers })
+    return this.http.get<Tramites[]>(`${environment.apiUrl}/api/admin/tramites`, { headers })
     .pipe(
       map(response => {
-        console.log('Clientes recibidos:', response);
+        console.log('Tramites recibidos:', response);
         // Transformar los datos recibidos para adaptarlos a nuestra interfaz
-        return response.map(cliente => {
+        return response.map(tramites => {
           // Crear un objeto que cumpla con nuestra interfaz
-          const clienteFormateado: Client = {
-            id: cliente.id,
-            nombre_cliente: cliente.nombre_cliente || '',
-            dni: cliente.dni || '',
-            contacto: cliente.contacto || '',
-            email: cliente.email || 'No especificado',
-            estado: cliente.estado || 'pendiente',
-            // Usar created_at como fechaRegistro
-            created_at: cliente.created_at || new Date().toISOString(),
-            // Campos que podrían no venir del backend
-            tipo_empresa: cliente.tipo_empresa || 'No especificado',
-            nombre_empresa: cliente.nombre_empresa || 'No especificado',
-                    progreso: cliente.progreso ||'No se inicio',
-            pago1: !!cliente.pago1, // Convertir a booleano
-            pago2: !!cliente.pago2, // Convertir a booleano,
+          const TramitesFormateado: Tramites = {
+            id: tramites.id,
+            nombre_cliente: tramites.nombre_cliente || '',
+            fecha_inicio: tramites.fecha_inicio || '',
+            fecha_fin: tramites.fecha_fin || null,
+            estado_tramite: tramites.estado_tramite || 'Sin especificar',
+            nombre_empresa: tramites.nombre_empresa || 'No disponible',
+            estado_pago: tramites.estado_pago || 'pendiente',
             };
           
-          return clienteFormateado;
+          return TramitesFormateado;
         });
       }),
       catchError(error => {
-        console.error('Error al cargar clientes:', error);
+        console.error('Error al cargar tramites:', error);
         
         // Manejo de diferentes tipos de errores
         if (error.status === 401) {

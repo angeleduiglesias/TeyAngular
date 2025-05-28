@@ -1,0 +1,196 @@
+<div class="client-container">
+    <div class="header">
+      <h2>Gestión de Pagos</h2>
+  
+      <!-- Filtros por botones movidos a la derecha -->
+      <div class="filters-section">
+        <div class="filters-row">
+          <!-- Filtro por Estado del Trámite -->
+          <div class="filter-group">
+            <label class="filter-label">Estado Pago:</label>
+            <div class="filter-buttons">
+              <button 
+                class="filter-btn" 
+                [class.active]="selectedStatusFilter === ''"
+                (click)="filterByStatus('')">
+                <i class="fas fa-list"></i> Todos
+              </button>
+              <button 
+                class="filter-btn status-completed" 
+                [class.active]="selectedStatusFilter === 'Completado'"
+                (click)="filterByStatus('Completado')">
+                <i class="fas fa-check-circle"></i> Pagado
+              </button>
+              <button 
+                class="filter-btn status-pending" 
+                [class.active]="selectedStatusFilter === 'En proceso'"
+                (click)="filterByStatus('En proceso')">
+                <i class="fas fa-clock"></i> En Proceso
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de búsqueda movida debajo del header -->
+    <div class="search-clear-section">
+      <div class="search-container">
+        <input 
+          type="text" 
+          placeholder="Buscar Pago" 
+          [(ngModel)]="searchTerm" 
+          (keyup)="applyFilter()"
+          class="search-input">
+          <i class="fas fa-search"></i>
+      </div>
+      
+      <span class="results-count" *ngIf="payments.length > 0">
+        Mostrando {{ filteredPayments.length }} de {{ payments.length }} Pagos
+      </span>
+    </div>
+    
+    <div class="table-container">
+      <table class="client-table">
+        <thead>
+          <tr>
+            <th (click)="sortTable('nombre_cliente')">
+              Nombre Cliente
+              <i class="fas" [ngClass]="getSortIcon('nombre_cliente')"></i>
+            </th>
+            <th (click)="sortTable('dni')">
+              DNI
+              <i class="fas" [ngClass]="getSortIcon('dni')"></i>
+            </th>
+            <th (click)="sortTable('tipo_pago')">
+              Tipo de Pago
+              <i class="fas" [ngClass]="getSortIcon('tipo_pago')"></i>
+            </th>
+            <th (click)="sortTable('monto')">
+              Monto
+              <i class="fas" [ngClass]="getSortIcon('monto')"></i>
+            </th>
+            <th (click)="sortTable('fecha')">
+              Fecha
+              <i class="fas" [ngClass]="getSortIcon('fecha')"></i>
+            </th>
+            <th (click)="sortTable('estado_pago')">
+              Estado Pago
+              <i class="fas" [ngClass]="getSortIcon('estado_pago')"></i>
+            </th>
+            <th (click)="sortTable('forma_pago')">
+              Forma Pago
+              <i class="fas" [ngClass]="getSortIcon('forma_pago')"></i>
+            </th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of filteredPayments">
+            <td>{{ payment.nombre_cliente }}</td>
+            <td>{{ payment.dni }}</td>
+            <td>{{ payment.tipo_pago }}</td>
+            <td class="monto-cell">
+              <span class="monto-value">S/. {{ payment.monto | number:'1.2-2' }}</span>
+            </td>
+            <td>{{ payment.fecha | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(payment.estado_pago)">
+                {{ payment.estado_pago }}
+              </span>
+            </td>
+            <td>
+              <span class="payment-method-badge" [ngClass]="getPaymentMethodClass(payment.forma_pago)">
+                {{ payment.forma_pago }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <button class="btn-action view" (click)="viewPaymentDetails(payment.id)" title="Ver detalles">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn-action edit" (click)="editPayment(payment.id)" title="Editar">
+                <i class="fas fa-edit"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="filteredPayments.length === 0">
+            <td colspan="8" class="no-data">No se encontraron pagos</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="pagination">
+      <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <span>Página {{ currentPage }} de {{ totalPages > 0 ? totalPages : 1 }}</span>
+      <button [disabled]="currentPage === totalPages || totalPages === 0" (click)="changePage(currentPage + 1)">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    
+    <!-- Modal para detalles del pago -->
+    <div class="modal-overlay" *ngIf="showPaymentModal" (click)="closePaymentModal()">
+      <div class="modal-container" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3>Detalles del Pago</h3>
+          <button class="modal-close" (click)="closePaymentModal()">×</button>
+        </div>
+        <div class="modal-body" *ngIf="selectedPayment">
+          <div class="payment-info-grid">
+            <div class="info-group">
+              <div class="info-label">ID de Pago:</div>
+              <div class="info-value">{{ selectedPayment.id }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Nombre del Cliente:</div>
+              <div class="info-value">{{ selectedPayment.nombre_cliente }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">DNI:</div>
+              <div class="info-value">{{ selectedPayment.dni }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Tipo de Pago:</div>
+              <div class="info-value">{{ selectedPayment.tipo_pago }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Monto:</div>
+              <div class="info-value">S/. {{ selectedPayment.monto | number:'1.2-2' }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Fecha:</div>
+              <div class="info-value">{{ selectedPayment.fecha | date:'dd/MM/yyyy HH:mm' }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Estado del Pago:</div>
+              <div class="info-value">
+                <span class="status-badge" [ngClass]="getStatusClass(selectedPayment.estado_pago)">
+                  {{ selectedPayment.estado_pago }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Forma de Pago:</div>
+              <div class="info-value">
+                <span class="payment-method-badge" [ngClass]="getPaymentMethodClass(selectedPayment.forma_pago)">
+                  {{ selectedPayment.forma_pago }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" (click)="closePaymentModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>

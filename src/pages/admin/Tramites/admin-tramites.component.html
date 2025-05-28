@@ -1,0 +1,196 @@
+<div class="client-container">
+    <div class="header">
+      <h2>Gestión de Trámites</h2>
+      
+      <!-- Filtros por botones movidos a la derecha -->
+      <div class="filters-section">
+        <div class="filters-row">
+          <!-- Filtro por Estado del Trámite -->
+          <div class="filter-group">
+            <label class="filter-label">Estado Trámite:</label>
+            <div class="filter-buttons">
+              <button 
+                class="filter-btn" 
+                [class.active]="selectedStatusFilter === ''"
+                (click)="filterByStatus('')">
+                <i class="fas fa-list"></i> Todos
+              </button>
+              <button 
+                class="filter-btn status-completed" 
+                [class.active]="selectedStatusFilter === 'Completado'"
+                (click)="filterByStatus('Completado')">
+                <i class="fas fa-check-circle"></i> Completado
+              </button>
+              <button 
+                class="filter-btn status-in-progress" 
+                [class.active]="selectedStatusFilter === 'En proceso'"
+                (click)="filterByStatus('En proceso')">
+                <i class="fas fa-clock"></i> En Proceso
+              </button>
+              <button 
+                class="filter-btn status-pending" 
+                [class.active]="selectedStatusFilter === 'Iniciado'"
+                (click)="filterByStatus('Iniciado')">
+                <i class="fas fa-play-circle"></i> Iniciado
+              </button>
+              <button 
+                class="filter-btn status-cancelled" 
+                [class.active]="selectedStatusFilter === 'Cancelado'"
+                (click)="filterByStatus('Cancelado')">
+                <i class="fas fa-times-circle"></i> Cancelado
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Barra de búsqueda movida debajo del header -->
+    <div class="search-clear-section">
+      <div class="search-container">
+        <input 
+          type="text" 
+          placeholder="Buscar Tramite" 
+          [(ngModel)]="searchTerm" 
+          (keyup)="applyFilter()"
+          class="search-input">
+          <i class="fas fa-search"></i>
+      </div>
+      
+      <span class="results-count" *ngIf="tramites.length > 0">
+        Mostrando {{ filteredTramites.length }} de {{ tramites.length }} trámites
+      </span>
+    </div>
+  
+    <div class="table-container">
+      <table class="client-table">
+        <thead>
+          <tr>
+            <th (click)="sortTable('nombre_cliente')">
+              Nombre Cliente
+              <i class="fas" [ngClass]="getSortIcon('nombre_cliente')"></i>
+            </th>
+            <th (click)="sortTable('fecha_inicio')">
+              Fecha de Inicio
+              <i class="fas" [ngClass]="getSortIcon('fecha_inicio')"></i>
+            </th>
+            <th (click)="sortTable('fecha_fin')">
+              Fecha de Fin
+              <i class="fas" [ngClass]="getSortIcon('fecha_fin')"></i>
+            </th>
+            <th (click)="sortTable('estado_tramite')">
+              Estado Trámite
+              <i class="fas" [ngClass]="getSortIcon('estado_tramite')"></i>
+            </th>
+            <th (click)="sortTable('nombre_empresa')">
+              Nombre Empresa
+              <i class="fas" [ngClass]="getSortIcon('nombre_empresa')"></i>
+            </th>
+            <th (click)="sortTable('estado_pago')">
+              Estado Pago
+              <i class="fas" [ngClass]="getSortIcon('estado_pago')"></i>
+            </th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tramite of filteredTramites">
+            <td>{{ tramite.nombre_cliente }}</td>
+            <td>{{ tramite.fecha_inicio | date:'dd/MM/yyyy' }}</td>
+            <td>{{ tramite.fecha_fin ? (tramite.fecha_fin | date:'dd/MM/yyyy') : 'En proceso' }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(tramite.estado_tramite)">
+                {{ tramite.estado_tramite }}
+              </span>
+            </td>
+            <td>{{ tramite.nombre_empresa }}</td>
+            <td>
+              <span class="payment-badge" [ngClass]="getPaymentStatusClass(tramite.estado_pago)">
+                {{ tramite.estado_pago }}
+              </span>
+            </td>
+            <td class="actions-cell">
+              <button class="btn-action view" (click)="viewTramiteDetails(tramite.id)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="filteredTramites.length === 0">
+            <td colspan="7" class="no-data">
+              <i class="fas fa-search"></i>
+              No se encontraron trámites que coincidan con los criterios de búsqueda
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="pagination">
+      <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <span>Página {{ currentPage }} de {{ totalPages > 0 ? totalPages : 1 }}</span>
+      <button [disabled]="currentPage === totalPages || totalPages === 0" (click)="changePage(currentPage + 1)">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    
+    <!-- Modal para detalles del trámite -->
+    <div class="modal-overlay" *ngIf="showTramiteModal" (click)="closeTramiteModal()">
+      <div class="modal-container" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3>Detalles del Trámite</h3>
+          <button class="modal-close" (click)="closeTramiteModal()">×</button>
+        </div>
+        <div class="modal-body" *ngIf="selectedTramite">
+          <div class="client-info-grid">
+            <div class="info-group">
+              <div class="info-label">ID del Trámite:</div>
+              <div class="info-value">TR-{{ selectedTramite.id }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Nombre del Cliente:</div>
+              <div class="info-value">{{ selectedTramite.nombre_cliente }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Fecha de Inicio:</div>
+              <div class="info-value">{{ selectedTramite.fecha_inicio | date:'dd/MM/yyyy' }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Fecha de Fin:</div>
+              <div class="info-value">{{ selectedTramite.fecha_fin ? (selectedTramite.fecha_fin | date:'dd/MM/yyyy') : 'En proceso' }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Estado del Trámite:</div>
+              <div class="info-value">
+                <span class="status-badge" [ngClass]="getStatusClass(selectedTramite.estado_tramite)">
+                  {{ selectedTramite.estado_tramite }}
+                </span>
+              </div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Nombre de la Empresa:</div>
+              <div class="info-value">{{ selectedTramite.nombre_empresa }}</div>
+            </div>
+            
+            <div class="info-group">
+              <div class="info-label">Estado del Pago:</div>
+              <div class="info-value">
+                <span class="payment-badge" [ngClass]="getPaymentStatusClass(selectedTramite.estado_pago)">
+                  {{ selectedTramite.estado_pago }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-close" (click)="closeTramiteModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

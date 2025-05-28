@@ -95,7 +95,14 @@ export class AdminDashboardComponent implements OnInit {
        
         // Asignar directamente los datos procesados
         this.nombre_admin = response.nombre_admin;
-        this.pagos_recientes = response.pagos_recientes;
+        this.pagos_recientes = response.pagos_recientes.map((pago: any) => {
+          let formattedTipoPago = pago.tipo_pago.replace(/_/g, ' ');
+          formattedTipoPago = formattedTipoPago.charAt(0).toUpperCase() + formattedTipoPago.slice(1);
+          return {
+            ...pago,
+            tipo_pago: formattedTipoPago
+          };
+        });
         this.tramites_recientes = response.tramites_recientes;
         this.clientes_registrados = response.clientes_registrados;
         this.clientes_activos = response.clientes_activos;

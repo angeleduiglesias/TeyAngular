@@ -159,6 +159,7 @@ export class StepFiveComponent implements OnInit {
       const datosPago = {
         dni: localStorage.getItem('dni_usuario'),
         estado: 'pagado',
+        fecha: new Date(),
         monto: 100.00,
         comprobante: null,
         tipo_pago: 'reserva_nombre'

@@ -1,11 +1,8 @@
 .notary-container {
-  padding: 20px;
+  padding: 30px;
   margin-left: 30px;
+  margin-right: 20px;
   margin-top: 30px;
-  margin-right: 30px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .header {
@@ -18,7 +15,7 @@
 .header h2 {
   color: #283F51;
   margin: 0;
-  font-size: 24px;
+  font-size: 30px;
 }
 
 .actions {
@@ -27,10 +24,10 @@
 }
 
 .btn-add {
-  background-color: #218838;
+  background-color: #42b483;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   padding: 8px 16px;
   cursor: pointer;
   display: flex;
@@ -52,7 +49,7 @@
   padding: 8px 12px;
   padding-right: 35px;
   border: 1px solid #ced4da;
-  border-radius: 4px;
+  border-radius: 5px;
   width: 250px;
 }
 
@@ -129,6 +126,47 @@
   display: flex;
   gap: 20px;
   justify-content:start;
+}
+
+
+.btn-action {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin: 0 2px;
+}
+
+.btn-action.edit {
+  background-color: #ffc107df;
+  color: white;
+}
+
+.btn-action.edit:hover {
+  background-color: #e0a800;
+}
+
+.btn-action.delete {
+  background-color: #dc3546da;
+  color: white;
+}
+
+.btn-action.delete:hover {
+  background-color: #bd2130;
+}
+
+.btn-action.view {
+  background-color: #1e3b8ad9;
+  color: white;
+}
+
+.btn-action.view:hover {
+  background-color: #152a63;
 }
 
 .icon-whatsapp, .icon-email {

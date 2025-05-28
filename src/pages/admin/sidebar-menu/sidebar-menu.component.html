@@ -36,6 +36,16 @@
       <i class="fas fa-user-tie"></i>
       <span *ngIf="!collapsed">Notarios</span>
     </div>
+    <div class="menu-item" [class.active]="currentRoute === '/admin/tramites'" (click)="navigateTo('/admin/tramites')" tabindex="0" (keydown.enter)="navigateTo('/admin/tramites')">
+      <i class="fas fa-file-alt"></i>
+      <span *ngIf="!collapsed">Tramites</span>
+  </div>
+    <div>
+      <div class="menu-item" [class.active]="currentRoute === '/admin/pagos'" (click)="navigateTo('/admin/pagos')" tabindex="0" (keydown.enter)="navigateTo('/admin/pagos')">
+        <i class="fas fa-money-bill-wave"></i>
+        <span *ngIf="!collapsed">Pagos</span>
+    </div>
+
     <div class="menu-item" [class.active]="currentRoute === '/admin/reportes'" (click)="navigateTo('/admin/reportes')" tabindex="0" (keydown.enter)="navigateTo('/admin/reportes')">
       <i class="fas fa-chart-bar"></i>
       <span *ngIf="!collapsed">Reportes</span>
@@ -44,10 +54,8 @@
       <i class="fas fa-cog"></i>
       <span *ngIf="!collapsed">Configuración</span>
     </div>
-  </div>
-  
-  <div class="menu-item-spacer"></div>
-  
+
+  <div class="menu-item-spacer"></div> 
 <!-- Botón de cerrar sesión -->
 <div class="menu-item logout-item" (click)="logout()" tabindex="0" (keydown.enter)="logout()">
   <i class="fas fa-sign-out-alt"></i>

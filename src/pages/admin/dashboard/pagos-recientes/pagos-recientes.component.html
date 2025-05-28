@@ -9,7 +9,7 @@
         <h3 class="pago-concepto">{{ pago.tipo_pago }}</h3>
         <p class="pago-cliente">Cliente: {{ pago.nombre_cliente }}</p>
         <div class="pago-details">
-          <p class="pago-monto">Monto: ${{ pago.monto_pago | number:'1.2-2' }}</p>
+          <p class="pago-monto">Monto: S/. {{ pago.monto_pago | number:'1.2-2' }}</p>
           <span class="pago-fecha">{{ pago.fecha_pago }}</span>
         </div>
       </div>

@@ -27,6 +27,13 @@ export class AdminClientComponent implements OnInit {
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
+    // Añadir estas propiedades a la clase
+  showClientModal = false;
+  selectedClient: any = null;
+
+    // Variables para filtros
+  selectedStatusFilter: string = '';
+
   constructor(
     private router: Router,
     private adminClientService: AdminClientService,
@@ -63,6 +70,14 @@ export class AdminClientComponent implements OnInit {
       });
   }
 
+    // Métodos de filtrado
+    filterByStatus(status: string): void {
+      this.selectedStatusFilter = status;
+      this.currentPage = 1;
+      this.applyFilter();
+    }
+
+
   applyFilter(): void {
     if (!this.searchTerm) {
       this.filteredClients = [...this.clients];
@@ -73,8 +88,8 @@ export class AdminClientComponent implements OnInit {
         client.dni.includes(term) ||
         client.tipo_empresa.toLowerCase().includes(term)
       );
+
     }
-    
     // Aplicar ordenamiento si existe
     this.sortData();
     
@@ -130,10 +145,6 @@ export class AdminClientComponent implements OnInit {
     this.currentPage = page;
     this.applyFilter();
   }
-
-  // Añadir estas propiedades a la clase
-  showClientModal = false;
-  selectedClient: any = null;
   
   // Modificar el método existente
   viewClientDetails(id: number): void {

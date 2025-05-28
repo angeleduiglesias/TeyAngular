@@ -10,6 +10,8 @@ import { LoginComponent } from './components/login/login.component';
 import { AdminDashboardComponent } from '../pages/admin/dashboard/admin-dashboard-component';
 import { AdminClientComponent } from '../pages/admin/client/admin-client-component';
 import { AdminNotaryComponent } from '../pages/admin/notary/admin-notary-component';
+import { AdminPaymentsComponent } from '../pages/admin/payments/admin-payments.component';
+import { AdminTramitesComponent } from '../pages/admin/Tramites/admin-tramites.component';
 import { AdminReportsComponent } from '../pages/admin/reports/admin-reports-component';
 import { AdminConfigurationComponent } from '../pages/admin/configuration/admin-configuration-component';
 import { ClienteConfigurationComponent } from '../pages/cliente/configuration/cliente-configuration.component';
@@ -54,6 +56,8 @@ export const routes: Routes = [
       {path: 'notarios',component: AdminNotaryComponent},
       {path: 'reportes',component: AdminReportsComponent},
       {path:'configuracion',component: AdminConfigurationComponent},
+      {path:'pagos',component: AdminPaymentsComponent},
+      {path:'tramites',component: AdminTramitesComponent},
 
     ]
   },

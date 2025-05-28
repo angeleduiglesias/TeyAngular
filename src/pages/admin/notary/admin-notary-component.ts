@@ -43,6 +43,52 @@ export class AdminNotaryComponent implements OnInit {
     this.loading = true;
     this.error = '';
 
+    // Datos de prueba según la interfaz Notary
+    const datosPrueba: Notary[] = [
+      {
+        id: 1,
+        apellidos: 'García Márquez',
+        nombre: 'Gabriel',
+        telefono: '912345678',
+        email: 'gabriel.garcia@ejemplo.com'
+      },
+      {
+        id: 2,
+        apellidos: 'Vargas Llosa',
+        nombre: 'Mario',
+        telefono: '923456789',
+        email: 'mario.vargas@ejemplo.com'
+      },
+      {
+        id: 3,
+        apellidos: 'Allende',
+        nombre: 'Isabel',
+        telefono: '934567890',
+        email: 'isabel.allende@ejemplo.com'
+      },
+      {
+        id: 4,
+        apellidos: 'Borges',
+        nombre: 'Jorge Luis',
+        telefono: '945678901',
+        email: 'jorge.borges@ejemplo.com'
+      },
+      {
+        id: 5,
+        apellidos: 'Cortázar',
+        nombre: 'Julio',
+        telefono: '956789012',
+        email: 'julio.cortazar@ejemplo.com'
+      }
+    ];
+
+    // Opción 1: Usar solo datos de prueba (para desarrollo)
+    this.notaries = datosPrueba;
+    this.applyFilter();
+    this.loading = false;
+
+    // Opción 2: Intentar obtener datos del backend, y si falla, usar datos de prueba
+    /*
     this.adminNotaryService.getNotaries()
       .subscribe({
         next: (response) => {
@@ -53,6 +99,11 @@ export class AdminNotaryComponent implements OnInit {
         error: (error) => {
           console.error('Error al cargar notarios:', error);
           this.error = 'No se pudieron cargar los notarios. Por favor, intenta nuevamente.';
+          
+          // Usar datos de prueba en caso de error
+          console.log('Usando datos de prueba debido al error');
+          this.notaries = datosPrueba;
+          this.applyFilter();
           this.loading = false;
           
           // Si hay un error de autenticación (401), redirigir al login
@@ -61,6 +112,7 @@ export class AdminNotaryComponent implements OnInit {
           }
         }
       });
+    */
   }
 
   applyFilter(): void {

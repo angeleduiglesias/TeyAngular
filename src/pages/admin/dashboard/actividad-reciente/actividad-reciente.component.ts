@@ -23,6 +23,26 @@ export class ActividadRecienteComponent implements OnInit {
     // Si no se reciben datos, usar datos de ejemplo
     if (this.reservasNombre.length === 0) {
       this.reservasNombre = [
+        {
+          id: 1,
+          nombre_cliente: 'Juan Pérez',
+          nombre_empresa: 'Tecnología Innovadora S.A.C.',
+          tipo_empresa: 'SAC',
+          posible_nombre1: 'TecnoInnovación S.A.C.',
+          posible_nombre2: 'InnovaTech Perú S.A.C.',
+          posible_nombre3: 'Soluciones Tecnológicas S.A.C.',
+          posible_nombre4: 'Digital Solutions S.A.C.'
+        },
+        {
+          id: 2,
+          nombre_cliente: 'María García',
+          nombre_empresa: 'Consultores Asociados E.I.R.L.',
+          tipo_empresa: 'EIRL',
+          posible_nombre1: 'Consultoría Integral E.I.R.L.',
+          posible_nombre2: 'Asesoría Empresarial E.I.R.L.',
+          posible_nombre3: 'Consultores Expertos E.I.R.L.',
+          posible_nombre4: 'Soluciones Empresariales E.I.R.L.'
+        }
         
       ];
     }

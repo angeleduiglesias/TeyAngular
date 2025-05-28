@@ -63,6 +63,10 @@ export class SidebarMenuComponent implements OnInit {
       this.currentRoute = '/admin/notarios';
     } else if (this.currentRoute.startsWith('/admin/reportes')) {
       this.currentRoute = '/admin/reportes';
+    } else if (this.currentRoute.startsWith('/admin/pagos')) {
+      this.currentRoute = '/admin/pagos';
+    } else if (this.currentRoute.startsWith('/admin/tramites')) {
+      this.currentRoute = '/admin/tramites';
     } else if (this.currentRoute.startsWith('/admin/configuracion')) {
       this.currentRoute = '/admin/configuracion';
     } else if (this.currentRoute.startsWith('/admin')) {

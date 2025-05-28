@@ -1,13 +1,53 @@
 <div class="client-container">
   <div class="header">
     <h2>Gestión de Clientes</h2>
-    <div class="actions">
-      <div class="search-container">
-        <input type="text" placeholder="Buscar cliente..." [(ngModel)]="searchTerm" (keyup)="applyFilter()">
-        <i class="fas fa-search"></i>
+
+     <!-- Filtros por botones movidos a la derecha -->
+     <div class="filters-section">
+      <div class="filters-row">
+        <!-- Filtro por Estado del Trámite -->
+        <div class="filter-group">
+          <label class="filter-label">Estado Cliente:</label>
+          <div class="filter-buttons">
+            <button 
+              class="filter-btn" 
+              [class.active]="selectedStatusFilter === ''"
+              (click)="filterByStatus('')">
+              <i class="fas fa-list"></i> Todos
+            </button>
+            <button 
+              class="filter-btn status-completed" 
+              [class.active]="selectedStatusFilter === 'Activo'"
+              (click)="filterByStatus('Activo')">
+              <i class="fas fa-check-circle"></i> Activo
+            </button>
+            <button 
+              class="filter-btn status-in-cancelled" 
+              [class.active]="selectedStatusFilter === 'Inactivo'"
+              (click)="filterByStatus('Inactivo')">
+              <i class="fas fa-clock"></i> Inactivo
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+    <!-- Barra de búsqueda movida debajo del header -->
+    <div class="search-clear-section">
+      <div class="search-container">
+        <input 
+          type="text" 
+          placeholder="Buscar Cliente" 
+          [(ngModel)]="searchTerm" 
+          (keyup)="applyFilter()"
+          class="search-input">
+          <i class="fas fa-search"></i>
+      </div>
+      
+      <span class="results-count" *ngIf="clients.length > 0">
+        Mostrando {{ filteredClients.length }} de {{ clients.length }} Clientes
+      </span>
+    </div>
 
   <div class="table-container">
     <table class="client-table">
@@ -101,7 +141,7 @@
         <div class="client-info-grid">
           <div class="info-group">
             <div class="info-label">Número de Cliente:</div>
-            <div class="info-value">{{ selectedClient.numeroCliente || 'CL-' + selectedClient.id }}</div>
+            <div class="info-value">{{ selectedClient.id || 'CL-' + selectedClient.id }}</div>
           </div>
           
           <div class="info-group">
@@ -131,7 +171,7 @@
           
           <div class="info-group">
             <div class="info-label">Nombre de Empresa:</div>
-            <div class="info-value">{{ selectedClient.nombreEmpresa || 'No definido' }}</div>
+            <div class="info-value">{{ selectedClient.nombre_empresa || 'No definido' }}</div>
           </div>
           
           <div class="info-group">
@@ -177,8 +217,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-contact whatsapp" [disabled]="!selectedClient?.telefono" 
-                (click)="contactClient('whatsapp', selectedClient.telefono)">
+        <button class="btn-contact whatsapp" [disabled]="!selectedClient?.contacto" 
+                (click)="contactClient('whatsapp', selectedClient.contacto)">
           <i class="fab fa-whatsapp"></i> WhatsApp
         </button>
         <button class="btn-contact email" [disabled]="!selectedClient?.email" 
