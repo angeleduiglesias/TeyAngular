@@ -1,84 +1,118 @@
 <div class="reports-container">
-    <!-- Primera fila: Gráficos -->
-    <div class="charts-row">
-      <div class="chart-card">
-        <h3>Gráfico de Barras de Ingresos por día</h3>
-        <div class="chart-container">
-          <canvas id="incomeChart"></canvas>
-        </div>
-      </div>
-      <div class="chart-card">
-        <h3>Gráfico de tipo de empresas más constituidas</h3>
-        <div class="chart-container">
-          <canvas id="companyTypeChart"></canvas>
-        </div>
+  <div class="section-header">
+    <h2>Panel de Reportes</h2>
+    <p>Visualiza y exporta estadísticas e información financiera</p>
+  </div>
+
+  <!-- Primera fila: Gráficos principales -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3><i class="fas fa-chart-bar"></i> Ingresos por Día</h3>
+      <div class="chart-container">
+        <canvas id="incomeChart"></canvas>
       </div>
     </div>
-  
-    <!-- Segunda fila: Tarjetas de reportes con checklist -->
+    <div class="chart-card">
+      <h3><i class="fas fa-chart-pie"></i> Tipos de Empresas Constituidas</h3>
+      <div class="chart-container">
+        <canvas id="companyTypeChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Segunda fila: Nuevos gráficos -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <h3><i class="fas fa-chart-line"></i> Tendencia de Ingresos Mensuales</h3>
+      <div class="chart-container">
+        <canvas id="incomeMonthlyTrendChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <h3><i class="fas fa-map-marker-alt"></i> Distribución Geográfica</h3>
+      <div class="chart-container">
+        <canvas id="geographicDistributionChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tercera fila: Tarjetas de reportes con checklist -->
+  <div class="reports-section">
+    <h3 class="reports-section-title"><i class="fas fa-file-export"></i> Exportar Reportes</h3>
     <div class="reports-row">
       <div class="report-card-container">
         <div class="report-card">
-          <h4>REPORTE DE ESTADÍSTICAS</h4>
-          <div class="checklist-container">
-            <div class="checklist-item">
-              <input type="checkbox" id="rubro" [(ngModel)]="statisticsOptions.rubro" checked>
-              <label for="rubro">Rubro</label>
-            </div>
-            <div class="checklist-item">
-              <input type="checkbox" id="tipoEmpresa" [(ngModel)]="statisticsOptions.tipoEmpresa" checked>
-              <label for="tipoEmpresa">Tipo de empresa</label>
-            </div>
-            <div class="checklist-item">
-              <input type="checkbox" id="ubicacion" [(ngModel)]="statisticsOptions.ubicacion" checked>
-              <label for="ubicacion">Distribución geográfica</label>
-            </div>
-            <div class="checklist-item">
-              <input type="checkbox" id="cantidad" [(ngModel)]="statisticsOptions.cantidad" checked>
-              <label for="cantidad">Número de empresas</label>
+          <div class="report-card-header">
+            <i class="fas fa-chart-pie report-icon"></i>
+            <h4>REPORTE DE ESTADÍSTICAS</h4>
+          </div>
+          <div class="report-card-body">
+            <div class="checklist-container">
+              <div class="checklist-item">
+                <input type="checkbox" id="rubro" [(ngModel)]="statisticsOptions.rubro" checked>
+                <label for="rubro">Rubro</label>
+              </div>
+              <div class="checklist-item">
+                <input type="checkbox" id="tipoEmpresa" [(ngModel)]="statisticsOptions.tipoEmpresa" checked>
+                <label for="tipoEmpresa">Tipo de empresa</label>
+              </div>
+              <div class="checklist-item">
+                <input type="checkbox" id="ubicacion" [(ngModel)]="statisticsOptions.ubicacion" checked>
+                <label for="ubicacion">Distribución geográfica</label>
+              </div>
+              <div class="checklist-item">
+                <input type="checkbox" id="cantidad" [(ngModel)]="statisticsOptions.cantidad" checked>
+                <label for="cantidad">Número de empresas</label>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="export-buttons">
-          <button class="btn-export excel" (click)="exportToExcel('statistics')">
-            <i class="fas fa-file-excel"></i> Excel
-          </button>
-          <button class="btn-export pdf" (click)="exportToPDF('statistics')">
-            <i class="fas fa-file-pdf"></i> PDF
-          </button>
+          <div class="report-card-footer">
+            <button class="btn-export excel" (click)="exportToExcel('statistics')">
+              <i class="fas fa-file-excel"></i> Excel
+            </button>
+            <button class="btn-export pdf" (click)="exportToPDF('statistics')">
+              <i class="fas fa-file-pdf"></i> PDF
+            </button>
+          </div>
         </div>
       </div>
-  
+
       <div class="report-card-container">
         <div class="report-card">
-          <h4>REPORTE DE INGRESOS</h4>
-          <div class="checklist-container">
-            <div class="checklist-item">
-              <input type="checkbox" id="ingresos" [(ngModel)]="incomeOptions.ingresos" checked>
-              <label for="ingresos">Ingresos mensuales</label>
-            </div>
-            <div class="checklist-item">
-              <input type="checkbox" id="gastos" [(ngModel)]="incomeOptions.gastos" checked>
-              <label for="gastos">Gastos mensuales</label>
-            </div>
-            <div class="checklist-item">
-              <input type="checkbox" id="ganancia" [(ngModel)]="incomeOptions.ganancia" checked>
-              <label for="ganancia">Ganancia mensual</label>
-            </div>
-            <div class="checklist-item">
-              <input type="checkbox" id="resumen" [(ngModel)]="incomeOptions.resumen" checked>
-              <label for="resumen">Resumen anual</label>
+          <div class="report-card-header">
+            <i class="fas fa-money-bill-wave report-icon"></i>
+            <h4>REPORTE DE INGRESOS</h4>
+          </div>
+          <div class="report-card-body">
+            <div class="checklist-container">
+              <div class="checklist-item">
+                <input type="checkbox" id="ingresos" [(ngModel)]="incomeOptions.ingresos" checked>
+                <label for="ingresos">Ingresos mensuales</label>
+              </div>
+              <div class="checklist-item">
+                <input type="checkbox" id="gastos" [(ngModel)]="incomeOptions.gastos" checked>
+                <label for="gastos">Gastos mensuales</label>
+              </div>
+              <div class="checklist-item">
+                <input type="checkbox" id="ganancia" [(ngModel)]="incomeOptions.ganancia" checked>
+                <label for="ganancia">Ganancia mensual</label>
+              </div>
+              <div class="checklist-item">
+                <input type="checkbox" id="resumen" [(ngModel)]="incomeOptions.resumen" checked>
+                <label for="resumen">Resumen anual</label>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="export-buttons">
-          <button class="btn-export excel" (click)="exportToExcel('income')">
-            <i class="fas fa-file-excel"></i> Excel
-          </button>
-          <button class="btn-export pdf" (click)="exportToPDF('income')">
-            <i class="fas fa-file-pdf"></i> PDF
-          </button>
+          <div class="report-card-footer">
+            <button class="btn-export excel" (click)="exportToExcel('income')">
+              <i class="fas fa-file-excel"></i> Excel
+            </button>
+            <button class="btn-export pdf" (click)="exportToPDF('income')">
+              <i class="fas fa-file-pdf"></i> PDF
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>

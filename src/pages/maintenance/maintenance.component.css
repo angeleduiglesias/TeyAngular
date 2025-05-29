@@ -1,0 +1,129 @@
+.maintenance-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.maintenance-content {
+  max-width: 600px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.maintenance-icon {
+  font-size: 60px;
+  color: #1E3A8A;
+  margin-bottom: 20px;
+  animation: rotate 5s infinite linear;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+h1 {
+  color: #1E3A8A;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.maintenance-message {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.maintenance-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #555;
+}
+
+.detail-item i {
+  color: #1E3A8A;
+  font-size: 18px;
+}
+
+.return-btn {
+  background-color: #1E3A8A;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto 25px;
+  transition: all 0.3s ease;
+}
+
+.return-btn:hover {
+  background-color: #152a63;
+  transform: translateY(-2px);
+}
+
+.contact-info {
+  color: #777;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.contact-info a {
+  color: #1E3A8A;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .maintenance-content {
+    padding: 30px 20px;
+  }
+  
+  .maintenance-icon {
+    font-size: 50px;
+  }
+  
+  h1 {
+    font-size: 24px;
+  }
+}

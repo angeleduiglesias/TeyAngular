@@ -23,21 +23,26 @@ import { NotarioCitasComponent } from '../pages/notario/citas/notario-citas-comp
 import { TermsConditionsComponent } from '../pages/terms-conditions/terms-conditions.component';
 import { NotarioDashboardComponent } from '../pages/notario/dashboard/notario-dashboard-component';
 import { DocumentoRevisionComponent } from '../pages/notario/documento-revision/documento-revision.component';
+import { NuevaCitaComponent } from '../pages/notario/citas/nueva-cita/nueva-cita.component';
 // Remove unused import since AuthGuard is not used in routes
 import { RoleGuard } from './guards/role-guard';
+import { MaintenanceGuard } from './guards/maintenance.guard';
+import { MaintenanceComponent } from '../pages/maintenance/maintenance.component';
 
 // Define las rutas de la aplicación
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [MaintenanceGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },   
+  { path: 'maintenance', component: MaintenanceComponent, canActivate: [MaintenanceGuard] },
   {
-    path: 'terminos-condiciones',component:TermsConditionsComponent
+    path: 'terminos-condiciones', component: TermsConditionsComponent, canActivate: [MaintenanceGuard]
   },
 
   {
     path: 'pre-form',
     component: PreFormComponent,
+    canActivate: [MaintenanceGuard],
     children: [
       { path: '', redirectTo: 'step-one', pathMatch: 'full' },
       { path: 'step-one', component: StepOneComponent },
@@ -68,13 +73,14 @@ export const routes: Routes = [
   { 
     path: 'notario', 
     loadComponent: () => import('../pages/notario/notario.component').then(c => c.NotarioComponent),
-    //canActivate: [RoleGuard],
+    canActivate: [MaintenanceGuard, RoleGuard],
     data: { expectedRole: 'notario' },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: NotarioDashboardComponent },
       {path:'documentos',component: NotarioDocumentosComponent},
       {path:'citas',component: NotarioCitasComponent},
+      {path:'citas/nueva',component: NuevaCitaComponent},
       {path:'documento/:id',component: DocumentoRevisionComponent},
       // Rutas adicionales para documentos y citas se pueden agregar aquí
     ]
@@ -83,7 +89,7 @@ export const routes: Routes = [
   { 
     path: 'cliente', 
     loadComponent: () => import('../pages/cliente/cliente.component').then(c => c.ClienteComponent),
-    canActivate: [RoleGuard],
+    canActivate: [MaintenanceGuard, RoleGuard],
     data: { expectedRole: 'cliente' },
     children:[
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},

@@ -18,6 +18,8 @@ import { AdminReportsService } from '../../../app/services/admin/admin-reports.s
 export class AdminReportsComponent implements OnInit {
   private incomeChart: Chart | null = null;
   private companyTypeChart: Chart | null = null;
+  private incomeMonthlyTrendChart: Chart | null = null;
+  private geographicDistributionChart: Chart | null = null;
 
   // Opciones para el checklist de estadísticas
   statisticsOptions = {
@@ -147,7 +149,15 @@ export class AdminReportsComponent implements OnInit {
     }
   ];
 
-
+  // Datos para el gráfico de distribución geográfica
+  geographicData = [
+    { region: 'Lima Metropolitana', cantidad: 45 },
+    { region: 'Arequipa', cantidad: 18 },
+    { region: 'Trujillo', cantidad: 12 },
+    { region: 'Cusco', cantidad: 10 },
+    { region: 'Piura', cantidad: 8 },
+    { region: 'Chiclayo', cantidad: 7 }
+  ];
 
   // URL del logo de la empresa (ruta corregida)
   private logoUrl = 'assets/logo.png';
@@ -164,6 +174,10 @@ export class AdminReportsComponent implements OnInit {
     
     // Inicializar gráfico de tipos de empresas
     this.initCompanyTypeChart();
+
+    // Inicializar nuevos gráficos
+    this.initIncomeMonthlyTrendChart();
+    this.initGeographicDistributionChart();
   }
 
   private initIncomeChart(): void {
@@ -211,6 +225,67 @@ export class AdminReportsComponent implements OnInit {
     const chartData = this.adminReportsService.getMockCompanyTypeChartData();
     this.companyTypeChart = new Chart(ctx, {
       type: 'doughnut',
+      data: chartData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right',
+          },
+          title: {
+            display: false
+          }
+        }
+      }
+    });
+  }
+
+  private initIncomeMonthlyTrendChart(): void {
+    const ctx = document.getElementById('incomeMonthlyTrendChart') as HTMLCanvasElement;
+    if (!ctx) return;
+
+    // Obtener datos del servicio (corregido para usar el método directo en lugar de Observable)
+    const chartData = this.adminReportsService.getMockIncomeMonthlyTrendChartData();
+    this.incomeMonthlyTrendChart = new Chart(ctx, {
+      type: 'line',
+      data: chartData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Ingresos (S/.)',
+              font: {
+                weight: 'bold'
+              }
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: 'Mes',
+              font: {
+                weight: 'bold'
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  private initGeographicDistributionChart(): void {
+    const ctx = document.getElementById('geographicDistributionChart') as HTMLCanvasElement;
+    if (!ctx) return;
+
+    // Obtener datos del servicio (corregido para usar el método directo en lugar de Observable)
+    const chartData = this.adminReportsService.getMockGeographicDistributionChartData();
+    this.geographicDistributionChart = new Chart(ctx, {
+      type: 'pie',
       data: chartData,
       options: {
         responsive: true,
@@ -539,7 +614,7 @@ export class AdminReportsComponent implements OnInit {
           );
           
           doc.text(
-            'TEY - Todos los derechos reservados © ' + new Date().getFullYear(),
+            'TEY - Todos los derechos reservados ' + new Date().getFullYear(),
             doc.internal.pageSize.width / 2,
             doc.internal.pageSize.height - 10,
             { align: 'center' }

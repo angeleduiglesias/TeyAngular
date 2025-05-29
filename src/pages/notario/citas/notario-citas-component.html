@@ -1,66 +1,73 @@
+<!-- Font Awesome 6 Free -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <div class="citas-container">
   <div class="header-section">
     <div class="back-button">
       <button class="btn-back" (click)="volverAlPanel()"><i class="fas fa-arrow-left"></i> Volver al panel</button>
     </div>
-    <h1 class="page-title">Citas Programadas</h1>
-    <p class="page-subtitle">Gestione las citas con sus clientes</p>
+    <h1 class="page-title"><i class="fas fa-calendar-check"></i> Citas Programadas</h1>
+    <p class="page-subtitle"><i class="fas fa-info-circle"></i> Gestione las citas con sus clientes</p>
   </div>
 
   <div class="search-section">
     <div class="search-box">
+      <i class="fas fa-search search-icon"></i>
       <input type="text" placeholder="Buscar citas..." class="search-input">
-      <button class="search-btn">Buscar</button>
+      <button class="search-btn"><i class="fas fa-search"></i> Buscar</button>
     </div>
   </div>
 
-  <div class="citas-list">
-    <div class="cita-card" *ngFor="let cita of citas">
+  <div class="citas-grid">
+    <div class="cita-card-square" *ngFor="let cita of citas">
       <div class="cita-header">
-        <div class="cita-date">
-          <i class="fas fa-calendar"></i>
-          <span>Cita: {{ cita.fecha }}</span>
-        </div>
-        <div class="cita-type">{{ cita.tipoDocumento }}</div>
+        <i class="fas fa-calendar-alt"></i> Cita: {{ cita.fecha }}
       </div>
 
-      <div class="cita-details">
-        <div class="detail-item">
+      <div class="cita-body">
+        <div class="cita-type">
+          {{ cita.tipoDocumento }}
+        </div>
+        
+        <div class="cita-detail-item">
           <i class="fas fa-user"></i>
           <div class="detail-content">
-            <span class="detail-label">Cliente</span>
-            <span class="detail-value">{{ cita.cliente }}</span>
+            <div class="detail-label">Cliente</div>
+            <div class="detail-value">{{ cita.cliente }}</div>
           </div>
         </div>
         
-        <div class="detail-item">
+        <div class="cita-detail-item">
           <i class="fas fa-clock"></i>
           <div class="detail-content">
-            <span class="detail-label">Hora</span>
-            <span class="detail-value">{{ cita.hora }}</span>
+            <div class="detail-label">Hora</div>
+            <div class="detail-value">{{ cita.hora }}</div>
           </div>
         </div>
         
-        <div class="detail-item">
+        <div class="cita-detail-item">
           <i class="fas fa-map-marker-alt"></i>
           <div class="detail-content">
-            <span class="detail-label">Dirección</span>
-            <span class="detail-value">{{ cita.direccion }}</span>
+            <div class="detail-label">Dirección</div>
+            <div class="detail-value">{{ cita.direccion }}</div>
           </div>
         </div>
         
-        <div class="detail-item">
+        <div class="cita-detail-item">
           <i class="fas fa-file-alt"></i>
           <div class="detail-content">
-            <span class="detail-label">Documento</span>
-            <span class="detail-value">{{ cita.tipoDocumento }}</span>
+            <div class="detail-label">Documento</div>
+            <div class="detail-value">{{ cita.tipoDocumento }}</div>
           </div>
         </div>
       </div>
 
       <div class="cita-actions">
-        <button class="btn-cancel" (click)="cancelarCita(cita.id)">
-          <i class="fas fa-times"></i> Cancelar Cita
+        <button class="btn-action btn-edit" title="Editar cita">
+          <i class="fas fa-edit"></i> Editar
+        </button>
+        <button class="btn-action btn-cancel" (click)="cancelarCita(cita.id)" title="Cancelar cita">
+          <i class="fas fa-trash"></i> Cancelar Cita
         </button>
       </div>
     </div>

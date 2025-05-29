@@ -34,10 +34,18 @@ export interface ChartData {
   datasets: {
     label: string;
     data: number[];
-    backgroundColor?: string[];
-    borderColor?: string;
+    backgroundColor?: string[] | string;
+    borderColor?: string[] | string;
     borderWidth?: number;
+    tension?: number;
+    fill?: boolean;
   }[];
+}
+
+// Interface para datos geográficos
+export interface GeographicData {
+  region: string;
+  cantidad: number;
 }
 
 @Injectable({
@@ -100,6 +108,30 @@ export class AdminReportsService {
       .pipe(
         catchError(error => {
           console.error('Error obteniendo datos para el gráfico de tipos de empresas:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  // Obtener datos para el gráfico de tendencia mensual de ingresos
+  getIncomeMonthlyTrendChartData(): Observable<ChartData> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<ChartData>(`${this.apiUrl}/income-monthly-trend-chart`, { headers })
+      .pipe(
+        catchError(error => {
+          console.error('Error obteniendo datos para el gráfico de tendencia mensual de ingresos:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  // Obtener datos para el gráfico de distribución geográfica
+  getGeographicDistributionChartData(): Observable<ChartData> {
+    const headers = this.getAuthHeaders();
+    return this.http.get<ChartData>(`${this.apiUrl}/geographic-distribution-chart`, { headers })
+      .pipe(
+        catchError(error => {
+          console.error('Error obteniendo datos para el gráfico de distribución geográfica:', error);
           return throwError(() => error);
         })
       );
@@ -280,6 +312,53 @@ export class AdminReportsService {
             'rgba(255, 206, 86, 0.7)',
             'rgba(75, 192, 192, 0.7)',
             'rgba(153, 102, 255, 0.7)'
+          ],
+          borderWidth: 1
+        }
+      ]
+    };
+  }
+
+  // Método para obtener datos de gráfico de tendencia mensual de ingresos de prueba
+  getMockIncomeMonthlyTrendChartData(): ChartData {
+    return {
+      labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      datasets: [
+        {
+          label: 'Ingresos 2023',
+          data: [15000, 18000, 22000, 19500, 23500, 25000, 27000, 26000, 28000, 30000, 32000, 35000],
+          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: 'rgba(54, 162, 235, 0.1)',
+          tension: 0.4,
+          fill: true
+        },
+        {
+          label: 'Ingresos 2022',
+          data: [12000, 14000, 16000, 15000, 18000, 20000, 22000, 21000, 23000, 24000, 26000, 28000],
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.1)',
+          tension: 0.4,
+          fill: true
+        }
+      ]
+    };
+  }
+
+  // Método para obtener datos de gráfico de distribución geográfica de prueba
+  getMockGeographicDistributionChartData(): ChartData {
+    return {
+      labels: ['Lima Metropolitana', 'Arequipa', 'Trujillo', 'Cusco', 'Piura', 'Chiclayo'],
+      datasets: [
+        {
+          label: 'Distribución Geográfica',
+          data: [45, 18, 12, 10, 8, 7],
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)'
           ],
           borderWidth: 1
         }

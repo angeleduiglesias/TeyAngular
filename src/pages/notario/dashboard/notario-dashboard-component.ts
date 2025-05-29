@@ -13,6 +13,16 @@ interface Documento {
   citaProgramada?: boolean;
 }
 
+interface Cita {
+  id: number;
+  documentoId: number;
+  cliente: string;
+  tipoDocumento: string;
+  fecha: string;
+  hora: string;
+  direccion: string;
+}
+
 @Component({
   selector: 'app-notario-dashboard',
   standalone: true,
@@ -95,6 +105,22 @@ export class NotarioDashboardComponent implements OnInit {
     }
   ];
 
+  // Datos de ejemplo para las citas
+  citas: Cita[] = [
+    {
+      id: 1,
+      documentoId: 3,
+      cliente: 'Carlos Rodríguez',
+      tipoDocumento: 'Testamento',
+      fecha: '19 de mayo de 2025',
+      hora: '10:30',
+      direccion: 'Av. Principal 123, Oficina 405'
+    }
+  ];
+
+  mostrarModalCita: boolean = false;
+  citaSeleccionada: Cita | null = null;
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -106,8 +132,45 @@ export class NotarioDashboardComponent implements OnInit {
   }
 
   registrarCita(id: number): void {
-    console.log(`Registrando cita para documento ${id}`);
-    // Implementar lógica para registrar cita
+    // Buscar el documento por id
+    const documento = this.documentosPendientes.find(doc => doc.id === id);
+    
+    if (documento) {
+      // Navegar a la página de citas con los parámetros necesarios
+      this.router.navigate(['/notario/citas/nueva'], { 
+        queryParams: { 
+          documentoId: id,
+          cliente: documento.cliente,
+          tipoDocumento: documento.titulo
+        } 
+      });
+      
+      // Marcar el documento como con cita programada (en un escenario real, esto se haría después de confirmar la creación)
+      documento.citaProgramada = true;
+    }
+  }
+
+  verDetalleCita(documentoId: number): void {
+    // Buscar la cita asociada al documento
+    const cita = this.citas.find(c => c.documentoId === documentoId);
+    
+    if (cita) {
+      this.citaSeleccionada = cita;
+      this.mostrarModalCita = true;
+    } else {
+      // En caso de que no se encuentre la cita (esto no debería ocurrir en un escenario real)
+      console.error(`No se encontró cita para el documento ${documentoId}`);
+    }
+  }
+
+  cerrarModalCita(): void {
+    this.mostrarModalCita = false;
+    this.citaSeleccionada = null;
+  }
+
+  irACitas(): void {
+    this.cerrarModalCita();
+    this.router.navigate(['/notario/citas']);
   }
 
   descargarDocumento(id: number): void {

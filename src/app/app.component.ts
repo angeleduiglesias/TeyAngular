@@ -61,9 +61,10 @@ export class AppComponent {
     const esRutaTerminos = rutaActual.includes('/terminos');
     const esRutaCliente = rutaActual.includes('/cliente');
     const esRutaNotario = rutaActual.includes('/notario');
+    const esRutaMaintenance = rutaActual.includes('/maintenance');
     
-    this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaAdmin || esRutaLogout || esRutaCliente || esRutaNotario);
-    this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaAdmin || esRutaLogout || esRutaTerminos || esRutaCliente || esRutaNotario);
+    this.mostrarFooter = !(esRutaPreForm || esRutaLogin || esRutaAdmin || esRutaLogout || esRutaCliente || esRutaNotario || esRutaMaintenance);
+    this.mostrarHeader = !(esRutaPreForm || esRutaLogin || esRutaAdmin || esRutaLogout || esRutaTerminos || esRutaCliente || esRutaNotario || esRutaMaintenance);
   }
 }
 

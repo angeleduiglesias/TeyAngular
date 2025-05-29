@@ -1,20 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MaintenanceService } from '../../../app/services/maintenance.service';
 
 interface UserData {
   nombre: string;
   telefono: string;
   email: string;
-  contrasena: string;
-  foto?: string;
 }
 
 interface SystemConfig {
   landingPage: boolean;
   maintenancePage: boolean;
-  darkMode: boolean;
-  language: string;
+}
+
+interface AdminUser {
+  nombre: string;
+  email: string;
+  isPrincipal?: boolean;
 }
 
 @Component({
@@ -28,72 +31,162 @@ export class AdminConfigurationComponent implements OnInit {
   userData: UserData = {
     nombre: '',
     telefono: '',
-    email: '',
-    contrasena: ''
+    email: ''
   };
 
   systemConfig: SystemConfig = {
     landingPage: false,
     maintenancePage: false,
-    darkMode: false,
-    language: 'es'
   };
+
+  newAdmin: AdminUser = {
+    nombre: '',
+    email: ''
+  };
+
+  adminList: AdminUser[] = [];
 
   showToast: boolean = false;
   toastMessage: string = '';
   toastIcon: string = '';
   activeConfigTab: string = 'general';
+  
+  showConfirmModal: boolean = false;
 
-  constructor() { }
+  // Variables para validación de email
+  isValidEmail: boolean = false;
+  emailError: string = '';
+
+  constructor(private maintenanceService: MaintenanceService) { }
 
   ngOnInit(): void {
-    // Cargar datos del usuario (simulado)
     this.loadUserData();
-    // Cargar configuración del sistema (simulado)
     this.loadSystemConfig();
+    this.loadAdminList();
+    
+    this.systemConfig.maintenancePage = this.maintenanceService.isMaintenanceMode();
   }
 
   loadUserData(): void {
-    // Simulación de carga de datos desde un servicio
     setTimeout(() => {
       this.userData = {
         nombre: 'Juan Pérez',
         telefono: '987654321',
-        email: 'juan.perez@example.com',
-        contrasena: '********'
+        email: 'juan.perez@example.com'
       };
     }, 500);
   }
 
   loadSystemConfig(): void {
-    // Simulación de carga de configuración desde un servicio
     setTimeout(() => {
+      const maintenanceMode = this.maintenanceService.isMaintenanceMode();
+      
       this.systemConfig = {
-        landingPage: true,
-        maintenancePage: false,
-        darkMode: false,
-        language: 'es'
+        landingPage: false,
+        maintenancePage: maintenanceMode
       };
     }, 500);
   }
 
-  savePersonalData(): void {
-    // Simulación de guardado de datos personales
-    console.log('Guardando datos personales:', this.userData);
-    
-    // Mostrar mensaje de éxito
-    this.showToastMessage('Datos personales guardados correctamente', 'fa-check-circle');
+  loadAdminList(): void {
+    setTimeout(() => {
+      this.adminList = [
+        {
+          nombre: 'Juan Pérez',
+          email: 'juan.perez@example.com',
+          isPrincipal: true
+        }
+      ];
+    }, 500);
   }
 
-  saveSystemConfig(): void {
-    // Confirmar antes de aplicar cambios
-    if (confirm('¿Estás seguro de que deseas aplicar estos cambios en la configuración del sistema?')) {
-      // Simulación de guardado de configuración del sistema
-      console.log('Guardando configuración del sistema:', this.systemConfig);
-      
-      // Mostrar mensaje de éxito
-      this.showToastMessage('Configuración del sistema actualizada', 'fa-check-circle');
+  // Validar formato de email
+  validateEmail(): void {
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    
+    if (!this.newAdmin.email) {
+      this.isValidEmail = false;
+      this.emailError = '';
+      return;
     }
+    
+    if (!emailRegex.test(this.newAdmin.email)) {
+      this.isValidEmail = false;
+      this.emailError = 'Por favor, ingrese un correo electrónico válido';
+    } else {
+      this.isValidEmail = true;
+      this.emailError = '';
+    }
+  }
+
+  addNewAdmin(): void {
+    this.validateEmail();
+    
+    if (!this.newAdmin.nombre || !this.newAdmin.email || !this.isValidEmail) {
+      this.showToastMessage('Por favor, complete todos los campos correctamente', 'fa-exclamation-circle');
+      return;
+    }
+
+    console.log('Añadiendo nuevo administrador:', this.newAdmin);
+    
+    this.adminList.push({
+      nombre: this.newAdmin.nombre,
+      email: this.newAdmin.email
+    });
+    
+    this.newAdmin = {
+      nombre: '',
+      email: ''
+    };
+    this.isValidEmail = false;
+    
+    this.showToastMessage('Administrador agregado correctamente', 'fa-check-circle');
+  }
+
+  updatePhone(): void {
+    console.log('Actualizando teléfono:', this.userData.telefono);
+    
+    this.showToastMessage('Teléfono actualizado correctamente', 'fa-check-circle');
+  }
+
+  updateEmail(): void {
+    console.log('Actualizando email:', this.userData.email);
+    
+    this.showToastMessage('Email actualizado correctamente', 'fa-check-circle');
+  }
+
+  redirectToPasswordReset(): void {
+    console.log('Redireccionando a cambio de contraseña en Firebase');
+    
+    this.showToastMessage('Se ha enviado un enlace para cambiar la contraseña a su correo', 'fa-info-circle');
+  }
+
+  openConfirmModal(): void {
+    this.showConfirmModal = true;
+  }
+
+  closeConfirmModal(): void {
+    this.showConfirmModal = false;
+  }
+
+  confirmSaveSystemConfig(): void {
+    this.maintenanceService.setMaintenanceMode(this.systemConfig.maintenancePage);
+    
+    console.log('Guardando configuración del sistema:', this.systemConfig);
+    
+    this.closeConfirmModal();
+    
+    this.showToastMessage('Configuración del sistema actualizada', 'fa-check-circle');
+    
+    if (this.systemConfig.maintenancePage) {
+      setTimeout(() => {
+        this.showToastMessage('Modo mantenimiento activado. Los usuarios serán redirigidos a la página de mantenimiento.', 'fa-info-circle');
+      }, 3500);
+    }
+  }
+
+  onMaintenanceModeChange(event: any): void {
+    console.log('Cambio en modo mantenimiento:', this.systemConfig.maintenancePage);
   }
 
   changeConfigTab(tab: string): void {
@@ -105,7 +198,6 @@ export class AdminConfigurationComponent implements OnInit {
     this.toastIcon = icon;
     this.showToast = true;
     
-    // Ocultar el toast después de 3 segundos
     setTimeout(() => {
       this.showToast = false;
     }, 3000);

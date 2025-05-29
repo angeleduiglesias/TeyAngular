@@ -1,3 +1,6 @@
+<!-- Font Awesome 6 Free -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <div class="dashboard-content">
   <!-- Documentos Pendientes Section -->
   <div class="documentos-pendientes-section">
@@ -22,7 +25,7 @@
             <td>{{ documento.cliente }}</td>
             <td>{{ documento.fechaSolicitud }}</td>
             <td class="actions-cell">
-              <span class="status-badge" *ngIf="documento.citaProgramada">Cita programada</span>
+              <span class="status-badge clickable" *ngIf="documento.citaProgramada" (click)="verDetalleCita(documento.id)"><i class="fas fa-eye"></i> Cita programada</span>
               <button class="table-btn" *ngIf="!documento.citaProgramada" (click)="registrarCita(documento.id)"><i class="fas fa-calendar"></i> Registrar Cita</button>
               <button class="table-btn dark" (click)="revisarDocumento(documento.id)"><i class="fas fa-eye"></i> Revisar</button>
             </td>
@@ -63,6 +66,42 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para ver detalle de cita -->
+<div class="modal" *ngIf="mostrarModalCita">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2><i class="fas fa-calendar-check"></i> Detalle de Cita</h2>
+      <button class="close-btn" (click)="cerrarModalCita()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" *ngIf="citaSeleccionada">
+      <div class="cita-info-item">
+        <span class="info-label"><i class="fas fa-file-alt"></i> Documento:</span>
+        <span class="info-value">{{ citaSeleccionada.tipoDocumento }}</span>
+      </div>
+      <div class="cita-info-item">
+        <span class="info-label"><i class="fas fa-user"></i> Cliente:</span>
+        <span class="info-value">{{ citaSeleccionada.cliente }}</span>
+      </div>
+      <div class="cita-info-item">
+        <span class="info-label"><i class="fas fa-calendar-alt"></i> Fecha:</span>
+        <span class="info-value">{{ citaSeleccionada.fecha }}</span>
+      </div>
+      <div class="cita-info-item">
+        <span class="info-label"><i class="fas fa-clock"></i> Hora:</span>
+        <span class="info-value">{{ citaSeleccionada.hora }}</span>
+      </div>
+      <div class="cita-info-item">
+        <span class="info-label"><i class="fas fa-map-marker-alt"></i> Dirección:</span>
+        <span class="info-value">{{ citaSeleccionada.direccion }}</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-btn" (click)="cerrarModalCita()">Cerrar</button>
+      <button class="modal-btn primary" (click)="irACitas()">Ver todas las citas</button>
     </div>
   </div>
 </div>

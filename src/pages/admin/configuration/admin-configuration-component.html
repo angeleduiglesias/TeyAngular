@@ -1,131 +1,200 @@
 <div class="config-container">
-  <!-- Sección de Datos Personales -->
-  <div class="personal-data-section">
-    <h2 class="section-title">Datos Personales</h2>
+  <h1 class="main-title">Configuración de Cuenta</h1>
+  <p class="subtitle">Gestiona tu información personal y preferencias del sistema</p>
+  
+  <div class="config-columns">
+    <!-- Columna 1: Sección de Datos Personales -->
+    <div class="config-column">
+      <div class="config-card">
+        <div class="card-header">
+          <i class="fas fa-user-circle"></i>
+          <h2>Datos Personales</h2>
+          <p>Información básica de tu perfil</p>
+        </div>
+        
+        <div class="form-container">
+          <!-- Nombre (solo lectura) -->
+          <div class="form-field">
+            <label for="nombre">
+              <i class="fas fa-user"></i>
+              Nombre completo
+            </label>
+            <div class="static-value">{{ userData.nombre }}</div>
+          </div>
+          
+          <!-- Teléfono (editable) -->
+          <div class="form-field">
+            <label for="telefono">
+              <i class="fas fa-phone"></i>
+              Teléfono
+            </label>
+            <div class="input-with-action">
+              <input type="tel" id="telefono" placeholder="Ingrese su número de teléfono" [(ngModel)]="userData.telefono">
+              <button class="btn-edit" (click)="updatePhone()" title="Guardar teléfono">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Email (editable) -->
+          <div class="form-field">
+            <label for="email">
+              <i class="fas fa-envelope"></i>
+              Correo electrónico
+            </label>
+            <div class="input-with-action">
+              <input type="email" id="email" placeholder="Ingrese su correo electrónico" [(ngModel)]="userData.email">
+              <button class="btn-edit" (click)="updateEmail()" title="Guardar email">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Contraseña (botón de cambio) -->
+          <div class="form-field">
+            <label for="contrasena">
+              <i class="fas fa-lock"></i>
+              Contraseña
+            </label>
+            <button class="btn-change-password" (click)="redirectToPasswordReset()">
+              <i class="fas fa-key"></i> Cambiar contraseña
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     
-    <div class="form-container">
-      <div class="form-group">
-        <div class="input-icon">
-          <i class="fas fa-user"></i>
+    <!-- Columna 2: Sección de Configuración del Sistema -->
+    <div class="config-column">
+      <div class="config-card">
+        <div class="card-header">
+          <i class="fas fa-cog"></i>
+          <h2>Configuración del Sistema</h2>
+          <p>Personaliza tu experiencia en la plataforma</p>
         </div>
-        <div class="input-field">
-          <label for="nombre">Nombre</label>
-          <input type="text" id="nombre" placeholder="Ingrese su nombre completo" [(ngModel)]="userData.nombre">
+        
+        <div class="tabs-container">
+          <div class="tabs-header">
+            <button class="tab-button" [class.active]="activeConfigTab === 'general'" (click)="changeConfigTab('general')">
+              <i class="fas fa-cog"></i> General
+            </button>
+            <button class="tab-button" [class.active]="activeConfigTab === 'usuario'" (click)="changeConfigTab('usuario')">
+              <i class="fas fa-user"></i> Usuario
+            </button>
+          </div>
+          
+          <div class="tab-content" *ngIf="activeConfigTab === 'general'">
+            <!-- Opciones de la pestaña General -->
+            <div class="config-option">
+              <div class="option-info">
+                <div class="option-label">Cambio de Landing Page</div>
+                <div class="option-description">Permite modificar la página principal</div>
+              </div>
+              <div class="option-control">
+                <label class="switch">
+                  <input type="checkbox" [(ngModel)]="systemConfig.landingPage">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="config-option">
+              <div class="option-info">
+                <div class="option-label">Página de Mantenimiento</div>
+                <div class="option-description">Activa el modo de mantenimiento</div>
+              </div>
+              <div class="option-control">
+                <label class="switch">
+                  <input type="checkbox" [(ngModel)]="systemConfig.maintenancePage" (change)="onMaintenanceModeChange($event)">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="maintenance-warning" *ngIf="systemConfig.maintenancePage">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>Al activar este modo, los usuarios serán redirigidos a la página de mantenimiento.</span>
+            </div>
+          </div>
+          
+          <div class="tab-content" *ngIf="activeConfigTab === 'usuario'">
+            <!-- Contenido de la pestaña Usuario -->
+            <div class="admin-section">
+              <h3 class="section-subtitle">
+                <i class="fas fa-user-plus"></i> Añadir Nuevo Administrador
+              </h3>
+              
+              <div class="form-field">
+                <label for="adminName">
+                  <i class="fas fa-user"></i> Nombre del administrador
+                </label>
+                <input type="text" id="adminName" placeholder="Ingresa el nombre completo" [(ngModel)]="newAdmin.nombre">
+              </div>
+              
+              <div class="form-field">
+                <label for="adminEmail">
+                  <i class="fas fa-envelope"></i> Correo electrónico
+                </label>
+                <input type="email" id="adminEmail" placeholder="admin@ejemplo.com" [(ngModel)]="newAdmin.email" (input)="validateEmail()">
+                <small class="error-message" *ngIf="emailError && newAdmin.email">{{ emailError }}</small>
+              </div>
+              
+              <button class="btn-add-admin" (click)="addNewAdmin()" [disabled]="!newAdmin.nombre || !newAdmin.email || !isValidEmail">
+                <i class="fas fa-user-plus"></i> Añadir Administrador
+              </button>
+              
+              <div class="admin-divider"></div>
+              
+              <h3 class="section-subtitle">
+                <i class="fas fa-users-cog"></i> Administradores Actuales
+              </h3>
+              
+              <div class="admin-list">
+                <div class="admin-item" *ngFor="let admin of adminList">
+                  <div class="admin-info">
+                    <div class="admin-name">{{ admin.nombre }}</div>
+                    <div class="admin-email">{{ admin.email }}</div>
+                  </div>
+                  <div class="admin-role" *ngIf="admin.isPrincipal">
+                    <i class="fas fa-crown"></i> Admin Principal
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="config-actions" *ngIf="activeConfigTab === 'general'">
+            <button class="btn-apply" (click)="openConfirmModal()">
+              <i class="fas fa-check-circle"></i> Aplicar Cambios
+            </button>
+          </div>
         </div>
-      </div>
-      
-      <div class="form-group">
-        <div class="input-icon">
-          <i class="fas fa-phone"></i>
-        </div>
-        <div class="input-field">
-          <label for="telefono">Teléfono</label>
-          <input type="tel" id="telefono" placeholder="Ingrese su número de teléfono" [(ngModel)]="userData.telefono">
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <div class="input-icon">
-          <i class="fas fa-envelope"></i>
-        </div>
-        <div class="input-field">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="Ingrese su correo electrónico" [(ngModel)]="userData.email">
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <div class="input-icon">
-          <i class="fas fa-image"></i>
-        </div>
-        <div class="input-field">
-          <label for="cambiar">Cambiar</label>
-          <button id="cambiar" class="btn-cambiar">Cambiar foto de perfil</button>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <div class="input-icon">
-          <i class="fas fa-lock"></i>
-        </div>
-        <div class="input-field">
-          <label for="contrasena">Contraseña</label>
-          <input type="password" id="contrasena" placeholder="Cambiar contraseña" [(ngModel)]="userData.contrasena">
-        </div>
-      </div>
-      
-      <div class="form-actions">
-        <button class="btn-save" (click)="savePersonalData()">Guardar Cambios</button>
       </div>
     </div>
   </div>
-  
-  <!-- Sección de Configuración del Sistema -->
-  <div class="system-config-section">
-    <h2 class="section-title">Configuración del Sistema</h2>
-    
-    <div class="config-layout">
-      <div class="config-sidebar">
-        <button class="sidebar-item active" (click)="changeConfigTab('general')">
-          <i class="fas fa-cog"></i>
-          <span>General</span>
-        </button>
-        <button class="sidebar-item" (click)="changeConfigTab('appearance')">
-          <i class="fas fa-palette"></i>
-          <span>Apariencia</span>
-        </button>
-        <button class="sidebar-item" (click)="changeConfigTab('security')">
-          <i class="fas fa-shield-alt"></i>
-          <span>Seguridad</span>
-        </button>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal-overlay" [ngClass]="{'show': showConfirmModal}">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Confirmar cambios</h3>
+      <button class="modal-close" (click)="closeConfirmModal()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-message">
+        <p>¿Estás seguro de que deseas aplicar estos cambios en la configuración del sistema?</p>
+        <p *ngIf="systemConfig.maintenancePage" class="warning-message">
+          <i class="fas fa-exclamation-triangle"></i>
+          <strong>Atención:</strong> Al activar el modo mantenimiento, los usuarios serán redirigidos a la página de mantenimiento hasta que lo desactives.
+        </p>
       </div>
-      
-      <div class="config-content">
-        <div class="config-option">
-          <div class="option-label">Cambio de Landing Page</div>
-          <div class="option-control">
-            <label class="switch">
-              <input type="checkbox" [(ngModel)]="systemConfig.landingPage">
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
-        
-        <div class="config-option">
-          <div class="option-label">Cambio a Página de Mantenimiento</div>
-          <div class="option-control">
-            <label class="switch">
-              <input type="checkbox" [(ngModel)]="systemConfig.maintenancePage">
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
-        
-        <div class="config-option">
-          <div class="option-label">Modo Oscuro</div>
-          <div class="option-control">
-            <label class="switch">
-              <input type="checkbox" [(ngModel)]="systemConfig.darkMode">
-              <span class="slider round"></span>
-            </label>
-          </div>
-        </div>
-        
-        <div class="config-option">
-          <div class="option-label">Idioma</div>
-          <div class="option-control">
-            <select [(ngModel)]="systemConfig.language">
-              <option value="es">Español</option>
-              <option value="en">Inglés</option>
-              <option value="pt">Portugués</option>
-            </select>
-          </div>
-        </div>
-        
-        <div class="config-actions">
-          <button class="btn-save" (click)="saveSystemConfig()">Aplicar Cambios</button>
-        </div>
-      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="closeConfirmModal()">Cancelar</button>
+      <button class="btn-confirm" (click)="confirmSaveSystemConfig()">Confirmar</button>
     </div>
   </div>
 </div>
