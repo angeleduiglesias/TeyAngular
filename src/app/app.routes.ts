@@ -22,6 +22,7 @@ import { NotarioDocumentosComponent } from '../pages/notario/documentos/notario-
 import { NotarioCitasComponent } from '../pages/notario/citas/notario-citas-component';
 import { TermsConditionsComponent } from '../pages/terms-conditions/terms-conditions.component';
 import { NotarioDashboardComponent } from '../pages/notario/dashboard/notario-dashboard-component';
+import { DocumentoRevisionComponent } from '../pages/notario/documento-revision/documento-revision.component';
 // Remove unused import since AuthGuard is not used in routes
 import { RoleGuard } from './guards/role-guard';
 
@@ -74,6 +75,7 @@ export const routes: Routes = [
       { path: 'dashboard', component: NotarioDashboardComponent },
       {path:'documentos',component: NotarioDocumentosComponent},
       {path:'citas',component: NotarioCitasComponent},
+      {path:'documento/:id',component: DocumentoRevisionComponent},
       // Rutas adicionales para documentos y citas se pueden agregar aquí
     ]
   },

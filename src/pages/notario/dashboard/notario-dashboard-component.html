@@ -1,81 +1,68 @@
 <div class="dashboard-content">
-  <div class="dashboard-stats">
-    <div class="stat-card">
-      <div class="stat-value">{{ tramitesPendientes }}</div>
-      <div class="stat-label">Trámites pendientes</div>
+  <!-- Documentos Pendientes Section -->
+  <div class="documentos-pendientes-section">
+    <div class="section-header">
+      <h2>Documentos Pendientes</h2>
+      <p>Gestiona los documentos que requieren tu atención</p>
     </div>
-    <div class="stat-card">
-      <div class="stat-value">{{ documentosPorRevisar }}</div>
-      <div class="stat-label">Documentos por revisar</div>
-    </div>
-  </div>
-
-  <div class="dashboard-card">
-    <h2>Trámites Pendientes</h2>
-    <p>Trámites que requieren tu atención.</p>
-    <div class="tramites-list">
-      <div class="tramite-item">
-        <div class="tramite-info">
-          <h3>Escritura de Propiedad</h3>
-          <p>Cliente: Juan Pérez</p>
-          <p class="tramite-date">Recibido: 15/05/2023</p>
-        </div>
-        <button class="action-btn">Revisar</button>
-      </div>
-      <div class="tramite-item">
-        <div class="tramite-info">
-          <h3>Testamento</h3>
-          <p>Cliente: María González</p>
-          <p class="tramite-date">Recibido: 18/05/2023</p>
-        </div>
-        <button class="action-btn">Revisar</button>
-      </div>
-      <div class="tramite-item">
-        <div class="tramite-info">
-          <h3>Poder Notarial</h3>
-          <p>Cliente: Carlos Rodríguez</p>
-          <p class="tramite-date">Recibido: 20/05/2023</p>
-        </div>
-        <button class="action-btn">Revisar</button>
-      </div>
+        
+    <div class="table-container">
+      <table class="documentos-table">
+        <thead>
+          <tr>
+            <th>Nombre del Documento</th>
+            <th>Cliente</th>
+            <th>Fecha de Solicitud</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let documento of documentosPendientes">
+            <td>{{ documento.titulo }}</td>
+            <td>{{ documento.cliente }}</td>
+            <td>{{ documento.fechaSolicitud }}</td>
+            <td class="actions-cell">
+              <span class="status-badge" *ngIf="documento.citaProgramada">Cita programada</span>
+              <button class="table-btn" *ngIf="!documento.citaProgramada" (click)="registrarCita(documento.id)"><i class="fas fa-calendar"></i> Registrar Cita</button>
+              <button class="table-btn dark" (click)="revisarDocumento(documento.id)"><i class="fas fa-eye"></i> Revisar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <div class="dashboard-card">
-    <h2>Documentos por Revisar</h2>
-    <p>Documentos que requieren tu validación.</p>
-    <div class="documentos-list">
-      <div class="documento-item">
-        <div class="documento-info">
-          <h3>Identificación oficial</h3>
-          <p>Cliente: Juan Pérez</p>
-        </div>
-        <button class="action-btn">Validar</button>
-      </div>
-      <div class="documento-item">
-        <div class="documento-info">
-          <h3>Comprobante de domicilio</h3>
-          <p>Cliente: María González</p>
-        </div>
-        <button class="action-btn">Validar</button>
-      </div>
+  <!-- Documentos Finalizados Section -->
+  <div class="documentos-finalizados-section">
+    <div class="section-header">
+      <h2>Documentos Finalizados</h2>
+      <p>Documentos procesados y firmados</p>
     </div>
-  </div>
-
-  <div class="dashboard-card">
-    <h2>Calendario de Citas</h2>
-    <p>Próximas citas programadas.</p>
-    <div class="citas-list">
-      <div class="cita-item">
-        <div class="cita-fecha">28 Mayo, 2023</div>
-        <div class="cita-hora">10:00 AM</div>
-        <div class="cita-cliente">Juan Pérez - Firma de Escritura</div>
-      </div>
-      <div class="cita-item">
-        <div class="cita-fecha">30 Mayo, 2023</div>
-        <div class="cita-hora">2:30 PM</div>
-        <div class="cita-cliente">María González - Testamento</div>
-      </div>
+        
+    <div class="table-container">
+      <table class="documentos-table">
+        <thead>
+          <tr>
+            <th>Nombre del Documento</th>
+            <th>Cliente</th>
+            <th>Fecha de Solicitud</th>
+            <th>Fecha de Finalización</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let documento of documentosFinalizados">
+            <td>{{ documento.titulo }}</td>
+            <td>{{ documento.cliente }}</td>
+            <td>{{ documento.fechaSolicitud }}</td>
+            <td>{{ documento.fechaFinalizacion }}</td>
+            <td class="actions-cell">
+              <button class="table-btn" (click)="descargarDocumento(documento.id)"><i class="fas fa-download"></i> Descargar</button>
+              <button class="table-btn dark" (click)="verDetalles(documento.id)"><i class="fas fa-info-circle"></i> Detalles</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

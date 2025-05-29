@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Cita {
   id: number;
   fecha: string;
-  horaInicio: string;
-  horaFin: string;
-  titulo: string;
+  hora: string;
   cliente: string;
-  tipo: string;
+  direccion: string;
+  tipoDocumento: string;
 }
 
 @Component({
@@ -16,104 +16,56 @@ interface Cita {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './notario-citas-component.html',
-  styleUrl: './notario-citas-component.css'
+  styleUrls: ['./notario-citas-component.css']
 })
 export class NotarioCitasComponent implements OnInit {
-  citasHoy: Cita[] = [
+  citas: Cita[] = [
     {
       id: 1,
-      fecha: '28/05/2023',
-      horaInicio: '10:00',
-      horaFin: '12:00',
-      titulo: 'Firma de Escritura',
-      cliente: 'Juan Pu00e9rez',
-      tipo: 'escritura'
+      fecha: '19 de mayo de 2025',
+      hora: '10:30',
+      cliente: 'Carlos Rodríguez',
+      direccion: 'Av. Principal 123, Oficina 405',
+      tipoDocumento: 'Testamento'
     },
     {
       id: 2,
-      fecha: '28/05/2023',
-      horaInicio: '14:00',
-      horaFin: '15:00',
-      titulo: 'Asesoru00eda Legal',
-      cliente: 'Maru00eda Gonzu00e1lez',
-      tipo: 'asesoria'
+      fecha: '21 de mayo de 2025',
+      hora: '14:00',
+      cliente: 'María González',
+      direccion: 'Calle Secundaria 456, Piso 2',
+      tipoDocumento: 'Escritura de Compraventa'
     },
     {
       id: 3,
-      fecha: '28/05/2023',
-      horaInicio: '16:00',
-      horaFin: '18:00',
-      titulo: 'Firma de Testamento',
-      cliente: 'Carlos Rodru00edguez',
-      tipo: 'testamento'
-    }
-  ];
-
-  proximasCitas: Cita[] = [
+      fecha: '22 de mayo de 2025',
+      hora: '11:15',
+      cliente: 'Juan Pérez',
+      direccion: 'Plaza Central 789, Local 12',
+      tipoDocumento: 'Poder Notarial'
+    },
     {
       id: 4,
-      fecha: '30/05/2023',
-      horaInicio: '10:00',
-      horaFin: '11:30',
-      titulo: 'Firma de Poder Notarial',
-      cliente: 'Ana Lu00f3pez',
-      tipo: 'poder'
-    },
-    {
-      id: 5,
-      fecha: '02/06/2023',
-      horaInicio: '14:00',
-      horaFin: '15:00',
-      titulo: 'Asesoru00eda Legal',
-      cliente: 'Roberto Su00e1nchez',
-      tipo: 'asesoria'
-    },
-    {
-      id: 6,
-      fecha: '05/06/2023',
-      horaInicio: '11:00',
-      horaFin: '13:00',
-      titulo: 'Firma de Escritura',
-      cliente: 'Laura Martu00ednez',
-      tipo: 'escritura'
+      fecha: '25 de mayo de 2025',
+      hora: '09:00',
+      cliente: 'Ana López',
+      direccion: 'Av. Principal 123, Oficina 405',
+      tipoDocumento: 'Escritura de Propiedad'
     }
   ];
 
-  vistaActual: 'dia' | 'semana' | 'mes' = 'dia';
-  fechaActual: Date = new Date();
-
-  constructor() { }
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Inicializaciu00f3n del componente
   }
 
-  cambiarVista(vista: 'dia' | 'semana' | 'mes'): void {
-    this.vistaActual = vista;
-    // Implementar lu00f3gica para cambiar la vista del calendario
+  volverAlPanel(): void {
+    this.router.navigate(['/notario/dashboard']);
   }
 
-  navegarFecha(direccion: 'anterior' | 'siguiente'): void {
-    // Implementar lu00f3gica para navegar entre fechas
-    if (direccion === 'anterior') {
-      // Restar du00edas/semanas/meses segu00fan la vista actual
-    } else {
-      // Sumar du00edas/semanas/meses segu00fan la vista actual
-    }
-  }
-
-  verDetallesCita(id: number): void {
-    console.log(`Ver detalles de cita ${id}`);
-    // Implementar lu00f3gica para mostrar detalles de la cita
-  }
-
-  reprogramarCita(id: number): void {
-    console.log(`Reprogramar cita ${id}`);
-    // Implementar lu00f3gica para reprogramar la cita
-  }
-
-  agendarNuevaCita(): void {
-    console.log('Agendar nueva cita');
-    // Implementar lu00f3gica para agendar una nueva cita
+  cancelarCita(id: number): void {
+    console.log(`Cancelando cita ${id}`);
+    // Aquí iría la lógica para cancelar la cita
+    this.citas = this.citas.filter(cita => cita.id !== id);
   }
 }

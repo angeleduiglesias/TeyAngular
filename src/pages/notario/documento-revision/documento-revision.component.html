@@ -1,0 +1,49 @@
+<div class="documento-revision-container">
+  <div class="back-button">
+    <button class="btn-back" (click)="volverAlPanel()"><i class="fas fa-arrow-left"></i> Volver al panel</button>
+  </div>
+  
+  <div class="documento-header">
+    <h1>{{ documento?.titulo }}</h1>
+    <p class="documento-info">Cliente: {{ documento?.cliente }} | Solicitado: {{ documento?.fechaSolicitud }}</p>
+  </div>
+  
+  <div class="documento-content">
+    <div class="documento-section">
+      <div class="section-header">
+        <h2><i class="fas fa-file-alt"></i> Documento Original</h2>
+        <p>Revise el documento enviado por el cliente</p>
+      </div>
+      
+      <div class="documento-preview">
+        <div class="preview-placeholder">
+          <i class="fas fa-file-alt preview-icon"></i>
+          <p>Vista previa del documento</p>
+        </div>
+      </div>
+      
+      <button class="btn-download">
+        <i class="fas fa-download"></i> Descargar Documento Original
+      </button>
+    </div>
+    
+    <div class="documento-section">
+      <div class="section-header">
+        <h2>Finalizar Proceso</h2>
+        <p>Suba el documento firmado y complete el proceso</p>
+      </div>
+      
+      <div class="upload-area">
+        <div class="upload-placeholder">
+          <i class="fas fa-upload"></i>
+          <p>Subir documento firmado</p>
+          <span class="upload-hint">Arrastre y suelte o haga clic para seleccionar</span>
+        </div>
+      </div>
+      
+      <button class="btn-finalizar">
+        <i class="fas fa-check"></i> Finalizar Proceso
+      </button>
+    </div>
+  </div>
+</div>
