@@ -1,0 +1,17 @@
+<div class="notario-container">
+  <!-- Navbar superior -->
+  <app-notario-navbar 
+    [userData]="userData" 
+    [activeTab]="activeTab"
+    (tabChange)="changeTab($event)"
+    (logoutEvent)="logout()">
+  </app-notario-navbar>
+
+  <!-- Contenido principal - Router outlet para cargar componentes hijos -->
+  <div class="content-container">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="footer">
+    Tey - 2025 Todos los derechos reservados
+  </div>
+</div>

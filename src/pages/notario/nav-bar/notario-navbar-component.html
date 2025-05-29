@@ -1,0 +1,21 @@
+<div class="navbar-container">
+<nav class="navbar">
+  <div class="navbar-brand">
+    <h1 *ngIf="userData">Bienvenido {{ userData.nombre }}</h1>
+  </div>
+  <div class="navbar-menu">
+    <ul class="nav-links">
+      <li [class.active]="activeTab === 'dashboard'">
+        <a (click)="changeTab('dashboard')">Dashboard</a>
+      </li>
+      <li [class.active]="activeTab === 'documentos'">
+        <a (click)="changeTab('documentos')">Documentos</a>
+      </li>
+      <li [class.active]="activeTab === 'citas'">
+        <a (click)="changeTab('citas')">Citas</a>
+      </li>
+    </ul>
+  </div>
+  <button class="logout-btn" (click)="logout()">Cerrar sesión</button>
+</nav>
+</div>

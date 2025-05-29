@@ -17,7 +17,7 @@ export interface Client {
     pago1: boolean;  // en cuanto a esto, primero necesitamos guardar el pago y luego lo arreglamos
     pago2: boolean;
     nombre_empresa: string; //este seria el nombre de la empresa, si lo modificas, necesitas cambiarlo en el for
-    contacto: string;
+    telefono: string;
     email: string;
   }  
 
@@ -56,7 +56,7 @@ export class AdminClientService {
             id: cliente.id,
             nombre_cliente: cliente.nombre_cliente || '',
             dni: cliente.dni || '',
-            contacto: cliente.contacto || '',
+            telefono: cliente.telefono || '',
             email: cliente.email || 'No especificado',
             estado: cliente.estado || 'pendiente',
             // Usar created_at como fechaRegistro

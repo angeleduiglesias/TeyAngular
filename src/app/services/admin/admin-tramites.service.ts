@@ -13,7 +13,8 @@ export interface Tramites {
     fecha_fin: Date | null;
     estado_tramite: string;
     nombre_empresa: string;
-    estado_pago: string;
+    pago1: boolean;
+    pago2: boolean;
   }  
 
 @Injectable({
@@ -54,7 +55,8 @@ export class AdminTramitesService {
             fecha_fin: tramites.fecha_fin || null,
             estado_tramite: tramites.estado_tramite || 'Sin especificar',
             nombre_empresa: tramites.nombre_empresa || 'No disponible',
-            estado_pago: tramites.estado_pago || 'pendiente',
+            pago1: tramites.pago1 || false,
+            pago2: tramites.pago2 || false,
             };
           
           return TramitesFormateado;

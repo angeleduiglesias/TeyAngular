@@ -18,7 +18,10 @@ import { ClienteConfigurationComponent } from '../pages/cliente/configuration/cl
 import { ClienteDashboardComponent } from '../pages/cliente/dashboard/cliente-dashboard-component';
 import { ClienteNotifyComponent } from '../pages/cliente/notificaciones/cliente-notify.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { NotarioDocumentosComponent } from '../pages/notario/documentos/notario-documentos-component';
+import { NotarioCitasComponent } from '../pages/notario/citas/notario-citas-component';
 import { TermsConditionsComponent } from '../pages/terms-conditions/terms-conditions.component';
+import { NotarioDashboardComponent } from '../pages/notario/dashboard/notario-dashboard-component';
 // Remove unused import since AuthGuard is not used in routes
 import { RoleGuard } from './guards/role-guard';
 
@@ -62,10 +65,17 @@ export const routes: Routes = [
     ]
   },
   { 
-    path: 'notario/dashboard', 
-    loadComponent: () => import('../pages/notario/dashboard/notario-dashboard-component').then(c => c.NotarioDashboardComponent),
-    canActivate: [RoleGuard],
-    data: { expectedRole: 'notario' }
+    path: 'notario', 
+    loadComponent: () => import('../pages/notario/notario.component').then(c => c.NotarioComponent),
+    //canActivate: [RoleGuard],
+    data: { expectedRole: 'notario' },
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: NotarioDashboardComponent },
+      {path:'documentos',component: NotarioDocumentosComponent},
+      {path:'citas',component: NotarioCitasComponent},
+      // Rutas adicionales para documentos y citas se pueden agregar aquí
+    ]
   },
   
   { 

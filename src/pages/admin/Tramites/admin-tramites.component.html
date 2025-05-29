@@ -105,9 +105,14 @@
             </td>
             <td>{{ tramite.nombre_empresa }}</td>
             <td>
-              <span class="payment-badge" [ngClass]="getPaymentStatusClass(tramite.estado_pago)">
-                {{ tramite.estado_pago }}
-              </span>
+              <div class="payment-status">
+                <span class="payment-badge" [ngClass]="{'paid': tramite.pago1, 'unpaid': !tramite.pago1}">
+                  Pago 1
+                </span>
+                <span class="payment-badge" [ngClass]="{'paid': tramite.pago2, 'unpaid': !tramite.pago2}">
+                  Pago 2
+                </span>
+              </div>
             </td>
             <td class="actions-cell">
               <button class="btn-action view" (click)="viewTramiteDetails(tramite.id)">
@@ -181,9 +186,14 @@
             <div class="info-group">
               <div class="info-label">Estado del Pago:</div>
               <div class="info-value">
-                <span class="payment-badge" [ngClass]="getPaymentStatusClass(selectedTramite.estado_pago)">
-                  {{ selectedTramite.estado_pago }}
-                </span>
+                <div class="payment-status">
+                  <span class="payment-badge" [ngClass]="{'paid': selectedTramite.pago1, 'unpaid': !selectedTramite.pago1}">
+                    Pago 1
+                  </span>
+                  <span class="payment-badge" [ngClass]="{'paid': selectedTramite.pago2, 'unpaid': !selectedTramite.pago2}">
+                    Pago 2
+                  </span>
+                </div>
               </div>
             </div>
           </div>

@@ -28,6 +28,38 @@ export class AdminNotaryComponent implements OnInit {
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
+  // Variables para el modal de creación
+  showCreateModal: boolean = false;
+  newNotary: Notary = {
+    id: 0,
+    nombre: '',
+    apellidos: '',
+    telefono: '',
+    email: ''
+  };
+
+  // Variables para el modal de edición
+  showEditModal: boolean = false;
+  editingNotary: Notary = {
+    id: 0,
+    nombre: '',
+    apellidos: '',
+    telefono: '',
+    email: ''
+  };
+
+  // Variables para el modal de detalles
+  showDetailsModal: boolean = false;
+  selectedNotary: Notary | null = null;
+
+  // Variables para notificaciones
+  notification = {
+    show: false,
+    message: '',
+    type: 'success',
+    icon: 'fa-check-circle'
+  };
+
   constructor(
     private router: Router,
     private adminNotaryService: AdminNotaryService,
@@ -184,9 +216,49 @@ export class AdminNotaryComponent implements OnInit {
   }
 
   editNotary(notary: Notary): void {
-    // Implementar lógica para editar notario
-    console.log('Editar notario:', notary);
-    // this.router.navigate(['/admin/notarios/editar', notary.id]);
+    // Crear una copia para evitar modificar el original directamente
+    this.editingNotary = { ...notary };
+    this.showEditModal = true;
+  }
+
+  saveEditedNotary(): void {
+    // Validar campos requeridos
+    if (!this.editingNotary.nombre || !this.editingNotary.apellidos || 
+        !this.editingNotary.telefono || !this.editingNotary.email) {
+      this.showNotification('Por favor, complete todos los campos requeridos.', 'error');
+      return;
+    }
+
+    // En un caso real, aquí se enviaría la información al backend
+    this.adminNotaryService.updateNotary(this.editingNotary.id, this.editingNotary).subscribe({
+      next: (response) => {
+        // Actualizar el notario en la lista
+        const index = this.notaries.findIndex(n => n.id === this.editingNotary.id);
+        if (index !== -1) {
+          this.notaries[index] = { ...this.editingNotary };
+          this.applyFilter();
+        }
+        
+        // Cerrar modal y mostrar notificación
+        this.closeModal();
+        this.showNotification('Notario actualizado exitosamente', 'update');
+      },
+      error: (error) => {
+        console.error('Error al actualizar notario:', error);
+        this.showNotification('Error al actualizar notario. Por favor, intente nuevamente.', 'error');
+        
+        // Para desarrollo: actualizar el notario en la lista local aunque falle el backend
+        if (true) { // Cambiar a false en producción
+          const index = this.notaries.findIndex(n => n.id === this.editingNotary.id);
+          if (index !== -1) {
+            this.notaries[index] = { ...this.editingNotary };
+            this.applyFilter();
+          }
+          this.closeModal();
+          this.showNotification('Notario actualizado exitosamente (modo desarrollo)', 'update');
+        }
+      }
+    });
   }
 
   deleteNotary(id: number): void {
@@ -195,21 +267,137 @@ export class AdminNotaryComponent implements OnInit {
       this.adminNotaryService.deleteNotary(id)
         .subscribe({
           next: () => {
-            console.log('Notario eliminado con éxito:', id);
+            // Eliminar el notario de la lista
             this.notaries = this.notaries.filter(notary => notary.id !== id);
             this.applyFilter();
+            this.showNotification('Notario eliminado exitosamente', 'delete');
           },
           error: (error) => {
             console.error('Error al eliminar notario:', error);
-            alert('No se pudo eliminar el notario. Por favor, intenta nuevamente.');
+            this.showNotification('Error al eliminar notario. Por favor, intente nuevamente.', 'error');
+            
+            // Para desarrollo: eliminar el notario de la lista local aunque falle el backend
+            if (true) { // Cambiar a false en producción
+              this.notaries = this.notaries.filter(notary => notary.id !== id);
+              this.applyFilter();
+              this.showNotification('Notario eliminado exitosamente (modo desarrollo)', 'delete');
+            }
           }
         });
     }
   }
 
   viewNotaryDetails(id: number): void {
-    // Implementar lógica para ver detalles del notario
-    console.log('Ver detalles del notario con ID:', id);
-    // this.router.navigate(['/admin/notarios/detalles', id]);
+    // Buscar el notario por ID
+    const notary = this.notaries.find(n => n.id === id);
+    if (notary) {
+      // Crear una copia para evitar problemas de referencia
+      this.selectedNotary = { ...notary };
+      this.showDetailsModal = true;
+    } else {
+      this.showNotification('No se encontró el notario solicitado', 'error');
+    }
+  }
+
+  openEditModalFromDetails(): void {
+    if (this.selectedNotary) {
+      this.editingNotary = { ...this.selectedNotary };
+      this.showDetailsModal = false;
+      this.showEditModal = true;
+    }
+  }
+
+  closeModal(): void {
+    this.showCreateModal = false;
+    this.showEditModal = false;
+    this.showDetailsModal = false;
+  }
+
+  // Método para abrir el modal de creación
+  openCreateModal(): void {
+    // Reiniciar el formulario
+    this.newNotary = {
+      id: 0,
+      nombre: '',
+      apellidos: '',
+      telefono: '',
+      email: ''
+    };
+    this.showCreateModal = true;
+  }
+
+  createNotary(): void {
+    // Validar campos requeridos
+    if (!this.newNotary.nombre || !this.newNotary.apellidos || !this.newNotary.telefono || !this.newNotary.email) {
+      this.showNotification('Por favor, complete todos los campos requeridos.', 'error');
+      return;
+    }
+
+    // En un caso real, aquí se enviaría la información al backend
+    this.adminNotaryService.createNotary(this.newNotary).subscribe({
+      next: (response) => {
+        // Agregar el nuevo notario a la lista
+        const newId = this.notaries.length > 0 ? Math.max(...this.notaries.map(n => n.id)) + 1 : 1;
+        const createdNotary = { ...this.newNotary, id: response?.id || newId };
+        this.notaries.unshift(createdNotary);
+        this.applyFilter();
+        
+        // Cerrar modal y mostrar notificación
+        this.closeModal();
+        this.showNotification('Notario creado exitosamente', 'create');
+      },
+      error: (error) => {
+        console.error('Error al crear notario:', error);
+        this.showNotification('Error al crear notario. Por favor, intente nuevamente.', 'error');
+        
+        // Para desarrollo: agregar el notario a la lista local aunque falle el backend
+        if (true) { // Cambiar a false en producción
+          const newId = this.notaries.length > 0 ? Math.max(...this.notaries.map(n => n.id)) + 1 : 1;
+          const createdNotary = { ...this.newNotary, id: newId };
+          this.notaries.unshift(createdNotary);
+          this.applyFilter();
+          this.closeModal();
+          this.showNotification('Notario creado exitosamente (modo desarrollo)', 'create');
+        }
+      }
+    });
+  }
+
+  // Método para mostrar notificaciones
+  showNotification(message: string, action: 'create' | 'update' | 'delete' | 'error', icon?: string): void {
+    let type: 'success' | 'warning' | 'error' = 'success';
+    let iconClass = '';
+    
+    // Determinar tipo y icono según la acción
+    switch (action) {
+      case 'create':
+        type = 'success';
+        iconClass = 'fa-check-circle';
+        break;
+      case 'update':
+        type = 'warning';
+        iconClass = 'fa-edit';
+        break;
+      case 'delete':
+        type = 'error';
+        iconClass = 'fa-trash';
+        break;
+      case 'error':
+        type = 'error';
+        iconClass = 'fa-exclamation-circle';
+        break;
+    }
+    
+    this.notification = {
+      show: true,
+      message,
+      type,
+      icon: icon || iconClass
+    };
+    
+    // Ocultar la notificación después de 3 segundos
+    setTimeout(() => {
+      this.notification.show = false;
+    }, 3000);
   }
 }

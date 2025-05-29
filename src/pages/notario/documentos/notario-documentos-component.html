@@ -1,0 +1,108 @@
+<div class="documentos-container">
+  <h1 class="page-title">Documentos</h1>
+  
+  <div class="filter-section">
+    <div class="search-box">
+      <input type="text" placeholder="Buscar documento..." class="search-input">
+      <button class="search-btn">Buscar</button>
+    </div>
+    <div class="filter-options">
+      <select class="filter-select">
+        <option value="">Todos los tipos</option>
+        <option value="identificacion">Identificación</option>
+        <option value="comprobante">Comprobante de domicilio</option>
+        <option value="escritura">Escritura</option>
+        <option value="poder">Poder notarial</option>
+        <option value="testamento">Testamento</option>
+      </select>
+      <select class="filter-select">
+        <option value="">Todos los estados</option>
+        <option value="pendiente">Pendiente de revisión</option>
+        <option value="revisado">Revisado</option>
+        <option value="aprobado">Aprobado</option>
+        <option value="rechazado">Rechazado</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="documentos-list">
+    <!-- Documento 1 -->
+    <div class="documento-card">
+      <div class="documento-header">
+        <h3>Identificación oficial</h3>
+        <span class="documento-status pending">Pendiente</span>
+      </div>
+      <div class="documento-info">
+        <p><strong>Cliente:</strong> Juan Pérez</p>
+        <p><strong>Fecha de carga:</strong> 15/05/2023</p>
+        <p><strong>Tipo:</strong> INE</p>
+      </div>
+      <div class="documento-actions">
+        <button class="action-btn primary">Ver documento</button>
+        <button class="action-btn">Validar</button>
+      </div>
+    </div>
+
+    <!-- Documento 2 -->
+    <div class="documento-card">
+      <div class="documento-header">
+        <h3>Comprobante de domicilio</h3>
+        <span class="documento-status pending">Pendiente</span>
+      </div>
+      <div class="documento-info">
+        <p><strong>Cliente:</strong> María González</p>
+        <p><strong>Fecha de carga:</strong> 18/05/2023</p>
+        <p><strong>Tipo:</strong> Recibo CFE</p>
+      </div>
+      <div class="documento-actions">
+        <button class="action-btn primary">Ver documento</button>
+        <button class="action-btn">Validar</button>
+      </div>
+    </div>
+
+    <!-- Documento 3 -->
+    <div class="documento-card">
+      <div class="documento-header">
+        <h3>Escritura de propiedad</h3>
+        <span class="documento-status approved">Aprobado</span>
+      </div>
+      <div class="documento-info">
+        <p><strong>Cliente:</strong> Carlos Rodríguez</p>
+        <p><strong>Fecha de carga:</strong> 10/05/2023</p>
+        <p><strong>Tipo:</strong> Escritura</p>
+      </div>
+      <div class="documento-actions">
+        <button class="action-btn primary">Ver documento</button>
+        <button class="action-btn secondary">Descargar</button>
+      </div>
+    </div>
+
+    <!-- Documento 4 -->
+    <div class="documento-card">
+      <div class="documento-header">
+        <h3>Poder notarial</h3>
+        <span class="documento-status rejected">Rechazado</span>
+      </div>
+      <div class="documento-info">
+        <p><strong>Cliente:</strong> Ana López</p>
+        <p><strong>Fecha de carga:</strong> 05/05/2023</p>
+        <p><strong>Tipo:</strong> Poder</p>
+        <p><strong>Motivo de rechazo:</strong> Documento ilegible</p>
+      </div>
+      <div class="documento-actions">
+        <button class="action-btn primary">Ver documento</button>
+        <button class="action-btn warning">Solicitar corrección</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <button class="pagination-btn">Anterior</button>
+    <div class="pagination-numbers">
+      <button class="pagination-number active">1</button>
+      <button class="pagination-number">2</button>
+      <button class="pagination-number">3</button>
+    </div>
+    <button class="pagination-btn">Siguiente</button>
+  </div>
+</div>

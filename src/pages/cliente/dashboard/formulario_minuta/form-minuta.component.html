@@ -18,48 +18,131 @@
     
     <!-- Contenido del paso actual -->
     <div class="step-content" [ngSwitch]="pasoActual">
+      
+      <!-- Paso 1: Datos Personales -->
       <div *ngSwitchCase="0">
-        <h3>Información Básica</h3>
-        <!-- Campos del paso 1 -->
+        <h3>Datos Personales</h3>
         <div class="form-group">
-          <label>Nombre de la Empresa</label>
-          <input type="text" [(ngModel)]="datosFormulario.nombreEmpresa" [value]="nombreEmpresa" readonly>
+          <label>Nombre <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.nombre" placeholder="Ingrese su nombre completo">
         </div>
         <div class="form-group">
-          <label>Tipo de Sociedad</label>
-          <select [(ngModel)]="datosFormulario.tipoSociedad">
-            <option value="sas">Sociedad por Acciones Simplificada (SAS)</option>
-            <option value="ltda">Sociedad de Responsabilidad Limitada (Ltda)</option>
-            <option value="sa">Sociedad Anónima (SA)</option>
+          <label>Nacionalidad <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.nacionalidad" placeholder="Ingrese su nacionalidad">
+        </div>
+        <div class="form-group">
+          <label>DNI <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.dni" placeholder="Ingrese su número de DNI">
+        </div>
+        <div class="form-group">
+          <label>Profesión</label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.profesion" placeholder="Ingrese su profesión">
+        </div>
+        <div class="form-group">
+          <label>Estado Civil</label>
+          <select [(ngModel)]="formularioMinuta.paso_1_datos_personales.estado_civil">
+            <option value="">Seleccione una opción</option>
+            <option value="soltero">Soltero/a</option>
+            <option value="casado">Casado/a</option>
+            <option value="divorciado">Divorciado/a</option>
+            <option value="viudo">Viudo/a</option>
           </select>
         </div>
-      </div>
-      
-      <div *ngSwitchCase="1">
-        <h3>Socios y Participación</h3>
-        <!-- Campos del paso 2 -->
-        <div class="form-group" *ngFor="let socio of datosFormulario.socios; let i = index">
-          <div class="socio-row">
-            <div>
-              <label>Nombre del Socio {{i+1}}</label>
-              <input type="text" [(ngModel)]="socio.nombre">
-            </div>
-            <div>
-              <label>Participación (%)</label>
-              <input type="number" [(ngModel)]="socio.participacion">
-            </div>
-            <button *ngIf="i > 0" class="btn-remove" (click)="eliminarSocio(i)">X</button>
+        <div class="form-group">
+          <label>Dirección</label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.direccion" placeholder="Ingrese su dirección">
+        </div>
+        
+        <!-- Campos condicionales para cónyuge (solo si está casado) -->
+        <div *ngIf="formularioMinuta.paso_1_datos_personales.estado_civil === 'casado'">
+          <div class="form-group">
+            <label>Nombre del Cónyuge</label>
+            <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.nombre_conyuge" placeholder="Ingrese el nombre de su cónyuge">
+          </div>
+          <div class="form-group">
+            <label>DNI del Cónyuge</label>
+            <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.dni_conyuge" placeholder="Ingrese el DNI de su cónyuge">
           </div>
         </div>
-        <button class="btn-add" (click)="agregarSocio()">Agregar Socio</button>
       </div>
       
-      <div *ngSwitchCase="2">
-        <h3>Objeto Social</h3>
-        <!-- Campos del paso 3 -->
+      <!-- Paso 2: Datos de la Empresa -->
+      <div *ngSwitchCase="1">
+        <h3>Datos de la Empresa</h3>
         <div class="form-group">
-          <label>Actividad Principal</label>
-          <textarea [(ngModel)]="datosFormulario.objetoSocial" rows="4"></textarea>
+          <label>Nombre de la Empresa <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_2_datos_empresa.nombre_empresa" [value]="nombreEmpresa" [readonly]="nombreEmpresa">
+        </div>
+        <div class="form-group">
+          <label>Dirección de la Empresa</label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_2_datos_empresa.direccion_empresa" placeholder="Ingrese la dirección de la empresa">
+        </div>
+        <div class="form-group">
+          <label>Provincia</label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_2_datos_empresa.provincia_empresa" placeholder="Ingrese la provincia">
+        </div>
+        <div class="form-group">
+          <label>Departamento</label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_2_datos_empresa.departamento_empresa" placeholder="Ingrese el departamento">
+        </div>
+        <div class="form-group">
+          <label>Objetivo de la Empresa <span class="required">*</span></label>
+          <textarea [(ngModel)]="formularioMinuta.paso_2_datos_empresa.objetivo" rows="4" placeholder="Describa el objetivo principal de la empresa"></textarea>
+        </div>
+      </div>
+      
+      <!-- Paso 3: Capital y Aportes -->
+      <div *ngSwitchCase="2">
+        <h3>Capital y Aportes</h3>
+        <div class="form-group">
+          <label>Monto de Capital <span class="required">*</span></label>
+          <input type="number" [(ngModel)]="formularioMinuta.paso_3_capital_y_aportes.monto_capital" placeholder="Ingrese el monto de capital">
+        </div>
+        
+        <h4>Aportes</h4>
+        <div class="form-group" *ngFor="let aporte of formularioMinuta.paso_3_capital_y_aportes.aportes; let i = index">
+          <div class="aporte-row">
+            <div>
+              <label>Descripción del Aporte {{i+1}} <span class="required">*</span></label>
+              <input type="text" [(ngModel)]="aporte.descripcion" placeholder="Describa el aporte">
+            </div>
+            <div>
+              <label>Monto <span class="required">*</span></label>
+              <input type="number" [(ngModel)]="aporte.monto" placeholder="Ingrese el monto">
+            </div>
+            <button *ngIf="i > 0" class="btn-remove" (click)="eliminarAporte(i)">X</button>
+          </div>
+        </div>
+        <button class="btn-add" (click)="agregarAporte()">Agregar Aporte</button>
+      </div>
+      
+      <!-- Paso 4: Apoderado -->
+      <div *ngSwitchCase="3">
+        <h3>Datos del Apoderado</h3>
+        <div class="form-group">
+          <label>Nombre del Apoderado <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_4_apoderado.apoderado" placeholder="Ingrese el nombre del apoderado">
+        </div>
+        <div class="form-group">
+          <label>DNI del Apoderado <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_4_apoderado.dni_apoderado" placeholder="Ingrese el DNI del apoderado">
+        </div>
+      </div>
+      
+      <!-- Paso 5: Confirmación -->
+      <div *ngSwitchCase="4">
+        <h3>Confirmación</h3>
+        <div class="form-group">
+          <label>Ciudad <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_5_confirmacion.ciudad" placeholder="Ingrese la ciudad">
+        </div>
+        <div class="form-group">
+          <label>Fecha de Registro</label>
+          <input type="date" [(ngModel)]="formularioMinuta.paso_5_confirmacion.fecha_registro">
+        </div>
+        <div class="confirmation-message">
+          <p>Por favor revise cuidadosamente toda la información antes de finalizar.</p>
+          <p>Al hacer clic en "Finalizar", confirma que todos los datos proporcionados son correctos.</p>
         </div>
       </div>
     </div>
@@ -76,15 +159,51 @@
   <div *ngIf="nombreEmpresa && mostrandoResumen && !formularioEnviado" class="form-summary">
     <h3>Resumen de la Información</h3>
     <div class="summary-content">
-      <p><strong>Nombre de la Empresa:</strong> {{datosFormulario.nombreEmpresa}}</p>
-      <p><strong>Tipo de Sociedad:</strong> {{getTipoSociedadTexto(datosFormulario.tipoSociedad)}}</p>
-      <p><strong>Socios:</strong></p>
-      <ul>
-        <li *ngFor="let socio of datosFormulario.socios">
-          {{socio.nombre}} - {{socio.participacion}}%
-        </li>
-      </ul>
-      <p><strong>Objeto Social:</strong> {{datosFormulario.objetoSocial}}</p>
+      <div class="summary-section">
+        <h4>Datos Personales</h4>
+        <p><strong>Nombre:</strong> {{formularioMinuta.paso_1_datos_personales.nombre}}</p>
+        <p><strong>Nacionalidad:</strong> {{formularioMinuta.paso_1_datos_personales.nacionalidad}}</p>
+        <p><strong>DNI:</strong> {{formularioMinuta.paso_1_datos_personales.dni}}</p>
+        <p *ngIf="formularioMinuta.paso_1_datos_personales.profesion"><strong>Profesión:</strong> {{formularioMinuta.paso_1_datos_personales.profesion}}</p>
+        <p *ngIf="formularioMinuta.paso_1_datos_personales.estado_civil"><strong>Estado Civil:</strong> {{formularioMinuta.paso_1_datos_personales.estado_civil}}</p>
+        <p *ngIf="formularioMinuta.paso_1_datos_personales.direccion"><strong>Dirección:</strong> {{formularioMinuta.paso_1_datos_personales.direccion}}</p>
+        <div *ngIf="formularioMinuta.paso_1_datos_personales.estado_civil === 'casado'">
+          <p><strong>Nombre del Cónyuge:</strong> {{formularioMinuta.paso_1_datos_personales.nombre_conyuge}}</p>
+          <p><strong>DNI del Cónyuge:</strong> {{formularioMinuta.paso_1_datos_personales.dni_conyuge}}</p>
+        </div>
+      </div>
+      
+      <div class="summary-section">
+        <h4>Datos de la Empresa</h4>
+        <p><strong>Nombre de la Empresa:</strong> {{formularioMinuta.paso_2_datos_empresa.nombre_empresa}}</p>
+        <p *ngIf="formularioMinuta.paso_2_datos_empresa.direccion_empresa"><strong>Dirección:</strong> {{formularioMinuta.paso_2_datos_empresa.direccion_empresa}}</p>
+        <p *ngIf="formularioMinuta.paso_2_datos_empresa.provincia_empresa"><strong>Provincia:</strong> {{formularioMinuta.paso_2_datos_empresa.provincia_empresa}}</p>
+        <p *ngIf="formularioMinuta.paso_2_datos_empresa.departamento_empresa"><strong>Departamento:</strong> {{formularioMinuta.paso_2_datos_empresa.departamento_empresa}}</p>
+        <p><strong>Objetivo:</strong> {{formularioMinuta.paso_2_datos_empresa.objetivo}}</p>
+      </div>
+      
+      <div class="summary-section">
+        <h4>Capital y Aportes</h4>
+        <p><strong>Monto de Capital:</strong> {{formularioMinuta.paso_3_capital_y_aportes.monto_capital | currency:'PEN ':'symbol':'1.2-2'}}</p>
+        <p><strong>Aportes:</strong></p>
+        <ul>
+          <li *ngFor="let aporte of formularioMinuta.paso_3_capital_y_aportes.aportes">
+            {{aporte.descripcion}} - {{aporte.monto | currency:'PEN ':'symbol':'1.2-2'}}
+          </li>
+        </ul>
+      </div>
+      
+      <div class="summary-section">
+        <h4>Datos del Apoderado</h4>
+        <p><strong>Nombre del Apoderado:</strong> {{formularioMinuta.paso_4_apoderado.apoderado}}</p>
+        <p><strong>DNI del Apoderado:</strong> {{formularioMinuta.paso_4_apoderado.dni_apoderado}}</p>
+      </div>
+      
+      <div class="summary-section">
+        <h4>Confirmación</h4>
+        <p><strong>Ciudad:</strong> {{formularioMinuta.paso_5_confirmacion.ciudad}}</p>
+        <p><strong>Fecha de Registro:</strong> {{formularioMinuta.paso_5_confirmacion.fecha_registro | date:'dd/MM/yyyy'}}</p>
+      </div>
     </div>
     <div class="summary-actions">
       <button class="btn-edit" (click)="editarFormulario()">Editar</button>

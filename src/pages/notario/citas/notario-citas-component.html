@@ -1,0 +1,138 @@
+<div class="citas-container">
+  <h1 class="page-title">Calendario de Citas</h1>
+  
+  <div class="calendar-controls">
+    <div class="calendar-navigation">
+      <button class="nav-btn"><i class="fas fa-chevron-left"></i></button>
+      <h2 class="current-month">Mayo 2023</h2>
+      <button class="nav-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="view-options">
+      <button class="view-btn active">Du00eda</button>
+      <button class="view-btn">Semana</button>
+      <button class="view-btn">Mes</button>
+    </div>
+  </div>
+  
+  <div class="calendar-view">
+    <!-- Vista diaria -->
+    <div class="day-view">
+      <div class="date-header">
+        <h3>Miu00e9rcoles, 28 de Mayo de 2023</h3>
+      </div>
+      
+      <div class="time-slots">
+        <!-- Horas del du00eda -->
+        <div class="time-column">
+          <div class="time-slot">8:00</div>
+          <div class="time-slot">9:00</div>
+          <div class="time-slot">10:00</div>
+          <div class="time-slot">11:00</div>
+          <div class="time-slot">12:00</div>
+          <div class="time-slot">13:00</div>
+          <div class="time-slot">14:00</div>
+          <div class="time-slot">15:00</div>
+          <div class="time-slot">16:00</div>
+          <div class="time-slot">17:00</div>
+          <div class="time-slot">18:00</div>
+        </div>
+        
+        <!-- Eventos del du00eda -->
+        <div class="events-column">
+          <div class="event-container" style="grid-row: 3 / span 2;"> <!-- 10:00 - 12:00 -->
+            <div class="event-card">
+              <div class="event-time">10:00 - 12:00</div>
+              <div class="event-title">Firma de Escritura</div>
+              <div class="event-client">Cliente: Juan Pu00e9rez</div>
+              <div class="event-actions">
+                <button class="action-btn small">Detalles</button>
+                <button class="action-btn small secondary">Reprogramar</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="event-container" style="grid-row: 7 / span 1;"> <!-- 14:00 - 15:00 -->
+            <div class="event-card">
+              <div class="event-time">14:00 - 15:00</div>
+              <div class="event-title">Asesoru00eda Legal</div>
+              <div class="event-client">Cliente: Maru00eda Gonzu00e1lez</div>
+              <div class="event-actions">
+                <button class="action-btn small">Detalles</button>
+                <button class="action-btn small secondary">Reprogramar</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="event-container" style="grid-row: 9 / span 2;"> <!-- 16:00 - 18:00 -->
+            <div class="event-card">
+              <div class="event-time">16:00 - 18:00</div>
+              <div class="event-title">Firma de Testamento</div>
+              <div class="event-client">Cliente: Carlos Rodru00edguez</div>
+              <div class="event-actions">
+                <button class="action-btn small">Detalles</button>
+                <button class="action-btn small secondary">Reprogramar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="upcoming-citas">
+    <h3 class="section-title">Pru00f3ximas Citas</h3>
+    <div class="citas-list">
+      <div class="cita-card">
+        <div class="cita-date">
+          <div class="date-number">30</div>
+          <div class="date-month">MAY</div>
+        </div>
+        <div class="cita-details">
+          <div class="cita-time">10:00 - 11:30</div>
+          <div class="cita-title">Firma de Poder Notarial</div>
+          <div class="cita-client">Ana Lu00f3pez</div>
+        </div>
+        <div class="cita-actions">
+          <button class="action-btn">Detalles</button>
+          <button class="action-btn secondary">Reprogramar</button>
+        </div>
+      </div>
+      
+      <div class="cita-card">
+        <div class="cita-date">
+          <div class="date-number">2</div>
+          <div class="date-month">JUN</div>
+        </div>
+        <div class="cita-details">
+          <div class="cita-time">14:00 - 15:00</div>
+          <div class="cita-title">Asesoru00eda Legal</div>
+          <div class="cita-client">Roberto Su00e1nchez</div>
+        </div>
+        <div class="cita-actions">
+          <button class="action-btn">Detalles</button>
+          <button class="action-btn secondary">Reprogramar</button>
+        </div>
+      </div>
+      
+      <div class="cita-card">
+        <div class="cita-date">
+          <div class="date-number">5</div>
+          <div class="date-month">JUN</div>
+        </div>
+        <div class="cita-details">
+          <div class="cita-time">11:00 - 13:00</div>
+          <div class="cita-title">Firma de Escritura</div>
+          <div class="cita-client">Laura Martu00ednez</div>
+        </div>
+        <div class="cita-actions">
+          <button class="action-btn">Detalles</button>
+          <button class="action-btn secondary">Reprogramar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="add-cita-container">
+    <button class="add-cita-btn">+ Agendar Nueva Cita</button>
+  </div>
+</div>

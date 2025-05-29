@@ -58,7 +58,8 @@ export class AdminTramitesComponent implements OnInit {
         fecha_fin: new Date('2023-02-15'),
         estado_tramite: 'Completado',
         nombre_empresa: 'Empresa ABC S.A.C.',
-        estado_pago: 'pagado'
+        pago1: true,
+        pago2: true
       },
       {
         id: 2,
@@ -67,7 +68,8 @@ export class AdminTramitesComponent implements OnInit {
         fecha_fin: new Date('2023-03-10'),
         estado_tramite: 'En proceso',
         nombre_empresa: 'Comercial XYZ E.I.R.L.',
-        estado_pago: 'pendiente'
+        pago1: true,
+        pago2: false
       },
       {
         id: 3,
@@ -76,7 +78,8 @@ export class AdminTramitesComponent implements OnInit {
         fecha_fin: null,
         estado_tramite: 'Iniciado',
         nombre_empresa: 'Inversiones 123 S.R.L.',
-        estado_pago: 'pagado'
+        pago1: true,
+        pago2: true
       },
       {
         id: 4,
@@ -85,7 +88,8 @@ export class AdminTramitesComponent implements OnInit {
         fecha_fin: null,
         estado_tramite: 'En proceso',
         nombre_empresa: 'Servicios Integrales S.A.',
-        estado_pago: 'pendiente'
+        pago1: false,
+        pago2: false
       },
       {
         id: 5,
@@ -94,7 +98,8 @@ export class AdminTramitesComponent implements OnInit {
         fecha_fin: new Date('2023-06-12'),
         estado_tramite: 'Completado',
         nombre_empresa: 'Constructora Lima S.A.C.',
-        estado_pago: 'pagado'
+        pago1: true,
+        pago2: true
       },
       {
         id: 6,
@@ -103,7 +108,8 @@ export class AdminTramitesComponent implements OnInit {
         fecha_fin: null,
         estado_tramite: 'Cancelado',
         nombre_empresa: 'Consultoría Legal E.I.R.L.',
-        estado_pago: 'cancelado'
+        pago1: false,
+        pago2: false
       }
     ];
 
@@ -151,8 +157,7 @@ export class AdminTramitesComponent implements OnInit {
       filtered = filtered.filter(tramite => 
         tramite.nombre_cliente.toLowerCase().includes(term) ||
         tramite.nombre_empresa.toLowerCase().includes(term) ||
-        tramite.estado_tramite.toLowerCase().includes(term) ||
-        tramite.estado_pago.toLowerCase().includes(term)
+        tramite.estado_tramite.toLowerCase().includes(term)
       );
     }
   

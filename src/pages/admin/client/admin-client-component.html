@@ -100,7 +100,7 @@
             </div>
           </td>
           <td class="contact-icons">
-            <a [href]="'https://wa.me/' + client.contacto" target="_blank" class="icon-whatsapp" title="Contactar por WhatsApp">
+            <a [href]="'https://wa.me/' + client.telefono" target="_blank" class="icon-whatsapp" title="Contactar por WhatsApp">
               <i class="fab fa-whatsapp"></i>
             </a>
             <a [href]="'mailto:' + client.email" class="icon-email" title="Enviar correo electrónico">
@@ -141,7 +141,7 @@
         <div class="client-info-grid">
           <div class="info-group">
             <div class="info-label">Número de Cliente:</div>
-            <div class="info-value">{{ selectedClient.id || 'CL-' + selectedClient.id }}</div>
+            <div class="info-value">{{ 'CL-' + selectedClient.id }}</div>
           </div>
           
           <div class="info-group">
@@ -161,7 +161,7 @@
           
           <div class="info-group">
             <div class="info-label">Teléfono:</div>
-            <div class="info-value">{{ selectedClient.contacto }}</div>
+            <div class="info-value">{{ selectedClient.telefono }}</div>
           </div>
           
           <div class="info-group">
@@ -217,8 +217,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-contact whatsapp" [disabled]="!selectedClient?.contacto" 
-                (click)="contactClient('whatsapp', selectedClient.contacto)">
+        <button class="btn-contact whatsapp" [disabled]="!selectedClient?.telefono" 
+                (click)="contactClient('whatsapp', selectedClient.telefono)">
           <i class="fab fa-whatsapp"></i> WhatsApp
         </button>
         <button class="btn-contact email" [disabled]="!selectedClient?.email" 
