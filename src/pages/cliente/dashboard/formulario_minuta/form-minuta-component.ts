@@ -56,6 +56,12 @@ interface MetodoPago {
   imagen: string;
 }
 
+// Tipos de formulario de minuta
+enum TipoFormularioMinuta {
+  EIRL_BIENES_NO_DINERARIOS = 'eirl_bienes_no_dinerarios',
+  EIRL_BIENES_DINERARIOS = 'eirl_bienes_dinerarios'
+}
+
 @Component({
   selector: 'app-form-minuta',
   standalone: true,
@@ -72,6 +78,10 @@ export class FormMinutaComponent implements OnInit {
   @Output() porcentajeProgresoChange = new EventEmitter<number>();
   @Output() estadoPagoChange = new EventEmitter<string>();
   @Output() pagoActualChange = new EventEmitter<number>();
+  
+  // Tipos de formulario disponibles
+  tiposFormulario = TipoFormularioMinuta;
+  tipoFormularioSeleccionado: TipoFormularioMinuta = TipoFormularioMinuta.EIRL_BIENES_NO_DINERARIOS;
   
   // Datos del formulario de minuta
   pasos: string[] = [
@@ -153,9 +163,36 @@ export class FormMinutaComponent implements OnInit {
   }
   
   ngOnChanges(): void {
-    // Actualizar el nombre de la empresa en el formulario cuando cambie
     if (this.nombreEmpresa) {
       this.formularioMinuta.paso_2_datos_empresa.nombre_empresa = this.nombreEmpresa;
+    }
+  }
+  
+  // Método para cambiar el tipo de formulario
+  cambiarTipoFormulario(tipo: TipoFormularioMinuta): void {
+    this.tipoFormularioSeleccionado = tipo;
+    
+    // Reiniciar el formulario si se cambia el tipo
+    this.pasoActual = 0;
+    this.mostrandoResumen = false;
+    
+    // Reiniciar los aportes según el tipo de formulario
+    if (tipo === TipoFormularioMinuta.EIRL_BIENES_DINERARIOS) {
+      // Para bienes dinerarios, inicializar con un aporte de dinero
+      this.formularioMinuta.paso_3_capital_y_aportes.aportes = [
+        {
+          descripcion: 'Aporte en efectivo',
+          monto: 0
+        }
+      ];
+    } else {
+      // Para bienes no dinerarios, inicializar con un aporte genérico
+      this.formularioMinuta.paso_3_capital_y_aportes.aportes = [
+        {
+          descripcion: '',
+          monto: 0
+        }
+      ];
     }
   }
   
@@ -199,6 +236,16 @@ export class FormMinutaComponent implements OnInit {
           return false;
         }
         
+        // Validación específica según el tipo de formulario
+        if (this.tipoFormularioSeleccionado === TipoFormularioMinuta.EIRL_BIENES_DINERARIOS) {
+          // Para bienes dinerarios, validar que el monto del aporte coincida con el capital
+          const totalAportes = capitalAportes.aportes.reduce((sum, aporte) => sum + aporte.monto, 0);
+          if (totalAportes !== capitalAportes.monto_capital) {
+            alert('El monto total de los aportes debe ser igual al monto de capital');
+            return false;
+          }
+        }
+        
         // Validar que haya al menos un aporte y que todos tengan descripción y monto
         if (capitalAportes.aportes.length === 0) {
           alert('Debe agregar al menos un aporte');
@@ -235,13 +282,27 @@ export class FormMinutaComponent implements OnInit {
   }
   
   agregarAporte(): void {
+    // Si es tipo dinerario, no permitir agregar más aportes
+    if (this.tipoFormularioSeleccionado === TipoFormularioMinuta.EIRL_BIENES_DINERARIOS && 
+        this.formularioMinuta.paso_3_capital_y_aportes.aportes.length >= 1) {
+      alert('Para bienes dinerarios solo se permite un aporte en efectivo');
+      return;
+    }
+    
     this.formularioMinuta.paso_3_capital_y_aportes.aportes.push({
-      descripcion: '',
+      descripcion: this.tipoFormularioSeleccionado === TipoFormularioMinuta.EIRL_BIENES_DINERARIOS ? 'Aporte en efectivo' : '',
       monto: 0
     });
   }
   
   eliminarAporte(index: number): void {
+    // Si es tipo dinerario, no permitir eliminar el único aporte
+    if (this.tipoFormularioSeleccionado === TipoFormularioMinuta.EIRL_BIENES_DINERARIOS && 
+        this.formularioMinuta.paso_3_capital_y_aportes.aportes.length <= 1) {
+      alert('Para bienes dinerarios se requiere al menos un aporte en efectivo');
+      return;
+    }
+    
     if (index >= 0 && this.formularioMinuta.paso_3_capital_y_aportes.aportes.length > 1) {
       this.formularioMinuta.paso_3_capital_y_aportes.aportes.splice(index, 1);
     }
@@ -267,6 +328,7 @@ export class FormMinutaComponent implements OnInit {
     
     // Aquí se podría enviar el formulario al backend
     console.log('Formulario enviado:', this.formularioMinuta);
+    console.log('Tipo de formulario:', this.tipoFormularioSeleccionado);
   }
   
   seleccionarMetodoPago(id: number): void {

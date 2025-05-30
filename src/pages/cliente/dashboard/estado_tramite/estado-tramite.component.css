@@ -3,46 +3,30 @@
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   padding: 20px;
-  transition: transform 0.3s ease;
-}
-
-.progress-card:hover {
-  transform: translateY(-5px);
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .progress-card h2 {
   color: #1E3A8A;
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   font-size: 18px;
-}
-
-/* Estilos de la barra de progreso */
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .progress-date {
   color: #6c757d;
   font-size: 14px;
+  margin-bottom: 20px;
 }
 
-.progress-status {
+.progress-label {
   font-weight: 500;
-}
-
-.status-pendiente {
-  color: #ffc107;
-}
-
-.status-en.proceso {
-  color: #17a2b8;
-}
-
-.status-finalizado {
-  color: #28a745;
+  color: #343a40;
+  margin-bottom: 10px;
 }
 
 .progress-bar-container {
@@ -50,12 +34,45 @@
   background-color: #e9ecef;
   border-radius: 5px;
   overflow: hidden;
-  margin-top: 15px;
 }
 
 .progress-bar {
   height: 100%;
   background-color: #1E3A8A;
   border-radius: 5px;
-  transition: width 0.5s ease;
+}
+
+.progress-percentage {
+  font-size: 14px;
+  color: #6c757d;
+  margin-top: 8px;
+  margin-bottom: 15px;
+}
+
+.progress-status {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto; /* Empuja el status al final de la tarjeta */
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-pendiente {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-en-proceso {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.status-finalizado {
+  background-color: #d4edda;
+  color: #155724;
 }

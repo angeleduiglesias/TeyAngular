@@ -1,24 +1,16 @@
 <div class="payment-card">
   <h2>Estado de Pagos</h2>
-  
+
   <div class="payment-list">
     <div class="payment-item" *ngFor="let pago of pagos">
-      <div class="payment-info">
-        <div class="payment-name">{{ pago.nombre }}</div>
-        <div class="payment-status-badge" [ngClass]="pago.pagado ? 'paid' : 'pending'">
-          {{ pago.pagado ? 'Pagado' : 'Pendiente' }}
-        </div>
+      <div class="payment-name">{{ pago.nombre }}</div>
+      <div class="payment-status" [ngClass]="pago.pagado ? 'pagado' : 'no-pagado'">
+        {{ pago.pagado ? 'Pagado' : 'No pagado' }}
       </div>
-      <button class="payment-button" *ngIf="!pago.pagado" (click)="irAPagar(pago.id)">
-        Pagar
-      </button>
     </div>
   </div>
-  
+
   <div class="payment-summary" *ngIf="pagoActual > 0">
     <div class="progress-text">{{ pagoActual }}/{{ pagoTotal }} pagos completados</div>
   </div>
 </div>
-
-
-

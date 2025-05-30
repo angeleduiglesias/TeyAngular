@@ -2,27 +2,35 @@
 
   <!-- Contenido principal -->
   <div class="dashboard-content">
-    <!-- Sección de Trámite (visible por defecto) -->
-    <app-estado-tramite 
-    [fechaInicioTramite]="fechaInicioTramite"
-    [estadoTramite]="estadoTramite"
-    [porcentajeProgreso]="porcentajeProgreso">
-   </app-estado-tramite>
+    <!-- Fila para los componentes de estado en columnas -->
+    <div class="status-row">
+      <!-- Columna izquierda: Estado del Trámite -->
+      <div class="status-column">
+        <app-estado-tramite 
+          [fechaInicioTramite]="fechaInicioTramite"
+          [estadoTramite]="estadoTramite"
+          [porcentajeProgreso]="porcentajeProgreso">
+        </app-estado-tramite>
+      </div>
+      
+      <!-- Columna derecha: Estado de Pagos -->
+      <div class="status-column">
+        <app-estado-pagos 
+          [estadoPago]="estadoPago"
+          [pagoActual]="pagoActual"
+          [pagoTotal]="pagoTotal">
+        </app-estado-pagos>
+      </div>
+    </div>
 
-      <!-- Container de pagos -->
-      <app-estado-pagos 
-      [estadoPago]="estadoPago"
-      [pagoActual]="pagoActual"
-      [pagoTotal]="pagoTotal">
-    </app-estado-pagos>
-
+    <!-- Formulario de minuta (abajo, ancho completo) -->
     <app-form-minuta 
-    [userData]="userData"
-    [nombreEmpresa]="nombreEmpresa"
-    (estadoTramiteChange)="actualizarEstadoTramite($event)"
-    (porcentajeProgresoChange)="actualizarPorcentajeProgreso($event)"
-    (estadoPagoChange)="actualizarEstadoPago($event)"
-    (pagoActualChange)="actualizarPagoActual($event)">
-  </app-form-minuta>
-
+      [userData]="userData"
+      [nombreEmpresa]="nombreEmpresa"
+      (estadoTramiteChange)="actualizarEstadoTramite($event)"
+      (porcentajeProgresoChange)="actualizarPorcentajeProgreso($event)"
+      (estadoPagoChange)="actualizarEstadoPago($event)"
+      (pagoActualChange)="actualizarPagoActual($event)">
+    </app-form-minuta>
   </div>
+</div>

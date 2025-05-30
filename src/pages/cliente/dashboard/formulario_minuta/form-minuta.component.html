@@ -1,3 +1,4 @@
+
 <div class="form-card">
   <h2>Formulario de Minuta</h2>
   
@@ -8,6 +9,31 @@
   
   <!-- Formulario habilitado -->
   <div *ngIf="nombreEmpresa && !formularioEnviado" class="form-enabled">
+    <!-- Selector de tipo de formulario -->
+    <div class="form-type-selector">
+      <h3>Seleccione el tipo de formulario EIRL</h3>
+      <div class="form-type-options">
+        <div class="form-type-option" 
+             [ngClass]="{'selected': tipoFormularioSeleccionado === tiposFormulario.EIRL_BIENES_NO_DINERARIOS}"
+             (click)="cambiarTipoFormulario(tiposFormulario.EIRL_BIENES_NO_DINERARIOS)">
+          <div class="option-icon">🏭</div>
+          <div class="option-content">
+            <h4>EIRL con Bienes No Dinerarios</h4>
+            <p>Aportes en bienes muebles, inmuebles, derechos, etc.</p>
+          </div>
+        </div>
+        <div class="form-type-option" 
+             [ngClass]="{'selected': tipoFormularioSeleccionado === tiposFormulario.EIRL_BIENES_DINERARIOS}"
+             (click)="cambiarTipoFormulario(tiposFormulario.EIRL_BIENES_DINERARIOS)">
+          <div class="option-icon">💰</div>
+          <div class="option-content">
+            <h4>EIRL con Bienes Dinerarios</h4>
+            <p>Aportes exclusivamente en dinero en efectivo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Pasos del formulario -->
     <div class="form-steps">
       <div class="step" *ngFor="let step of pasos; let i = index" 
@@ -99,21 +125,34 @@
           <input type="number" [(ngModel)]="formularioMinuta.paso_3_capital_y_aportes.monto_capital" placeholder="Ingrese el monto de capital">
         </div>
         
-        <h4>Aportes</h4>
-        <div class="form-group" *ngFor="let aporte of formularioMinuta.paso_3_capital_y_aportes.aportes; let i = index">
-          <div class="aporte-row">
-            <div>
-              <label>Descripción del Aporte {{i+1}} <span class="required">*</span></label>
-              <input type="text" [(ngModel)]="aporte.descripcion" placeholder="Describa el aporte">
+        <!-- Mensaje informativo según el tipo de formulario -->
+        <div class="info-message" *ngIf="tipoFormularioSeleccionado === tiposFormulario.EIRL_BIENES_DINERARIOS">
+          <p><i class="fa fa-info-circle"></i> Para EIRL con bienes dinerarios, el aporte debe ser exclusivamente en dinero en efectivo.</p>
+        </div>
+        <div class="info-message" *ngIf="tipoFormularioSeleccionado === tiposFormulario.EIRL_BIENES_NO_DINERARIOS">
+          <p><i class="fa fa-info-circle"></i> Para EIRL con bienes no dinerarios, puede agregar múltiples aportes de diferentes tipos.</p>
+        </div>
+        
+        <div class="aportes-list">
+          <div class="aporte-item" *ngFor="let aporte of formularioMinuta.paso_3_capital_y_aportes.aportes; let i = index">
+            <div class="form-group">
+              <label>Descripción del Aporte <span class="required">*</span></label>
+              <input type="text" [(ngModel)]="aporte.descripcion" placeholder="Describa el aporte" 
+                     [readonly]="tipoFormularioSeleccionado === tiposFormulario.EIRL_BIENES_DINERARIOS">
             </div>
-            <div>
-              <label>Monto <span class="required">*</span></label>
-              <input type="number" [(ngModel)]="aporte.monto" placeholder="Ingrese el monto">
+            <div class="form-group">
+              <label>Valor del Aporte <span class="required">*</span></label>
+              <input type="number" [(ngModel)]="aporte.monto" placeholder="Ingrese el valor del aporte">
             </div>
-            <button *ngIf="i > 0" class="btn-remove" (click)="eliminarAporte(i)">X</button>
+            <button class="btn-remove" *ngIf="formularioMinuta.paso_3_capital_y_aportes.aportes.length > 1" (click)="eliminarAporte(i)">
+              Eliminar
+            </button>
           </div>
         </div>
-        <button class="btn-add" (click)="agregarAporte()">Agregar Aporte</button>
+        <button class="btn-add" (click)="agregarAporte()" 
+                [disabled]="tipoFormularioSeleccionado === tiposFormulario.EIRL_BIENES_DINERARIOS && formularioMinuta.paso_3_capital_y_aportes.aportes.length >= 1">
+          Agregar Aporte
+        </button>
       </div>
       
       <!-- Paso 4: Apoderado -->
@@ -159,6 +198,11 @@
   <div *ngIf="nombreEmpresa && mostrandoResumen && !formularioEnviado" class="form-summary">
     <h3>Resumen de la Información</h3>
     <div class="summary-content">
+      <div class="summary-section">
+        <h4>Tipo de Formulario</h4>
+        <p><strong>Tipo:</strong> {{tipoFormularioSeleccionado === tiposFormulario.EIRL_BIENES_DINERARIOS ? 'EIRL con Bienes Dinerarios' : 'EIRL con Bienes No Dinerarios'}}</p>
+      </div>
+      
       <div class="summary-section">
         <h4>Datos Personales</h4>
         <p><strong>Nombre:</strong> {{formularioMinuta.paso_1_datos_personales.nombre}}</p>

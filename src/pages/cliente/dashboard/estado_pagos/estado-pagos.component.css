@@ -3,19 +3,19 @@
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   padding: 20px;
-  margin-top: 20px;
-  transition: transform 0.3s ease;
-}
-
-.payment-card:hover {
-  transform: translateY(-5px);
+  margin-top: 0;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .payment-card h2 {
   color: #1E3A8A;
   margin-top: 0;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   font-size: 18px;
+  font-weight: 600;
 }
 
 /* Estilos para la lista de pagos */
@@ -23,27 +23,16 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin: 15px 0;
+  flex-grow: 1;
 }
 
 .payment-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 15px;
+  padding: 16px;
   background-color: #f8f9fa;
   border-radius: 6px;
-  transition: all 0.2s ease;
-}
-
-.payment-item:hover {
-  background-color: #f1f3f5;
-}
-
-.payment-info {
-  display: flex;
-  align-items: center;
-  gap: 12px;
 }
 
 .payment-name {
@@ -51,21 +40,59 @@
   color: #343a40;
 }
 
-.payment-status-badge {
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 12px;
+.payment-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
   font-weight: 500;
 }
 
-.payment-status-badge.paid {
+.payment-status.pagado {
   background-color: #d4edda;
   color: #28a745;
 }
 
-.payment-status-badge.pending {
+.payment-status.no-pagado {
   background-color: #fff3cd;
   color: #856404;
+}
+
+.payment-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.payment-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.payment-badge.completed {
+  background-color: #d4edda;
+  color: #28a745;
+}
+
+.payment-badge.in-progress {
+  background-color: #cce5ff;
+  color: #007bff;
+}
+
+.payment-badge.pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.next-payment {
+  margin-top: 5px;
+  font-size: 12px;
+  font-style: italic;
 }
 
 .payment-button {
@@ -182,45 +209,6 @@
 .step.current .step-name {
   color: #007bff;
   font-weight: 500;
-}
-
-/* Estilos para el estado de pago */
-.payment-status {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 15px;
-}
-
-.payment-badge {
-  display: inline-block;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 500;
-  font-size: 14px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.payment-badge.completed {
-  background-color: #d4edda;
-  color: #28a745;
-}
-
-.payment-badge.in-progress {
-  background-color: #cce5ff;
-  color: #007bff;
-}
-
-.payment-badge.pending {
-  background-color: #fff3cd;
-  color: #856404;
-}
-
-.next-payment {
-  margin-top: 5px;
-  font-size: 12px;
-  font-style: italic;
 }
 
 @media (max-width: 768px) {

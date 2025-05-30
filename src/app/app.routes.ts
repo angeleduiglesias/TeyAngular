@@ -73,7 +73,7 @@ export const routes: Routes = [
   { 
     path: 'notario', 
     loadComponent: () => import('../pages/notario/notario.component').then(c => c.NotarioComponent),
-    canActivate: [MaintenanceGuard, RoleGuard],
+    //canActivate: [MaintenanceGuard, RoleGuard],
     data: { expectedRole: 'notario' },
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

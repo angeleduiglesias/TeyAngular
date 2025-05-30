@@ -13,9 +13,42 @@
   gap: 20px;
 }
 
-.content-section {
+/* Fila para los componentes de estado */
+.status-row {
   display: flex;
-  flex-direction: column;
   gap: 20px;
+  margin-bottom: 10px;
+  align-items: stretch; /* Asegura que ambas columnas tengan la misma altura */
 }
 
+/* Columnas para los componentes de estado */
+.status-column {
+  flex: 1;
+  min-width: 0; /* Permite que las columnas se reduzcan si es necesario */
+  display: flex; /* Permite que el contenido se expanda a toda la altura */
+}
+
+/* Hacer que los componentes ocupen todo el espacio disponible */
+.status-column app-estado-tramite,
+.status-column app-estado-pagos {
+  width: 100%;
+  height: 100%;
+}
+
+/* Asegurar que las tarjetas tengan la misma altura */
+:host ::ng-deep .progress-card,
+:host ::ng-deep .payment-card {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .status-row {
+    flex-direction: column;
+  }
+  
+  .status-column {
+    width: 100%;
+  }
+}
