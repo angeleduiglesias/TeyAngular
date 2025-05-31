@@ -25,9 +25,6 @@ export class StepThreeComponent implements OnInit {
   rango_capital = [
     { id: 'rango1', nombre: 'S/ 500 - S/ 1,000' },
     { id: 'rango2', nombre: 'S/ 1,001 - S/ 5,000' },
-    { id: 'rango3', nombre: 'S/ 5,001 - S/ 10,000' },
-    { id: 'rango4', nombre: 'S/ 10,001 - S/ 50,000' },
-    { id: 'rango5', nombre: 'Más de S/ 50,000' }
   ];
 
   constructor(

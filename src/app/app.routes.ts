@@ -16,7 +16,8 @@ import { AdminReportsComponent } from '../pages/admin/reports/admin-reports-comp
 import { AdminConfigurationComponent } from '../pages/admin/configuration/admin-configuration-component';
 import { ClienteConfigurationComponent } from '../pages/cliente/configuration/cliente-configuration.component';
 import { ClienteDashboardComponent } from '../pages/cliente/dashboard/cliente-dashboard-component';
-import { ClienteNotifyComponent } from '../pages/cliente/notificaciones/cliente-notify.component';
+import { ClienteDocumentosComponent } from '../pages/cliente/documentos/cliente-documentos.component';
+import { ClienteCitasComponent } from '../pages/cliente/citas/cliente-citas.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { NotarioDocumentosComponent } from '../pages/notario/documentos/notario-documentos-component';
 import { NotarioCitasComponent } from '../pages/notario/citas/notario-citas-component';
@@ -89,14 +90,14 @@ export const routes: Routes = [
   { 
     path: 'cliente', 
     loadComponent: () => import('../pages/cliente/cliente.component').then(c => c.ClienteComponent),
-    canActivate: [MaintenanceGuard, RoleGuard],
+    //canActivate: [MaintenanceGuard, RoleGuard],
     data: { expectedRole: 'cliente' },
     children:[
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {path: 'dashboard', component: ClienteDashboardComponent},
-      {path: 'notificaciones', component: ClienteNotifyComponent},
+      {path: 'documentos', component: ClienteDocumentosComponent},
+      {path: 'citas', component: ClienteCitasComponent},
       {path: 'configuracion', component: ClienteConfigurationComponent},
-      
     ]
   },
   // Ruta de fallback

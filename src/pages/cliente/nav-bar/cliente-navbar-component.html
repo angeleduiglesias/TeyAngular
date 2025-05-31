@@ -8,14 +8,18 @@
       <li [class.active]="activeTab === 'tramite'">
         <a (click)="changeTab('tramite')">Trámite</a>
       </li>
+      <li [class.active]="activeTab === 'documentos'">
+        <a (click)="changeTab('documentos')">
+          Documentos
+        </a>
+      </li>
+      <li [class.active]="activeTab === 'citas'">
+        <a (click)="changeTab('citas')">
+          Citas
+        </a>
+      </li>
       <li [class.active]="activeTab === 'configuracion'">
         <a (click)="changeTab('configuracion')">Configuración</a>
-      </li>
-      <li [class.active]="activeTab === 'notificaciones'">
-        <a (click)="changeTab('notificaciones')">
-          Notificaciones
-          <span class="notification-badge" *ngIf="notificaciones && notificaciones.length > 0">{{notificaciones.length}}</span>
-        </a>
       </li>
     </ul>
   </div>

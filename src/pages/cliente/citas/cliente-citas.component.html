@@ -1,0 +1,108 @@
+<div class="citas-container">
+  <div class="header">
+    <h2>Mis Citas</h2>
+    <p class="subtitle">Gestiona tus citas con notarios</p>
+    <button class="nueva-cita-btn" (click)="solicitarCita()">
+      <i class="fas fa-plus"></i> Solicitar nueva cita
+    </button>
+  </div>
+
+  <div class="filtros">
+    <button 
+      class="filtro-btn" 
+      [class.active]="filtroActivo === 'todas'" 
+      (click)="filtrarCitas('todas')"
+    >Todas</button>
+    <button 
+      class="filtro-btn" 
+      [class.active]="filtroActivo === 'programada'" 
+      (click)="filtrarCitas('programada')"
+    >Programadas</button>
+    <button 
+      class="filtro-btn" 
+      [class.active]="filtroActivo === 'pendiente'" 
+      (click)="filtrarCitas('pendiente')"
+    >Pendientes</button>
+    <button 
+      class="filtro-btn" 
+      [class.active]="filtroActivo === 'completada'" 
+      (click)="filtrarCitas('completada')"
+    >Completadas</button>
+  </div>
+
+  <!-- Próximas citas -->
+  <div class="proximas-citas" *ngIf="citas.length > 0">
+    <h3>Próximas citas</h3>
+    <div class="proximas-cards">
+      <div class="cita-card proxima" *ngFor="let cita of citas | slice:0:3">
+        <div class="cita-fecha">
+          <div class="dia">{{ cita.fecha | date:'dd' }}</div>
+          <div class="mes">{{ cita.fecha | date:'MMM' | uppercase }}</div>
+        </div>
+        <div class="cita-detalles">
+          <div class="cita-hora"><i class="fas fa-clock"></i> {{ cita.hora }}</div>
+          <div class="cita-notario"><i class="fas fa-user"></i> {{ cita.notario }}</div>
+          <div class="cita-asunto">{{ cita.asunto }}</div>
+          <div class="cita-estado">
+            <span class="estado-badge" [ngClass]="getEstadoClass(cita.estado)">
+              {{ cita.estado }}
+            </span>
+          </div>
+        </div>
+        <div class="cita-acciones">
+          <button class="accion-btn reprogramar" (click)="reprogramarCita(cita.id)" *ngIf="cita.estado !== 'Completada' && cita.estado !== 'Cancelada'">
+            <i class="fas fa-calendar-alt"></i> Reprogramar
+          </button>
+          <button class="accion-btn cancelar" (click)="cancelarCita(cita.id)" *ngIf="cita.estado !== 'Completada' && cita.estado !== 'Cancelada'">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="todas-citas">
+    <h3>Historial de citas</h3>
+    <div class="citas-table">
+      <table *ngIf="citasFiltradas.length > 0">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Notario</th>
+            <th>Asunto</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cita of citasFiltradas">
+            <td>{{ cita.fecha | date:'dd/MM/yyyy' }}</td>
+            <td>{{ cita.hora }}</td>
+            <td>{{ cita.notario }}</td>
+            <td>{{ cita.asunto }}</td>
+            <td>
+              <span class="estado-badge" [ngClass]="getEstadoClass(cita.estado)">
+                {{ cita.estado }}
+              </span>
+            </td>
+            <td class="acciones">
+              <button class="accion-btn reprogramar" (click)="reprogramarCita(cita.id)" *ngIf="cita.estado !== 'Completada' && cita.estado !== 'Cancelada'">
+                <i class="fas fa-calendar-alt"></i>
+              </button>
+              <button class="accion-btn cancelar" (click)="cancelarCita(cita.id)" *ngIf="cita.estado !== 'Completada' && cita.estado !== 'Cancelada'">
+                <i class="fas fa-times"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="empty-state" *ngIf="citasFiltradas.length === 0">
+        <i class="fas fa-calendar-times empty-icon"></i>
+        <p>No hay citas disponibles</p>
+        <p class="empty-subtitle">Puedes solicitar una nueva cita con el botón de arriba</p>
+      </div>
+    </div>
+  </div>
+</div>

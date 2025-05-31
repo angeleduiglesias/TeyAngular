@@ -1,0 +1,63 @@
+<div class="documentos-container">
+  <div class="header">
+    <h2>Mis Documentos</h2>
+    <p class="subtitle">Gestiona tus documentos legales</p>
+  </div>
+
+  <div class="documentos-list">
+    <div class="filter-bar">
+      <div class="search-box">
+        <input type="text" placeholder="Buscar documento...">
+        <i class="fas fa-search"></i>
+      </div>
+      <div class="filter-options">
+        <select>
+          <option value="">Todos los estados</option>
+          <option value="pendiente">Pendiente</option>
+          <option value="aprobado">Aprobado</option>
+          <option value="rechazado">Rechazado</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="documentos-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let documento of documentos">
+            <td>{{ documento.nombre }}</td>
+            <td>{{ documento.tipo }}</td>
+            <td>{{ documento.fecha | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="getStatusClass(documento.estado)">
+                {{ documento.estado }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="action-btn view" (click)="viewDocument(documento.id)" title="Ver documento">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="action-btn download" (click)="downloadDocument(documento.id)" title="Descargar documento">
+                <i class="fas fa-download"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="empty-state" *ngIf="documentos.length === 0">
+      <i class="fas fa-file-alt empty-icon"></i>
+      <p>No tienes documentos disponibles</p>
+      <p class="empty-subtitle">Los documentos relacionados con tus trámites aparecerán aquí</p>
+    </div>
+  </div>
+</div>

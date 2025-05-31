@@ -12,7 +12,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class StepOneComponent implements OnInit {
   tipoEmpresaForm: FormGroup;
-  opcionesSocios = [2, 3, 5];
+  opcionesSocios = [2, 3, 4];
   mostrarInputPersonalizado = false;
   datosPersonalesForm: any;
 

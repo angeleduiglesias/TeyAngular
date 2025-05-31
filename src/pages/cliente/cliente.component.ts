@@ -4,19 +4,12 @@ import { RouterModule, Router } from '@angular/router';
 import { ClienteNavbarComponent } from './nav-bar/cliente-navbar-component';
 import { AuthService } from '../../app/services/auth-service';
 
-interface Notificacion {
-  id: number;
-  mensaje: string;
-  fecha: Date;
-  leida: boolean;
-}
-
 @Component({
   selector: 'app-cliente',
   standalone: true,
   imports: [CommonModule, RouterModule, ClienteNavbarComponent],
   templateUrl: './cliente.component.html',
-  styleUrl: './cliente.component.css'
+  styleUrls: ['./cliente.component.css']
 })
 export class ClienteComponent implements OnInit {
   // Datos del usuario
@@ -24,16 +17,6 @@ export class ClienteComponent implements OnInit {
   
   // Control de pestañas
   activeTab: string = 'tramite';
-  
-  // Notificaciones
-  notificaciones: Notificacion[] = [
-    {
-      id: 1,
-      mensaje: 'Bienvenido al sistema de gestión de trámites.',
-      fecha: new Date(),
-      leida: false
-    }
-  ];
   
   constructor(
     private authService: AuthService,
@@ -59,8 +42,11 @@ export class ClienteComponent implements OnInit {
       case 'configuracion':
         this.router.navigate(['/cliente/configuracion']);
         break;
-      case 'notificaciones':
-        this.router.navigate(['/cliente/notificaciones']);
+      case 'documentos':
+        this.router.navigate(['/cliente/documentos']);
+        break;
+      case 'citas':
+        this.router.navigate(['/cliente/citas']);
         break;
       default:
         this.router.navigate(['/cliente/dashboard']);

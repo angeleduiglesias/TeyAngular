@@ -141,6 +141,33 @@ input[type="dni"]:focus {
   .secondary-button:hover {
     background-color: #f8f9fa;
   }
+  
+  /* Estilos para el spinner del botón */
+  .spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .button-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+  }
+
+  .spinner-text {
+    font-size: 14px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
   /* =======================
      MEDIA QUERY PARA PANTALLAS PEQUEÑAS
      (por debajo de 768px)

@@ -63,7 +63,10 @@
         </button>
         <button type="button" class="primary-button" (click)="siguiente()" [disabled]="datosPersonalesForm.invalid || enviando">
           <span *ngIf="!enviando">Enviar ›</span>
-          <span *ngIf="enviando">Enviando...</span>
+          <span *ngIf="enviando" class="spinner-container">
+            <span class="button-spinner"></span>
+            <span class="spinner-text">Espera, estamos guardando tus datos</span>
+          </span>
         </button>
       </div>
     </form>

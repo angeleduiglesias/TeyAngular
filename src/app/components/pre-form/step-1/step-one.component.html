@@ -49,24 +49,9 @@
             (click)="tipoEmpresaForm.get('numero_socios')?.setValue(opcion); mostrarInputPersonalizado = false">
             {{ opcion }}
           </button>
-          <button 
-            type="button" 
-            class="option-btn custom-btn" 
-            [class.selected]="mostrarInputPersonalizado"
-            (click)="cambiarTipoInput(true)">
-            Otro
-          </button>
+         
         </div>
         
-        <div *ngIf="mostrarInputPersonalizado" class="custom-input-container">
-          <input 
-            type="number" 
-            class="custom-socios-input" 
-            placeholder="Ingrese número personalizado" 
-            min="1"
-            (input)="onCustomSociosInput($event)"
-          >
-        </div>
       </div>
       
       <div *ngIf="tipoEmpresaForm.get('numero_socios')?.invalid && (tipoEmpresaForm.get('numero_socios')?.dirty || tipoEmpresaForm.get('numero_socios')?.touched)" class="error-message">
