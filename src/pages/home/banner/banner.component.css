@@ -1,16 +1,15 @@
 .banner{
   max-width: 100vw;
-  background: #1e293b;   /* El color final que tenías */ /* Un color final aún más oscuro */
+  background: #1e293b;
   align-content: center;
   gap: 0px 20px;
   padding: 50px 0;
-
 }
 
 .container{
   width: 90%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   text-align: left;
   margin: 0 auto;
@@ -18,19 +17,19 @@
   padding: 15px 10px;
 }
 
-/* 1) Reserva espacio para las imágenes con aspect-ratio */
-.banner-image-responsive img,
+/* Reserva espacio para las imágenes con aspect-ratio */
 .banner-image img {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 3; /* o la proporción real de tu imagen */
+  aspect-ratio: 4 / 3;
+  max-width: 550px;
 }
 
-/* 2) Reserva espacio para el contenido de texto */
+/* Reserva espacio para el contenido de texto */
 .banner-content {
-  width: 90%;
-  min-height: 280px;      /* ajusta según altura típica de tu texto */
+  width: 50%;
+  min-height: 280px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,26 +37,30 @@
 
 .banner-content h1{
   color: white;
-  font-size: 69px;
+  font-size: 3.5rem;
   width: 100%;
   margin-top: 0px;
   letter-spacing: -0.5px;
+  line-height: 1.2;
 }
 
 .banner-content h1 span{
   color: #42B483;
 }
+
 .banner-content p{
   color: #F6F6F6;
-  font-size: 22px;
-  margin-top: 10px;
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
   letter-spacing: -0.5px;
+  line-height: 1.5;
 }
 
 .banner-image{
+  width: 45%;
   height: auto;
   display: flex;
-  justify-content: right;
+  justify-content: flex-end;
 }
 
 img{
@@ -65,52 +68,135 @@ img{
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
-.banner-image-responsive{
-  display: none;
-}
-
 
 .banner-content .info-text {
-  margin-top: 1rem;              /* Separación respecto al párrafo anterior */
-  font-size: 0.9rem;             /* Texto ligeramente más pequeño */
-  color: #ffffff;                   /* Un gris menos contrastado */
-  border-left: 3px solid #007bff;/* Línea de acento */
-  padding-left: 0.75rem;         /* Separación interna para la línea */
-  font-style: italic;            /* Opcional: enfatizar con cursiva */
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #ffffff;
+  border-left: 3px solid #42B483;
+  padding-left: 0.75rem;
+  font-style: italic;
   letter-spacing: 0.5px;
+}
+
+/* Estilo para el botón */
+.buttons {
+  display: flex;
+  margin-top: 1.5rem;
+}
+
+/* Estilo personalizado para el botón dentro de app-btn-comienza */
+:host ::ng-deep .btn-primary {
+  background-color: #42B483;
+  color: white;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(66, 180, 131, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: nowrap; /* Evita que el texto haga wrap */
+  display: inline-block; /* Asegura que el botón se comporte como un bloque en línea */
+  min-width: 220px; /* Ancho mínimo para el botón */
+}
+
+:host ::ng-deep .btn-primary::after {
+  content: " ahora";
+}
+
+:host ::ng-deep .btn-primary:hover {
+  background-color: #35a070;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(66, 180, 131, 0.4);
+}
+
+:host ::ng-deep .btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(66, 180, 131, 0.3);
+}
+
+@media (max-width: 992px) {
+  .banner-content h1 {
+    font-size: 2.8rem;
+  }
+  
+  .banner-content p {
+    font-size: 1.1rem;
+  }
+  
+  :host ::ng-deep .btn-primary {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+  }
 }
 
 @media (max-width: 768px) {
   .banner{
-    height: 90vh;
+    min-height: auto;
+    padding: 30px 0;
   }
+  
   .container {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding: 20px 0px;
   }
+  
   .banner-content {
-    text-align: center;
+    text-align: left;
     width: 100%;
   }
+  
   .banner-content h1 {
-    font-size: 40px;
+    font-size: 2.5rem;
+    text-align: left;
   }
+  
   .banner-content p {
-    font-size: 16px;
+    font-size: 1rem;
+    text-align: left;
   }
-  img {
-    width: 100%;
-    height: auto;
-  }
-
-  .banner-image-responsive{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .banner-image{
+  
+  .banner-image {
     display: none;
+  }
+  
+  .banner-content .info-text {
+    text-align: left;
+    max-width: 100%;
+  }
+  
+  .buttons {
+    justify-content: center;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  
+  :host ::ng-deep .btn-primary {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 280px; /* Ancho mínimo para el botón en móvil */
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-content h1 {
+    font-size: 2rem;
+  }
+  
+  :host ::ng-deep .btn-primary {
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    min-width: 250px; /* Ancho mínimo para el botón en pantallas muy pequeñas */
   }
 }

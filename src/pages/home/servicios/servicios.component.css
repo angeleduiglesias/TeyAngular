@@ -82,6 +82,18 @@
     transform: rotateY(180deg);
 }
 
+.proximamente-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #bb631a;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
 /* Colores para los reversos */
 .service-card:nth-child(1) .card-back {
     background: white;

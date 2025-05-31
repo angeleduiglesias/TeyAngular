@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { BtnComienzaComponent } from "../../../app/components/buttons/btn-comienza/btn-comienza.component";
 
 @Component({
   selector: 'app-banner',
-  imports: [],
+  imports: [BtnComienzaComponent],
   templateUrl: './banner.component.html',
-  styleUrl: './banner.component.css'
+  styleUrls: ['./banner.component.css']
 })
 export class BannerComponent {
 

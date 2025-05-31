@@ -20,25 +20,7 @@
 }
 
 .logo img {
-  height: 60px;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-.nav-links li a {
-  text-decoration: none;
-  color: var(--azulLetra);
-  font-weight: bold;
-  font-size: 20px;
-
-}
-
-.nav-links li a:hover {
-  color: #28a745;
+  height: 40px;
 }
 
 .buttons {
@@ -61,58 +43,16 @@
   color: white;
 }
 
-/* Botón hamburguesa */
-.menu-toggle {
-  display: none;
-  font-size: 28px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #2d3748;
-}
-
 /* Estilos responsive */
 @media (max-width: 768px) {
   .container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .menu-toggle {
-    display: block;
-    align-self: flex-end;
-    margin-top: -40px;
-  }
-  nav{
-    width: 100%;
-    position: absolute;
-    top: 80px;
-    left: 0;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
-
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    background: white;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: 10px;
-  }
-
-  .nav-links.open {
-    display: flex;
-  }
-
-  .nav-links li {
-    padding: 10px 20px;
+    flex-direction: row; /* mantiene horizontal */
+    align-items: center;
+    flex-wrap: wrap; /* por si no entra todo */
   }
 
   .buttons {
-    display: none;
+    gap: 10px;
+    flex-wrap: wrap; /* si hay muchos botones */
   }
 }
