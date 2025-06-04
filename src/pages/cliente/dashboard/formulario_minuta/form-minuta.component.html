@@ -2,13 +2,19 @@
 <div class="form-card">
   <h2>Formulario de Minuta</h2>
   
+  <!-- Estado de carga -->
+  <div *ngIf="cargandoEstado" class="loading-state">
+    <p>Cargando información de la reserva...</p>
+    <div class="spinner"></div>
+  </div>
+  
   <!-- Estado inicial: deshabilitado -->
-  <div *ngIf="!nombreEmpresa" class="form-disabled">
+  <div *ngIf="!cargandoEstado && !mostrarFormulario && nombreEmpresa" class="form-disabled">
     <p>Una vez tengamos el nombre de tu empresa te notificaremos y podrás acceder al formulario.</p>
   </div>
   
   <!-- Formulario habilitado -->
-  <div *ngIf="nombreEmpresa && !formularioEnviado" class="form-enabled">
+  <div *ngIf="mostrarFormulario && nombreEmpresa && !formularioEnviado" class="form-enabled">
     <!-- Selector de tipo de formulario -->
     <div class="form-type-selector">
       <h3>Seleccione el tipo de formulario EIRL</h3>

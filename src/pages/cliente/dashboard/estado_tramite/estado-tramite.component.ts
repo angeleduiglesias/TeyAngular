@@ -9,9 +9,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./estado-tramite.component.css']
 })
 export class EstadoTramiteComponent implements OnInit {
-  @Input() fechaInicioTramite: Date = new Date();
-  @Input() estadoTramite: string = 'Pendiente';
-  @Input() porcentajeProgreso: number = 0;
+  @Input() fecha_inicio: Date = new Date();
+  @Input() estado_tramite: string = 'Pendiente';
+  @Input() progreso: number = 0;
 
   constructor() { }
 

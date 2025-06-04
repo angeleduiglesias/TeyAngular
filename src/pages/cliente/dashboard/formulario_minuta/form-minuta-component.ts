@@ -2,6 +2,8 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { ClienteMinutaService } from '../../../../app/services/cliente/cliente-minuta.service';
+
 // Interfaces para el formulario de 5 pasos
 interface DatosPersonales {
   nombre: string;
@@ -42,7 +44,7 @@ interface Confirmacion {
   fecha_registro: string;
 }
 
-interface FormularioMinuta {
+export interface FormularioMinuta {
   paso_1_datos_personales: DatosPersonales;
   paso_2_datos_empresa: DatosEmpresa;
   paso_3_capital_y_aportes: CapitalAportes;
@@ -57,10 +59,11 @@ interface MetodoPago {
 }
 
 // Tipos de formulario de minuta
-enum TipoFormularioMinuta {
+ export enum TipoFormularioMinuta {
   EIRL_BIENES_NO_DINERARIOS = 'eirl_bienes_no_dinerarios',
   EIRL_BIENES_DINERARIOS = 'eirl_bienes_dinerarios'
 }
+
 
 @Component({
   selector: 'app-form-minuta',
@@ -72,6 +75,11 @@ enum TipoFormularioMinuta {
 export class FormMinutaComponent implements OnInit {
   @Input() userData: any;
   @Input() nombreEmpresa: string = '';
+  @Input() estadoReserva: string = ''; // Nuevo input para recibir el estado de la reserva
+  
+  // Propiedad para controlar la visibilidad del formulario
+  mostrarFormulario: boolean = false;
+  cargandoEstado: boolean = true; // Para mostrar un estado de carga
   
   // Eventos para comunicación con el componente padre
   @Output() estadoTramiteChange = new EventEmitter<string>();
@@ -143,7 +151,9 @@ export class FormMinutaComponent implements OnInit {
   metodoPagoSeleccionado: number | null = null;
   pagoConfirmado: boolean = false;
 
-  constructor() {}
+  constructor(
+    private clienteMinutaService: ClienteMinutaService
+  ) {}
 
   ngOnInit(): void {
     // Inicializar el nombre de la empresa en el formulario cuando esté disponible
@@ -160,11 +170,37 @@ export class FormMinutaComponent implements OnInit {
         this.formularioMinuta.paso_1_datos_personales.dni = this.userData.dni;
       }
     }
+    
+    // Determinar si se debe mostrar el formulario según el estado de la reserva
+    this.verificarEstadoReserva();
   }
   
   ngOnChanges(): void {
     if (this.nombreEmpresa) {
       this.formularioMinuta.paso_2_datos_empresa.nombre_empresa = this.nombreEmpresa;
+    }
+    
+    // Verificar el estado de la reserva cuando cambie
+    this.verificarEstadoReserva();
+  }
+  
+  // Método para verificar el estado de la reserva y determinar si se muestra el formulario
+  private verificarEstadoReserva(): void {
+    this.cargandoEstado = true;
+    
+    // Si no hay estado de reserva después de 10 segundos, ocultar el formulario
+    const timeout = setTimeout(() => {
+      if (!this.estadoReserva) {
+        this.mostrarFormulario = true;
+        this.cargandoEstado = false;
+      }
+    }, 10000);
+    
+    // Si hay un estado de reserva, determinar si se muestra el formulario
+    if (this.estadoReserva) {
+      clearTimeout(timeout); // Cancelar el timeout si ya tenemos el estado
+      this.mostrarFormulario = this.estadoReserva === 'completo';
+      this.cargandoEstado = false;
     }
   }
   
@@ -326,9 +362,22 @@ export class FormMinutaComponent implements OnInit {
     this.estadoTramiteChange.emit('En proceso');
     this.porcentajeProgresoChange.emit(50);
     
-    // Aquí se podría enviar el formulario al backend
-    console.log('Formulario enviado:', this.formularioMinuta);
-    console.log('Tipo de formulario:', this.tipoFormularioSeleccionado);
+    // Enviar el formulario al backend
+    this.clienteMinutaService.enviarFormularioMinuta(
+      this.formularioMinuta,
+      this.tipoFormularioSeleccionado,
+      this.nombreEmpresa
+    ).subscribe({
+      next: (response) => {
+        console.log('Formulario enviado exitosamente:', response);
+        // Aquí puedes manejar la respuesta exitosa
+      },
+      error: (error) => {
+        console.error('Error al enviar el formulario:', error);
+        // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
+        this.formularioEnviado = false; // Permitir al usuario intentar nuevamente
+      }
+    });
   }
   
   seleccionarMetodoPago(id: number): void {

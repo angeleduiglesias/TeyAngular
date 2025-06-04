@@ -1,18 +1,18 @@
 <div class="progress-card">
   <h2>Progreso del Trámite</h2>
   <div class="progress-date">
-    <span>Fecha de inicio: {{fechaInicioTramite | date:'dd/MM/yyyy'}}</span>
+    <span>Fecha de inicio: {{fecha_inicio | date:'dd/MM/yyyy'}}</span>
   </div>
   
   <div class="progress-label">Progreso</div>
   
   <div class="progress-bar-container">
-    <div class="progress-bar" [style.width.%]="porcentajeProgreso"></div>
+    <div class="progress-bar" [style.width.%]="progreso"></div>
   </div>
   
-  <div class="progress-percentage">{{porcentajeProgreso}}% completado</div>
+  <div class="progress-percentage">{{progreso}}% completado</div>
   
   <div class="progress-status">
-    <span [ngClass]="'status-badge status-' + estadoTramite.toLowerCase()">{{estadoTramite}}</span>
+    <span [ngClass]="'status-badge status-' + estado_tramite.toLowerCase()">{{estado_tramite}}</span>
   </div>
 </div>

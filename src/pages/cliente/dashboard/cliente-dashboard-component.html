@@ -7,18 +7,17 @@
       <!-- Columna izquierda: Estado del Trámite -->
       <div class="status-column">
         <app-estado-tramite 
-          [fechaInicioTramite]="fechaInicioTramite"
-          [estadoTramite]="estadoTramite"
-          [porcentajeProgreso]="porcentajeProgreso">
+          [fecha_inicio]="estado_tramite.fecha_inicio"
+          [estado_tramite]="estado_tramite.estado"
+          [progreso]="estado_tramite.progreso">
         </app-estado-tramite>
       </div>
       
       <!-- Columna derecha: Estado de Pagos -->
       <div class="status-column">
         <app-estado-pagos 
-          [estadoPago]="estadoPago"
-          [pagoActual]="pagoActual"
-          [pagoTotal]="pagoTotal">
+          [pago1]="estado_pagos.pago1"
+          [pago2]="estado_pagos.pago2">
         </app-estado-pagos>
       </div>
     </div>
@@ -27,6 +26,7 @@
     <app-form-minuta 
       [userData]="userData"
       [nombreEmpresa]="nombreEmpresa"
+      [estadoReserva]="estado_documento.estado_reserva"
       (estadoTramiteChange)="actualizarEstadoTramite($event)"
       (porcentajeProgresoChange)="actualizarPorcentajeProgreso($event)"
       (estadoPagoChange)="actualizarEstadoPago($event)"

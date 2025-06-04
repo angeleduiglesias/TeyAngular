@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { ClienteDashboardService } from '../../../app/services/cliente/cliente-dashboard.service';
 import { AuthService } from '../../../app/services/auth-service';
 import { EstadoTramiteComponent } from './estado_tramite/estado-tramite.component';
 import { EstadoPagosComponent } from './estado_pagos/estado-pagos.component';
 import { FormMinutaComponent } from './formulario_minuta/form-minuta-component';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+
+
 
 interface Socio {
   nombre: string;
@@ -21,35 +23,31 @@ interface DatosFormulario {
   objetoSocial: string;
 }
 
-interface Notificacion {
-  id: number;
-  mensaje: string;
-  fecha: Date;
-  leida: boolean;
-}
-
 interface MetodoPago {
   id: number;
   nombre: string;
   imagen: string;
 }
 
-interface DashboardData {
-  tramite: {
-    fechaInicio: string;
-    estado: string;
-    porcentaje: number;
-  };
-  pago: {
-    estado: string;
-    actual: number;
-    total: number;
-  };
-  empresa: {
-    nombre: string;
-  };
-  notificaciones: Notificacion[];
+export interface EstadoFormActivated{
+  nombre_reserva: string;
+  estado_reserva: string;
+  nombre_minuta: string;
+  estado_minuta:string;
+  nombre_empresa?: string;
 }
+
+export interface TramiteData {
+  fecha_inicio: Date;
+  estado: string;
+  progreso: number;
+}
+
+export interface PagoData {
+  pago1: boolean;
+  pago2: boolean;
+}
+
 
 @Component({
   selector: 'app-cliente-dashboard',
@@ -61,20 +59,31 @@ interface DashboardData {
 export class ClienteDashboardComponent implements OnInit {
   // Datos del usuario
   userData: any = null;
+
+  nombre_cliente: string = '';
   
   // Control de pestañas
   activeTab: string = 'tramite';
   
   // Datos del trámite
-  fechaInicioTramite: Date = new Date();
-  estadoTramite: string = 'Pendiente'; // 'Pendiente', 'En proceso', 'Finalizado'
-  porcentajeProgreso: number = 25;
-  
+  estado_tramite: TramiteData = {
+    fecha_inicio: new Date(),
+    estado: '',
+    progreso: 0
+  }
   // Datos de pagos
-  estadoPago: string = 'Pendiente'; // 'Pendiente', 'Completado'
-  pagoActual: number = 0;
-  pagoTotal: number = 2;
-  
+  estado_pagos: PagoData = {
+    pago1: false,
+    pago2: false
+  }
+
+  estado_documento: EstadoFormActivated = {
+    nombre_reserva: '',
+    estado_reserva: '',
+    nombre_minuta: '',
+    estado_minuta: '',
+    nombre_empresa: ''
+  }
   // Datos del formulario de minuta
   nombreEmpresa: string = ''; // Inicialmente vacío, se llenará cuando se reciba
   pasos: string[] = ['Información Básica', 'Socios', 'Objeto Social'];
@@ -97,29 +106,13 @@ export class ClienteDashboardComponent implements OnInit {
   metodoPagoSeleccionado: number | null = null;
   pagoConfirmado: boolean = false;
   
-  // Configuración de notificaciones
-  configNotificaciones = {
-    email: true,
-    sms: false
-  };
-  
-  // Notificaciones
-  notificaciones: Notificacion[] = [
-    {
-      id: 1,
-      mensaje: 'Bienvenido al sistema de gestión de trámites.',
-      fecha: new Date(),
-      leida: false
-    }
-  ];
-  
   cargando: boolean = false;
   error: string = '';
   
   constructor(
     private authService: AuthService,
     private router: Router,
-    private http: HttpClient
+    private DashboardClienteInformation: ClienteDashboardService
   ) {}
 
   ngOnInit(): void {
@@ -137,32 +130,17 @@ export class ClienteDashboardComponent implements OnInit {
     this.error = '';
     
     // Obtener el ID del usuario desde el servicio de autenticación
-    const userId = this.userData?.id || localStorage.getItem('userId') || '0';
-    
-    this.http.get<DashboardData>(`${environment.apiUrl}/clientes/${userId}/dashboard`)
+   
+    this.DashboardClienteInformation.getDashboardData()
       .subscribe({
-        next: (data) => {
+        next: (response) => {
+          console.log('Datos recibidos del dashboard:', response);
           // Actualizar datos del trámite
-          this.fechaInicioTramite = new Date(data.tramite.fechaInicio);
-          this.estadoTramite = data.tramite.estado;
-          this.porcentajeProgreso = data.tramite.porcentaje;
-          
-          // Actualizar datos de pago
-          this.estadoPago = data.pago.estado;
-          this.pagoActual = data.pago.actual;
-          this.pagoTotal = data.pago.total;
-          
-          // Actualizar nombre de empresa
-          this.nombreEmpresa = data.empresa.nombre;
-          if (this.nombreEmpresa) {
-            this.datosFormulario.nombreEmpresa = this.nombreEmpresa;
-          }
-          
-          // Actualizar notificaciones
-          if (data.notificaciones && data.notificaciones.length > 0) {
-            this.notificaciones = data.notificaciones;
-          }
-          
+          this.estado_tramite = response.estado_tramite;
+          this.estado_documento = response.estado_documento;
+          this.estado_pagos = response.estado_pagos;
+          this.nombre_cliente = response.nombre_cliente;
+
           this.cargando = false;
         },
         error: (error) => {
@@ -183,30 +161,23 @@ export class ClienteDashboardComponent implements OnInit {
       this.nombreEmpresa = 'Mi Empresa SAS';
       this.datosFormulario.nombreEmpresa = this.nombreEmpresa;
       
-      // Agregar notificación
-      this.notificaciones.unshift({
-        id: 2,
-        mensaje: `El nombre de tu empresa "${this.nombreEmpresa}" ha sido aprobado. Ya puedes completar el formulario.`,
-        fecha: new Date(),
-        leida: false
-      });
     }, 1000);
   }
   
   actualizarEstadoTramite(estado: string): void {
-    this.estadoTramite = estado;
+    this.estado_tramite.estado = estado;
   }
   
   actualizarPorcentajeProgreso(porcentaje: number): void {
-    this.porcentajeProgreso = porcentaje;
+    this.estado_tramite.progreso = porcentaje;
   }
   
   actualizarEstadoPago(estado: string): void {
-    this.estadoPago = estado;
+    this.estado_pagos.pago1 = estado === 'Completado';
   }
   
   actualizarPagoActual(pago: number): void {
-    this.pagoActual = pago;
+    this.estado_pagos.pago2 = pago === 2; // Si pago es 2, significa que está completado
   }
 
   // Métodos para el formulario multi-step
@@ -295,16 +266,9 @@ export class ClienteDashboardComponent implements OnInit {
     this.mostrandoResumen = false;
     
     // Actualizar estado del trámite
-    this.estadoTramite = 'En proceso';
-    this.porcentajeProgreso = 50;
+    this.estado_tramite.estado = 'En proceso';
+    this.estado_tramite.progreso = 50;
     
-    // Agregar notificación
-    this.notificaciones.unshift({
-      id: this.notificaciones.length + 1,
-      mensaje: 'Tu formulario ha sido enviado correctamente. Por favor completa el pago para continuar con el trámite.',
-      fecha: new Date(),
-      leida: false
-    });
   }
   
   // FUNCIÓN 7: Seleccionar método de pago - Implementada
@@ -318,20 +282,12 @@ export class ClienteDashboardComponent implements OnInit {
       // Simular procesamiento de pago
       setTimeout(() => {
         this.pagoConfirmado = true;
-        this.estadoPago = 'Completado';
-        this.pagoActual = this.pagoTotal;
+        this.estado_pagos.pago1 = true; // Cambiado de this.estadoPago = 'Completado'
+        this.estado_pagos.pago2 = true; // Cambiado de this.pagoActual = this.pagoTotal
         
         // Actualizar estado del trámite
-        this.estadoTramite = 'Finalizado';
-        this.porcentajeProgreso = 100;
-        
-        // Agregar notificación
-        this.notificaciones.unshift({
-          id: this.notificaciones.length + 1,
-          mensaje: 'Tu pago ha sido procesado correctamente. Tu empresa será registrada en un plazo no mayor a 10 días.',
-          fecha: new Date(),
-          leida: false
-        });
+        this.estado_tramite.estado = 'Finalizado';
+        this.estado_tramite.progreso = 100;
       }, 2000);
     }
   }

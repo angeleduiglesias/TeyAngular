@@ -10,44 +10,33 @@ import { Router } from '@angular/router';
   styleUrls: ['./estado-pagos.component.css']
 })
 export class EstadoPagosComponent implements OnInit {
-  @Input() estadoPago: string = 'Pendiente';
-  @Input() pagoActual: number = 0;
-  @Input() pagoTotal: number = 2;
-  
+  @Input() pago1: boolean = false;
+  @Input() pago2: boolean = false;
+
   pagos = [
     { id: 1, nombre: 'Reserva de nombre', pagado: false },
     { id: 2, nombre: 'Entrega de Minuta', pagado: false }
   ];
-  
-  constructor(private router: Router) { }
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Actualizar el estado de los pagos según pagoActual
-    for (let i = 0; i < this.pagoActual; i++) {
-      if (i < this.pagos.length) {
-        this.pagos[i].pagado = true;
-      }
-    }
+    // Asignar los valores booleanos recibidos
+    this.pagos[0].pagado = this.pago1;
+    this.pagos[1].pagado = this.pago2;
   }
-  
+
   irAPagar(pagoId: number): void {
-    // Aquí puedes redirigir a la página de pago con el ID correspondiente
     this.router.navigate(['/pagos'], { queryParams: { id: pagoId } });
   }
-  
-  // Método para obtener el nombre del pago actual
+
   getNombrePagoActual(): string {
-    if (this.pagoActual > 0 && this.pagoActual <= this.pagos.length) {
-      return this.pagos[this.pagoActual - 1].nombre;
-    }
-    return '';
+    const index = this.pagos.findIndex(p => !p.pagado);
+    return index !== -1 ? this.pagos[index].nombre : '';
   }
-  
-  // Método para obtener el nombre del siguiente pago
+
   getNombreSiguientePago(): string {
-    if (this.pagoActual < this.pagoTotal && this.pagoActual < this.pagos.length) {
-      return this.pagos[this.pagoActual].nombre;
-    }
-    return '';
+    const index = this.pagos.findIndex(p => !p.pagado);
+    return index + 1 < this.pagos.length ? this.pagos[index + 1].nombre : '';
   }
 }
