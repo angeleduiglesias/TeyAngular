@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReservaNombre } from '../admin-dashboard-component';
+import { CambiarNombreService } from '../../../../app/services/admin/admin-cambiarnombre.service';
 
 @Component({
   selector: 'app-actividad-reciente',
@@ -20,6 +21,8 @@ export class ActividadRecienteComponent implements OnInit {
   mostrarModal: boolean = false;
   reservaSeleccionada: ReservaNombre | null = null;
 
+  constructor(private cambiarNombreService: CambiarNombreService) {}
+  
   ngOnInit(): void {
     // Si no se reciben datos, usar datos de ejemplo
     if (this.reservasNombre.length === 0) {
@@ -66,13 +69,30 @@ export class ActividadRecienteComponent implements OnInit {
     // Buscar la reserva por ID
     const reserva = this.reservasNombre.find(r => r.id === id || r.cliente_id === id);
     if (reserva && this.nuevoNombreEmpresa.trim()) {
-      // Actualizar el nombre de la empresa
-      reserva.nombre_empresa = this.nuevoNombreEmpresa.trim();
+      // Guardar el nombre para usarlo en la petición
+      const nuevoNombre = this.nuevoNombreEmpresa.trim();
       
-      // En un caso real, aquí se enviaría la actualización al backend
-      console.log(`Nombre de empresa actualizado para ID ${id}: ${this.nuevoNombreEmpresa}`);
-      
-      // Finalizar edición
+      // Enviar la actualización al backend
+      const cliente_id = reserva.cliente_id || id;
+      this.cambiarNombreService.cambiarNombreEmpresa(cliente_id, nuevoNombre)
+        .subscribe({
+          next: (response: any) => {
+            // Solo actualizar el nombre localmente si la petición fue exitosa
+            reserva.nombre_empresa = nuevoNombre;
+            console.log('Nombre de empresa actualizado correctamente:', response);
+            
+            // Finalizar edición
+            this.empresaEditando = null;
+            this.nuevoNombreEmpresa = '';
+          },
+          error: (error: any) => {
+            console.error('Error al actualizar el nombre de la empresa:', error);
+            // No actualizar el nombre localmente si hay error
+            // Opcionalmente, mostrar un mensaje de error al usuario
+          }
+        });
+    } else {
+      // Finalizar edición sin cambios si no hay reserva o el nombre está vacío
       this.empresaEditando = null;
       this.nuevoNombreEmpresa = '';
     }
