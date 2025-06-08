@@ -55,16 +55,8 @@
       <div *ngSwitchCase="0">
         <h3>Datos Personales</h3>
         <div class="form-group">
-          <label>Nombre <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.nombre" placeholder="Ingrese su nombre completo">
-        </div>
-        <div class="form-group">
           <label>Nacionalidad <span class="required">*</span></label>
           <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.nacionalidad" placeholder="Ingrese su nacionalidad">
-        </div>
-        <div class="form-group">
-          <label>DNI <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.dni" placeholder="Ingrese su número de DNI">
         </div>
         <div class="form-group">
           <label>Profesión</label>
@@ -80,24 +72,24 @@
             <option value="viudo">Viudo/a</option>
           </select>
         </div>
-        <div class="form-group">
-          <label>Dirección</label>
-          <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.direccion" placeholder="Ingrese su dirección">
-        </div>
-        
-        <!-- Campos condicionales para cónyuge (solo si está casado) -->
-        <div *ngIf="formularioMinuta.paso_1_datos_personales.estado_civil === 'casado'">
-          <div class="form-group">
-            <label>Nombre del Cónyuge</label>
-            <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.nombre_conyuge" placeholder="Ingrese el nombre de su cónyuge">
+          <!-- Campos condicionales para cónyuge (solo si está casado) -->
+          <div *ngIf="formularioMinuta.paso_1_datos_personales.estado_civil === 'casado'">
+            <div class="form-group">
+              <label>Nombre del Cónyuge</label>
+              <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.nombre_conyuge" placeholder="Ingrese el nombre de su cónyuge">
+            </div>
+            <div class="form-group">
+              <label>DNI del Cónyuge</label>
+              <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.dni_conyuge" placeholder="Ingrese el DNI de su cónyuge">
+            </div>
           </div>
           <div class="form-group">
-            <label>DNI del Cónyuge</label>
-            <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.dni_conyuge" placeholder="Ingrese el DNI de su cónyuge">
-          </div>
+            <label>Dirección</label>
+            <input type="text" [(ngModel)]="formularioMinuta.paso_1_datos_personales.direccion" placeholder="Ingrese su dirección">
+          </div> 
         </div>
-      </div>
       
+         
       <!-- Paso 2: Datos de la Empresa -->
       <div *ngSwitchCase="1">
         <h3>Datos de la Empresa</h3>
@@ -211,9 +203,7 @@
       
       <div class="summary-section">
         <h4>Datos Personales</h4>
-        <p><strong>Nombre:</strong> {{formularioMinuta.paso_1_datos_personales.nombre}}</p>
         <p><strong>Nacionalidad:</strong> {{formularioMinuta.paso_1_datos_personales.nacionalidad}}</p>
-        <p><strong>DNI:</strong> {{formularioMinuta.paso_1_datos_personales.dni}}</p>
         <p *ngIf="formularioMinuta.paso_1_datos_personales.profesion"><strong>Profesión:</strong> {{formularioMinuta.paso_1_datos_personales.profesion}}</p>
         <p *ngIf="formularioMinuta.paso_1_datos_personales.estado_civil"><strong>Estado Civil:</strong> {{formularioMinuta.paso_1_datos_personales.estado_civil}}</p>
         <p *ngIf="formularioMinuta.paso_1_datos_personales.direccion"><strong>Dirección:</strong> {{formularioMinuta.paso_1_datos_personales.direccion}}</p>

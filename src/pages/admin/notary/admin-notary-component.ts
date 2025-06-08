@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminNotaryService, Notary } from '../../../app/services/admin/admin-notary.service';
-import { AuthService } from '../../../app/services/auth-service';
 
 @Component({
   selector: 'app-admin-notary',
@@ -63,7 +62,6 @@ export class AdminNotaryComponent implements OnInit {
   constructor(
     private router: Router,
     private adminNotaryService: AdminNotaryService,
-    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -77,50 +75,11 @@ export class AdminNotaryComponent implements OnInit {
 
     // Datos de prueba según la interfaz Notary
     const datosPrueba: Notary[] = [
-      {
-        id: 1,
-        apellidos: 'García Márquez',
-        nombre: 'Gabriel',
-        telefono: '912345678',
-        email: 'gabriel.garcia@ejemplo.com'
-      },
-      {
-        id: 2,
-        apellidos: 'Vargas Llosa',
-        nombre: 'Mario',
-        telefono: '923456789',
-        email: 'mario.vargas@ejemplo.com'
-      },
-      {
-        id: 3,
-        apellidos: 'Allende',
-        nombre: 'Isabel',
-        telefono: '934567890',
-        email: 'isabel.allende@ejemplo.com'
-      },
-      {
-        id: 4,
-        apellidos: 'Borges',
-        nombre: 'Jorge Luis',
-        telefono: '945678901',
-        email: 'jorge.borges@ejemplo.com'
-      },
-      {
-        id: 5,
-        apellidos: 'Cortázar',
-        nombre: 'Julio',
-        telefono: '956789012',
-        email: 'julio.cortazar@ejemplo.com'
-      }
+      
     ];
 
-    // Opción 1: Usar solo datos de prueba (para desarrollo)
-    this.notaries = datosPrueba;
-    this.applyFilter();
-    this.loading = false;
-
     // Opción 2: Intentar obtener datos del backend, y si falla, usar datos de prueba
-    /*
+    
     this.adminNotaryService.getNotaries()
       .subscribe({
         next: (response) => {
@@ -144,7 +103,7 @@ export class AdminNotaryComponent implements OnInit {
           }
         }
       });
-    */
+    
   }
 
   applyFilter(): void {
@@ -351,7 +310,7 @@ export class AdminNotaryComponent implements OnInit {
         this.showNotification('Error al crear notario. Por favor, intente nuevamente.', 'error');
         
         // Para desarrollo: agregar el notario a la lista local aunque falle el backend
-        if (true) { // Cambiar a false en producción
+        if (false) { // Cambiar a false en producción
           const newId = this.notaries.length > 0 ? Math.max(...this.notaries.map(n => n.id)) + 1 : 1;
           const createdNotary = { ...this.newNotary, id: newId };
           this.notaries.unshift(createdNotary);

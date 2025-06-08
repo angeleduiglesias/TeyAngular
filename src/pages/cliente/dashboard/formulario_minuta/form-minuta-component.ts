@@ -6,9 +6,7 @@ import { ClienteMinutaService } from '../../../../app/services/cliente/cliente-m
 
 // Interfaces para el formulario de 5 pasos
 interface DatosPersonales {
-  nombre: string;
   nacionalidad: string;
-  dni: string;
   profesion: string;
   estado_civil: string;
   direccion: string;
@@ -104,9 +102,7 @@ export class FormMinutaComponent implements OnInit {
   // Inicialización del formulario
   formularioMinuta: FormularioMinuta = {
     paso_1_datos_personales: {
-      nombre: '',
       nacionalidad: '',
-      dni: '',
       profesion: '',
       estado_civil: '',
       direccion: '',
@@ -160,17 +156,7 @@ export class FormMinutaComponent implements OnInit {
     if (this.nombreEmpresa) {
       this.formularioMinuta.paso_2_datos_empresa.nombre_empresa = this.nombreEmpresa;
     }
-    
-    // Si hay datos del usuario, prellenar algunos campos
-    if (this.userData) {
-      if (this.userData.nombre) {
-        this.formularioMinuta.paso_1_datos_personales.nombre = this.userData.nombre;
-      }
-      if (this.userData.dni) {
-        this.formularioMinuta.paso_1_datos_personales.dni = this.userData.dni;
-      }
-    }
-    
+       
     // Determinar si se debe mostrar el formulario según el estado de la reserva
     this.verificarEstadoReserva();
   }
@@ -251,8 +237,8 @@ export class FormMinutaComponent implements OnInit {
     switch(this.pasoActual) {
       case 0: // Validar datos personales
         const datosPersonales = this.formularioMinuta.paso_1_datos_personales;
-        if (!datosPersonales.nombre || !datosPersonales.dni || !datosPersonales.nacionalidad) {
-          alert('Por favor complete los campos obligatorios: Nombre, DNI y Nacionalidad');
+        if (!datosPersonales.nacionalidad || !datosPersonales.profesion || !datosPersonales.estado_civil) {
+          alert('Por favor complete los campos obligatorios: Nacionalidad, Profesión y Estado Civil');
           return false;
         }
         return true;

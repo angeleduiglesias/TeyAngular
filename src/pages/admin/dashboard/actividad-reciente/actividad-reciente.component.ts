@@ -27,28 +27,7 @@ export class ActividadRecienteComponent implements OnInit {
     // Si no se reciben datos, usar datos de ejemplo
     if (this.reservasNombre.length === 0) {
       this.reservasNombre = [
-        {
-          id: 1,
-          cliente_id: 1,
-          nombre_cliente: 'Juan Pérez',
-          nombre_empresa: 'Tecnología Innovadora S.A.C.',
-          tipo_empresa: 'SAC',
-          posible_nombre1: 'TecnoInnovación S.A.C.',
-          posible_nombre2: 'InnovaTech Perú S.A.C.',
-          posible_nombre3: 'Soluciones Tecnológicas S.A.C.',
-          posible_nombre4: 'Digital Solutions S.A.C.'
-        },
-        {
-          id: 2,
-          cliente_id: 2,
-          nombre_cliente: 'María García',
-          nombre_empresa: 'Consultores Asociados E.I.R.L.',
-          tipo_empresa: 'EIRL',
-          posible_nombre1: 'Consultoría Integral E.I.R.L.',
-          posible_nombre2: 'Asesoría Empresarial E.I.R.L.',
-          posible_nombre3: 'Consultores Expertos E.I.R.L.',
-          posible_nombre4: 'Soluciones Empresariales E.I.R.L.'
-        }
+       
       ];
     }
     
@@ -65,6 +44,22 @@ export class ActividadRecienteComponent implements OnInit {
     this.nuevoNombreEmpresa = nombreActual || '';
   }
 
+  // Propiedad para mensajes de notificación
+  mensajeNotificacion: string | null = null;
+  tipoNotificacion: 'exito' | 'error' | 'info' | null = null;
+  
+  // Método para mostrar notificaciones
+  mostrarNotificacion(mensaje: string, tipo: 'exito' | 'error' | 'info' = 'info'): void {
+    this.mensajeNotificacion = mensaje;
+    this.tipoNotificacion = tipo;
+    
+    // Ocultar la notificación después de 3 segundos
+    setTimeout(() => {
+      this.mensajeNotificacion = null;
+      this.tipoNotificacion = null;
+    }, 3000);
+  }
+  
   guardarEdicion(id: number): void {
     // Buscar la reserva por ID
     const reserva = this.reservasNombre.find(r => r.id === id || r.cliente_id === id);
@@ -81,20 +76,25 @@ export class ActividadRecienteComponent implements OnInit {
             reserva.nombre_empresa = nuevoNombre;
             console.log('Nombre de empresa actualizado correctamente:', response);
             
+            // Mostrar notificación de éxito
+            this.mostrarNotificacion('Nombre de empresa actualizado correctamente', 'exito');
+            
             // Finalizar edición
             this.empresaEditando = null;
             this.nuevoNombreEmpresa = '';
           },
           error: (error: any) => {
             console.error('Error al actualizar el nombre de la empresa:', error);
-            // No actualizar el nombre localmente si hay error
-            // Opcionalmente, mostrar un mensaje de error al usuario
+            // Mostrar notificación de error
+            this.mostrarNotificacion('Error al actualizar el nombre de la empresa', 'error');
           }
         });
     } else {
       // Finalizar edición sin cambios si no hay reserva o el nombre está vacío
       this.empresaEditando = null;
       this.nuevoNombreEmpresa = '';
+      // Mostrar notificación informativa
+      this.mostrarNotificacion('No se realizaron cambios en el nombre', 'info');
     }
   }
 

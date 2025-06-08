@@ -39,19 +39,7 @@ export interface Notary {
           })
         );
     }
-  
-    // Obtener un notario por ID
-    getNotaryById(id: number): Observable<Notary> {
-      const headers = this.getAuthHeaders();
-      return this.http.get<Notary>(`${this.apiUrl}/${id}`, { headers })
-        .pipe(
-          catchError(error => {
-            console.error(`Error obteniendo notario con ID ${id}:`, error);
-            return throwError(() => error);
-          })
-        );
-    }
-  
+    
     // Crear un nuevo notario
     createNotary(notary: Omit<Notary, 'id'>): Observable<Notary> {
       const headers = this.getAuthHeaders();

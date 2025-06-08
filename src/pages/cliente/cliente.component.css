@@ -16,15 +16,17 @@
 
 .footer {
   text-align: center;
-  margin-top: 40px;
   width: 100%;
   padding: 10px 0;
   color: black;
+  bottom: 0;
+  left: 0;
+  font-size: 12.5px ;
 }
 
 /* Estilos responsivos */
 @media (max-width: 768px) {
   .content-container {
-    padding: 15px;
+    padding: 10px;
   }
 }

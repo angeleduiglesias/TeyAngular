@@ -131,3 +131,12 @@
 <div class="copy-message" *ngIf="mensajeCopia">
   {{ mensajeCopia }}
 </div>
+
+<!-- Notificación toast -->
+<div class="notification-toast" *ngIf="mensajeNotificacion" [ngClass]="{
+  'notification-success': tipoNotificacion === 'exito',
+  'notification-error': tipoNotificacion === 'error',
+  'notification-info': tipoNotificacion === 'info'
+}">
+  {{ mensajeNotificacion }}
+</div>
