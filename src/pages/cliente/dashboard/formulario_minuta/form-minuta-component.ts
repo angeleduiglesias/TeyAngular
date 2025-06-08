@@ -180,7 +180,7 @@ export class FormMinutaComponent implements OnInit {
         this.mostrarFormulario = true;
         this.cargandoEstado = false;
       }
-    }, 10000);
+    },5000);
     
     // Si hay un estado de reserva, determinar si se muestra el formulario
     if (this.estadoReserva) {
@@ -195,7 +195,7 @@ export class FormMinutaComponent implements OnInit {
     this.tipoFormularioSeleccionado = tipo;
     
     // Reiniciar el formulario si se cambia el tipo
-    this.pasoActual = 0;
+    this.pasoActual = 2;
     this.mostrandoResumen = false;
     
     // Reiniciar los aportes según el tipo de formulario

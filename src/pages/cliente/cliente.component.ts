@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { ClienteNavbarComponent } from './nav-bar/cliente-navbar-component';
 import { AuthService } from '../../app/services/auth-service';
+import { ClienteNombreService } from '../../app/services/cliente/cliente-nombre.service';
+import { ClienteDashboardService } from '../../app/services/cliente/cliente-dashboard.service';
 
 @Component({
   selector: 'app-cliente',
-  standalone: true,
   imports: [CommonModule, RouterModule, ClienteNavbarComponent],
   templateUrl: './cliente.component.html',
   styleUrls: ['./cliente.component.css']
@@ -20,13 +21,21 @@ export class ClienteComponent implements OnInit {
   
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private clienteNombreService: ClienteNombreService,
+    private ClienteDashboardService: ClienteDashboardService
   ) {}
 
   ngOnInit(): void {
     // Obtener información del usuario actual
     this.authService.currentUser$.subscribe(user => {
       this.userData = user;
+
+    this.ClienteDashboardService.getDashboardData().subscribe({
+        next: (data) => {
+          this.clienteNombreService.setNombre(data.nombre_cliente);
+        }
+      });
     });
   }
   

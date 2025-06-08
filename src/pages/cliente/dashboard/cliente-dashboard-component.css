@@ -46,6 +46,7 @@
 @media (max-width: 768px) {
   .status-row {
     flex-direction: column;
+    margin: -10px;
   }
   
   .status-column {

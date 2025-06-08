@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, shareReplay } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth-service';
@@ -19,6 +19,7 @@ export interface Notary {
   })
   export class AdminNotaryService {
     private apiUrl = `${environment.apiUrl}/api/admin/notarios`;
+    private notariesCache$: Observable<Notary[]> | null = null;
   
     constructor(
       private http: HttpClient,
@@ -27,17 +28,28 @@ export interface Notary {
   
     // Obtener todos los notarios
     getNotaries(): Observable<Notary[]> {
-      const headers = this.getAuthHeaders();
-      return this.http.get<Notary[]>(this.apiUrl, { headers })
-        .pipe(
-          map(response => {
-            return response;
-          }),
-          catchError(error => {
-            console.error('Error obteniendo notarios:', error);
-            return throwError(() => error);
-          })
-        );
+      if (!this.notariesCache$) {
+        const headers = this.getAuthHeaders();
+        this.notariesCache$ = this.http.get<Notary[]>(this.apiUrl, { headers })
+          .pipe(
+            map(response => {
+              return response;
+            }),
+            shareReplay(1),
+            catchError(error => {
+              console.error('Error obteniendo notarios:', error);
+              // Limpiar cache en caso de error
+              this.notariesCache$ = null;
+              return throwError(() => error);
+            })
+          );
+      }
+      return this.notariesCache$;
+    }
+
+    // Método para limpiar el cache cuando sea necesario
+    clearNotariesCache(): void {
+      this.notariesCache$ = null;
     }
     
     // Crear un nuevo notario
@@ -45,6 +57,11 @@ export interface Notary {
       const headers = this.getAuthHeaders();
       return this.http.post<Notary>(this.apiUrl, notary, { headers })
         .pipe(
+          map(response => {
+            // Limpiar cache después de crear para obtener datos actualizados
+            this.clearNotariesCache();
+            return response;
+          }),
           catchError(error => {
             console.error('Error creando notario:', error);
             return throwError(() => error);
@@ -57,6 +74,11 @@ export interface Notary {
       const headers = this.getAuthHeaders();
       return this.http.put<Notary>(`${this.apiUrl}/${id}`, notary, { headers })
         .pipe(
+          map(response => {
+            // Limpiar cache después de actualizar para obtener datos actualizados
+            this.clearNotariesCache();
+            return response;
+          }),
           catchError(error => {
             console.error(`Error actualizando notario con ID ${id}:`, error);
             return throwError(() => error);
@@ -69,6 +91,11 @@ export interface Notary {
       const headers = this.getAuthHeaders();
       return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers })
         .pipe(
+          map(response => {
+            // Limpiar cache después de eliminar para obtener datos actualizados
+            this.clearNotariesCache();
+            return response;
+          }),
           catchError(error => {
             console.error(`Error eliminando notario con ID ${id}:`, error);
             return throwError(() => error);

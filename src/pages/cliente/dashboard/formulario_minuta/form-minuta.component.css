@@ -455,11 +455,48 @@
   color: #555;
 }
 
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  background: #f7f8fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  margin: 24px 0;
+  padding: 32px 20px;
+}
+
+.loading-state p {
+  color: #2a2a2a;
+  font-size: 1.15rem;
+  margin-bottom: 24px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #e0e0e0;
+  border-top: 5px solid #3f51b5;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+
 /* Responsive */
 @media (max-width: 768px) {
   .form-card {
     padding: 15px;
-
+    margin: 20px -10px;
   }
   
   .form-type-options {
@@ -469,7 +506,6 @@
   
   .form-type-option {
     width: 100%;
-    max-width: 300px;
   }
   
   .aporte-row {
@@ -484,6 +520,5 @@
   
   .payment-method {
     width: 100%;
-    max-width: 250px;
   }
 }
