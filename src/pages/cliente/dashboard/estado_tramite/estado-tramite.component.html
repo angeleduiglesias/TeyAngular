@@ -1,18 +1,34 @@
 <div class="progress-card">
-  <h2>Progreso del Trámite</h2>
-  <div class="progress-date">
-    <span>Fecha de inicio: {{fecha_inicio | date:'dd/MM/yyyy'}}</span>
+  <div class="card-header">
+    <i class="document-icon"></i>
+    <h2>Progreso del Trámite</h2>
   </div>
   
-  <div class="progress-label">Progreso</div>
+  <div class="progress-date">
+    <i class="calendar-icon"></i>
+    <span>Fecha de inicio:</span>
+    <span class="date-value">{{fecha_inicio | date:'dd/MM/yyyy'}}</span>
+  </div>
+  
+  <div class="progress-section">
+    <div class="progress-label">Progreso</div>
+    <div class="progress-value">{{progreso}}% completado</div>
+  </div>
   
   <div class="progress-bar-container">
     <div class="progress-bar" [style.width.%]="progreso"></div>
   </div>
   
-  <div class="progress-percentage">{{progreso}}% completado</div>
+  <div class="estimated-completion">
+    <i class="clock-icon"></i>
+    <span>Finalización estimada:</span>
+    <span class="date-value">15/06/2025</span>
+  </div>
   
   <div class="progress-status">
-    <span [ngClass]="estadoTramiteClase">{{estado_tramite}}</span>
+    <button [ngClass]="estadoTramiteClase">
+      <i class="status-icon"></i>
+      {{estado_tramite}}
+    </button>
   </div>
 </div>

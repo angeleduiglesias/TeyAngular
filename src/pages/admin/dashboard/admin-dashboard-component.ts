@@ -12,7 +12,7 @@ import { ActividadRecienteComponent } from './actividad-reciente/actividad-recie
 
 export interface TramiteReciente {
   id: number;
-  nombre_empresa: string;
+  tipo_documento: string;
   nombre_cliente: string;
   fecha_tramite: Date;
   estado_tramite: string;

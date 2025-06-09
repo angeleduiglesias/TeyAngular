@@ -29,7 +29,7 @@ export class CambiarNombreService {
       'Content-Type': 'application/json'
     });
     
-    // Usar POST como solicitado y la URL base del environment
+    // Usar PUT como solicitado y la URL base del environment
     return this.http.put(`${environment.apiUrl}/api/admin/cambiarNombre`, payload, { headers });
   }
 }

@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TramiteReciente } from '../admin-dashboard-component';
+import { FormatTextPipe } from './format-text.pipe';
+
 @Component({
   selector: 'app-tramites-recientes',
-  imports: [CommonModule],
+  imports: [CommonModule, FormatTextPipe],
   templateUrl: './tramites-recientes.component.html',
   styleUrl: './tramites-recientes.component.css'
 })
@@ -36,5 +38,4 @@ export class TramitesRecientesComponent implements OnInit {
         return 'fa-file-alt';
     }
   }
-
 }

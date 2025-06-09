@@ -6,7 +6,7 @@
         <i class="fas" [ngClass]="getIconClass(tramite.estado_tramite)"></i>
       </div>
       <div class="tramite-info">
-        <h3 class="tramite-tipo">{{ tramite.nombre_empresa }}</h3>
+        <h3 class="tramite-tipo">{{ tramite.tipo_documento | formatText }}</h3>
         <p class="tramite-cliente">Cliente: {{ tramite.nombre_cliente }}</p>
         <div class="tramite-details">
           <p class="tramite-date">Recibido: {{ tramite.fecha_tramite }}</p>

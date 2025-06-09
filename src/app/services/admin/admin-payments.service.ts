@@ -55,11 +55,11 @@ export class AdminPaymentsService {
                   id: payments.id,
                   nombre_cliente: payments.nombre_cliente || '',
                   dni: payments.dni || '',
-                  tipo_pago: payments.tipo_pago || '',
+                  tipo_pago: this.formatTipoPago(payments.tipo_pago) || '',
                   monto: payments.monto || 0,
                   fecha: payments.fecha || 'No disponible',
                   estado_pago: payments.estado_pago || 'pendiente',
-                  forma_pago: payments.forma_pago || 'sin especificar',
+                  forma_pago: payments.forma_pago || 'Tarjeta',
                   };
                 
                 return PagoFormateado ;
@@ -94,5 +94,18 @@ export class AdminPaymentsService {
       // Método para limpiar el cache cuando sea necesario
       clearPaymentsCache(): void {
         this.paymentsCache$ = null;
+      }
+
+      // Añadir este método a la clase
+      private formatTipoPago(tipoPago: string): string {
+        if (!tipoPago) return '';
+        
+        // Eliminar guiones y dividir en palabras
+        const palabras = tipoPago.split('_');
+        
+        // Capitalizar la primera letra de cada palabra y unirlas con espacio
+        return palabras.map(palabra => {
+          return palabra.charAt(0).toUpperCase() + palabra.slice(1).toLowerCase();
+        }).join(' ');
       }
 }

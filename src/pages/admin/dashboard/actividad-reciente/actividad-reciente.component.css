@@ -67,12 +67,12 @@
 }
 
 .btn-editar {
-  background-color: #218838;
+  background-color: #42b483;
   color: white;
 }
 
 .btn-guardar {
-  background-color: #218838;
+  background-color: #42b483;
   color: white;
 }
 
@@ -136,12 +136,12 @@
 }
 
 .btn-guardar {
-  background-color: #218838;
+  background-color: #42b483;
   color: white;
 }
 
 .btn-guardar:hover {
-  background-color: #1a6e2e;
+  background-color: #47d195;
 }
 
 .btn-cancelar {
