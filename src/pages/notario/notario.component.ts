@@ -4,6 +4,8 @@ import { Router, RouterModule, NavigationEnd, Event } from '@angular/router';
 import { AuthService } from '../../app/services/auth-service';
 import { NotarioNavbarComponent } from './nav-bar/notario-navbar-component';
 import { Subscription, filter } from 'rxjs';
+import { NotarioDashboardService } from '../../app/services/notario/notario-dashboard.service';
+import { NotarioNombreService } from '../../app/services/notario/notario-nombre.service';
 
 @Component({
   selector: 'app-notario',
@@ -19,14 +21,23 @@ export class NotarioComponent implements OnInit, OnDestroy {
   
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notarioNombreService: NotarioNombreService,
+    private notarioDashboardService: NotarioDashboardService
   ) {}
 
   ngOnInit(): void {
     // Obtener información del usuario actual
     this.authService.currentUser$.subscribe(user => {
       this.userData = user;
+
+    this.notarioDashboardService.getDashboardData().subscribe({
+      next: (data) => {
+        this.notarioNombreService.setNombre(data.nombre_notario);
+      }
     });
+  });
+
 
     // Suscribirse a los eventos de navegación para actualizar la pestaña activa
     this.routerSubscription = this.router.events

@@ -1,13 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-
-interface Notificacion {
-  id: number;
-  mensaje: string;
-  fecha: Date;
-  leida: boolean;
-}
+import { NotarioNombreService } from '../../../app/services/notario/notario-nombre.service';
 
 @Component({
   selector: 'app-notario-navbar',
@@ -16,16 +9,17 @@ interface Notificacion {
   styleUrl: './notario-navbar-component.css'
 })
 export class NotarioNavbarComponent implements OnInit {
-  @Input() userData: any;
+  nombre_notario: string = '';
+
   @Input() activeTab: string = 'dashboard';
   
   @Output() tabChange = new EventEmitter<string>();
   @Output() logoutEvent = new EventEmitter<void>();
   
-  constructor(private router: Router) {}
+  constructor(private notarioNombreService: NotarioNombreService) {}
 
   ngOnInit(): void {
-    // Inicialización del componente
+    this.nombre_notario = this.notarioNombreService.getNombre();
   }
   
   changeTab(tab: string): void {

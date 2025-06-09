@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../app/services/auth-service';
+import { NotarioDashboardService } from '../../../app/services/notario/notario-dashboard.service';
 
-interface Documento {
+export interface Documento {
   id: number;
   titulo: string;
   cliente: string;
@@ -13,7 +15,7 @@ interface Documento {
   citaProgramada?: boolean;
 }
 
-interface Cita {
+export interface Cita {
   id: number;
   documentoId: number;
   cliente: string;
@@ -31,6 +33,11 @@ interface Cita {
   styleUrls: ['./notario-dashboard-component.css']
 })
 export class NotarioDashboardComponent implements OnInit {
+
+  userData: any = null;
+
+  activeTab: string = 'documentos';
+
   documentosPendientes: Documento[] = [
     {
       id: 1,
@@ -121,12 +128,49 @@ export class NotarioDashboardComponent implements OnInit {
   mostrarModalCita: boolean = false;
   citaSeleccionada: Cita | null = null;
 
-  constructor(private router: Router) {}
+  cargando: boolean = false;
+  error: string = '';
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private notarioDashboardService: NotarioDashboardService,
+  ) {}
 
   ngOnInit(): void {
     // Inicialización del componente
+    this.authService.currentUser$.subscribe(user => {
+      this.userData = user;
+
+      this.cargarDatosDashboard();
+    });
   }
 
+  cargarDatosDashboard(): void {
+    this.cargando = true;
+    this.error = '';
+    
+    // Obtener el ID del usuario desde el servicio de autenticación
+   
+    this.notarioDashboardService.getDashboardData()
+      .subscribe({
+        next: (response) => {
+          console.log('Datos recibidos del dashboard:', response);
+          // Actualizar datos del trámite
+          this.citas = response.citas;
+          this.documentosFinalizados = response.documentos;
+          this.documentosPendientes = response.documentos;
+
+          this.cargando = false;
+        },
+        error: (error) => {
+          console.error('Error al cargar datos del dashboard:', error);
+          this.error = 'No se pudieron cargar los datos. Por favor, intenta nuevamente.';
+          this.cargando = false;
+        }
+      });
+  }
+  
   revisarDocumento(id: number): void {
     this.router.navigate(['/notario/documento', id]);
   }
