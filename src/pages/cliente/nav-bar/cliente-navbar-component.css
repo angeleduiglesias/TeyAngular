@@ -162,8 +162,16 @@
   }
   
   .logout-btn {
-    order: 2;
-    padding: 6px 12px;
+    font-size: 12px;
+    padding: 8px 8px 8px 30px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logout-btn::before {
+    left: 8px;
+    width: 14px;
+    height: 14px;
   }
 }
 

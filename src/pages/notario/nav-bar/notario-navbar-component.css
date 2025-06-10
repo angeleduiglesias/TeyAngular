@@ -9,13 +9,12 @@
     align-items: center;
     padding: 15px 30px;
     margin-bottom: 30px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 1.5px solid #e0e0e0;
     position: relative;
-    background-color: #1d2cb32b;
   }
   
   .navbar-brand h1 {
-    color: #1E3A8A;
+    color: #4285f4;
     margin: 0;
     font-size: 26px;
     white-space: nowrap;
@@ -46,7 +45,7 @@
     text-decoration: none;
     font-weight: 500;
     font-size: 16px;
-    padding: 8px 0;
+    padding: 10px 10px;
     cursor: pointer;
     transition: color 0.3s;
     display: flex;
@@ -54,11 +53,14 @@
   }
   
   .nav-links li a:hover {
-    color: #1E3A8A;
+    color: #4285f4;
   }
   
   .nav-links li.active a {
-    color: #1E3A8A;
+    color: #4285f4;
+    padding: 10px 10px;
+    border-radius: 5px;
+    background-color:#4286f419;;
     font-weight: 600;
   }
   
@@ -69,7 +71,8 @@
     left: 0;
     width: 100%;
     height: 3px;
-    background-color: #1E3A8A;
+    background-color: #4285f4;
+    border-radius: 5px;
   }
   
   .notification-badge {
@@ -85,19 +88,42 @@
     margin-left: 5px;
   }
   
-  .logout-btn {
-    background-color: transparent;
-    color: #dc3545;
-    border: 1px solid #dc3545;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
+/* Botón de cerrar sesión */
+.logout-btn {
+  background-color: transparent;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  padding-left: 36px;
+}
+
+.logout-btn::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23dc3545' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'%3E%3C/path%3E%3Cpolyline points='16 17 21 12 16 7'%3E%3C/polyline%3E%3Cline x1='21' y1='12' x2='9' y2='12'%3E%3C/line%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
   
   .logout-btn:hover {
     background-color: #dc3545;
     color: white;
+  }
+
+  .logout-btn:hover::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'%3E%3C/path%3E%3Cpolyline points='16 17 21 12 16 7'%3E%3C/polyline%3E%3Cline x1='21' y1='12' x2='9' y2='12'%3E%3C/line%3E%3C/svg%3E");
   }
 
   /* Estilos responsivos */
@@ -140,9 +166,8 @@
   .nav-links {
     flex-direction: row;
     width: 100%;
-    gap: 15px;
+    gap: 20px;
     justify-content:space-around;
-    text-align: center;
   }
   
   .nav-links li.active::after {
@@ -150,8 +175,16 @@
   }
   
   .logout-btn {
-    order: 2;
-    padding: 6px 12px;
+    font-size: 12px;
+    padding: 8px 8px 8px 30px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logout-btn::before {
+    left: 8px;
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -160,8 +193,23 @@
   .navbar-brand h1 {
     font-size: 16px;
   }
+  .nav-links {
+    gap: 5px;
+  }
   
   .nav-links li a {
     font-size: 14px;
+  }
+  .logout-btn {
+    font-size: 12px;
+    padding: 8px 8px 8px 30px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logout-btn::before {
+    left: 8px;
+    width: 14px;
+    height: 14px;
   }
 }
