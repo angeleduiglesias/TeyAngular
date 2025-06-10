@@ -41,7 +41,7 @@ export class NotarioDashboardComponent implements OnInit {
   documentosPendientes: Documento[] = [
     {
       id: 1,
-      titulo: 'Escritura de Compraventa',
+      titulo: 'Minuta EIRL',
       cliente: 'María González',
       fechaSolicitud: '15/05/2025',
       tipo: 'escritura',
@@ -49,7 +49,7 @@ export class NotarioDashboardComponent implements OnInit {
     },
     {
       id: 2,
-      titulo: 'Poder Notarial',
+      titulo: 'Minuta SAC',
       cliente: 'Juan Pérez',
       fechaSolicitud: '14/05/2025',
       tipo: 'poder',
@@ -57,7 +57,7 @@ export class NotarioDashboardComponent implements OnInit {
     },
     {
       id: 3,
-      titulo: 'Testamento',
+      titulo: 'Minuta EIRL',
       cliente: 'Carlos Rodríguez',
       fechaSolicitud: '12/05/2025',
       tipo: 'testamento',
@@ -226,5 +226,10 @@ export class NotarioDashboardComponent implements OnInit {
     console.log(`Ver detalles del documento ${id}`);
     // Podría redirigir a una vista de solo lectura del documento finalizado
     this.router.navigate(['/notario/documento', id]);
+  }
+
+  // Método para obtener el número de documentos con cita programada
+  getDocumentosProgramados(): number {
+    return this.documentosPendientes.filter(d => d.citaProgramada).length;
   }
 }

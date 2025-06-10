@@ -5,70 +5,82 @@
   <!-- Documentos Pendientes Section -->
   <div class="documentos-pendientes-section">
     <div class="section-header">
-      <h2>Documentos Pendientes</h2>
-      <p>Gestiona los documentos que requieren tu atención</p>
+      <div class="header-content">
+        <div class="header-icon">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <div class="header-text">
+          <h2>Documentos Pendientes</h2>
+          <p>Gestiona los documentos que requieren tu atención</p>
+        </div>
+      </div>
+      <div class="header-stats">
+        <div class="stat-item">
+          <span class="stat-number">{{ documentosPendientes.length }}</span>
+          <span class="stat-label">Pendientes</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">{{ getDocumentosProgramados() }}</span>
+          <span class="stat-label">Programados</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="Buscar documentos o clientes...">
+      </div>
     </div>
         
-    <div class="table-container">
-      <table class="documentos-table">
-        <thead>
-          <tr>
-            <th>Nombre del Documento</th>
-            <th>Cliente</th>
-            <th>Fecha de Solicitud</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let documento of documentosPendientes">
-            <td>{{ documento.titulo }}</td>
-            <td>{{ documento.cliente }}</td>
-            <td>{{ documento.fechaSolicitud }}</td>
-            <td class="actions-cell">
-              <span class="status-badge clickable" *ngIf="documento.citaProgramada" (click)="verDetalleCita(documento.id)"><i class="fas fa-eye"></i> Cita programada</span>
-              <button class="table-btn" *ngIf="!documento.citaProgramada" (click)="registrarCita(documento.id)"><i class="fas fa-calendar"></i> Registrar Cita</button>
-              <button class="table-btn dark" (click)="revisarDocumento(documento.id)"><i class="fas fa-eye"></i> Revisar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="documentos-grid">
+      <div class="documento-card" *ngFor="let documento of documentosPendientes">
+        <div class="card-header">
+          <div class="document-icon">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <div class="document-info">
+            <h3 class="document-title">{{ documento.titulo }}</h3>
+            <div class="document-meta">
+              <span class="client-name">
+                <i class="fas fa-user"></i>
+                {{ documento.cliente }}
+              </span>
+              <span class="request-date">
+                <i class="fas fa-calendar"></i>
+                {{ documento.fechaSolicitud }}
+              </span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <div class="status-section">
+            <span class="status-label">Estado</span>
+            <div class="status-indicator" [ngClass]="documento.citaProgramada ? 'programada' : 'pendiente'">
+              {{ documento.citaProgramada ? 'Cita Programada' : 'Pendiente' }}
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-actions">
+          <button class="action-btn secondary" *ngIf="documento.citaProgramada" (click)="verDetalleCita(documento.id)">
+            <i class="fas fa-calendar"></i>
+            Ver Cita
+          </button>
+          <button class="action-btn primary" *ngIf="!documento.citaProgramada" (click)="registrarCita(documento.id)">
+            <i class="fas fa-calendar"></i>
+            Registrar Cita
+          </button>
+          <button class="action-btn review" (click)="revisarDocumento(documento.id)">
+            <i class="fas fa-eye"></i>
+            Revisar
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Documentos Finalizados Section -->
-  <div class="documentos-finalizados-section">
-    <div class="section-header">
-      <h2>Documentos Finalizados</h2>
-      <p>Documentos procesados y firmados</p>
-    </div>
-        
-    <div class="table-container">
-      <table class="documentos-table">
-        <thead>
-          <tr>
-            <th>Nombre del Documento</th>
-            <th>Cliente</th>
-            <th>Fecha de Solicitud</th>
-            <th>Fecha de Finalización</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let documento of documentosFinalizados">
-            <td>{{ documento.titulo }}</td>
-            <td>{{ documento.cliente }}</td>
-            <td>{{ documento.fechaSolicitud }}</td>
-            <td>{{ documento.fechaFinalizacion }}</td>
-            <td class="actions-cell">
-              <button class="table-btn" (click)="descargarDocumento(documento.id)"><i class="fas fa-download"></i> Descargar</button>
-              <button class="table-btn dark" (click)="verDetalles(documento.id)"><i class="fas fa-info-circle"></i> Detalles</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
 
 <!-- Modal para ver detalle de cita -->
 <div class="modal" *ngIf="mostrarModalCita">
