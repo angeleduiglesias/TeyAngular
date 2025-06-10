@@ -17,7 +17,9 @@ export class NuevaCitaComponent implements OnInit {
     tipoDocumento: '',
     fecha: '',
     hora: '',
-    direccion: 'Av. Principal 123, Oficina 405' // Dirección predeterminada
+    direccion: 'Av. Principal 123, Oficina 405',
+    notas:'' ,
+    telefono:''// Dirección predeterminada
   };
 
   constructor(

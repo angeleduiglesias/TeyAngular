@@ -13,7 +13,7 @@ export interface Client {
   tipo_empresa: string;
   estado: string;
   created_at: string;
-  progreso: string;
+  progreso: number;
   pago1: boolean;
   pago2: boolean;
   nombre_empresa: string;
@@ -60,7 +60,7 @@ export class AdminClientService {
               created_at: cliente.created_at || new Date().toISOString(),
               tipo_empresa: cliente.tipo_empresa || 'No especificado',
               nombre_empresa: cliente.nombre_empresa || 'No especificado',
-              progreso: cliente.progreso || 'No se inició',
+              progreso: cliente.progreso || 0,
               pago1: !!cliente.pago1,
               pago2: !!cliente.pago2,
             }));

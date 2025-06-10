@@ -23,7 +23,7 @@ export interface PagosReciente {
   tipo_pago: string;
   nombre_cliente: string;
   monto_pago: number;
-  fecha_pago: Date;
+  fecha: Date;
 }
 
 export interface ReservaNombre {

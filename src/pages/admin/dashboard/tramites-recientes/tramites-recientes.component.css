@@ -47,12 +47,12 @@
   color: #ffc107;
 }
 
-.tramite-icon.en {
+.tramite-icon.en-proceso{
   background-color: rgba(30, 58, 138, 0.1);
   color: #1E3A8A;
 }
 
-.tramite-icon.completado {
+.tramite-icon.aprobado{
   background-color: rgba(33, 136, 56, 0.1);
   color: #218838;
 }
@@ -106,7 +106,7 @@
   border: 1px solid rgba(30, 58, 138, 0.3);
 }
 
-.status-badge.completado {
+.status-badge.aprobado {
   background-color: rgba(33, 136, 56, 0.1);
   color: #218838;
   border: 1px solid rgba(33, 136, 56, 0.3);

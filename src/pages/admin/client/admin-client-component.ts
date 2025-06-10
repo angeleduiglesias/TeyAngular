@@ -79,17 +79,28 @@ export class AdminClientComponent implements OnInit {
 
 
   applyFilter(): void {
-    if (!this.searchTerm) {
-      this.filteredClients = [...this.clients];
-    } else {
+    // Primero filtramos por término de búsqueda
+    let filtered = [...this.clients];
+    
+    if (this.searchTerm) {
       const term = this.searchTerm.toLowerCase();
-      this.filteredClients = this.clients.filter(client => 
+      filtered = filtered.filter(client => 
         client.nombre_cliente.toLowerCase().includes(term) ||
         client.dni.includes(term) ||
-        client.tipo_empresa.toLowerCase().includes(term)
+        client.tipo_empresa.toLowerCase().includes(term) ||
+        client.estado.toLowerCase().includes(term)
       );
-
     }
+    
+    // Luego aplicamos el filtro por estado si está seleccionado
+    if (this.selectedStatusFilter) {
+      filtered = filtered.filter(client => 
+        client.estado.toLowerCase() === this.selectedStatusFilter.toLowerCase()
+      );
+    }
+    
+    this.filteredClients = filtered;
+    
     // Aplicar ordenamiento si existe
     this.sortData();
     
@@ -165,11 +176,11 @@ export class AdminClientComponent implements OnInit {
   getStatusClass(status: string): string {
     switch (status?.toLowerCase()) {
       case 'activo':
-        return 'status-active';
+        return 'status-activo';
       case 'pendiente':
-        return 'status-pending';
+        return 'status-pendiente';
       case 'inactivo':
-        return 'status-inactive';
+        return 'status-inactivo';
       default:
         return '';
     }

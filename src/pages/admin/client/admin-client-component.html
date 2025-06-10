@@ -2,8 +2,8 @@
   <div class="header">
     <h2>Gestión de Clientes</h2>
 
-     <!-- Filtros por botones movidos a la derecha -->
-     <div class="filters-section">
+    <!-- Filtros por botones movidos a la derecha -->
+    <div class="filters-section">
       <div class="filters-row">
         <!-- Filtro por Estado del Trámite -->
         <div class="filter-group">
@@ -17,14 +17,14 @@
             </button>
             <button 
               class="filter-btn status-completed" 
-              [class.active]="selectedStatusFilter === 'Activo'"
-              (click)="filterByStatus('Activo')">
+              [class.active]="selectedStatusFilter === 'activo'"
+              (click)="filterByStatus('activo')">
               <i class="fas fa-check-circle"></i> Activo
             </button>
             <button 
               class="filter-btn status-in-cancelled" 
-              [class.active]="selectedStatusFilter === 'Inactivo'"
-              (click)="filterByStatus('Inactivo')">
+              [class.active]="selectedStatusFilter === 'inactivo'"
+              (click)="filterByStatus('inactivo')">
               <i class="fas fa-clock"></i> Inactivo
             </button>
           </div>

@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, } from '@angular/common';
 import { TramiteReciente } from '../admin-dashboard-component';
-import { FormatTextPipe } from './format-text.pipe';
+import { FormatTextPipe } from '../../../../app/format-text.pipe';
 
 @Component({
   selector: 'app-tramites-recientes',
-  imports: [CommonModule, FormatTextPipe],
+  imports: [CommonModule,FormatTextPipe],
   templateUrl: './tramites-recientes.component.html',
   styleUrl: './tramites-recientes.component.css'
 })
@@ -32,7 +32,7 @@ export class TramitesRecientesComponent implements OnInit {
         return 'fa-clock';
       case 'en proceso':
         return 'fa-spinner';
-      case 'completado':
+      case 'aprobado':
         return 'fa-check-circle';
       default:
         return 'fa-file-alt';

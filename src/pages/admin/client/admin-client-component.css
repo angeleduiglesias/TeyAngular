@@ -586,6 +586,7 @@
   border: 1px solid #e0e0e0;
 }
 
+
 /* Estilos para los botones de contacto */
 .btn-contact, .btn-close {
   padding: 10px 16px;
@@ -650,4 +651,34 @@
     width: 100%;
     justify-content: center;
   }
+}
+
+/* Estilos para estados de cliente */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  border: 1px solid;
+}
+
+.status-badge.status-activo {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border-color: rgba(40, 167, 69, 0.3);
+}
+
+.status-badge.status-inactivo {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border-color: rgba(220, 53, 69, 0.3);
+}
+
+.status-badge.status-pendiente {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
+  border-color: rgba(255, 193, 7, 0.3);
 }

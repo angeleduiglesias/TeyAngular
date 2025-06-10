@@ -99,8 +99,8 @@
             <td>{{ tramite.fecha_inicio | date:'dd/MM/yyyy' }}</td>
             <td>{{ tramite.fecha_fin ? (tramite.fecha_fin | date:'dd/MM/yyyy') : 'En proceso' }}</td>
             <td>
-              <span class="status-badge" [ngClass]="getStatusClass(tramite.estado_tramite)">
-                {{ tramite.estado_tramite }}
+              <span class="status-badge" [ngClass]="getStatusClass(tramite.estado_tramite | formatText)">
+                {{ tramite.estado_tramite | formatText }}
               </span>
             </td>
             <td>{{ tramite.nombre_empresa }}</td>
@@ -172,8 +172,8 @@
             <div class="info-group">
               <div class="info-label">Estado del Trámite:</div>
               <div class="info-value">
-                <span class="status-badge" [ngClass]="getStatusClass(selectedTramite.estado_tramite)">
-                  {{ selectedTramite.estado_tramite }}
+                <span class="status-badge" [ngClass]="getStatusClass(selectedTramite.estado_tramite | formatText)">
+                  {{ selectedTramite.estado_tramite | formatText }}
                 </span>
               </div>
             </div>

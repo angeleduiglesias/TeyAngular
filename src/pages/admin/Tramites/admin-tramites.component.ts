@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminTramitesService, Tramites } from '../../../app/services/admin/admin-tramites.service';
 import { AuthService } from '../../../app/services/auth-service';
+import { FormatTextPipe } from '../../../app/format-text.pipe';
 
 @Component({
   selector: 'app-admin-tramites',
   templateUrl: './admin-tramites.component.html',
   styleUrls: ['./admin-tramites.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, FormatTextPipe]
 })
 export class AdminTramitesComponent implements OnInit {
   tramites: Tramites[] = [];

@@ -34,7 +34,9 @@ export class NotarioCitasComponent implements OnInit {
       hora: '14:00',
       cliente: 'María González',
       direccion: 'Calle Secundaria 456, Piso 2',
-      tipoDocumento: 'Escritura de Compraventa'
+      tipoDocumento: 'Escritura de Compraventa',
+
+
     },
     {
       id: 3,
@@ -42,7 +44,7 @@ export class NotarioCitasComponent implements OnInit {
       hora: '11:15',
       cliente: 'Juan Pérez',
       direccion: 'Plaza Central 789, Local 12',
-      tipoDocumento: 'Poder Notarial'
+      tipoDocumento: 'Poder Notarial',
     },
     {
       id: 4,
@@ -50,7 +52,7 @@ export class NotarioCitasComponent implements OnInit {
       hora: '09:00',
       cliente: 'Ana López',
       direccion: 'Av. Principal 123, Oficina 405',
-      tipoDocumento: 'Escritura de Propiedad'
+      tipoDocumento: 'Escritura de Propiedad',
     }
   ];
 
