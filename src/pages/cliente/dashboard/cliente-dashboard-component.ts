@@ -10,19 +10,6 @@ import { EstadoPagosComponent } from './estado_pagos/estado-pagos.component';
 import { FormMinutaComponent } from './formulario_minuta/form-minuta-component';
 
 
-
-interface Socio {
-  nombre: string;
-  participacion: number;
-}
-
-interface DatosFormulario {
-  nombreEmpresa: string;
-  tipoSociedad: string;
-  socios: Socio[];
-  objetoSocial: string;
-}
-
 interface MetodoPago {
   id: number;
   nombre: string;
@@ -80,14 +67,8 @@ export class ClienteDashboardComponent implements OnInit {
   }
   // Datos del formulario de minuta
   nombreEmpresa: string = ''; // Inicialmente vacío, se llenará cuando se reciba
-  pasos: string[] = ['Información Básica', 'Socios', 'Objeto Social'];
   pasoActual: number = 0;
-  datosFormulario: DatosFormulario = {
-    nombreEmpresa: '',
-    tipoSociedad: 'sas',
-    socios: [{ nombre: '', participacion: 0 }],
-    objetoSocial: ''
-  };
+
   mostrandoResumen: boolean = false;
   formularioEnviado: boolean = false;
   
@@ -151,7 +132,7 @@ export class ClienteDashboardComponent implements OnInit {
     // Simulación: después de 1 segundo, recibimos los datos
     setTimeout(() => {
       this.nombreEmpresa = 'Mi Empresa EIRL';
-      this.datosFormulario.nombreEmpresa = this.nombreEmpresa;
+      this.nombreEmpresa = this.nombreEmpresa;
       
     });
   }
@@ -172,12 +153,6 @@ export class ClienteDashboardComponent implements OnInit {
     this.estado_pagos.pago2 = pago === 2; // Si pago es 2, significa que está completado
   }
 
-  // Métodos para el formulario multi-step
-  pasoSiguiente(): void {
-    if (this.pasoActual < this.pasos.length - 1) {
-      this.pasoActual++;
-    }
-  }
 
   logout() {
     // Redirigir al componente de logout
@@ -189,44 +164,18 @@ export class ClienteDashboardComponent implements OnInit {
       this.pasoActual--;
     }
   }
-  
-  // FUNCIÓN 1: Agregar socio - Corregida
-  agregarSocio(): void {
-    this.datosFormulario.socios.push({
-      nombre: '',
-      participacion: 0
-    });
-  }
-  
-  // FUNCIÓN 2: Eliminar socio - Implementada
-  eliminarSocio(index: number): void {
-    if (index > 0 && this.datosFormulario.socios.length > 1) {
-      this.datosFormulario.socios.splice(index, 1);
-    }
-  }
-  
+
   // FUNCIÓN 3: Mostrar resumen - Implementada
   mostrarResumen(): void {
     // Validar que todos los campos estén completos
     let formularioValido = true;
     
     // Validar nombre de empresa
-    if (!this.datosFormulario.nombreEmpresa) {
+    if (!this.nombreEmpresa) {
       formularioValido = false;
     }
     
-    // Validar socios
-    for (const socio of this.datosFormulario.socios) {
-      if (!socio.nombre || socio.participacion <= 0) {
-        formularioValido = false;
-        break;
-      }
-    }
-    
-    // Validar objeto social
-    if (!this.datosFormulario.objetoSocial) {
-      formularioValido = false;
-    }
+  
     
     if (formularioValido) {
       this.mostrandoResumen = true;
@@ -262,7 +211,6 @@ export class ClienteDashboardComponent implements OnInit {
     this.estado_tramite.progreso = 50;
     
   }
-  
   // FUNCIÓN 7: Seleccionar método de pago - Implementada
   seleccionarMetodoPago(id: number): void {
     this.metodoPagoSeleccionado = id;

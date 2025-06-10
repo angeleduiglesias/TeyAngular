@@ -5,11 +5,16 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth-service';
 
-// Importamos las interfaces necesarias desde el componente del formulario
+// Importamos las interfaces desde ambos componentes
 import {
   FormularioMinuta,
   TipoFormularioMinuta
-} from '../../../pages/cliente/dashboard/formulario_minuta/form-minuta-component';
+} from '../../../pages/cliente/dashboard/formulario_minuta/form-EIRL/form.eirl.component';
+
+import {
+  FormularioSAC,
+  TipoFormularioSAC
+} from '../../../pages/cliente/dashboard/formulario_minuta/form-SAC/form.sac.component';
 
 // Interfaz para la respuesta del servidor
 export interface MinutaResponse {
@@ -18,11 +23,10 @@ export interface MinutaResponse {
   id_minuta?: number;
 }
 
-// Interfaz para el envío de datos de la minuta
+// Interfaz genérica para el envío de datos de la minuta
 export interface MinutaRequest {
-  formulario: FormularioMinuta;
-  tipo_formulario: TipoFormularioMinuta;
-  nombre_empresa: string;
+  formulario: FormularioMinuta | FormularioSAC;
+  tipo_formulario: TipoFormularioMinuta | TipoFormularioSAC;
 }
 
 @Injectable({
@@ -36,13 +40,31 @@ export class ClienteMinutaService {
   ) { }
 
   /**
-   * Envía los datos del formulario de minuta al backend
-   * @param formularioData Datos del formulario de minuta
-   * @param tipoFormulario Tipo de formulario seleccionado
+   * Envía los datos del formulario de minuta al backend (EIRL)
+   * @param formularioData Datos del formulario de minuta EIRL
+   * @param tipoFormulario Tipo de formulario EIRL seleccionado
    * @param nombreEmpresa Nombre de la empresa
    * @returns Observable con la respuesta del servidor
    */
-  enviarFormularioMinuta(formularioData: FormularioMinuta, tipoFormulario: TipoFormularioMinuta, nombreEmpresa: string): Observable<any> {
+  enviarFormularioMinuta(formularioData: FormularioMinuta, tipoFormulario: TipoFormularioMinuta, nombreEmpresa: string): Observable<any>;
+  
+  /**
+   * Envía los datos del formulario de minuta al backend (SAC)
+   * @param formularioData Datos del formulario de minuta SAC
+   * @param tipoFormulario Tipo de formulario SAC seleccionado
+   * @param nombreEmpresa Nombre de la empresa
+   * @returns Observable con la respuesta del servidor
+   */
+  enviarFormularioMinuta(formularioData: FormularioSAC, tipoFormulario: TipoFormularioSAC, nombreEmpresa: string): Observable<any>;
+  
+  /**
+   * Implementación del método que maneja ambos tipos de formularios
+   */
+  enviarFormularioMinuta(
+    formularioData: FormularioMinuta | FormularioSAC, 
+    tipoFormulario: TipoFormularioMinuta | TipoFormularioSAC, 
+    nombreEmpresa: string
+  ): Observable<any> {
     // Obtener el token de autenticación
     const token = this.authService.getToken();
     
@@ -56,11 +78,15 @@ export class ClienteMinutaService {
     const data: MinutaRequest = {
       formulario: formularioData,
       tipo_formulario: tipoFormulario,
-      nombre_empresa: nombreEmpresa
     };
     
-    // Realizar la petición POST al endpoint de minuta
-    return this.http.post<any>(`${environment.apiUrl}/api/cliente/minuta`, data, { headers })
+    // Determinar el endpoint según el tipo de formulario
+    const endpoint = this.isSACFormulario(tipoFormulario) 
+      ? `${environment.apiUrl}/api/cliente/minuta-sac` 
+      : `${environment.apiUrl}/api/cliente/minuta`;
+    
+    // Realizar la petición POST al endpoint correspondiente
+    return this.http.post<any>(endpoint, data, { headers })
       .pipe(
         catchError(error => {
           console.error('Error en el servicio ClienteMinutaService:', error);
@@ -82,5 +108,12 @@ export class ClienteMinutaService {
           return throwError(() => error);
         })
       );
+  }
+  
+  /**
+   * Método auxiliar para determinar si es un formulario SAC
+   */
+  private isSACFormulario(tipoFormulario: TipoFormularioMinuta | TipoFormularioSAC): boolean {
+    return Object.values(TipoFormularioSAC).includes(tipoFormulario as TipoFormularioSAC);
   }
 }

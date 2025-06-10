@@ -1,0 +1,276 @@
+
+<div class="form-card">
+  <h2>Formulario de Minuta</h2>
+  
+  <!-- Estado de carga -->
+  <div *ngIf="cargandoEstado" class="loading-state">
+    <p>Cargando información de la reserva...</p>
+    <div class="spinner"></div>
+  </div>
+  
+  <!-- Estado inicial: deshabilitado -->
+  <div *ngIf="!cargandoEstado && !mostrarFormulario && nombreEmpresa" class="form-disabled">
+    <p>Una vez tengamos el nombre de tu empresa te notificaremos y podrás acceder al formulario.</p>
+  </div>
+  
+  <!-- Formulario habilitado -->
+  <div *ngIf="mostrarFormulario && nombreEmpresa && !formularioEnviado" class="form-enabled">
+    <!-- Selector de tipo de formulario -->
+    <div class="form-type-selector">
+      <h3>Seleccione el tipo de formulario EIRL</h3>
+      <div class="form-type-options">
+        <div class="form-type-option" 
+            [ngClass]="{'selected': tipoFormularioSeleccionado === tiposFormulario.EIRLBND}"
+            (click)="cambiarTipoFormulario(tiposFormulario.EIRLBND)">
+          <div class="option-icon">🏭</div>
+          <div class="option-content">
+            <h4>EIRL con Bienes No Dinerarios</h4>
+            <p>Aportes en bienes muebles, inmuebles, derechos, etc.</p>
+          </div>
+        </div>
+        <div class="form-type-option" 
+            [ngClass]="{'selected': tipoFormularioSeleccionado === tiposFormulario.EIRLBD}"
+            (click)="cambiarTipoFormulario(tiposFormulario.EIRLBD)">
+          <div class="option-icon">💰</div>
+          <div class="option-content">
+            <h4>EIRL con Bienes Dinerarios</h4>
+            <p>Aportes exclusivamente en dinero en efectivo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pasos del formulario -->
+    <div class="form-steps">
+      <div class="step" *ngFor="let step of pasos; let i = index" 
+          [ngClass]="{'active': pasoActual === i, 'completed': pasoActual > i}">
+        {{i + 1}}
+      </div>
+    </div>
+    
+    <!-- Contenido del paso actual -->
+    <div class="step-content" [ngSwitch]="pasoActual">
+      
+      <!-- Paso 1: Datos Personales -->
+      <div *ngSwitchCase="0">
+        <h3>Datos Personales</h3>
+        <div class="form-group">
+          <label>Nacionalidad <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_1.nacionalidad" placeholder="Ingrese su nacionalidad">
+        </div>
+        <div class="form-group">
+          <label>Profesión</label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_1.profesion" placeholder="Ingrese su profesión">
+        </div>
+        <div class="form-group">
+          <label>Estado Civil</label>
+          <select [(ngModel)]="formularioMinuta.paso_1.estado_civil">
+            <option value="">Seleccione una opción</option>
+            <option value="soltero">Soltero/a</option>
+            <option value="casado">Casado/a</option>
+            <option value="divorciado">Divorciado/a</option>
+            <option value="viudo">Viudo/a</option>
+          </select>
+        </div>
+          <!-- Campos condicionales para cónyuge (solo si está casado) -->
+          <div *ngIf="formularioMinuta.paso_1.estado_civil === 'casado'">
+            <div class="form-group">
+              <label>Nombre del Cónyuge</label>
+              <input type="text" [(ngModel)]="formularioMinuta.paso_1.nombre_conyuge" placeholder="Ingrese el nombre de su cónyuge">
+            </div>
+            <div class="form-group">
+              <label>DNI del Cónyuge</label>
+              <input type="text" [(ngModel)]="formularioMinuta.paso_1.dni_conyuge" placeholder="Ingrese el DNI de su cónyuge">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Dirección</label>
+            <input type="text" [(ngModel)]="formularioMinuta.paso_1.direccion" placeholder="Ingrese su dirección">
+          </div> 
+        </div>
+      
+      <!-- Paso 2: Datos de la Empresa -->
+      <div *ngSwitchCase="1">
+        <h3>Datos de la Empresa</h3>
+        <div class="form-group">
+          <label>Nombre de la Empresa <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_2.nombre_empresa" [value]="nombreEmpresa" [readonly]="nombreEmpresa">
+        </div>
+        <div class="form-group">
+          <label>Dirección de la Empresa</label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_2.direccion_empresa" placeholder="Ingrese la dirección de la empresa">
+        </div>
+        <div class="form-group">
+          <label>Provincia</label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_2.provincia_empresa" placeholder="Ingrese la provincia">
+        </div>
+        <div class="form-group">
+          <label>Departamento</label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_2.departamento_empresa" placeholder="Ingrese el departamento">
+        </div>
+        <div class="form-group">
+          <label>Objetivo de la Empresa <span class="required">*</span></label>
+          <textarea [(ngModel)]="formularioMinuta.paso_2.objetivo" rows="4" placeholder="Describa el objetivo principal de la empresa"></textarea>
+        </div>
+      </div>
+      
+      <!-- Paso 3: Capital y Aportes -->
+      <div *ngSwitchCase="2">
+        <h3>Capital y Aportes</h3>
+        <div class="form-group">
+          <label>Monto de Capital <span class="required">*</span></label>
+          <input type="number" [(ngModel)]="formularioMinuta.paso_3.monto_capital" placeholder="Ingrese el monto de capital">
+        </div>
+        
+        <!-- Mensaje informativo según el tipo de formulario -->
+        <div class="info-message" *ngIf="tipoFormularioSeleccionado === tiposFormulario.EIRLBD">
+          <p><i class="fa fa-info-circle"></i> Para EIRL con bienes dinerarios, el aporte debe ser exclusivamente en dinero en efectivo.</p>
+        </div>
+        <div class="info-message" *ngIf="tipoFormularioSeleccionado === tiposFormulario.EIRLBND">
+          <p><i class="fa fa-info-circle"></i> Para EIRL con bienes no dinerarios, puede agregar múltiples aportes de diferentes tipos.</p>
+        </div>
+        
+        <div class="aportes-list">
+          <div class="aporte-item" *ngFor="let aporte of formularioMinuta.paso_3.aportes; let i = index">
+            <div class="form-group">
+              <label>Descripción del Aporte <span class="required">*</span></label>
+              <input type="text" [(ngModel)]="aporte.descripcion" placeholder="Describa el aporte" 
+            [readonly]="tipoFormularioSeleccionado === tiposFormulario.EIRLBD">
+            </div>
+            <div class="form-group">
+              <label>Valor del Aporte <span class="required">*</span></label>
+              <input type="number" [(ngModel)]="aporte.monto" placeholder="Ingrese el valor del aporte">
+            </div>
+            <button class="btn-remove" *ngIf="formularioMinuta.paso_3.aportes.length > 1" (click)="eliminarAporte(i)">
+              Eliminar
+            </button>
+          </div>
+        </div>
+        <button class="btn-add" (click)="agregarAporte()" 
+                [disabled]="tipoFormularioSeleccionado === tiposFormulario.EIRLBD && formularioMinuta.paso_3.aportes.length >= 1">
+          Agregar Aporte
+        </button>
+      </div>
+      
+      <!-- Paso 4: Apoderado -->
+      <div *ngSwitchCase="3">
+        <h3>Datos del Apoderado</h3>
+        <div class="form-group">
+          <label>Nombre del Apoderado <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_4.apoderado" placeholder="Ingrese el nombre del apoderado">
+        </div>
+        <div class="form-group">
+          <label>DNI del Apoderado <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_4.dni_apoderado" placeholder="Ingrese el DNI del apoderado">
+        </div>
+      </div>
+      
+      <!-- Paso 5: Confirmación -->
+      <div *ngSwitchCase="4">
+        <h3>Confirmación</h3>
+        <div class="form-group">
+          <label>Ciudad <span class="required">*</span></label>
+          <input type="text" [(ngModel)]="formularioMinuta.paso_5.ciudad" placeholder="Ingrese la ciudad">
+        </div>
+        <div class="form-group">
+          <label>Fecha de Registro</label>
+          <input type="date" [(ngModel)]="formularioMinuta.paso_5.fecha_registro">
+        </div>
+        <div class="confirmation-message">
+          <p>Por favor revise cuidadosamente toda la información antes de finalizar.</p>
+          <p>Al hacer clic en "Finalizar", confirma que todos los datos proporcionados son correctos.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Navegación entre pasos -->
+    <div class="form-navigation">
+      <button *ngIf="pasoActual > 0" class="btn-prev" (click)="pasoAnterior()">Anterior</button>
+      <button *ngIf="pasoActual < pasos.length - 1" class="btn-next" (click)="pasoSiguiente()">Siguiente</button>
+      <button *ngIf="pasoActual === pasos.length - 1" class="btn-submit" (click)="mostrarResumen()">Finalizar</button>
+    </div>
+  </div>
+  
+  <!-- Resumen del formulario -->
+  <div *ngIf="nombreEmpresa && mostrandoResumen && !formularioEnviado" class="form-summary">
+    <h3>Resumen de la Información</h3>
+    <div class="summary-content">
+      <div class="summary-section">
+        <h4>Tipo de Formulario</h4>
+        <p><strong>Tipo:</strong> {{tipoFormularioSeleccionado === tiposFormulario.EIRLBD ? 'EIRL con Bienes Dinerarios' : 'EIRL con Bienes No Dinerarios'}}</p>
+      </div>
+      
+      <div class="summary-section">
+        <h4>Datos Personales</h4>
+        <p><strong>Nacionalidad:</strong> {{formularioMinuta.paso_1.nacionalidad}}</p>
+        <p *ngIf="formularioMinuta.paso_1.profesion"><strong>Profesión:</strong> {{formularioMinuta.paso_1.profesion}}</p>
+        <p *ngIf="formularioMinuta.paso_1.estado_civil"><strong>Estado Civil:</strong> {{formularioMinuta.paso_1.estado_civil}}</p>
+        <p *ngIf="formularioMinuta.paso_1.direccion"><strong>Dirección:</strong> {{formularioMinuta.paso_1.direccion}}</p>
+        <div *ngIf="formularioMinuta.paso_1.estado_civil === 'casado'">
+          <p><strong>Nombre del Cónyuge:</strong> {{formularioMinuta.paso_1.nombre_conyuge}}</p>
+          <p><strong>DNI del Cónyuge:</strong> {{formularioMinuta.paso_1.dni_conyuge}}</p>
+        </div>
+      </div>
+      
+      <div class="summary-section">
+        <h4>Datos de la Empresa</h4>
+        <p><strong>Nombre de la Empresa:</strong> {{formularioMinuta.paso_2.nombre_empresa}}</p>
+        <p *ngIf="formularioMinuta.paso_2.direccion_empresa"><strong>Dirección:</strong> {{formularioMinuta.paso_2.direccion_empresa}}</p>
+        <p *ngIf="formularioMinuta.paso_2.provincia_empresa"><strong>Provincia:</strong> {{formularioMinuta.paso_2.provincia_empresa}}</p>
+        <p *ngIf="formularioMinuta.paso_2.departamento_empresa"><strong>Departamento:</strong> {{formularioMinuta.paso_2.departamento_empresa}}</p>
+        <p><strong>Objetivo:</strong> {{formularioMinuta.paso_2.objetivo}}</p>
+      </div>
+      
+      <div class="summary-section">
+        <h4>Capital y Aportes</h4>
+        <p><strong>Monto de Capital:</strong> {{formularioMinuta.paso_3.monto_capital | currency:'PEN ':'symbol':'1.2-2'}}</p>
+        <p><strong>Aportes:</strong></p>
+        <ul>
+          <li *ngFor="let aporte of formularioMinuta.paso_3.aportes">
+            {{aporte.descripcion}} - {{aporte.monto | currency:'PEN ':'symbol':'1.2-2'}}
+          </li>
+        </ul>
+      </div>
+      
+      <div class="summary-section">
+        <h4>Datos del Apoderado</h4>
+        <p><strong>Nombre del Apoderado:</strong> {{formularioMinuta.paso_4.apoderado}}</p>
+        <p><strong>DNI del Apoderado:</strong> {{formularioMinuta.paso_4.dni_apoderado}}</p>
+      </div>
+      
+      <div class="summary-section">
+        <h4>Confirmación</h4>
+        <p><strong>Ciudad:</strong> {{formularioMinuta.paso_5.ciudad}}</p>
+        <p><strong>Fecha de Registro:</strong> {{formularioMinuta.paso_5.fecha_registro | date:'dd/MM/yyyy'}}</p>
+      </div>
+    </div>
+    <div class="summary-actions">
+      <button class="btn-edit" (click)="editarFormulario()">Editar</button>
+      <button class="btn-confirm" (click)="enviarFormulario()">Enviar</button>
+    </div>
+  </div>
+  
+  <!-- Formulario de pago después de enviar -->
+  <div *ngIf="formularioEnviado && !pagoConfirmado" class="payment-form">
+    <h3>Completar Pago</h3>
+    <div class="payment-methods">
+      <div class="payment-method" *ngFor="let metodo of metodosPago" 
+          [ngClass]="{'selected': metodoPagoSeleccionado === metodo.id}"
+          (click)="seleccionarMetodoPago(metodo.id)">
+        <img [src]="metodo.imagen" [alt]="metodo.nombre">
+        <span>{{metodo.nombre}}</span>
+      </div>
+    </div>
+    <button class="btn-pay" [disabled]="!metodoPagoSeleccionado" (click)="confirmarPago()">
+      Realizar Pago
+    </button>
+  </div>
+  
+  <!-- Mensaje de éxito después del pago -->
+  <div *ngIf="pagoConfirmado" class="success-message">
+    <div class="success-icon">✓</div>
+    <h3>{{userData.nombre}}, felicitaciones</h3>
+    <p>Tu empresa ({{nombreEmpresa}}) será registrada en un plazo no mayor a 10 días.</p>
+    <p>Atento a tu correo, el notario te citará a firmar.</p>
+  </div>
+</div>
