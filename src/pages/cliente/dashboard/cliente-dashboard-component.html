@@ -25,8 +25,9 @@
     <!-- Formulario de minuta (abajo, ancho completo) -->
     <app-form-minuta 
       [userData]="userData"
-      [nombreEmpresa]="nombreEmpresa"
+      [nombreEmpresa]="estado_documento.nombre_empresa"
       [estadoReserva]="estado_documento.estado_reserva"
+      [tipoEmpresa]="estado_documento.tipo_empresa"
       (estadoTramiteChange)="actualizarEstadoTramite($event)"
       (porcentajeProgresoChange)="actualizarPorcentajeProgreso($event)"
       (estadoPagoChange)="actualizarEstadoPago($event)"

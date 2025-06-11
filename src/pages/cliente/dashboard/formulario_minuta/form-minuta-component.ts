@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FormEirlComponent } from './form-EIRL/form.eirl.component';
@@ -6,8 +6,8 @@ import { FormSacComponent } from './form-SAC/form.sac.component'; // Agregar est
 
 // Enum para tipos de empresa
 export enum TipoEmpresa {
-  EIRL = 'eirl',
-  SAC = 'sac'
+  EIRL = 'EIRL',
+  SAC = 'SAC'
 }
 
 @Component({
@@ -17,10 +17,11 @@ export enum TipoEmpresa {
   templateUrl: './form-minuta.component.html',
   styleUrls: ['./form-minuta.component.css']
 })
-export class FormMinutaComponent implements OnInit {
+export class FormMinutaComponent implements OnInit, OnChanges {
   @Input() userData: any;
   @Input() nombreEmpresa: string = '';
   @Input() estadoReserva: string = '';
+  @Input() tipoEmpresa: string = '';
   
   // Eventos para comunicación con el componente padre
   @Output() estadoTramiteChange = new EventEmitter<string>();
@@ -39,29 +40,50 @@ export class FormMinutaComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    console.log('ngOnInit - estadoReserva:', this.estadoReserva);
+    console.log('ngOnInit - nombreEmpresa:', this.nombreEmpresa);
     this.verificarEstadoReserva();
   }
   
-  ngOnChanges(): void {
-    this.verificarEstadoReserva();
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('ngOnChanges ejecutado:', changes);
+    
+    if (changes['estadoReserva'] || changes['nombreEmpresa'] || changes['tipoEmpresa']) {
+      console.log('ngOnChanges - estadoReserva:', this.estadoReserva);
+      console.log('ngOnChanges - nombreEmpresa:', this.nombreEmpresa);
+      console.log('ngOnChanges - tipoEmpresa:', this.tipoEmpresa);
+      this.verificarEstadoReserva();
+    }
   }
   
-  // Método para verificar el estado de la reserva
   private verificarEstadoReserva(): void {
+    console.log('Verificando estado reserva:', this.estadoReserva);
+    console.log('Nombre empresa:', this.nombreEmpresa);
+    console.log('Tipo empresa:', this.tipoEmpresa);
+    
     this.cargandoEstado = true;
     
-    const timeout = setTimeout(() => {
-      if (!this.estadoReserva) {
+    setTimeout(() => {
+      if (this.estadoReserva === 'aprobado' && this.nombreEmpresa && this.nombreEmpresa.trim() !== '') {
         this.mostrarFormulario = true;
-        this.cargandoEstado = false;
+        // Establecer el tipo de empresa automáticamente
+        if (this.tipoEmpresa === 'SAC') {
+          this.tipoEmpresaSeleccionado = TipoEmpresa.SAC;
+        } else if (this.tipoEmpresa === 'EIRL') {
+          this.tipoEmpresaSeleccionado = TipoEmpresa.EIRL;
+        } else {
+          // Valor por defecto si no viene especificado
+          this.tipoEmpresaSeleccionado = TipoEmpresa.EIRL;
+        }
+      } else {
+        this.mostrarFormulario = false;
       }
-    }, 5000);
-    
-    if (this.estadoReserva) {
-      clearTimeout(timeout);
-      this.mostrarFormulario = this.estadoReserva === 'completo';
       this.cargandoEstado = false;
-    }
+      
+      console.log('Mostrar formulario:', this.mostrarFormulario);
+      console.log('Tipo empresa seleccionado:', this.tipoEmpresaSeleccionado);
+      console.log('Cargando estado:', this.cargandoEstado);
+    }, 500);
   }
   
   // Método para cambiar el tipo de empresa

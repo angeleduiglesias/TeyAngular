@@ -11,34 +11,10 @@
     <p>Una vez tengamos el nombre de tu empresa te notificaremos y podrás acceder al formulario.</p>
   </div>
   
-  <!-- Selector de tipo de empresa -->
-  <div *ngIf="mostrarFormulario && nombreEmpresa" class="form-type-selector">
-    <h2>Formulario de Minuta</h2>
-    <h3>Seleccione el tipo de empresa</h3>
-    <div class="form-type-options">
-      <div class="form-type-option" 
-          [ngClass]="{'selected': tipoEmpresaSeleccionado === tiposEmpresa.EIRL}"
-          (click)="cambiarTipoEmpresa(tiposEmpresa.EIRL)">
-        <div class="option-icon">🏭</div>
-        <div class="option-content">
-          <h4>Empresa Individual de Responsabilidad Limitada (EIRL)</h4>
-          <p>Para personas naturales que desean constituir una empresa unipersonal.</p>
-        </div>
-      </div>
-      <div class="form-type-option" 
-          [ngClass]="{'selected': tipoEmpresaSeleccionado === tiposEmpresa.SAC}"
-          (click)="cambiarTipoEmpresa(tiposEmpresa.SAC)">
-        <div class="option-icon">🏢</div>
-        <div class="option-content">
-          <h4>Sociedad Anónima Cerrada (SAC)</h4>
-          <p>Para empresas con múltiples socios y capital dividido en acciones.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Renderizar componente específico según el tipo seleccionado -->
+  <!-- Formulario directo sin selector -->
   <div *ngIf="mostrarFormulario && nombreEmpresa">
+    <h2>Formulario de Minuta - {{tipoEmpresaSeleccionado}}</h2>
+    
     <!-- Componente EIRL -->
     <app-form-eirl 
       *ngIf="tipoEmpresaSeleccionado === tiposEmpresa.EIRL"

@@ -209,7 +209,7 @@ export class FormSacComponent implements OnInit {
     
     if (this.estadoReserva) {
       clearTimeout(timeout);
-      this.mostrarFormulario = this.estadoReserva === 'completo';
+      this.mostrarFormulario = this.estadoReserva === 'aprobado';
       this.cargandoEstado = false;
     }
   }

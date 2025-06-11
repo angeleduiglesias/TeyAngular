@@ -19,7 +19,7 @@ interface MetodoPago {
 export interface EstadoFormActivated{
   estado_reserva: string;
   pago2: boolean;
-  nombre_empresa?: string;
+  nombre_empresa: string;
   tipo_empresa:string;
   tipo_aporte: string;
 }
@@ -189,17 +189,7 @@ export class ClienteDashboardComponent implements OnInit {
     }
   }
   
-  // FUNCIÓN 4: Obtener texto de tipo de sociedad - Implementada
-  getTipoSociedadTexto(tipo: string): string {
-    const tiposSociedad: {[key: string]: string} = {
-      'sas': 'Sociedad por Acciones Simplificada (SAS)',
-      'ltda': 'Sociedad de Responsabilidad Limitada (Ltda)',
-      'sa': 'Sociedad Anónima (SA)'
-    };
-    
-    return tiposSociedad[tipo] || tipo;
-  }
-  
+
   // FUNCIÓN 5: Editar formulario - Implementada
   editarFormulario(): void {
     this.mostrandoResumen = false;
