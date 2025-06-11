@@ -350,7 +350,6 @@ export class FormEirlComponent implements OnInit {
     // Enviar el formulario al backend
     this.clienteMinutaService.enviarFormularioMinuta(
       this.formularioMinuta,
-      this.tipoFormularioSeleccionado,
     ).subscribe({
       next: (response) => {
         console.log('Formulario enviado exitosamente:', response);

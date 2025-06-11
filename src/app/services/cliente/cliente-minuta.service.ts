@@ -8,18 +8,15 @@ import { AuthService } from '../auth-service';
 // Importamos las interfaces desde ambos componentes
 import {
   FormularioMinuta,
-  TipoFormularioEIRL
 } from '../../../pages/cliente/dashboard/formulario_minuta/form-EIRL/form.eirl.component';
 
 import {
   FormularioSAC,
-  TipoFormularioSAC
 } from '../../../pages/cliente/dashboard/formulario_minuta/form-SAC/form.sac.component';
 
 // Interfaz genérica para el envío de datos de la minuta
 export interface MinutaRequest {
   formulario: FormularioMinuta | FormularioSAC;
-  tipo_formulario: TipoFormularioEIRL | TipoFormularioSAC;
 }
 
 @Injectable({
@@ -35,25 +32,22 @@ export class ClienteMinutaService {
   /**
    * Envía los datos del formulario de minuta al backend (EIRL)
    * @param formularioData Datos del formulario de minuta EIRL
-   * @param tipoFormulario Tipo de formulario EIRL seleccionadoNombre de la empresa
    * @returns Observable con la respuesta del servidor
    */
-  enviarFormularioMinuta(formularioData: FormularioMinuta, tipoFormulario: TipoFormularioEIRL): Observable<any>;
+  enviarFormularioMinuta(formularioData: FormularioMinuta,): Observable<any>;
   
   /**
    * Envía los datos del formulario de minuta al backend (SAC)
    * @param formularioData Datos del formulario de minuta SAC
-   * @param tipoFormulario Tipo de formulario SAC seleccionado
    * @returns Observable con la respuesta del servidor
    */
-  enviarFormularioMinuta(formularioData: FormularioSAC, tipoFormulario: TipoFormularioSAC): Observable<any>;
+  enviarFormularioMinuta(formularioData: FormularioSAC,): Observable<any>;
   
   /**
    * Implementación del método que maneja ambos tipos de formularios
    */
   enviarFormularioMinuta(
     formularioData: FormularioMinuta | FormularioSAC, 
-    tipoFormulario: TipoFormularioEIRL | TipoFormularioSAC, 
   ): Observable<any> {
     // Obtener el token de autenticación
     const token = this.authService.getToken();
@@ -67,7 +61,6 @@ export class ClienteMinutaService {
     // Preparar los datos a enviar
     const data: MinutaRequest = {
       formulario: formularioData,
-      tipo_formulario: tipoFormulario,
     };
 
       // Usar un solo endpoint para ambos tipos
@@ -98,10 +91,5 @@ export class ClienteMinutaService {
       );
   }
   
-  /**
-   * Método auxiliar para determinar si es un formulario SAC
-   */
-  private isSACFormulario(tipoFormulario: TipoFormularioEIRL | TipoFormularioSAC): boolean {
-    return Object.values(TipoFormularioSAC).includes(tipoFormulario as TipoFormularioSAC);
-  }
+
 }

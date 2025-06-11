@@ -556,7 +556,6 @@ export class FormSacComponent implements OnInit {
     // Enviar el formulario al backend
     this.clienteMinutaService.enviarFormularioMinuta(
       this.formularioSAC,
-      this.tipoFormularioSeleccionado,
     ).subscribe({
       next: (response) => {
         console.log('Formulario SAC enviado exitosamente:', response);
