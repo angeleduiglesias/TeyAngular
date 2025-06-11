@@ -1,108 +1,141 @@
-<div class="documentos-container">
-  <h1 class="page-title">Documentos</h1>
+<div class="notario-documentos-container">
   
   <div class="filter-section">
     <div class="search-box">
-      <input type="text" placeholder="Buscar documento..." class="search-input">
-      <button class="search-btn">Buscar</button>
+      <input 
+        type="text" 
+        placeholder="Buscar por nombre de documento o cliente..." 
+        class="search-input"
+        [(ngModel)]="terminoBusqueda"
+        (input)="aplicarFiltros()">
+      <button class="search-btn" (click)="buscarDocumentos()">Buscar</button>
     </div>
     <div class="filter-options">
-      <select class="filter-select">
-        <option value="">Todos los tipos</option>
-        <option value="identificacion">Identificación</option>
-        <option value="comprobante">Comprobante de domicilio</option>
-        <option value="escritura">Escritura</option>
-        <option value="poder">Poder notarial</option>
-        <option value="testamento">Testamento</option>
+      <!-- Filtro por tipo de empresa -->
+      <select 
+        class="filter-select" 
+        [(ngModel)]="filtroTipoEmpresa" 
+        (change)="aplicarFiltros()">
+        <option value="">Todos los tipos de empresa</option>
+        <option value="SAC">SAC</option>
+        <option value="EIRL">EIRL</option>
       </select>
-      <select class="filter-select">
+      
+      <!-- Filtro por estado -->
+      <select 
+        class="filter-select" 
+        [(ngModel)]="filtroEstado" 
+        (change)="aplicarFiltros()">
         <option value="">Todos los estados</option>
-        <option value="pendiente">Pendiente de revisión</option>
-        <option value="revisado">Revisado</option>
+        <option value="pendiente">Pendiente</option>
         <option value="aprobado">Aprobado</option>
-        <option value="rechazado">Rechazado</option>
       </select>
+      
+      <!-- Botón para limpiar filtros -->
+      <button class="clear-filters-btn" (click)="limpiarFiltros()">Limpiar filtros</button>
     </div>
+  </div>
+
+  <!-- Información de resultados y paginación -->
+  <div class="results-info">
+    <p>{{ obtenerRangoDocumentos() }}</p>
   </div>
 
   <div class="documentos-list">
-    <!-- Documento 1 -->
-    <div class="documento-card">
+    <!-- Iteración dinámica sobre el array de documentos de la página actual -->
+    <div class="documento-card" *ngFor="let documento of documentos">
       <div class="documento-header">
-        <h3>Identificación oficial</h3>
-        <span class="documento-status pending">Pendiente</span>
+        <h3>{{ documento.nombre_documento }}</h3>
+        <span class="documento-status" 
+              [ngClass]="{
+                'pending': documento.estado === 'pendiente',
+                'approved': documento.estado === 'aprobado'
+              }">
+          {{ documento.estado === 'pendiente' ? 'Pendiente' : 'Aprobado' }}
+        </span>
       </div>
       <div class="documento-info">
-        <p><strong>Cliente:</strong> Juan Pérez</p>
-        <p><strong>Fecha de carga:</strong> 15/05/2023</p>
-        <p><strong>Tipo:</strong> INE</p>
+        <p><strong>Cliente:</strong> {{ documento.nombre_cliente }}</p>
+        <p><strong>Fecha de carga:</strong> {{ documento.fecha_envio }}</p>
+        <p><strong>Tipo de empresa:</strong> {{ documento.tipo_empresa }}</p>
       </div>
       <div class="documento-actions">
-        <button class="action-btn primary">Ver documento</button>
-        <button class="action-btn">Validar</button>
+        <button class="action-btn primary" (click)="verDocumento(documento.documento_id)">
+          Ver documento
+        </button>
+        
+        <!-- Botones para documentos PENDIENTES -->
+        <ng-container *ngIf="documento.estado === 'pendiente'">
+          <button class="action-btn" (click)="validarDocumento(documento.documento_id)">
+            Validar
+          </button>
+          <button class="action-btn secondary" (click)="descargarDocumento(documento.documento_id)">
+            Descargar
+          </button>
+        </ng-container>
+        
+        <!-- Botones para documentos APROBADOS -->
+        <ng-container *ngIf="documento.estado === 'aprobado'">
+          <button class="action-btn secondary" (click)="descargarDocumento(documento.documento_id)">
+            Descargar
+          </button>
+        </ng-container>
       </div>
     </div>
 
-    <!-- Documento 2 -->
-    <div class="documento-card">
-      <div class="documento-header">
-        <h3>Comprobante de domicilio</h3>
-        <span class="documento-status pending">Pendiente</span>
-      </div>
-      <div class="documento-info">
-        <p><strong>Cliente:</strong> María González</p>
-        <p><strong>Fecha de carga:</strong> 18/05/2023</p>
-        <p><strong>Tipo:</strong> Recibo CFE</p>
-      </div>
-      <div class="documento-actions">
-        <button class="action-btn primary">Ver documento</button>
-        <button class="action-btn">Validar</button>
-      </div>
-    </div>
-
-    <!-- Documento 3 -->
-    <div class="documento-card">
-      <div class="documento-header">
-        <h3>Escritura de propiedad</h3>
-        <span class="documento-status approved">Aprobado</span>
-      </div>
-      <div class="documento-info">
-        <p><strong>Cliente:</strong> Carlos Rodríguez</p>
-        <p><strong>Fecha de carga:</strong> 10/05/2023</p>
-        <p><strong>Tipo:</strong> Escritura</p>
-      </div>
-      <div class="documento-actions">
-        <button class="action-btn primary">Ver documento</button>
-        <button class="action-btn secondary">Descargar</button>
-      </div>
-    </div>
-
-    <!-- Documento 4 -->
-    <div class="documento-card">
-      <div class="documento-header">
-        <h3>Poder notarial</h3>
-        <span class="documento-status rejected">Rechazado</span>
-      </div>
-      <div class="documento-info">
-        <p><strong>Cliente:</strong> Ana López</p>
-        <p><strong>Fecha de carga:</strong> 05/05/2023</p>
-        <p><strong>Tipo:</strong> Poder</p>
-        <p><strong>Motivo de rechazo:</strong> Documento ilegible</p>
-      </div>
-      <div class="documento-actions">
-        <button class="action-btn primary">Ver documento</button>
-        <button class="action-btn warning">Solicitar corrección</button>
-      </div>
+    <!-- Mensaje cuando no hay documentos después del filtrado -->
+    <div *ngIf="documentos.length === 0 && documentosFiltrados.length === 0" class="no-documentos">
+      <p>No se encontraron documentos que coincidan con los filtros aplicados.</p>
     </div>
   </div>
 
-  <div class="pagination">
-    <button class="pagination-btn">Anterior</button>
+  <!-- Paginación funcional -->
+  <div class="pagination" *ngIf="totalPaginas > 1">
+    <button 
+      class="pagination-btn" 
+      (click)="paginaAnterior()" 
+      [disabled]="paginaActual === 1">
+      Anterior
+    </button>
+    
     <div class="pagination-numbers">
-      <button class="pagination-number active">1</button>
-      <button class="pagination-number">2</button>
-      <button class="pagination-number">3</button>
+      <!-- Botón para ir a la primera página si no está visible -->
+      <button 
+        *ngIf="paginasVisibles[0] > 1" 
+        class="pagination-number" 
+        (click)="irAPagina(1)">
+        1
+      </button>
+      
+      <!-- Puntos suspensivos si hay páginas ocultas al inicio -->
+      <span *ngIf="paginasVisibles[0] > 2" class="pagination-dots">...</span>
+      
+      <!-- Páginas visibles -->
+      <button 
+        *ngFor="let pagina of paginasVisibles" 
+        class="pagination-number" 
+        [class.active]="pagina === paginaActual"
+        (click)="irAPagina(pagina)">
+        {{ pagina }}
+      </button>
+      
+      <!-- Puntos suspensivos si hay páginas ocultas al final -->
+      <span *ngIf="paginasVisibles[paginasVisibles.length - 1] < totalPaginas - 1" class="pagination-dots">...</span>
+      
+      <!-- Botón para ir a la última página si no está visible -->
+      <button 
+        *ngIf="paginasVisibles[paginasVisibles.length - 1] < totalPaginas" 
+        class="pagination-number" 
+        (click)="irAPagina(totalPaginas)">
+        {{ totalPaginas }}
+      </button>
     </div>
-    <button class="pagination-btn">Siguiente</button>
+    
+    <button 
+      class="pagination-btn" 
+      (click)="paginaSiguiente()" 
+      [disabled]="paginaActual === totalPaginas">
+      Siguiente
+    </button>
   </div>
 </div>

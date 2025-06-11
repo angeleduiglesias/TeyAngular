@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotarioNuevacitaService, NewCita } from '../../../../app/services/notario/notario-nuevacita.service';
 
 @Component({
   selector: 'app-nueva-cita',
@@ -18,13 +19,16 @@ export class NuevaCitaComponent implements OnInit {
     fecha: '',
     hora: '',
     direccion: 'Av. Principal 123, Oficina 405', // Dirección predeterminada
-    notas:'' ,
-    telefono:''
+    notas: '',
+    telefono: ''
   };
+
+  guardando = false; // Para mostrar estado de carga
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private citaService: NotarioNuevacitaService
   ) {}
 
   ngOnInit(): void {
@@ -39,8 +43,8 @@ export class NuevaCitaComponent implements OnInit {
       if (params['tipoDocumento']) {
         this.cita.tipoDocumento = params['tipoDocumento'];
       }
-      if (params['telefono']) {
-        this.cita.telefono = params['telefono'];
+      if (params['Telefono']) {
+        this.cita.telefono = params['Telefono'];
       }
     });
 
@@ -59,10 +63,47 @@ export class NuevaCitaComponent implements OnInit {
 
   guardarCita(): void {
     console.log('Guardando cita:', this.cita);
-    // En un escenario real, aquí se enviaría la información a un servicio
     
-    // Redirigir a la página de citas
-    this.router.navigate(['/notario/citas']);
+    // Validar campos requeridos
+    if (!this.cita.cliente || !this.cita.tipoDocumento || !this.cita.fecha || !this.cita.hora || !this.cita.telefono) {
+      alert('Por favor, complete todos los campos requeridos.');
+      return;
+    }
+
+    this.guardando = true;
+
+    // Preparar datos para el servicio
+    const citaData: NewCita = {
+      documento_id: this.cita.documentoId,
+      cliente: this.cita.cliente,
+      tipo_documento: this.cita.tipoDocumento,
+      fecha: this.cita.fecha,
+      hora: this.cita.hora,
+      direccion: this.cita.direccion,
+      notas: this.cita.notas,
+      telefono: this.cita.telefono
+    };
+
+    // Llamar al servicio para crear la cita
+    this.citaService.crearCita(citaData).subscribe({
+      next: (response) => {
+        console.log('Cita creada exitosamente:', response);
+        this.guardando = false;
+        
+        if (response.success) {
+          alert('Cita creada exitosamente');
+          // Redirigir a la página de citas
+          this.router.navigate(['/notario/citas']);
+        } else {
+          alert('Error al crear la cita: ' + response.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error al crear la cita:', error);
+        this.guardando = false;
+        alert('Error al crear la cita. Por favor, intente nuevamente.');
+      }
+    });
   }
 
   cancelar(): void {

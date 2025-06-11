@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotarioDocumentosService } from '../../../app/services/notario/notario-documentos.service';
 
 interface Documento {
-  id: number;
-  titulo: string;
-  cliente: string;
-  fechaSolicitud: string;
-  tipo: string;
-  estado: string;
+  documento_id: number;
+  enlace_documento: string;
+  nombre_documento: string;
+  nombre_cliente: string;
+  fecha_envio: string;
+  tipo_empresa: string;
+  estado: 'pendiente' | 'aprobado';
 }
 
 @Component({
@@ -21,55 +23,17 @@ interface Documento {
 export class DocumentoRevisionComponent implements OnInit {
   documentoId: number | null = null;
   documento: Documento | null = null;
-  
-  // Datos de ejemplo para simular la carga de un documento
-  documentosEjemplo: Documento[] = [
-    {
-      id: 1,
-      titulo: 'Escritura de Compraventa',
-      cliente: 'Maru00eda Gonzu00e1lez',
-      fechaSolicitud: '15/05/2025',
-      tipo: 'escritura',
-      estado: 'pendiente'
-    },
-    {
-      id: 2,
-      titulo: 'Poder Notarial',
-      cliente: 'Juan Pu00e9rez',
-      fechaSolicitud: '14/05/2025',
-      tipo: 'poder',
-      estado: 'pendiente'
-    },
-    {
-      id: 3,
-      titulo: 'Testamento',
-      cliente: 'Carlos Rodru00edguez',
-      fechaSolicitud: '12/05/2025',
-      tipo: 'testamento',
-      estado: 'pendiente'
-    },
-    {
-      id: 4,
-      titulo: 'Acta Constitutiva',
-      cliente: 'Empresas XYZ',
-      fechaSolicitud: '10/05/2025',
-      tipo: 'acta',
-      estado: 'pendiente'
-    },
-    {
-      id: 5,
-      titulo: 'Contrato de Arrendamiento',
-      cliente: 'Ana Martu00ednez',
-      fechaSolicitud: '08/05/2025',
-      tipo: 'contrato',
-      estado: 'pendiente'
-    }
-  ];
+  cargando: boolean = false;
+  error: string = '';
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router,
+    private notarioDocumentosService: NotarioDocumentosService
+  ) {}
 
   ngOnInit(): void {
-    // Obtener el ID del documento de los paru00e1metros de la ruta
+    // Obtener el ID del documento de los parámetros de la ruta
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -80,16 +44,46 @@ export class DocumentoRevisionComponent implements OnInit {
   }
 
   cargarDocumento(): void {
-    // En un caso real, aquu00ed haru00edamos una llamada a un servicio para obtener los datos del documento
-    if (this.documentoId) {
-      const documentoEncontrado = this.documentosEjemplo.find(doc => doc.id === this.documentoId);
-      if (documentoEncontrado) {
-        this.documento = documentoEncontrado;
-      } else {
-        // Si no se encuentra el documento, redirigir al dashboard
-        this.router.navigate(['/notario/dashboard']);
+    if (!this.documentoId) return;
+    
+    this.cargando = true;
+    this.error = '';
+    
+    // Opción 1: Obtener documento específico (si tienes este endpoint)
+    this.notarioDocumentosService.getDocumentoPorId(this.documentoId).subscribe({
+      next: (documento) => {
+        this.documento = documento;
+        this.cargando = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar documento:', error);
+        this.error = 'Error al cargar el documento';
+        this.cargando = false;
+        
+        // Fallback: buscar en la lista completa
+        this.cargarDocumentoDesdeListaCompleta();
       }
-    }
+    });
+  }
+
+  cargarDocumentoDesdeListaCompleta(): void {
+    // Opción 2: Obtener todos los documentos y filtrar
+    this.notarioDocumentosService.getDocumentos().subscribe({
+      next: (documentos) => {
+        const documentoEncontrado = documentos.find(doc => doc.documento_id === this.documentoId);
+        if (documentoEncontrado) {
+          this.documento = documentoEncontrado;
+        } else {
+          this.router.navigate(['/notario/documentos']);
+        }
+        this.cargando = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar documentos:', error);
+        this.error = 'Error al cargar los datos';
+        this.cargando = false;
+      }
+    });
   }
 
   volverAlPanel(): void {
@@ -97,19 +91,26 @@ export class DocumentoRevisionComponent implements OnInit {
   }
 
   descargarDocumento(): void {
-    console.log(`Descargando documento ${this.documentoId}`);
-    // Implementar lu00f3gica para descargar el documento
+    if (this.documento && this.documento.enlace_documento) {
+      // Crear un enlace temporal para descargar
+      const link = document.createElement('a');
+      link.href = this.documento.enlace_documento;
+      link.download = this.documento.nombre_documento || 'documento.pdf';
+      link.target = '_blank';
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   }
 
   subirDocumento(event: any): void {
-    console.log('Subiendo documento firmado');
-    // Implementar lu00f3gica para subir el documento firmado
+    const file = event.target.files[0];
+    if (file) {
+      console.log('Subiendo documento firmado:', file.name);
+      // Implementar lógica para subir el documento firmado
+      // this.notarioDocumentosService.subirDocumentoFirmado(this.documentoId, file)
+    }
   }
 
-  finalizarProceso(): void {
-    console.log(`Finalizando proceso para documento ${this.documentoId}`);
-    // Implementar lu00f3gica para finalizar el proceso
-    // Luego redirigir al dashboard
-    this.router.navigate(['/notario/dashboard']);
-  }
 }

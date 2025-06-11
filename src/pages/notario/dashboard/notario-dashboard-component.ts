@@ -6,17 +6,16 @@ import { NotarioDashboardService } from '../../../app/services/notario/notario-d
 
 export interface Documento {
   documento_id: number;
-  titulo: string;
+  tipo_documento: string;
   cliente: string;
   fecha_inicio: string;
   telefono?:string;
-  tipo: string;
-  estado: 'pendiente' | 'finalizado';
+  estado: 'pendiente' | 'aprobado';
   cita_programada?: boolean;
 }
 
 export interface Cita {
-  id: number;
+  cita_id: number;
   documento_id: number;
   cliente: string;
   tipo_documento: string;
@@ -41,43 +40,43 @@ export class NotarioDashboardComponent implements OnInit {
   documentosPendientes: Documento[] = [
     {
       documento_id: 1,
-      titulo: 'Minuta EIRL',
+      tipo_documento: 'Minuta EIRL',
       cliente: 'María González',
       fecha_inicio: '15/05/2025',
-      tipo: 'escritura',
+      telefono: '1234567890',
       estado: 'pendiente'
     },
     {
       documento_id: 2,
-      titulo: 'Minuta SAC',
+      tipo_documento: 'Minuta SAC',
       cliente: 'Juan Pérez',
       fecha_inicio: '14/05/2025',
-      tipo: 'poder',
+     telefono: '9876543210',
       estado: 'pendiente'
     },
     {
       documento_id: 3,
-      titulo: 'Minuta EIRL',
+      tipo_documento: 'Minuta EIRL',
       cliente: 'Carlos Rodríguez',
       fecha_inicio: '12/05/2025',
-      tipo: 'testamento',
+      telefono: '5555555555',
       estado: 'pendiente',
       cita_programada: true
     },
     {
       documento_id: 4,
-      titulo: 'Acta Constitutiva',
+      tipo_documento: 'Acta Constitutiva',
       cliente: 'Empresas XYZ',
       fecha_inicio: '10/05/2025',
-      tipo: 'acta',
+      telefono: '9999999999',
       estado: 'pendiente'
     },
     {
       documento_id: 5,
-      titulo: 'Contrato de Arrendamiento',
+      tipo_documento: 'Contrato de Arrendamiento',
       cliente: 'Ana Martínez',
       fecha_inicio: '08/05/2025',
-      tipo: 'contrato',
+      telefono: '7777777777',
       estado: 'pendiente'
     }
   ];
@@ -85,7 +84,7 @@ export class NotarioDashboardComponent implements OnInit {
   // Datos de ejemplo para las citas
   citas: Cita[] = [
     {
-      id: 1,
+      cita_id: 1,
       documento_id: 3,
       cliente: 'Carlos Rodríguez',
       tipo_documento: 'Testamento',
@@ -154,7 +153,8 @@ export class NotarioDashboardComponent implements OnInit {
         queryParams: { 
           documentoId: id,
           cliente: documento.cliente,
-          tipoDocumento: documento.titulo
+          tipoDocumento: documento.tipo_documento,
+          Telefono: documento.telefono
         } 
       });
       
@@ -189,12 +189,6 @@ export class NotarioDashboardComponent implements OnInit {
   descargarDocumento(id: number): void {
     console.log(`Descargando documento ${id}`);
     // Implementar lógica para descargar el documento
-  }
-
-  verDetalles(id: number): void {
-    console.log(`Ver detalles del documento ${id}`);
-    // Podría redirigir a una vista de solo lectura del documento finalizado
-    this.router.navigate(['/notario/documento', id]);
   }
 
   // Método para obtener el número de documentos con cita programada

@@ -21,19 +21,19 @@
   <div class="citas-grid">
     <div class="cita-card-square" *ngFor="let cita of citas">
       <div class="cita-header">
-        <i class="fas fa-calendar-alt"></i> Cita: {{ cita.fecha }}
+        <i class="fas fa-calendar-alt"></i> Cita: {{ cita.fecha_cita }}
       </div>
 
       <div class="cita-body">
         <div class="cita-type">
-          {{ cita.tipoDocumento }}
+          Minuta {{ cita.tipo_empresa }}
         </div>
         
         <div class="cita-detail-item">
           <i class="fas fa-user"></i>
           <div class="detail-content">
             <div class="detail-label">Cliente</div>
-            <div class="detail-value">{{ cita.cliente }}</div>
+            <div class="detail-value">{{ cita.nombre_cliente }}</div>
           </div>
         </div>
         
@@ -41,7 +41,7 @@
           <i class="fas fa-clock"></i>
           <div class="detail-content">
             <div class="detail-label">Hora</div>
-            <div class="detail-value">{{ cita.hora }}</div>
+            <div class="detail-value">{{ cita.hora_cita }}</div>
           </div>
         </div>
         
@@ -57,16 +57,13 @@
           <i class="fas fa-file-alt"></i>
           <div class="detail-content">
             <div class="detail-label">Documento</div>
-            <div class="detail-value">{{ cita.tipoDocumento }}</div>
+            <div class="detail-value">Minuta {{ cita.tipo_empresa }}</div>
           </div>
         </div>
       </div>
 
       <div class="cita-actions">
-        <button class="btn-action btn-edit" title="Editar cita">
-          <i class="fas fa-edit"></i> Editar
-        </button>
-        <button class="btn-action btn-cancel" (click)="cancelarCita(cita.id)" title="Cancelar cita">
+        <button class="btn-action btn-cancel" (click)="cancelarCita(cita.cita_id)" title="Cancelar cita">
           <i class="fas fa-trash"></i> Cancelar Cita
         </button>
       </div>

@@ -14,6 +14,9 @@
       <li [class.active]="activeTab === 'citas'">
         <a (click)="changeTab('citas')">Citas</a>
       </li>
+      <li [class.active]="activeTab === 'configuracion'">
+        <a (click)="changeTab('configuracion')">Configuración</a>
+      </li>
     </ul>
   </div>
   <button class="logout-btn" (click)="logout()">Cerrar sesión</button>

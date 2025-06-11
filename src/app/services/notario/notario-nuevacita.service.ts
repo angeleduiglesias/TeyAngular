@@ -6,16 +6,25 @@ import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth-service';
 
 // Interfaz para los datos de la cita
-export interface CitaData {
+export interface NewCita {
   documento_id: number;
   cliente: string;
   tipo_documento: string;
   fecha: string;
   hora: string;
   direccion: string;
-  notas: string;
+  notas?: string;
   telefono: string;
 }
+
+export interface Citas {
+    cita_id: number;
+    fecha_cita: string;
+    hora_cita: string;
+    nombre_cliente: string;
+    direccion: string;
+    tipo_empresa: string;
+  }
 
 // Interfaz para la respuesta del servidor
 export interface CitaResponse {
@@ -39,7 +48,7 @@ export class NotarioNuevacitaService {
    * @param citaData Datos de la cita a crear
    * @returns Observable con la respuesta del servidor
    */
-  crearCita(citaData: CitaData): Observable<CitaResponse> {
+  crearCita(citaData: NewCita): Observable<CitaResponse> {
     // Obtener el token de autenticación
     const token = this.authService.getToken();
     
@@ -69,7 +78,7 @@ export class NotarioNuevacitaService {
    * Obtiene todas las citas del notario
    * @returns Observable con la lista de citas
    */
-  obtenerCitas(): Observable<CitaData[]> {
+  obtenerCitas(): Observable<Citas[]> {
     const token = this.authService.getToken();
     
     const headers = new HttpHeaders({
@@ -79,35 +88,10 @@ export class NotarioNuevacitaService {
     
     const endpoint = `${environment.apiUrl}/api/notario/citas`;
     
-    return this.http.get<CitaData[]>(endpoint, { headers })
+    return this.http.get<Citas[]>(endpoint, { headers })
       .pipe(
         catchError(error => {
           console.log('Error al obtener las citas:', error);
-          return throwError(() => error);
-        })
-      );
-  }
-
-  /**
-   * Actualiza una cita existente
-   * @param citaId ID de la cita a actualizar
-   * @param citaData Datos actualizados de la cita
-   * @returns Observable con la respuesta del servidor
-   */
-  actualizarCita(citaId: number, citaData: CitaData): Observable<CitaResponse> {
-    const token = this.authService.getToken();
-    
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
-    
-    const endpoint = `${environment.apiUrl}/api/notario/citas/${citaId}`;
-    
-    return this.http.put<CitaResponse>(endpoint, citaData, { headers })
-      .pipe(
-        catchError(error => {
-          console.log('Error al actualizar la cita:', error);
           return throwError(() => error);
         })
       );
@@ -128,6 +112,8 @@ export class NotarioNuevacitaService {
     
     const endpoint = `${environment.apiUrl}/api/notario/citas/${citaId}`;
     
+    console.log('Eliminando cita en endpoint:', endpoint);
+    
     return this.http.delete<CitaResponse>(endpoint, { headers })
       .pipe(
         catchError(error => {
@@ -136,4 +122,5 @@ export class NotarioNuevacitaService {
         })
       );
   }
+
 }

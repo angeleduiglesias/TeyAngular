@@ -65,6 +65,8 @@ export class NotarioComponent implements OnInit, OnDestroy {
       this.activeTab = 'documentos';
     } else if (url.includes('/notario/citas')) {
       this.activeTab = 'citas';
+    } else if (url.includes('/notario/configuracion')) {
+      this.activeTab = 'configuracion';
     }
     // Nota: No actualizamos para rutas como /notario/documento/:id o /notario/citas/nueva
     // ya que queremos mantener la pestaña padre activa
@@ -82,6 +84,9 @@ export class NotarioComponent implements OnInit, OnDestroy {
         break;
       case 'citas':
         this.router.navigate(['/notario/citas']);
+        break;
+      case 'configuracion':
+        this.router.navigate(['/notario/configuracion']);
         break;
     }
   }

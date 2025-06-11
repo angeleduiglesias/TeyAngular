@@ -23,6 +23,7 @@ import { NotarioDocumentosComponent } from '../pages/notario/documentos/notario-
 import { NotarioCitasComponent } from '../pages/notario/citas/notario-citas-component';
 import { TermsConditionsComponent } from '../pages/terms-conditions/terms-conditions.component';
 import { NotarioDashboardComponent } from '../pages/notario/dashboard/notario-dashboard-component';
+import { NotarioConfigurationComponent } from '../pages/notario/configuration/notario-configuration.component';
 import { DocumentoRevisionComponent } from '../pages/notario/documento-revision/documento-revision.component';
 import { NuevaCitaComponent } from '../pages/notario/citas/nueva-cita/nueva-cita.component';
 // Remove unused import since AuthGuard is not used in routes
@@ -83,6 +84,7 @@ export const routes: Routes = [
       {path:'citas',component: NotarioCitasComponent},
       {path:'citas/nueva',component: NuevaCitaComponent},
       {path:'documento/:id',component: DocumentoRevisionComponent},
+      {path:'configuracion',component: NotarioConfigurationComponent},
       // Rutas adicionales para documentos y citas se pueden agregar aquí
     ]
   },
@@ -90,7 +92,7 @@ export const routes: Routes = [
   { 
     path: 'cliente', 
     loadComponent: () => import('../pages/cliente/cliente.component').then(c => c.ClienteComponent),
-    //canActivate: [MaintenanceGuard, RoleGuard],
+    canActivate: [MaintenanceGuard, RoleGuard],
     data: { expectedRole: 'cliente' },
     children:[
       {path: '', redirectTo: 'dashboard', pathMatch: 'full'},

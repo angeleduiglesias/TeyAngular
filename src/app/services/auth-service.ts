@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap, catchError, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-
 // Interfaces para seguridad de tipos
 export interface User {
   id: string;
@@ -18,6 +17,13 @@ export interface User {
 export interface AuthResponse {
   token: string;  // Token Sanctum para autenticación
   user: User;     // Información del usuario autenticado
+}
+
+// Interfaz para la respuesta de actualización
+export interface UpdateResponse {
+  success: boolean;
+  message: string;
+  data?: any;
 }
 
 @Injectable({
@@ -99,5 +105,44 @@ export class AuthService {
   getCurrentUserRole(): string | null {
     const user = this.currentUserSubject.value;
     return user ? user.rol : null;
+  }
+
+  /**
+   * Actualiza el email del usuario en el backend y en el estado local
+   * @param nuevoEmail Nuevo email del usuario
+   * @returns Observable con la respuesta del servidor
+   */
+  updateUserEmail(nuevoEmail: string): Observable<UpdateResponse> {
+    const token = this.getToken();
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    };
+    
+    const endpoint = `${this.apiUrl}/api/actualizar-email`;
+    const body = { email: nuevoEmail };
+    
+    console.log('Actualizando email del usuario:', nuevoEmail);
+    
+    return this.http.put<UpdateResponse>(endpoint, body, { headers })
+      .pipe(
+        tap(response => {
+          // Si la actualización fue exitosa, actualizar el estado local
+          if (response.success) {
+            const currentUser = this.currentUserSubject.value;
+            if (currentUser) {
+              const updatedUser = { ...currentUser, email: nuevoEmail };
+              // Actualizar localStorage
+              localStorage.setItem('user', JSON.stringify(updatedUser));
+              // Actualizar el observable
+              this.currentUserSubject.next(updatedUser);
+            }
+          }
+        }),
+        catchError(error => {
+          console.log('Error al actualizar email:', error);
+          return throwError(() => error);
+        })
+      );
   }
 }

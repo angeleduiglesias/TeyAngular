@@ -6,13 +6,13 @@ import { Router } from '@angular/router';
 import { ClienteConfigurationService } from '../../../app/services/cliente/cliente-configuration.service';
 
 @Component({
-  selector: 'app-cliente-configuration',
+  selector: 'app-notario-configuration',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './cliente-configuration.component.html',
-  styleUrls: ['./cliente-configuration.component.css']
+  templateUrl: './notario-configuration.component.html',
+  styleUrls: ['./notario-configuration.component.css']
 })
-export class ClienteConfigurationComponent implements OnInit {
+export class NotarioConfigurationComponent implements OnInit {
   // Datos del usuario
   userData: any = {
     id: '',
