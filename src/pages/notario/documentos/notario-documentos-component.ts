@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface Documento {
-  id: number;
-  titulo: string;
-  cliente: string;
-  fechaCarga: string;
-  tipo: string;
-  estado: 'pendiente' | 'aprobado' | 'rechazado';
-  motivoRechazo?: string;
+  documento_id: number;
+  nombre_documento: string;
+  nombre_cliente: string;
+  fecha_envio: string;
+  tipo_empresa: string;
+  estado: 'pendiente' | 'aprobado' ;
 }
 
 @Component({
@@ -21,37 +20,36 @@ interface Documento {
 export class NotarioDocumentosComponent implements OnInit {
   documentos: Documento[] = [
     {
-      id: 1,
-      titulo: 'Identificaciu00f3n oficial',
-      cliente: 'Juan Pu00e9rez',
-      fechaCarga: '15/05/2023',
-      tipo: 'INE',
+      documento_id: 1,
+      nombre_documento: 'Identificaciu00f3n oficial',
+      nombre_cliente: 'Juan Pu00e9rez',
+      fecha_envio: '15/05/2023',
+      tipo_empresa: 'INE',
       estado: 'pendiente'
     },
     {
-      id: 2,
-      titulo: 'Comprobante de domicilio',
-      cliente: 'Maru00eda Gonzu00e1lez',
-      fechaCarga: '18/05/2023',
-      tipo: 'Recibo CFE',
+      documento_id: 2,
+      nombre_documento: 'Comprobante de domicilio',
+      nombre_cliente: 'Maru00eda Gonzu00e1lez',
+      fecha_envio: '18/05/2023',
+      tipo_empresa: 'Recibo CFE',
       estado: 'pendiente'
     },
     {
-      id: 3,
-      titulo: 'Escritura de propiedad',
-      cliente: 'Carlos Rodru00edguez',
-      fechaCarga: '10/05/2023',
-      tipo: 'Escritura',
+      documento_id: 3,
+      nombre_documento: 'Escritura de propiedad',
+      nombre_cliente: 'Carlos Rodru00edguez',
+      fecha_envio: '10/05/2023',
+      tipo_empresa: 'Escritura',
       estado: 'aprobado'
     },
     {
-      id: 4,
-      titulo: 'Poder notarial',
-      cliente: 'Ana Lu00f3pez',
-      fechaCarga: '05/05/2023',
-      tipo: 'Poder',
-      estado: 'rechazado',
-      motivoRechazo: 'Documento ilegible'
+      documento_id: 4,
+      nombre_documento: 'Poder notarial',
+      nombre_cliente: 'Ana Lu00f3pez',
+      fecha_envio: '05/05/2023',
+      tipo_empresa: 'Poder',
+      estado: 'pendiente',
     }
   ];
 
@@ -77,7 +75,7 @@ export class NotarioDocumentosComponent implements OnInit {
   }
 
   solicitarCorreccion(id: number): void {
-    console.log(`Solicitar correcciu00f3n para documento ${id}`);
+    console.log(`Solicitar correccion para documento ${id}`);
     // Implementar lu00f3gica para solicitar correcciu00f3n
   }
 }

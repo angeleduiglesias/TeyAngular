@@ -5,21 +5,21 @@ import { AuthService } from '../../../app/services/auth-service';
 import { NotarioDashboardService } from '../../../app/services/notario/notario-dashboard.service';
 
 export interface Documento {
-  id: number;
+  documento_id: number;
   titulo: string;
   cliente: string;
-  fechaSolicitud: string;
-  fechaFinalizacion?: string;
+  fecha_inicio: string;
+  telefono?:string;
   tipo: string;
   estado: 'pendiente' | 'finalizado';
-  citaProgramada?: boolean;
+  cita_programada?: boolean;
 }
 
 export interface Cita {
   id: number;
-  documentoId: number;
+  documento_id: number;
   cliente: string;
-  tipoDocumento: string;
+  tipo_documento: string;
   fecha: string;
   hora: string;
   direccion: string;
@@ -40,75 +40,45 @@ export class NotarioDashboardComponent implements OnInit {
 
   documentosPendientes: Documento[] = [
     {
-      id: 1,
+      documento_id: 1,
       titulo: 'Minuta EIRL',
       cliente: 'María González',
-      fechaSolicitud: '15/05/2025',
+      fecha_inicio: '15/05/2025',
       tipo: 'escritura',
       estado: 'pendiente'
     },
     {
-      id: 2,
+      documento_id: 2,
       titulo: 'Minuta SAC',
       cliente: 'Juan Pérez',
-      fechaSolicitud: '14/05/2025',
+      fecha_inicio: '14/05/2025',
       tipo: 'poder',
       estado: 'pendiente'
     },
     {
-      id: 3,
+      documento_id: 3,
       titulo: 'Minuta EIRL',
       cliente: 'Carlos Rodríguez',
-      fechaSolicitud: '12/05/2025',
+      fecha_inicio: '12/05/2025',
       tipo: 'testamento',
       estado: 'pendiente',
-      citaProgramada: true
+      cita_programada: true
     },
     {
-      id: 4,
+      documento_id: 4,
       titulo: 'Acta Constitutiva',
       cliente: 'Empresas XYZ',
-      fechaSolicitud: '10/05/2025',
+      fecha_inicio: '10/05/2025',
       tipo: 'acta',
       estado: 'pendiente'
     },
     {
-      id: 5,
+      documento_id: 5,
       titulo: 'Contrato de Arrendamiento',
       cliente: 'Ana Martínez',
-      fechaSolicitud: '08/05/2025',
+      fecha_inicio: '08/05/2025',
       tipo: 'contrato',
       estado: 'pendiente'
-    }
-  ];
-
-  documentosFinalizados: Documento[] = [
-    {
-      id: 6,
-      titulo: 'Escritura de Propiedad',
-      cliente: 'Roberto Sánchez',
-      fechaSolicitud: '01/05/2025',
-      fechaFinalizacion: '20/05/2025',
-      tipo: 'escritura',
-      estado: 'finalizado'
-    },
-    {
-      id: 7,
-      titulo: 'Testamento Vital',
-      cliente: 'Laura Martínez',
-      fechaSolicitud: '28/04/2025',
-      fechaFinalizacion: '18/05/2025',
-      tipo: 'testamento',
-      estado: 'finalizado'
-    },
-    {
-      id: 8,
-      titulo: 'Poder General',
-      cliente: 'Fernando Ríos',
-      fechaSolicitud: '25/04/2025',
-      fechaFinalizacion: '15/05/2025',
-      tipo: 'poder',
-      estado: 'finalizado'
     }
   ];
 
@@ -116,9 +86,9 @@ export class NotarioDashboardComponent implements OnInit {
   citas: Cita[] = [
     {
       id: 1,
-      documentoId: 3,
+      documento_id: 3,
       cliente: 'Carlos Rodríguez',
-      tipoDocumento: 'Testamento',
+      tipo_documento: 'Testamento',
       fecha: '19 de mayo de 2025',
       hora: '10:30',
       direccion: 'Av. Principal 123, Oficina 405'
@@ -158,7 +128,6 @@ export class NotarioDashboardComponent implements OnInit {
           console.log('Datos recibidos del dashboard:', response);
           // Actualizar datos del trámite
           this.citas = response.citas;
-          this.documentosFinalizados = response.documentos;
           this.documentosPendientes = response.documentos;
 
           this.cargando = false;
@@ -177,7 +146,7 @@ export class NotarioDashboardComponent implements OnInit {
 
   registrarCita(id: number): void {
     // Buscar el documento por id
-    const documento = this.documentosPendientes.find(doc => doc.id === id);
+    const documento = this.documentosPendientes.find(doc => doc.documento_id === id);
     
     if (documento) {
       // Navegar a la página de citas con los parámetros necesarios
@@ -190,20 +159,20 @@ export class NotarioDashboardComponent implements OnInit {
       });
       
       // Marcar el documento como con cita programada (en un escenario real, esto se haría después de confirmar la creación)
-      documento.citaProgramada = true;
+      documento.cita_programada = true;
     }
   }
 
-  verDetalleCita(documentoId: number): void {
+  verDetalleCita(id: number): void {
     // Buscar la cita asociada al documento
-    const cita = this.citas.find(c => c.documentoId === documentoId);
+    const cita = this.citas.find(c => c.documento_id === id);
     
     if (cita) {
       this.citaSeleccionada = cita;
       this.mostrarModalCita = true;
     } else {
       // En caso de que no se encuentre la cita (esto no debería ocurrir en un escenario real)
-      console.error(`No se encontró cita para el documento ${documentoId}`);
+      console.error(`No se encontró cita para el documento ${id}`);
     }
   }
 
@@ -230,6 +199,6 @@ export class NotarioDashboardComponent implements OnInit {
 
   // Método para obtener el número de documentos con cita programada
   getDocumentosProgramados(): number {
-    return this.documentosPendientes.filter(d => d.citaProgramada).length;
+    return this.documentosPendientes.filter(d => d.cita_programada).length;
   }
 }

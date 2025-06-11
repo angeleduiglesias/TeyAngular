@@ -18,8 +18,9 @@ interface MetodoPago {
 
 export interface EstadoFormActivated{
   estado_reserva: string;
-  estado_minuta:string;
+  pago2: boolean;
   nombre_empresa?: string;
+  tipo_empresa:string;
 }
 
 export interface TramiteData {
@@ -62,8 +63,9 @@ export class ClienteDashboardComponent implements OnInit {
 
   estado_documento: EstadoFormActivated = {
     estado_reserva: '',
-    estado_minuta: '',
+    pago2: false,
     nombre_empresa: '',
+    tipo_empresa: ''
   }
   // Datos del formulario de minuta
   nombreEmpresa: string = ''; // Inicialmente vacío, se llenará cuando se reciba

@@ -57,7 +57,7 @@ interface MetodoPago {
 }
 
 // Tipos de formulario de minuta
- export enum TipoFormularioMinuta {
+ export enum TipoFormularioEIRL {
   EIRLBND = 'eirl_bienes_no_dinerarios',
   EIRLBD = 'eirl_bienes_dinerarios'
 }
@@ -86,8 +86,8 @@ export class FormEirlComponent implements OnInit {
   @Output() pagoActualChange = new EventEmitter<number>();
   
   // Tipos de formulario disponibles
-  tiposFormulario = TipoFormularioMinuta;
-  tipoFormularioSeleccionado: TipoFormularioMinuta = TipoFormularioMinuta.EIRLBND;
+  tiposFormulario = TipoFormularioEIRL;
+  tipoFormularioSeleccionado: TipoFormularioEIRL = TipoFormularioEIRL.EIRLBND;
   
   // Datos del formulario de minuta
   pasos: string[] = [
@@ -190,7 +190,7 @@ export class FormEirlComponent implements OnInit {
   }
   
   // Método para cambiar el tipo de formulario
-  cambiarTipoFormulario(tipo: TipoFormularioMinuta): void {
+  cambiarTipoFormulario(tipo: TipoFormularioEIRL): void {
     this.tipoFormularioSeleccionado = tipo;
     
     // Reiniciar el formulario si se cambia el tipo
@@ -198,7 +198,7 @@ export class FormEirlComponent implements OnInit {
     this.mostrandoResumen = false;
     
     // Reiniciar los aportes según el tipo de formulario
-    if (tipo === TipoFormularioMinuta.EIRLBD) {
+    if (tipo === TipoFormularioEIRL.EIRLBD) {
       // Para bienes dinerarios, inicializar con un aporte de dinero
       this.formularioMinuta.paso_3.aportes = [
         {
@@ -258,7 +258,7 @@ export class FormEirlComponent implements OnInit {
         }
         
         // Validación específica según el tipo de formulario
-        if (this.tipoFormularioSeleccionado === TipoFormularioMinuta.EIRLBD) {
+        if (this.tipoFormularioSeleccionado === TipoFormularioEIRL.EIRLBD) {
           // Para bienes dinerarios, validar que el monto del aporte coincida con el capital
           const totalAportes = capitalAportes.aportes.reduce((sum, aporte) => sum + aporte.monto, 0);
           if (totalAportes !== capitalAportes.monto_capital) {
@@ -304,21 +304,21 @@ export class FormEirlComponent implements OnInit {
   
   agregarAporte(): void {
     // Si es tipo dinerario, no permitir agregar más aportes
-    if (this.tipoFormularioSeleccionado === TipoFormularioMinuta.EIRLBD && 
+    if (this.tipoFormularioSeleccionado === TipoFormularioEIRL.EIRLBD && 
         this.formularioMinuta.paso_3.aportes.length >= 1) {
       alert('Para bienes dinerarios solo se permite un aporte en efectivo');
       return;
     }
     
     this.formularioMinuta.paso_3.aportes.push({
-      descripcion: this.tipoFormularioSeleccionado === TipoFormularioMinuta.EIRLBD ? 'Aporte en efectivo' : '',
+      descripcion: this.tipoFormularioSeleccionado === TipoFormularioEIRL.EIRLBD ? 'Aporte en efectivo' : '',
       monto: 0
     });
   }
   
   eliminarAporte(index: number): void {
     // Si es tipo dinerario, no permitir eliminar el único aporte
-    if (this.tipoFormularioSeleccionado === TipoFormularioMinuta.EIRLBD && 
+    if (this.tipoFormularioSeleccionado === TipoFormularioEIRL.EIRLBD && 
         this.formularioMinuta.paso_3.aportes.length <= 1) {
       alert('Para bienes dinerarios se requiere al menos un aporte en efectivo');
       return;
@@ -351,7 +351,6 @@ export class FormEirlComponent implements OnInit {
     this.clienteMinutaService.enviarFormularioMinuta(
       this.formularioMinuta,
       this.tipoFormularioSeleccionado,
-      this.nombreEmpresa
     ).subscribe({
       next: (response) => {
         console.log('Formulario enviado exitosamente:', response);

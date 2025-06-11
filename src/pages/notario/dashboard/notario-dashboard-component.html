@@ -48,7 +48,7 @@
               </span>
               <span class="request-date">
                 <i class="fas fa-calendar"></i>
-                {{ documento.fechaSolicitud }}
+                {{ documento.fecha_inicio }}
               </span>
             </div>
           </div>
@@ -57,22 +57,22 @@
         <div class="card-content">
           <div class="status-section">
             <span class="status-label">Estado</span>
-            <div class="status-indicator" [ngClass]="documento.citaProgramada ? 'programada' : 'pendiente'">
-              {{ documento.citaProgramada ? 'Cita Programada' : 'Pendiente' }}
+            <div class="status-indicator" [ngClass]="documento.cita_programada ? 'programada' : 'pendiente'">
+              {{ documento.cita_programada ? 'Cita Programada' : 'Pendiente' }}
             </div>
           </div>
         </div>
         
         <div class="card-actions">
-          <button class="action-btn secondary" *ngIf="documento.citaProgramada" (click)="verDetalleCita(documento.id)">
+          <button class="action-btn secondary" *ngIf="documento.cita_programada" (click)="verDetalleCita(documento.documento_id)">
             <i class="fas fa-calendar"></i>
             Ver Cita
           </button>
-          <button class="action-btn primary" *ngIf="!documento.citaProgramada" (click)="registrarCita(documento.id)">
+          <button class="action-btn primary" *ngIf="!documento.cita_programada" (click)="registrarCita(documento.documento_id)">
             <i class="fas fa-calendar"></i>
             Registrar Cita
           </button>
-          <button class="action-btn review" (click)="revisarDocumento(documento.id)">
+          <button class="action-btn review" (click)="revisarDocumento(documento.documento_id)">
             <i class="fas fa-eye"></i>
             Revisar
           </button>
@@ -92,7 +92,7 @@
     <div class="modal-body" *ngIf="citaSeleccionada">
       <div class="cita-info-item">
         <span class="info-label"><i class="fas fa-file-alt"></i> Documento:</span>
-        <span class="info-value">{{ citaSeleccionada.tipoDocumento }}</span>
+        <span class="info-value">{{ citaSeleccionada.tipo_documento }}</span>
       </div>
       <div class="cita-info-item">
         <span class="info-label"><i class="fas fa-user"></i> Cliente:</span>

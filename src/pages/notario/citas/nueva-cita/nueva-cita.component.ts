@@ -17,9 +17,9 @@ export class NuevaCitaComponent implements OnInit {
     tipoDocumento: '',
     fecha: '',
     hora: '',
-    direccion: 'Av. Principal 123, Oficina 405',
+    direccion: 'Av. Principal 123, Oficina 405', // Dirección predeterminada
     notas:'' ,
-    telefono:''// Dirección predeterminada
+    telefono:''
   };
 
   constructor(
@@ -38,6 +38,9 @@ export class NuevaCitaComponent implements OnInit {
       }
       if (params['tipoDocumento']) {
         this.cita.tipoDocumento = params['tipoDocumento'];
+      }
+      if (params['telefono']) {
+        this.cita.telefono = params['telefono'];
       }
     });
 
