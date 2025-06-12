@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ClienteDocumentosService } from '../../../app/services/cliente/cliente-documentos.service';
 
-interface Documento {
-  id: number;
-  nombre: string;
+export interface Documento {
+  documento_id: number;
+  enlace_documento: string;
+  nombre_documento: string;
   tipo: string;
-  fecha: Date;
-  estado: string;
+  fecha_carga: Date;
 }
 
 @Component({
@@ -17,56 +18,126 @@ interface Documento {
   styleUrl: './cliente-documentos.component.css'
 })
 export class ClienteDocumentosComponent implements OnInit {
-  documentos: Documento[] = [
-    {
-      id: 1,
-      nombre: 'Constitución de empresa',
-      tipo: 'PDF',
-      fecha: new Date(),
-      estado: 'Pendiente'
-    },
-    {
-      id: 2,
-      nombre: 'Contrato de arrendamiento',
-      tipo: 'DOCX',
-      fecha: new Date(new Date().setDate(new Date().getDate() - 5)),
-      estado: 'Aprobado'
-    },
-    {
-      id: 3,
-      nombre: 'Declaración jurada',
-      tipo: 'PDF',
-      fecha: new Date(new Date().setDate(new Date().getDate() - 10)),
-      estado: 'Rechazado'
-    }
-  ];
+  documentos: Documento[] = [];
+  loading: boolean = false;
+  error: string = '';
 
-  constructor() {}
+  constructor(private clienteDocumentosService: ClienteDocumentosService) {}
 
   ngOnInit(): void {
-    // Inicialización del componente
+    this.cargarDocumentos();
   }
 
-  getStatusClass(estado: string): string {
-    switch(estado.toLowerCase()) {
-      case 'aprobado':
-        return 'status-approved';
-      case 'pendiente':
-        return 'status-pending';
-      case 'rechazado':
-        return 'status-rejected';
-      default:
-        return '';
-    }
+  /**
+   * Carga la lista de documentos desde el servicio
+   */
+  cargarDocumentos(): void {
+    this.loading = true;
+    this.error = '';
+    
+    this.clienteDocumentosService.obtenerDocumentos().subscribe({
+      next: (documentos) => {
+        this.documentos = documentos;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar documentos:', error);
+        this.error = 'Error al cargar los documentos. Por favor, intente nuevamente.';
+        this.loading = false;
+        
+        // Mantener datos de ejemplo en caso de error para demostración
+        this.documentos = [
+          {
+            documento_id: 1,
+            nombre_documento: 'Constitución de empresa',
+            tipo: 'PDF',
+            fecha_carga: new Date(),
+            enlace_documento: 'URL_ADDRESS.example.com/constitucion.pdf'
+          },
+          {
+            documento_id: 2,
+            nombre_documento: 'Contrato de arrendamiento',
+            tipo: 'PDF',
+            fecha_carga: new Date(),
+            enlace_documento: 'URL_ADDRESS.example.com/contrato.pdf'
+          },
+          {
+            documento_id: 3,
+            nombre_documento: 'Declaración jurada',
+            tipo: 'PDF',
+            fecha_carga: new Date(new Date().setDate(new Date().getDate() - 10)),
+            enlace_documento: 'URL_ADDRESS.example.com/declaracion.pdf'
+          }
+        ];
+      }
+    });
   }
 
+  /**
+   * Descarga un documento específico
+   * @param id ID del documento a descargar
+   */
   downloadDocument(id: number): void {
     console.log(`Descargando documento con ID: ${id}`);
-    // Aquí iría la lógica para descargar el documento
+    
+    this.clienteDocumentosService.descargarDocumento(id).subscribe({
+      next: (blob) => {
+        // Crear URL temporal para el blob
+        const url = window.URL.createObjectURL(blob);
+        
+        // Crear elemento de enlace temporal para descargar
+        const link = document.createElement('a');
+        link.href = url;
+        
+        // Buscar el nombre del documento
+        const documento = this.documentos.find(doc => doc.documento_id === id);
+        const nombreArchivo = documento ? documento.nombre_documento + '.pdf' : `documento_${id}.pdf`;
+        
+        link.download = nombreArchivo;
+        document.body.appendChild(link);
+        link.click();
+        
+        // Limpiar
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.error('Error al descargar documento:', error);
+        alert('Error al descargar el documento. Por favor, intente nuevamente.');
+      }
+    });
   }
 
+  /**
+   * Visualiza un documento en una nueva ventana
+   * @param id ID del documento a visualizar
+   */
   viewDocument(id: number): void {
     console.log(`Visualizando documento con ID: ${id}`);
-    // Aquí iría la lógica para visualizar el documento
+    
+    this.clienteDocumentosService.obtenerUrlVisualizacion(id).subscribe({
+      next: (response) => {
+        // Abrir el documento en una nueva ventana
+        window.open(response.url, '_blank');
+      },
+      error: (error) => {
+        console.error('Error al visualizar documento:', error);
+        
+        // Fallback: usar el enlace directo si está disponible
+        const documento = this.documentos.find(doc => doc.documento_id === id);
+        if (documento && documento.enlace_documento) {
+          window.open(documento.enlace_documento, '_blank');
+        } else {
+          alert('Error al visualizar el documento. Por favor, intente nuevamente.');
+        }
+      }
+    });
+  }
+
+  /**
+   * Reintenta cargar los documentos
+   */
+  reintentarCarga(): void {
+    this.cargarDocumentos();
   }
 }

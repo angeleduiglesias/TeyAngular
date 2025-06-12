@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../app/services/auth-service';
 import { Router } from '@angular/router';
 import { ClienteConfigurationService } from '../../../app/services/cliente/cliente-configuration.service';
+import { NotarioNombreService } from '../../../app/services/notario/notario-nombre.service';
 
 @Component({
   selector: 'app-notario-configuration',
@@ -16,11 +17,13 @@ export class NotarioConfigurationComponent implements OnInit {
   // Datos del usuario
   userData: any = {
     id: '',
-    nombre: '',
     email: '',
-    telefono: ''
   };
   
+  // Datos adicionales del usuario
+  nombre_notario: string = '';
+  telefono_notario: string = '';
+
   // Variables para controlar el modo de edición
   editandoEmail: boolean = false;
   editandoTelefono: boolean = false;
@@ -32,12 +35,14 @@ export class NotarioConfigurationComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private configService: ClienteConfigurationService
+    private configService: ClienteConfigurationService,
+    private NotarioNombreService: NotarioNombreService
   ) {}
   
   ngOnInit(): void {
     // Primero obtener datos del authService (email e id)
     this.authService.currentUser$.subscribe(user => {
+      this.nombre_notario = this.NotarioNombreService.getNombre();
       if (user) {
         // Asignar email e id del authService
         this.userData.email = user.email;
@@ -57,7 +62,6 @@ export class NotarioConfigurationComponent implements OnInit {
     this.configService.obtenerDatosAdicionales().subscribe({
       next: (datosAdicionales) => {
         // Asignar nombre y teléfono del backend
-        this.userData.nombre = datosAdicionales.nombre;
         this.userData.telefono = datosAdicionales.telefono;
         this.telefonoOriginal = datosAdicionales.telefono;
       },

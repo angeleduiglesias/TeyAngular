@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ClienteCitasService } from '../../../app/services/cliente/cliente-citas.service';
 
-interface Cita {
-  id: number;
-  fecha: Date;
-  hora: string;
-  notario: string;
+export interface Cita {
+  cita_id: number;
+  fecha_cita: Date;
+  hora_cita: string;
+  nombre_notario: string;
   asunto: string;
   estado: string;
 }
@@ -18,40 +19,69 @@ interface Cita {
   styleUrl: './cliente-citas.component.css'
 })
 export class ClienteCitasComponent implements OnInit {
-  citas: Cita[] = [
-    {
-      id: 1,
-      fecha: new Date(new Date().setDate(new Date().getDate() + 2)),
-      hora: '10:00 AM',
-      notario: 'Dr. Juan Pu00e9rez',
-      asunto: 'Firma de constituciu00f3n de empresa',
-      estado: 'Programada'
-    },
-    {
-      id: 2,
-      fecha: new Date(new Date().setDate(new Date().getDate() + 5)),
-      hora: '3:30 PM',
-      notario: 'Dra. Maru00eda Rodru00edguez',
-      asunto: 'Revisiu00f3n de documentos',
-      estado: 'Pendiente'
-    },
-    {
-      id: 3,
-      fecha: new Date(new Date().setDate(new Date().getDate() - 10)),
-      hora: '11:15 AM',
-      notario: 'Dr. Carlos Mendoza',
-      asunto: 'Legalizaciu00f3n de documentos',
-      estado: 'Completada'
-    }
-  ];
+  citas: Cita[] = [];
+  loading: boolean = false;
+  error: string = '';
 
   // Filtro activo
   filtroActivo: string = 'todas';
 
-  constructor() {}
+  constructor(private clienteCitasService: ClienteCitasService) {}
 
   ngOnInit(): void {
-    // Inicializaciu00f3n del componente
+    this.cargarCitas();
+  }
+
+  /**
+   * Carga la lista de citas desde el servicio
+   */
+  cargarCitas(): void {
+    this.loading = true;
+    this.error = '';
+    
+    this.clienteCitasService.obtenerCitas().subscribe({
+      next: (citas) => {
+        // Convertir las fechas de string a Date si es necesario
+        this.citas = citas.map(cita => ({
+          ...cita,
+          fecha_cita: new Date(cita.fecha_cita)
+        }));
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al cargar citas:', error);
+        this.error = 'Error al cargar las citas. Por favor, intente nuevamente.';
+        this.loading = false;
+        
+        // Mantener datos de ejemplo en caso de error para demostración
+        this.citas = [
+          {
+            cita_id: 1,
+            fecha_cita: new Date(new Date().setDate(new Date().getDate() + 2)),
+            hora_cita: '10:00 AM',
+            nombre_notario: 'Dr. Juan Pérez',
+            asunto: 'Firma de constitución de empresa',
+            estado: 'Programada'
+          },
+          {
+            cita_id: 2,
+            fecha_cita: new Date(new Date().setDate(new Date().getDate() + 5)),
+            hora_cita: '3:30 PM',
+            nombre_notario: 'Dra. María Rodríguez',
+            asunto: 'Revisión de documentos',
+            estado: 'Pendiente'
+          },
+          {
+            cita_id: 3,
+            fecha_cita: new Date(new Date().setDate(new Date().getDate() - 10)),
+            hora_cita: '11:15 AM',
+            nombre_notario: 'Dr. Carlos Mendoza',
+            asunto: 'Legalización de documentos',
+            estado: 'Completada'
+          }
+        ];
+      }
+    });
   }
 
   // Filtrar citas por estado
@@ -83,28 +113,17 @@ export class ClienteCitasComponent implements OnInit {
     }
   }
 
-  // Verificar si una cita es pru00f3xima (en los pru00f3ximos 3 du00edas)
+  // Verificar si una cita es próxima (en los próximos 3 días)
   esProxima(fecha: Date): boolean {
     const hoy = new Date();
     const diferenciaDias = Math.floor((fecha.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
     return diferenciaDias >= 0 && diferenciaDias <= 3;
   }
 
-  // Solicitar nueva cita
-  solicitarCita(): void {
-    console.log('Solicitando nueva cita');
-    // Aquu00ed iru00eda la lu00f3gica para abrir un formulario de solicitud de cita
-  }
-
-  // Cancelar cita
-  cancelarCita(id: number): void {
-    console.log(`Cancelando cita con ID: ${id}`);
-    // Aquu00ed iru00eda la lu00f3gica para cancelar una cita
-  }
-
-  // Reprogramar cita
-  reprogramarCita(id: number): void {
-    console.log(`Reprogramando cita con ID: ${id}`);
-    // Aquu00ed iru00eda la lu00f3gica para reprogramar una cita
+  /**
+   * Reintenta cargar las citas
+   */
+  reintentarCarga(): void {
+    this.cargarCitas();
   }
 }

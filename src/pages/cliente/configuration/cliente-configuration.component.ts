@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../app/services/auth-service';
 import { Router } from '@angular/router';
 import { ClienteConfigurationService } from '../../../app/services/cliente/cliente-configuration.service';
+import { ClienteNombreService } from '../../../app/services/cliente/cliente-nombre.service';
 
 @Component({
   selector: 'app-cliente-configuration',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ],
   templateUrl: './cliente-configuration.component.html',
   styleUrls: ['./cliente-configuration.component.css']
 })
@@ -16,10 +17,11 @@ export class ClienteConfigurationComponent implements OnInit {
   // Datos del usuario
   userData: any = {
     id: '',
-    nombre: '',
     email: '',
-    telefono: ''
   };
+  // Datos adicionales del usuario
+  nombre_cliente: string = '';
+  telefono_cliente: string = '';
   
   // Variables para controlar el modo de edición
   editandoEmail: boolean = false;
@@ -32,12 +34,15 @@ export class ClienteConfigurationComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private configService: ClienteConfigurationService
+    private configService: ClienteConfigurationService,
+    private clienteNombreService: ClienteNombreService
   ) {}
   
   ngOnInit(): void {
     // Primero obtener datos del authService (email e id)
     this.authService.currentUser$.subscribe(user => {
+      this.nombre_cliente = this.clienteNombreService.getNombre();
+
       if (user) {
         // Asignar email e id del authService
         this.userData.email = user.email;
@@ -57,7 +62,6 @@ export class ClienteConfigurationComponent implements OnInit {
     this.configService.obtenerDatosAdicionales().subscribe({
       next: (datosAdicionales) => {
         // Asignar nombre y teléfono del backend
-        this.userData.nombre = datosAdicionales.nombre;
         this.userData.telefono = datosAdicionales.telefono;
         this.telefonoOriginal = datosAdicionales.telefono;
       },

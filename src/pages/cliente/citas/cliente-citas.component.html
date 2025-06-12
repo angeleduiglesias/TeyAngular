@@ -1,10 +1,6 @@
 <div class="citas-container">
   <div class="header">
     <h2>Mis Citas</h2>
-    <p class="subtitle">Gestiona tus citas con notarios</p>
-    <button class="nueva-cita-btn" (click)="solicitarCita()">
-      <i class="fas fa-plus"></i> Solicitar nueva cita
-    </button>
   </div>
 
   <div class="filtros">
@@ -36,26 +32,18 @@
     <div class="proximas-cards">
       <div class="cita-card proxima" *ngFor="let cita of citas | slice:0:3">
         <div class="cita-fecha">
-          <div class="dia">{{ cita.fecha | date:'dd' }}</div>
-          <div class="mes">{{ cita.fecha | date:'MMM' | uppercase }}</div>
+          <div class="dia">{{ cita.fecha_cita | date:'dd' }}</div>
+          <div class="mes">{{ cita.fecha_cita | date:'MMM' | uppercase }}</div>
         </div>
         <div class="cita-detalles">
-          <div class="cita-hora"><i class="fas fa-clock"></i> {{ cita.hora }}</div>
-          <div class="cita-notario"><i class="fas fa-user"></i> {{ cita.notario }}</div>
+          <div class="cita-hora"><i class="fas fa-clock"></i> {{ cita.hora_cita }}</div>
+          <div class="cita-notario"><i class="fas fa-user"></i> {{ cita.nombre_notario }}</div>
           <div class="cita-asunto">{{ cita.asunto }}</div>
           <div class="cita-estado">
             <span class="estado-badge" [ngClass]="getEstadoClass(cita.estado)">
               {{ cita.estado }}
             </span>
           </div>
-        </div>
-        <div class="cita-acciones">
-          <button class="accion-btn reprogramar" (click)="reprogramarCita(cita.id)" *ngIf="cita.estado !== 'Completada' && cita.estado !== 'Cancelada'">
-            <i class="fas fa-calendar-alt"></i> Reprogramar
-          </button>
-          <button class="accion-btn cancelar" (click)="cancelarCita(cita.id)" *ngIf="cita.estado !== 'Completada' && cita.estado !== 'Cancelada'">
-            <i class="fas fa-times"></i> Cancelar
-          </button>
         </div>
       </div>
     </div>
@@ -72,28 +60,20 @@
             <th>Notario</th>
             <th>Asunto</th>
             <th>Estado</th>
-            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let cita of citasFiltradas">
-            <td>{{ cita.fecha | date:'dd/MM/yyyy' }}</td>
-            <td>{{ cita.hora }}</td>
-            <td>{{ cita.notario }}</td>
+            <td>{{ cita.fecha_cita | date:'dd/MM/yyyy' }}</td>
+            <td>{{ cita.hora_cita }}</td>
+            <td>{{ cita.nombre_notario }}</td>
             <td>{{ cita.asunto }}</td>
             <td>
               <span class="estado-badge" [ngClass]="getEstadoClass(cita.estado)">
                 {{ cita.estado }}
               </span>
             </td>
-            <td class="acciones">
-              <button class="accion-btn reprogramar" (click)="reprogramarCita(cita.id)" *ngIf="cita.estado !== 'Completada' && cita.estado !== 'Cancelada'">
-                <i class="fas fa-calendar-alt"></i>
-              </button>
-              <button class="accion-btn cancelar" (click)="cancelarCita(cita.id)" *ngIf="cita.estado !== 'Completada' && cita.estado !== 'Cancelada'">
-                <i class="fas fa-times"></i>
-              </button>
-            </td>
+
           </tr>
         </tbody>
       </table>
@@ -101,7 +81,7 @@
       <div class="empty-state" *ngIf="citasFiltradas.length === 0">
         <i class="fas fa-calendar-times empty-icon"></i>
         <p>No hay citas disponibles</p>
-        <p class="empty-subtitle">Puedes solicitar una nueva cita con el botón de arriba</p>
+        <p class="empty-subtitle">Si tienes un tramite en curso, en breve estara disponible</p>
       </div>
     </div>
   </div>

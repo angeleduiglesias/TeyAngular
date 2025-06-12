@@ -7,7 +7,6 @@ import { AuthService } from '../auth-service';
 
 // Interfaz para los datos adicionales del usuario (solo lo que no tiene authService)
 export interface UserAdditionalData {
-  nombre: string;
   telefono: string;
 }
 

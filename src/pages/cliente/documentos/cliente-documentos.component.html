@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <div class="documentos-container">
   <div class="header">
     <h2>Mis Documentos</h2>
@@ -10,14 +11,6 @@
         <input type="text" placeholder="Buscar documento...">
         <i class="fas fa-search"></i>
       </div>
-      <div class="filter-options">
-        <select>
-          <option value="">Todos los estados</option>
-          <option value="pendiente">Pendiente</option>
-          <option value="aprobado">Aprobado</option>
-          <option value="rechazado">Rechazado</option>
-        </select>
-      </div>
     </div>
 
     <div class="documentos-table">
@@ -27,25 +20,19 @@
             <th>Nombre</th>
             <th>Tipo</th>
             <th>Fecha</th>
-            <th>Estado</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let documento of documentos">
-            <td>{{ documento.nombre }}</td>
+            <td>{{ documento.nombre_documento }}</td>
             <td>{{ documento.tipo }}</td>
-            <td>{{ documento.fecha | date:'dd/MM/yyyy' }}</td>
-            <td>
-              <span class="status-badge" [ngClass]="getStatusClass(documento.estado)">
-                {{ documento.estado }}
-              </span>
-            </td>
+            <td>{{ documento.fecha_carga | date:'dd/MM/yyyy' }}</td>
             <td class="actions">
-              <button class="action-btn view" (click)="viewDocument(documento.id)" title="Ver documento">
+              <button class="action-btn view" (click)="viewDocument(documento.documento_id)" title="Ver documento">
                 <i class="fas fa-eye"></i>
               </button>
-              <button class="action-btn download" (click)="downloadDocument(documento.id)" title="Descargar documento">
+              <button class="action-btn download" (click)="downloadDocument(documento.documento_id)" title="Descargar documento">
                 <i class="fas fa-download"></i>
               </button>
             </td>
