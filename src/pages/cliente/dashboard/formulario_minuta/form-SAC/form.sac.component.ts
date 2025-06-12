@@ -177,9 +177,9 @@ export class FormSacComponent implements OnInit {
   
   // Datos de pago
   metodosPago: MetodoPago[] = [
-    { id: 1, nombre: 'Tarjeta de Crédito', imagen: 'assets/credit-card.png' },
-    { id: 2, nombre: 'PayPal', imagen: 'assets/paypal.png' },
-    { id: 3, nombre: 'Transferencia Bancaria', imagen: 'assets/bank-transfer.png' }
+    { id: 1, nombre: 'Tarjeta de Crédito', imagen: '' },
+    { id: 2, nombre: 'PayPal', imagen: '' },
+    { id: 3, nombre: 'Transferencia Bancaria', imagen: '' }
   ];
   metodoPagoSeleccionado: number | null = null;
   pagoConfirmado: boolean = false;
