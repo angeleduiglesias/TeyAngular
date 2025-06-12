@@ -37,6 +37,7 @@
       [nombreEmpresa]="nombreEmpresa"
       [estadoReserva]="estadoReserva"
       [tipoAporte]="tipoAporte"
+      [dniUsuario]="dniUsuario"
       (estadoTramiteChange)="onEstadoTramiteChange($event)"
       (porcentajeProgresoChange)="onPorcentajeProgresoChange($event)"
       (estadoPagoChange)="onEstadoPagoChange($event)"
@@ -46,14 +47,9 @@
 
   <div *ngIf="pago2">
    
-    
     <!-- Componente SAC -->
     <app-form-sac 
       *ngIf="tipoEmpresaSeleccionado === tiposEmpresa.SAC"
-      [userData]="userData"
-      [nombreEmpresa]="nombreEmpresa"
-      [estadoReserva]="estadoReserva"
-      [tipoAporte]="tipoAporte"
       [pago2]="pago2"
       (estadoTramiteChange)="onEstadoTramiteChange($event)"
       (porcentajeProgresoChange)="onPorcentajeProgresoChange($event)"

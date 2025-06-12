@@ -93,6 +93,7 @@ export class FormSacComponent implements OnInit {
   @Input() estadoReserva: string = '';
   @Input() tipoAporte: string = '';
   @Input() pago2: boolean = false;
+  @Input() dniUsuario: string = '';
   
   // Propiedad para controlar la visibilidad del formulario
   mostrarFormulario: boolean = false;
@@ -600,7 +601,7 @@ private configurarTipoFormulario(): void {
     if (this.metodoPagoSeleccionado) {
       // Crear objeto con los datos del pago (similar a step-five.component.ts)
       const datosPago = {
-        dni: localStorage.getItem('dni_usuario'),
+        dni: this.dniUsuario,
         estado: 'pagado',
         fecha: new Date(),
         monto: 400.00,

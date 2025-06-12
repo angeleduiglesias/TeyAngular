@@ -24,6 +24,7 @@ export class FormMinutaComponent implements OnInit, OnChanges {
   @Input() tipoEmpresa: string = '';
   @Input() tipoAporte: string = '';
   @Input() pago2: boolean = false;
+  @Input() dniUsuario: string = '';
   
   // Eventos para comunicación con el componente padre
   @Output() estadoTramiteChange = new EventEmitter<string>();

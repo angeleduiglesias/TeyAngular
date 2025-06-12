@@ -22,6 +22,7 @@ export interface EstadoFormActivated{
   nombre_empresa: string;
   tipo_empresa:string;
   tipo_aporte: string;
+  dni_cliente: string;
 }
 
 export interface TramiteData {
@@ -67,7 +68,8 @@ export class ClienteDashboardComponent implements OnInit {
     pago2: false,
     nombre_empresa: '',
     tipo_empresa: '',
-    tipo_aporte: ''
+    tipo_aporte: '',
+    dni_cliente: ''
   }
   // Datos del formulario de minuta
   nombreEmpresa: string = ''; // Inicialmente vacío, se llenará cuando se reciba
