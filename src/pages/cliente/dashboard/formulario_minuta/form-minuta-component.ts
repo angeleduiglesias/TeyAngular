@@ -22,6 +22,8 @@ export class FormMinutaComponent implements OnInit, OnChanges {
   @Input() nombreEmpresa: string = '';
   @Input() estadoReserva: string = '';
   @Input() tipoEmpresa: string = '';
+  @Input() tipoAporte: string = '';
+  @Input() pago2: boolean = false;
   
   // Eventos para comunicación con el componente padre
   @Output() estadoTramiteChange = new EventEmitter<string>();
@@ -40,31 +42,25 @@ export class FormMinutaComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit(): void {
-    console.log('ngOnInit - estadoReserva:', this.estadoReserva);
-    console.log('ngOnInit - nombreEmpresa:', this.nombreEmpresa);
     this.verificarEstadoReserva();
   }
   
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('ngOnChanges ejecutado:', changes);
-    
-    if (changes['estadoReserva'] || changes['nombreEmpresa'] || changes['tipoEmpresa']) {
-      console.log('ngOnChanges - estadoReserva:', this.estadoReserva);
-      console.log('ngOnChanges - nombreEmpresa:', this.nombreEmpresa);
-      console.log('ngOnChanges - tipoEmpresa:', this.tipoEmpresa);
+    if (
+      (changes['estadoReserva'] && !changes['estadoReserva'].firstChange) ||
+      (changes['nombreEmpresa'] && !changes['nombreEmpresa'].firstChange) ||
+      (changes['tipoEmpresa'] && !changes['tipoEmpresa'].firstChange)
+    ) {
       this.verificarEstadoReserva();
     }
   }
-  
   private verificarEstadoReserva(): void {
-    console.log('Verificando estado reserva:', this.estadoReserva);
-    console.log('Nombre empresa:', this.nombreEmpresa);
-    console.log('Tipo empresa:', this.tipoEmpresa);
     
     this.cargandoEstado = true;
+    this.mostrarFormulario = false;
     
     setTimeout(() => {
-      if (this.estadoReserva === 'aprobado' && this.nombreEmpresa && this.nombreEmpresa.trim() !== '') {
+      if (this.estadoReserva === 'pendiente' && this.nombreEmpresa && this.nombreEmpresa.trim() !== '') {
         this.mostrarFormulario = true;
         // Establecer el tipo de empresa automáticamente
         if (this.tipoEmpresa === 'SAC') {
@@ -80,9 +76,6 @@ export class FormMinutaComponent implements OnInit, OnChanges {
       }
       this.cargandoEstado = false;
       
-      console.log('Mostrar formulario:', this.mostrarFormulario);
-      console.log('Tipo empresa seleccionado:', this.tipoEmpresaSeleccionado);
-      console.log('Cargando estado:', this.cargandoEstado);
     }, 500);
   }
   

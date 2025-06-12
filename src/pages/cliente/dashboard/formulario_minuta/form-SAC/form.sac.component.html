@@ -1,44 +1,12 @@
-<div class="form-card">
-  <h2>Formulario de Minuta SAC</h2>
-  
-  <!-- Estado de carga -->
-  <div *ngIf="cargandoEstado" class="loading-state">
-    <p>Cargando información de la reserva...</p>
-    <div class="spinner"></div>
-  </div>
-  
-  <!-- Estado inicial: deshabilitado -->
-  <div *ngIf="!cargandoEstado && !mostrarFormulario && nombreEmpresa" class="form-disabled">
-    <p>Una vez tengamos el nombre de tu empresa te notificaremos y podrás acceder al formulario.</p>
-  </div>
-  
-  <!-- Formulario habilitado -->
-  <div *ngIf="mostrarFormulario && nombreEmpresa && !formularioEnviado" class="form-enabled">
-    <!-- Selector de tipo de formulario -->
-    <div class="form-type-selector">
-      <h3>Seleccione el tipo de formulario SAC</h3>
-      <div class="form-type-options">
-        <div class="form-type-option" 
-            [ngClass]="{'selected': tipoFormularioSeleccionado === tiposFormulario.SACBND}"
-            (click)="cambiarTipoFormulario(tiposFormulario.SACBND)">
-          <div class="option-icon">🏭</div>
-          <div class="option-content">
-            <h4>SAC con Bienes No Dinerarios</h4>
-            <p>Aportes en bienes muebles, inmuebles, derechos, etc.</p>
-          </div>
-        </div>
-        <div class="form-type-option" 
-            [ngClass]="{'selected': tipoFormularioSeleccionado === tiposFormulario.SACBD}"
-            (click)="cambiarTipoFormulario(tiposFormulario.SACBD)">
-          <div class="option-icon">💰</div>
-          <div class="option-content">
-            <h4>SAC con Bienes Dinerarios</h4>
-            <p>Aportes exclusivamente en dinero en efectivo.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+<div class="form-card">
+  
+  
+    
+  <!-- Formulario habilitado -->
+  <div *ngIf="mostrarFormulario && nombreEmpresa && !formularioEnviado && !mostrandoResumen && !pago2"  class="form-enabled">
+    
     <!-- Pasos del formulario -->
     <div class="form-steps">
       <div class="step" *ngFor="let step of pasos; let i = index" 
@@ -55,19 +23,15 @@
         <h3>Datos Personales</h3>
         <div class="form-group">
           <label>Nacionalidad <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_1_datos_personales.nacionalidad" placeholder="Ingrese su nacionalidad">
-        </div>
-        <div class="form-group">
-          <label>DNI <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_1_datos_personales.dni" placeholder="Ingrese su DNI">
+          <input type="text" [(ngModel)]="formularioSAC.paso_1.nacionalidad" placeholder="Ingrese su nacionalidad">
         </div>
         <div class="form-group">
           <label>Profesión <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_1_datos_personales.profesion" placeholder="Ingrese su profesión">
+          <input type="text" [(ngModel)]="formularioSAC.paso_1.profesion" placeholder="Ingrese su profesión">
         </div>
         <div class="form-group">
           <label>Estado Civil <span class="required">*</span></label>
-          <select [(ngModel)]="formularioSAC.paso_1_datos_personales.estado_civil">
+          <select [(ngModel)]="formularioSAC.paso_1.estado_civil">
             <option value="">Seleccione una opción</option>
             <option value="soltero">Soltero/a</option>
             <option value="casado">Casado/a</option>
@@ -76,19 +40,19 @@
           </select>
         </div>
         <!-- Campos condicionales para cónyuge -->
-        <div *ngIf="formularioSAC.paso_1_datos_personales.estado_civil === 'casado'">
+        <div *ngIf="formularioSAC.paso_1.estado_civil === 'casado'">
           <div class="form-group">
             <label>Nombre del Cónyuge</label>
-            <input type="text" [(ngModel)]="formularioSAC.paso_1_datos_personales.nombre_conyuge" placeholder="Ingrese el nombre de su cónyuge">
+            <input type="text" [(ngModel)]="formularioSAC.paso_1.nombre_conyuge" placeholder="Ingrese el nombre de su cónyuge">
           </div>
           <div class="form-group">
             <label>DNI del Cónyuge</label>
-            <input type="text" [(ngModel)]="formularioSAC.paso_1_datos_personales.dni_conyuge" placeholder="Ingrese el DNI de su cónyuge">
+            <input type="text" [(ngModel)]="formularioSAC.paso_1.dni_conyuge" placeholder="Ingrese el DNI de su cónyuge">
           </div>
         </div>
         <div class="form-group">
           <label>Dirección</label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_1_datos_personales.direccion" placeholder="Ingrese su dirección">
+          <input type="text" [(ngModel)]="formularioSAC.paso_1.direccion" placeholder="Ingrese su dirección">
         </div>
       </div>
       
@@ -101,19 +65,19 @@
         </div>
         <div class="form-group">
           <label>Dirección de la Empresa</label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_2_datos_empresa.direccion_empresa" placeholder="Ingrese la dirección de la empresa">
+          <input type="text" [(ngModel)]="formularioSAC.paso_2.direccion_empresa" placeholder="Ingrese la dirección de la empresa">
         </div>
         <div class="form-group">
           <label>Provincia</label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_2_datos_empresa.provincia_empresa" placeholder="Ingrese la provincia">
+          <input type="text" [(ngModel)]="formularioSAC.paso_2.provincia_empresa" placeholder="Ingrese la provincia">
         </div>
         <div class="form-group">
           <label>Departamento</label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_2_datos_empresa.departamento_empresa" placeholder="Ingrese el departamento">
+          <input type="text" [(ngModel)]="formularioSAC.paso_2.departamento_empresa" placeholder="Ingrese el departamento">
         </div>
         <div class="form-group">
           <label>Objetivo de la Empresa <span class="required">*</span></label>
-          <textarea [(ngModel)]="formularioSAC.paso_2_datos_empresa.objetivo" rows="4" placeholder="Describa el objetivo principal de la empresa"></textarea>
+          <textarea [(ngModel)]="formularioSAC.paso_2.objetivo" rows="4" placeholder="Describa el objetivo principal de la empresa"></textarea>
         </div>
       </div>
       
@@ -126,10 +90,10 @@
         </div>
         
         <div class="socios-list">
-          <div class="socio-item" *ngFor="let socio of formularioSAC.paso_3_socios; let i = index">
+          <div class="socio-item" *ngFor="let socio of formularioSAC.paso_3; let i = index">
             <div class="socio-header">
               <h4>Socio {{i + 1}}</h4>
-              <button class="btn-remove" *ngIf="formularioSAC.paso_3_socios.length > 2" (click)="eliminarSocio(i)">
+              <button class="btn-remove" *ngIf="formularioSAC.paso_3.length > 2" (click)="eliminarSocio(i)">
                 Eliminar Socio
               </button>
             </div>
@@ -204,7 +168,7 @@
           </div>
         </div>
         
-        <button class="btn-add" (click)="agregarSocio()" [disabled]="formularioSAC.paso_3_socios.length >= 3">
+        <button class="btn-add" (click)="agregarSocio()" [disabled]="formularioSAC.paso_3.length >= 3">
           Agregar Socio
         </button>
       </div>
@@ -238,7 +202,7 @@
         </div>
         
         <div class="aportes-list">
-          <div class="aporte-item" *ngFor="let aporte of formularioSAC.paso_4_capital_y_aportes.aportes; let i = index">
+          <div class="aporte-item" *ngFor="let aporte of formularioSAC.paso_4.aportes; let i = index">
             <div class="form-group">
               <label>Descripción del Aporte <span class="required">*</span></label>
               <input type="text" [(ngModel)]="aporte.descripcion" placeholder="Describa el aporte" 
@@ -253,13 +217,13 @@
                      min="0"
                      [max]="CAPITAL_MAXIMO">
             </div>
-            <button class="btn-remove" *ngIf="formularioSAC.paso_4_capital_y_aportes.aportes.length > 1" (click)="eliminarAporte(i)">
+            <button class="btn-remove" *ngIf="formularioSAC.paso_4.aportes.length > 1" (click)="eliminarAporte(i)">
               Eliminar
             </button>
           </div>
         </div>
         <button class="btn-add" (click)="agregarAporte()" 
-                [disabled]="(tipoFormularioSeleccionado === tiposFormulario.SACBD && formularioSAC.paso_4_capital_y_aportes.aportes.length >= 1) || calcularCapitalTotal() >= CAPITAL_MAXIMO">
+                [disabled]="(tipoFormularioSeleccionado === tiposFormulario.SACBD && formularioSAC.paso_4.aportes.length >= 1) || calcularCapitalTotal() >= CAPITAL_MAXIMO">
           Agregar Aporte
         </button>
         
@@ -275,11 +239,11 @@
         <h3>Datos del Apoderado</h3>
         <div class="form-group">
           <label>Nombre del Apoderado <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_5_apoderado.apoderado" placeholder="Ingrese el nombre del apoderado">
+          <input type="text" [(ngModel)]="formularioSAC.paso_5.apoderado" placeholder="Ingrese el nombre del apoderado">
         </div>
         <div class="form-group">
           <label>DNI del Apoderado <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_5_apoderado.dni_apoderado" placeholder="Ingrese el DNI del apoderado">
+          <input type="text" [(ngModel)]="formularioSAC.paso_5.dni_apoderado" placeholder="Ingrese el DNI del apoderado">
         </div>
       </div>
       
@@ -288,11 +252,11 @@
         <h3>Confirmación</h3>
         <div class="form-group">
           <label>Ciudad <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_6_confirmacion.ciudad" placeholder="Ingrese la ciudad">
+          <input type="text" [(ngModel)]="formularioSAC.paso_6.ciudad" placeholder="Ingrese la ciudad">
         </div>
         <div class="form-group">
           <label>Fecha de Registro</label>
-          <input type="date" [(ngModel)]="formularioSAC.paso_6_confirmacion.fecha_registro">
+          <input type="date" [(ngModel)]="formularioSAC.paso_6.fecha_registro">
         </div>
         <div class="confirmation-message">
           <p>Por favor revise cuidadosamente toda la información antes de finalizar.</p>
@@ -309,40 +273,41 @@
     </div>
   </div>
   
+  
+
   <!-- Resumen del formulario -->
   <div *ngIf="nombreEmpresa && mostrandoResumen && !formularioEnviado" class="form-summary">
     <h3>Resumen de la Información</h3>
     <div class="summary-content">
       <div class="summary-section">
-        <h4>Tipo de Formulario</h4>
+        <h4>Tipo de Empresa</h4>
         <p><strong>Tipo:</strong> {{tipoFormularioSeleccionado === tiposFormulario.SACBD ? 'SAC con Bienes Dinerarios' : 'SAC con Bienes No Dinerarios'}}</p>
       </div>
       
       <div class="summary-section">
         <h4>Datos Personales</h4>
-        <p><strong>Nacionalidad:</strong> {{formularioSAC.paso_1_datos_personales.nacionalidad}}</p>
-        <p><strong>DNI:</strong> {{formularioSAC.paso_1_datos_personales.dni}}</p>
-        <p *ngIf="formularioSAC.paso_1_datos_personales.profesion"><strong>Profesión:</strong> {{formularioSAC.paso_1_datos_personales.profesion}}</p>
-        <p *ngIf="formularioSAC.paso_1_datos_personales.estado_civil"><strong>Estado Civil:</strong> {{formularioSAC.paso_1_datos_personales.estado_civil}}</p>
-        <p *ngIf="formularioSAC.paso_1_datos_personales.direccion"><strong>Dirección:</strong> {{formularioSAC.paso_1_datos_personales.direccion}}</p>
-        <div *ngIf="formularioSAC.paso_1_datos_personales.estado_civil === 'casado'">
-          <p><strong>Nombre del Cónyuge:</strong> {{formularioSAC.paso_1_datos_personales.nombre_conyuge}}</p>
-          <p><strong>DNI del Cónyuge:</strong> {{formularioSAC.paso_1_datos_personales.dni_conyuge}}</p>
+        <p><strong>Nacionalidad:</strong> {{formularioSAC.paso_1.nacionalidad}}</p>
+        <p *ngIf="formularioSAC.paso_1.profesion"><strong>Profesión:</strong> {{formularioSAC.paso_1.profesion}}</p>
+        <p *ngIf="formularioSAC.paso_1.estado_civil"><strong>Estado Civil:</strong> {{formularioSAC.paso_1.estado_civil}}</p>
+        <p *ngIf="formularioSAC.paso_1.direccion"><strong>Dirección:</strong> {{formularioSAC.paso_1.direccion}}</p>
+        <div *ngIf="formularioSAC.paso_1.estado_civil === 'casado'">
+          <p><strong>Nombre del Cónyuge:</strong> {{formularioSAC.paso_1.nombre_conyuge}}</p>
+          <p><strong>DNI del Cónyuge:</strong> {{formularioSAC.paso_1.dni_conyuge}}</p>
         </div>
       </div>
       
       <div class="summary-section">
         <h4>Datos de la Empresa</h4>
         <p><strong>Nombre de la Empresa:</strong> {{nombreEmpresa}}</p>
-        <p *ngIf="formularioSAC.paso_2_datos_empresa.direccion_empresa"><strong>Dirección:</strong> {{formularioSAC.paso_2_datos_empresa.direccion_empresa}}</p>
-        <p *ngIf="formularioSAC.paso_2_datos_empresa.provincia_empresa"><strong>Provincia:</strong> {{formularioSAC.paso_2_datos_empresa.provincia_empresa}}</p>
-        <p *ngIf="formularioSAC.paso_2_datos_empresa.departamento_empresa"><strong>Departamento:</strong> {{formularioSAC.paso_2_datos_empresa.departamento_empresa}}</p>
-        <p><strong>Objetivo:</strong> {{formularioSAC.paso_2_datos_empresa.objetivo}}</p>
+        <p *ngIf="formularioSAC.paso_2.direccion_empresa"><strong>Dirección:</strong> {{formularioSAC.paso_2.direccion_empresa}}</p>
+        <p *ngIf="formularioSAC.paso_2.provincia_empresa"><strong>Provincia:</strong> {{formularioSAC.paso_2.provincia_empresa}}</p>
+        <p *ngIf="formularioSAC.paso_2.departamento_empresa"><strong>Departamento:</strong> {{formularioSAC.paso_2.departamento_empresa}}</p>
+        <p><strong>Objetivo:</strong> {{formularioSAC.paso_2.objetivo}}</p>
       </div>
       
       <div class="summary-section">
         <h4>Socios</h4>
-        <div *ngFor="let socio of formularioSAC.paso_3_socios; let i = index" class="socio-summary">
+        <div *ngFor="let socio of formularioSAC.paso_3; let i = index" class="socio-summary">
           <h5>Socio {{i + 1}}</h5>
           <p><strong>Nombre:</strong> {{socio.nombre_socio}}</p>
           <p><strong>DNI:</strong> {{socio.dni_socio}}</p>
@@ -365,10 +330,10 @@
       
       <div class="summary-section">
         <h4>Capital y Aportes</h4>
-        <p><strong>Monto de Capital:</strong> {{formularioSAC.paso_4_capital_y_aportes.monto_capital | currency:'PEN ':'symbol':'1.2-2'}}</p>
+        <p><strong>Monto de Capital:</strong> {{formularioSAC.paso_4.monto_capital | currency:'PEN ':'symbol':'1.2-2'}}</p>
         <p><strong>Aportes:</strong></p>
         <ul>
-          <li *ngFor="let aporte of formularioSAC.paso_4_capital_y_aportes.aportes">
+          <li *ngFor="let aporte of formularioSAC.paso_4.aportes">
             {{aporte.descripcion}} - {{aporte.monto | currency:'PEN ':'symbol':'1.2-2'}}
           </li>
         </ul>
@@ -376,14 +341,14 @@
       
       <div class="summary-section">
         <h4>Datos del Apoderado</h4>
-        <p><strong>Nombre del Apoderado:</strong> {{formularioSAC.paso_5_apoderado.apoderado}}</p>
-        <p><strong>DNI del Apoderado:</strong> {{formularioSAC.paso_5_apoderado.dni_apoderado}}</p>
+        <p><strong>Nombre del Apoderado:</strong> {{formularioSAC.paso_5.apoderado}}</p>
+        <p><strong>DNI del Apoderado:</strong> {{formularioSAC.paso_5.dni_apoderado}}</p>
       </div>
       
       <div class="summary-section">
         <h4>Confirmación</h4>
-        <p><strong>Ciudad:</strong> {{formularioSAC.paso_6_confirmacion.ciudad}}</p>
-        <p><strong>Fecha de Registro:</strong> {{formularioSAC.paso_6_confirmacion.fecha_registro | date:'dd/MM/yyyy'}}</p>
+        <p><strong>Ciudad:</strong> {{formularioSAC.paso_6.ciudad}}</p>
+        <p><strong>Fecha de Registro:</strong> {{formularioSAC.paso_6.fecha_registro | date:'dd/MM/yyyy'}}</p>
       </div>
     </div>
     <div class="summary-actions">
@@ -393,7 +358,7 @@
   </div>
   
   <!-- Formulario de pago después de enviar -->
-  <div *ngIf="formularioEnviado && !pagoConfirmado" class="payment-form">
+  <div *ngIf="formularioEnviado && !pagoConfirmado  && !pago2"  class="payment-form">
     <h3>Completar Pago</h3>
     <div class="payment-methods">
       <div class="payment-method" *ngFor="let metodo of metodosPago" 
@@ -407,12 +372,12 @@
       Realizar Pago
     </button>
   </div>
-  
-  <!-- Mensaje de éxito después del pago -->
-  <div *ngIf="pagoConfirmado" class="success-message">
-    <div class="success-icon">✓</div>
-    <h3>{{userData.nombre}}, felicitaciones</h3>
-    <p>Tu empresa ({{nombreEmpresa}}) será registrada en un plazo no mayor a 10 días.</p>
-    <p>Atento a tu correo, el notario te citará a firmar.</p>
-  </div>
+
+    <!-- Mensaje de éxito después del pago -->
+    <div *ngIf="pagoConfirmado || pago2" class="success-message">
+      <div class="success-icon">✓</div>
+      <h3>Felicitaciones</h3>
+      <p>Tu empresa ({{nombreEmpresa}}) será registrada en un plazo no mayor a 10 días.</p>
+      <p>Atento a tu correo, el notario te citará a firmar.</p>
+    </div>
 </div>

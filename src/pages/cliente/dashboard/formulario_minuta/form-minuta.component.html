@@ -12,8 +12,10 @@
   </div>
   
   <!-- Formulario directo sin selector -->
-  <div *ngIf="mostrarFormulario && nombreEmpresa">
+  <div *ngIf="mostrarFormulario && nombreEmpresa && !pago2">
     <h2>Formulario de Minuta - {{tipoEmpresaSeleccionado}}</h2>
+    <p>"Completa correctamente tus datos. Esta información se usará para generar tu documento de minuta."</p>
+    
     
     <!-- Componente EIRL -->
     <app-form-eirl 
@@ -21,6 +23,7 @@
       [userData]="userData"
       [nombreEmpresa]="nombreEmpresa"
       [estadoReserva]="estadoReserva"
+      [tipoAporte]="tipoAporte"
       (estadoTramiteChange)="onEstadoTramiteChange($event)"
       (porcentajeProgresoChange)="onPorcentajeProgresoChange($event)"
       (estadoPagoChange)="onEstadoPagoChange($event)"
@@ -33,6 +36,25 @@
       [userData]="userData"
       [nombreEmpresa]="nombreEmpresa"
       [estadoReserva]="estadoReserva"
+      [tipoAporte]="tipoAporte"
+      (estadoTramiteChange)="onEstadoTramiteChange($event)"
+      (porcentajeProgresoChange)="onPorcentajeProgresoChange($event)"
+      (estadoPagoChange)="onEstadoPagoChange($event)"
+      (pagoActualChange)="onPagoActualChange($event)">
+    </app-form-sac>
+  </div>
+
+  <div *ngIf="pago2">
+   
+    
+    <!-- Componente SAC -->
+    <app-form-sac 
+      *ngIf="tipoEmpresaSeleccionado === tiposEmpresa.SAC"
+      [userData]="userData"
+      [nombreEmpresa]="nombreEmpresa"
+      [estadoReserva]="estadoReserva"
+      [tipoAporte]="tipoAporte"
+      [pago2]="pago2"
       (estadoTramiteChange)="onEstadoTramiteChange($event)"
       (porcentajeProgresoChange)="onPorcentajeProgresoChange($event)"
       (estadoPagoChange)="onEstadoPagoChange($event)"

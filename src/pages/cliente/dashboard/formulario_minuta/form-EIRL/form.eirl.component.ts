@@ -73,7 +73,8 @@ interface MetodoPago {
 export class FormEirlComponent implements OnInit {
   @Input() userData: any;
   @Input() nombreEmpresa: string = '';
-  @Input() estadoReserva: string = ''; // Nuevo input para recibir el estado de la reserva
+  @Input() estadoReserva: string = ''; 
+  @Input() tipoAporte: string = '';
   
   // Propiedad para controlar la visibilidad del formulario
   mostrarFormulario: boolean = false;
@@ -158,6 +159,7 @@ export class FormEirlComponent implements OnInit {
     } 
     // Determinar si se debe mostrar el formulario según el estado de la reserva
     this.verificarEstadoReserva();
+    this.configurarTipoFormulario();
   }
   
   ngOnChanges(): void {
@@ -167,8 +169,21 @@ export class FormEirlComponent implements OnInit {
     
     // Verificar el estado de la reserva cuando cambie
     this.verificarEstadoReserva();
+    this.configurarTipoFormulario();
   }
   
+
+  //Funcion para configurar el tipo de formulario según el tipo de aporte
+  private configurarTipoFormulario(): void {
+    if (this.tipoAporte) {
+      if (this.tipoAporte === 'dinero') {
+        this.tipoFormularioSeleccionado = TipoFormularioEIRL.EIRLBD; // Bienes Dinerarios
+      } else if (this.tipoAporte === 'bienes') {
+        this.tipoFormularioSeleccionado = TipoFormularioEIRL.EIRLBND; // Bienes No Dinerarios
+      }
+    }
+  }
+
   // Método para verificar el estado de la reserva y determinar si se muestra el formulario
   private verificarEstadoReserva(): void {
     this.cargandoEstado = true;
@@ -189,34 +204,7 @@ export class FormEirlComponent implements OnInit {
     }
   }
   
-  // Método para cambiar el tipo de formulario
-  cambiarTipoFormulario(tipo: TipoFormularioEIRL): void {
-    this.tipoFormularioSeleccionado = tipo;
-    
-    // Reiniciar el formulario si se cambia el tipo
-    this.pasoActual = 2;
-    this.mostrandoResumen = false;
-    
-    // Reiniciar los aportes según el tipo de formulario
-    if (tipo === TipoFormularioEIRL.EIRLBD) {
-      // Para bienes dinerarios, inicializar con un aporte de dinero
-      this.formularioMinuta.paso_3.aportes = [
-        {
-          descripcion: 'Aporte en efectivo',
-          monto: 0
-        }
-      ];
-    } else {
-      // Para bienes no dinerarios, inicializar con un aporte genérico
-      this.formularioMinuta.paso_3.aportes = [
-        {
-          descripcion: '',
-          monto: 0
-        }
-      ];
-    }
-  }
-  
+
   // Métodos para el formulario multi-step
   pasoSiguiente(): void {
     if (this.validarPasoActual()) {

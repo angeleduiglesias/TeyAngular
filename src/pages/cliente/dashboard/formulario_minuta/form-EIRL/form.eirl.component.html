@@ -1,44 +1,8 @@
 
 <div class="form-card">
-  <h2>Formulario de Minuta</h2>
-  
-  <!-- Estado de carga -->
-  <div *ngIf="cargandoEstado" class="loading-state">
-    <p>Cargando información de la reserva...</p>
-    <div class="spinner"></div>
-  </div>
-  
-  <!-- Estado inicial: deshabilitado -->
-  <div *ngIf="!cargandoEstado && !mostrarFormulario && nombreEmpresa" class="form-disabled">
-    <p>Una vez tengamos el nombre de tu empresa te notificaremos y podrás acceder al formulario.</p>
-  </div>
   
   <!-- Formulario habilitado -->
   <div *ngIf="mostrarFormulario && nombreEmpresa && !formularioEnviado" class="form-enabled">
-    <!-- Selector de tipo de formulario -->
-    <div class="form-type-selector">
-      <h3>Seleccione el tipo de formulario EIRL</h3>
-      <div class="form-type-options">
-        <div class="form-type-option" 
-            [ngClass]="{'selected': tipoFormularioSeleccionado === tiposFormulario.EIRLBND}"
-            (click)="cambiarTipoFormulario(tiposFormulario.EIRLBND)">
-          <div class="option-icon">🏭</div>
-          <div class="option-content">
-            <h4>EIRL con Bienes No Dinerarios</h4>
-            <p>Aportes en bienes muebles, inmuebles, derechos, etc.</p>
-          </div>
-        </div>
-        <div class="form-type-option" 
-            [ngClass]="{'selected': tipoFormularioSeleccionado === tiposFormulario.EIRLBD}"
-            (click)="cambiarTipoFormulario(tiposFormulario.EIRLBD)">
-          <div class="option-icon">💰</div>
-          <div class="option-content">
-            <h4>EIRL con Bienes Dinerarios</h4>
-            <p>Aportes exclusivamente en dinero en efectivo.</p>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Pasos del formulario -->
     <div class="form-steps">
