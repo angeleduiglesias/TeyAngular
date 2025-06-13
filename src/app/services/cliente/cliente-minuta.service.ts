@@ -16,7 +16,7 @@ import {
 
 // Interfaz genérica para el envío de datos de la minuta
 export interface MinutaRequest {
-  formulario: FormularioMinuta | FormularioSAC;
+  formulario:  FormularioSAC;
 }
 
 @Injectable({
@@ -30,13 +30,7 @@ export class ClienteMinutaService {
   ) { }
 
   /**
-   * Envía los datos del formulario de minuta al backend (EIRL)
-   * @param formularioData Datos del formulario de minuta EIRL
-   * @returns Observable con la respuesta del servidor
-   */
-  enviarFormularioMinuta(formularioData: FormularioMinuta,): Observable<any>;
-  
-  /**
+
    * Envía los datos del formulario de minuta al backend (SAC)
    * @param formularioData Datos del formulario de minuta SAC
    * @returns Observable con la respuesta del servidor
@@ -47,7 +41,7 @@ export class ClienteMinutaService {
    * Implementación del método que maneja ambos tipos de formularios
    */
   enviarFormularioMinuta(
-    formularioData: FormularioMinuta | FormularioSAC, 
+    formularioData:  FormularioSAC, 
   ): Observable<any> {
     // Obtener el token de autenticación
     const token = this.authService.getToken();

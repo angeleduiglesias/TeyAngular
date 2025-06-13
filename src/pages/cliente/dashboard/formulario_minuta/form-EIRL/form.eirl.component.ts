@@ -335,20 +335,6 @@ export class FormEirlComponent implements OnInit {
     this.estadoTramiteChange.emit('En proceso');
     this.porcentajeProgresoChange.emit(50);
     
-    // Enviar el formulario al backend
-    this.clienteMinutaService.enviarFormularioMinuta(
-      this.formularioMinuta,
-    ).subscribe({
-      next: (response) => {
-        console.log('Formulario enviado exitosamente:', response);
-        // Aquí puedes manejar la respuesta exitosa
-      },
-      error: (error) => {
-        console.error('Error al enviar el formulario:', error);
-        // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
-        this.formularioEnviado = false; // Permitir al usuario intentar nuevamente
-      }
-    });
   }
   
   seleccionarMetodoPago(id: number): void {

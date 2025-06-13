@@ -590,7 +590,7 @@ private configurarTipoFormulario(): void {
         dni_cliente: this.dniUsuario,
         estado: 'pagado',
         fecha: new Date(),
-        monto: 400.00,
+        monto: 400,
         comprobante: null,
         tipo_pago: 'llenado_minuta'
       };
