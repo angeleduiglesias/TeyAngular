@@ -226,8 +226,8 @@ export class ClienteDashboardComponent implements OnInit {
         this.estado_pagos.pago2 = true; // Cambiado de this.pagoActual = this.pagoTotal
         
         // Actualizar estado del trámite
-        this.estado_tramite.estado = 'Finalizado';
-        this.estado_tramite.progreso = 100;
+        this.estado_tramite.estado = 'En proceso';
+        this.estado_tramite.progreso = 75;
       }, 2000);
     }
   }

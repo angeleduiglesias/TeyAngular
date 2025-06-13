@@ -587,7 +587,7 @@ private configurarTipoFormulario(): void {
     if (this.metodoPagoSeleccionado) {
       // Crear objeto con los datos del pago
       const datosPago = {
-        dni: this.dniUsuario,
+        dni_cliente: this.dniUsuario,
         estado: 'pagado',
         fecha: new Date(),
         monto: 400.00,
@@ -622,7 +622,7 @@ private configurarTipoFormulario(): void {
               this.estadoPagoChange.emit('Completado');
               this.pagoActualChange.emit(2);
               this.estadoTramiteChange.emit('En Proceso');
-              this.porcentajeProgresoChange.emit(100);
+              this.porcentajeProgresoChange.emit(75);
             },
             error: (formError) => {
               console.error('Error al enviar el formulario SAC:', formError);
