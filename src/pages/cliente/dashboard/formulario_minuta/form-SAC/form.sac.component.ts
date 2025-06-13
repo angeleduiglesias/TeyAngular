@@ -1,9 +1,10 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpHeaders} from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { ClienteMinutaService } from '../../../../../app/services/cliente/cliente-minuta.service';
+import { AuthService } from '../../../../../app/services/auth-service';
 
 // Interfaces para el formulario SAC
 interface DatosPersonales {
@@ -190,7 +191,8 @@ export class FormSacComponent implements OnInit {
  
   constructor(
     private clienteMinutaService: ClienteMinutaService,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -592,11 +594,19 @@ private configurarTipoFormulario(): void {
         comprobante: null,
         tipo_pago: 'llenado_minuta'
       };
+
+       // AGREGAR HEADERS CON TOKEN
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
       
-      // Enviar datos del pago
-      this.http.post<any>(`${environment.apiUrl}/api/cliente/pagoMinuta`, datosPago).subscribe({
-        next: (response) => {
-          console.log('Datos de pago enviados al backend:', response);
+     // Enviar datos del pago CON HEADERS
+    this.http.post<any>(`${environment.apiUrl}/api/cliente/pagoMinuta`, datosPago, { headers }).subscribe({
+      next: (response) => {
+        console.log('Datos de pago enviados al backend:', response);
+        
           
           // AHORA enviar el formulario después de confirmar el pago
           this.clienteMinutaService.enviarFormularioMinuta(

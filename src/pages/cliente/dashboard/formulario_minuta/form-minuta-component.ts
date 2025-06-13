@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FormEirlComponent } from './form-EIRL/form.eirl.component';
 import { FormSacComponent } from './form-SAC/form.sac.component'; // Agregar esta importación
-
 // Enum para tipos de empresa
 export enum TipoEmpresa {
   EIRL = 'EIRL',
