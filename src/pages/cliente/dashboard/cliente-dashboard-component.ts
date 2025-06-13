@@ -33,7 +33,9 @@ export interface TramiteData {
 
 export interface PagoData {
   pago1: boolean;
+  fecha_pago1: Date;
   pago2: boolean;
+  fecha_pago2: Date;
 }
 
 
@@ -59,7 +61,9 @@ export class ClienteDashboardComponent implements OnInit {
   }
   // Datos de pagos
   estado_pagos: PagoData = {
-    pago1: true, //solo son datos de prueba
+    pago1: true, 
+    fecha_pago1: new Date(), 
+    fecha_pago2: new Date(), //solo son datos de prueba
     pago2: false //solo son datos de prueba
   }
 

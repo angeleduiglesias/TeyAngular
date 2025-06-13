@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class EstadoPagosComponent implements OnInit {
   @Input() pago1: boolean = false;
   @Input() pago2: boolean = false;
+  @Input() fechaPago1 : Date = new Date();
+  @Input() fechaPago2 : Date = new Date();
 
   pagos = [
     { id: 1, nombre: 'Reserva de nombre', pagado: false },
@@ -24,6 +26,8 @@ export class EstadoPagosComponent implements OnInit {
     // Asignar los valores booleanos recibidos
     this.pagos[0].pagado = this.pago1;
     this.pagos[1].pagado = this.pago2;
+    this.fechaPago1 = this.fechaPago1;
+    this.fechaPago2 = this.fechaPago2;
   }
 
   irAPagar(pagoId: number): void {
