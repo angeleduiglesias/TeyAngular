@@ -61,7 +61,7 @@ export class FormMinutaComponent implements OnInit, OnChanges {
     this.mostrarFormulario = false;
     
     setTimeout(() => {
-      if (this.estadoReserva === 'pendiente' && this.nombreEmpresa && this.nombreEmpresa.trim() !== '') {
+      if (this.estadoReserva === 'aprobado' && this.nombreEmpresa && this.nombreEmpresa.trim() !== '') {
         this.mostrarFormulario = true;
         // Establecer el tipo de empresa automáticamente
         if (this.tipoEmpresa === 'SAC') {

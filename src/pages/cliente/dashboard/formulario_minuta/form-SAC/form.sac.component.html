@@ -61,7 +61,7 @@
         <h3>Datos de la Empresa</h3>
         <div class="form-group">
           <label>Nombre de la Empresa <span class="required">*</span></label>
-          <input type="text" [value]="nombreEmpresa" [readonly]="nombreEmpresa">
+          <input type="text" [(ngModel)]="formularioSAC.paso_2.nombre_empresa" [readonly]="nombreEmpresa">
         </div>
         <div class="form-group">
           <label>Dirección de la Empresa</label>
@@ -154,7 +154,7 @@
                          [(ngModel)]="aporte.monto" 
                          (ngModelChange)="onAporteSocioChange(i, j, $event)"
                          placeholder="Ingrese el valor del aporte"
-                         min="0"
+                         
                          [max]="CAPITAL_MAXIMO">
                 </div>
                 <button class="btn-remove-small" *ngIf="socio.aportes.length > 1" (click)="eliminarAporteSocio(i, j)">
@@ -348,7 +348,7 @@
       <div class="summary-section">
         <h4>Confirmación</h4>
         <p><strong>Ciudad:</strong> {{formularioSAC.paso_6.ciudad}}</p>
-        <p><strong>Fecha de Registro:</strong> {{formularioSAC.paso_6.fecha_registro | date:'dd/MM/yyyy'}}</p>
+        <p><strong>Fecha de Registro:</strong> {{formularioSAC.paso_6.fecha_registro | date:'dd/MM/yyyy'}} </p>
       </div>
     </div>
     <div class="summary-actions">

@@ -182,9 +182,8 @@ export class FormSacComponent implements OnInit {
   
   // Datos de pago
   metodosPago: MetodoPago[] = [
-    { id: 1, nombre: 'Tarjeta de Crédito', imagen: '' },
-    { id: 2, nombre: 'PayPal', imagen: '' },
-    { id: 3, nombre: 'Transferencia Bancaria', imagen: '' }
+    { id: 1, nombre: 'Tarjeta de Crédito', imagen: 'public/assets/visa.svg' },
+    { id: 2, nombre: 'PayPal..  Proximamente', imagen: 'public/assets/paypal.svg' },
   ];
   metodoPagoSeleccionado: number | null = null;
   pagoConfirmado: boolean = false;
@@ -270,7 +269,7 @@ private configurarTipoFormulario(): void {
     
     if (this.estadoReserva) {
       clearTimeout(timeout);
-      this.mostrarFormulario = this.estadoReserva === 'pendiente';
+      this.mostrarFormulario = this.estadoReserva === 'aprobado';
       this.cargandoEstado = false;
     }
   }
@@ -569,69 +568,64 @@ private configurarTipoFormulario(): void {
   }
   
   enviarFormulario(): void {
+    // Solo guardar el estado, no enviar aún
     this.formularioEnviado = true;
     this.mostrandoResumen = false;
     
     this.estadoTramiteChange.emit('En proceso');
     this.porcentajeProgresoChange.emit(50);
-    
-    // Enviar el formulario al backend
-    this.clienteMinutaService.enviarFormularioMinuta(
-      this.formularioSAC,
-    ).subscribe({
-      next: (response) => {
-        console.log('Formulario SAC enviado exitosamente:', response);
-        this.estadoTramiteChange.emit('Enviado');
-        this.porcentajeProgresoChange.emit(75);
-      },
-      error: (error) => {
-        console.error('Error al enviar el formulario SAC:', error);
-        this.formularioEnviado = false;
-        this.estadoTramiteChange.emit('Error');
-        this.porcentajeProgresoChange.emit(0);
-      }
-    });
+
   }
-  
+
   seleccionarMetodoPago(id: number): void {
     this.metodoPagoSeleccionado = id;
   }
   
   confirmarPago(): void {
     if (this.metodoPagoSeleccionado) {
-      // Crear objeto con los datos del pago (similar a step-five.component.ts)
+      // Crear objeto con los datos del pago
       const datosPago = {
         dni: this.dniUsuario,
         estado: 'pagado',
         fecha: new Date(),
         monto: 400.00,
         comprobante: null,
-        tipo_pago: 'minuta'
+        tipo_pago: 'llenado_minuta'
       };
       
-      // Mostrar indicador de carga o similar aquí si es necesario
-      
-      // Enviar datos al mismo endpoint que usa step-five.component.ts
-      this.http.post<any>(`${environment.apiUrl}/api/cliente/pagos`, datosPago).subscribe({
+      // Enviar datos del pago
+      this.http.post<any>(`${environment.apiUrl}/api/cliente/pagoMinuta`, datosPago).subscribe({
         next: (response) => {
           console.log('Datos de pago enviados al backend:', response);
           
-          // Mantener la lógica existente para actualizar el estado
-          this.pagoConfirmado = true;
-          this.estadoPagoChange.emit('Completado');
-          this.pagoActualChange.emit(2);
-          this.estadoTramiteChange.emit('Finalizado');
-          this.porcentajeProgresoChange.emit(100);
+          // AHORA enviar el formulario después de confirmar el pago
+          this.clienteMinutaService.enviarFormularioMinuta(
+            this.formularioSAC,
+          ).subscribe({
+            next: (formResponse) => {
+              console.log('Formulario SAC enviado exitosamente:', formResponse);
+              this.estadoTramiteChange.emit('Enviado');
+              this.porcentajeProgresoChange.emit(75);
+              
+              // Actualizar estado del pago
+              this.pagoConfirmado = true;
+              this.estadoPagoChange.emit('Completado');
+              this.pagoActualChange.emit(2);
+              this.estadoTramiteChange.emit('En Proceso');
+              this.porcentajeProgresoChange.emit(100);
+            },
+            error: (formError) => {
+              console.error('Error al enviar el formulario SAC:', formError);
+              this.formularioEnviado = false;
+              this.estadoTramiteChange.emit('Error');
+              this.porcentajeProgresoChange.emit(0);
+            }
+          });
         },
         error: (error) => {
           console.error('Error al enviar datos de pago:', error);
-          // Aún así actualizamos el estado para mantener la funcionalidad actual
-          // en caso de error de conexión con el backend
-          this.pagoConfirmado = true;
-          this.estadoPagoChange.emit('Completado');
-          this.pagoActualChange.emit(2);
-          this.estadoTramiteChange.emit('Finalizado');
-          this.porcentajeProgresoChange.emit(100);
+          // En caso de error del pago, mantener el estado actual sin enviar el formulario
+          this.estadoTramiteChange.emit('Error en pago');
         }
       });
     }
