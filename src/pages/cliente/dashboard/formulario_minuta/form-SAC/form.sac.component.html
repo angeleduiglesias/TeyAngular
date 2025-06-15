@@ -61,19 +61,294 @@
         <h3>Datos de la Empresa</h3>
         <div class="form-group">
           <label>Nombre de la Empresa <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_2.nombre_empresa" [readonly]="nombreEmpresa">
+          <input type="text" [(ngModel)]="formularioSAC.paso_2.nombre_empresa" [value]="nombreEmpresa" readonly>
         </div>
         <div class="form-group">
           <label>Dirección de la Empresa</label>
           <input type="text" [(ngModel)]="formularioSAC.paso_2.direccion_empresa" placeholder="Ingrese la dirección de la empresa">
         </div>
         <div class="form-group">
-          <label>Provincia</label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_2.provincia_empresa" placeholder="Ingrese la provincia">
+          <label>Departamento</label>
+          <select [(ngModel)]="formularioSAC.paso_2.departamento_empresa" (change)="onDepartamentoChange()">
+            <option value="">Seleccione un departamento</option>
+            <option value="Amazonas">Amazonas</option>
+            <option value="Áncash">Áncash</option>
+            <option value="Apurímac">Apurímac</option>
+            <option value="Arequipa">Arequipa</option>
+            <option value="Ayacucho">Ayacucho</option>
+            <option value="Cajamarca">Cajamarca</option>
+            <option value="Callao">Callao</option>
+            <option value="Cusco">Cusco</option>
+            <option value="Huancavelica">Huancavelica</option>
+            <option value="Huánuco">Huánuco</option>
+            <option value="Ica">Ica</option>
+            <option value="Junín">Junín</option>
+            <option value="La Libertad">La Libertad</option>
+            <option value="Lambayeque">Lambayeque</option>
+            <option value="Lima">Lima</option>
+            <option value="Loreto">Loreto</option>
+            <option value="Madre de Dios">Madre de Dios</option>
+            <option value="Moquegua">Moquegua</option>
+            <option value="Pasco">Pasco</option>
+            <option value="Piura">Piura</option>
+            <option value="Puno">Puno</option>
+            <option value="San Martín">San Martín</option>
+            <option value="Tacna">Tacna</option>
+            <option value="Tumbes">Tumbes</option>
+            <option value="Ucayali">Ucayali</option>
+          </select>
         </div>
         <div class="form-group">
-          <label>Departamento</label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_2.departamento_empresa" placeholder="Ingrese el departamento">
+          <label>Provincia</label>
+          <select [(ngModel)]="formularioSAC.paso_2.provincia_empresa">
+            <option value="">Seleccione una provincia</option>
+            <!-- Provincias de Amazonas -->
+            <option value="Chachapoyas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Amazonas'">Chachapoyas</option>
+            <option value="Bagua" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Amazonas'">Bagua</option>
+            <option value="Bongará" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Amazonas'">Bongará</option>
+            <option value="Condorcanqui" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Amazonas'">Condorcanqui</option>
+            <option value="Luya" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Amazonas'">Luya</option>
+            <option value="Rodríguez de Mendoza" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Amazonas'">Rodríguez de Mendoza</option>
+            <option value="Utcubamba" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Amazonas'">Utcubamba</option>
+
+            <!-- Provincias de Áncash -->
+            <option value="Huaraz" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Huaraz</option>
+            <option value="Aija" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Aija</option>
+            <option value="Antonio Raymondi" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Antonio Raymondi</option>
+            <option value="Asunción" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Asunción</option>
+            <option value="Bolognesi" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Bolognesi</option>
+            <option value="Carhuaz" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Carhuaz</option>
+            <option value="Carlos Fermín Fitzcarrald" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Carlos Fermín Fitzcarrald</option>
+            <option value="Casma" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Casma</option>
+            <option value="Corongo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Corongo</option>
+            <option value="Huari" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Huari</option>
+            <option value="Huarmey" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Huarmey</option>
+            <option value="Huaylas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Huaylas</option>
+            <option value="Mariscal Luzuriaga" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Mariscal Luzuriaga</option>
+            <option value="Ocros" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Ocros</option>
+            <option value="Pallasca" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Pallasca</option>
+            <option value="Pomabamba" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Pomabamba</option>
+            <option value="Recuay" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Recuay</option>
+            <option value="Santa" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Santa</option>
+            <option value="Sihuas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Sihuas</option>
+            <option value="Yungay" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Áncash'">Yungay</option>
+
+            <!-- Provincias de Apurímac -->
+            <option value="Abancay" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Apurímac'">Abancay</option>
+            <option value="Andahuaylas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Apurímac'">Andahuaylas</option>
+            <option value="Antabamba" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Apurímac'">Antabamba</option>
+            <option value="Aymaraes" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Apurímac'">Aymaraes</option>
+            <option value="Cotabambas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Apurímac'">Cotabambas</option>
+            <option value="Chincheros" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Apurímac'">Chincheros</option>
+            <option value="Grau" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Apurímac'">Grau</option>
+            
+            <!-- Provincias de Arequipa -->
+            <option value="Arequipa" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Arequipa'">Arequipa</option>
+            <option value="Camaná" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Arequipa'">Camaná</option>
+            <option value="Caravelí" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Arequipa'">Caravelí</option>
+            <option value="Castilla" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Arequipa'">Castilla</option>
+            <option value="Caylloma" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Arequipa'">Caylloma</option>
+            <option value="Condesuyos" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Arequipa'">Condesuyos</option>
+            <option value="Islay" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Arequipa'">Islay</option>
+            <option value="La Unión" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Arequipa'">La Unión</option>
+            
+            <!-- Provincias de Ayacucho -->
+            <option value="Huamanga" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">Huamanga</option>
+            <option value="Cangallo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">Cangallo</option>
+            <option value="Huanca Sancos" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">Huanca Sancos</option>
+            <option value="Huanta" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">Huanta</option>
+            <option value="La Mar" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">La Mar</option>
+            <option value="Lucanas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">Lucanas</option>
+            <option value="Parinacochas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">Parinacochas</option>
+            <option value="Páucar del Sara Sara" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">Páucar del Sara Sara</option>
+            <option value="Sucre" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">Sucre</option>
+            <option value="Víctor Fajardo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">Víctor Fajardo</option>
+            <option value="Vilcas Huamán" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ayacucho'">Vilcas Huamán</option>
+            
+            <!-- Provincias de Cajamarca -->
+            <option value="Cajamarca" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">Cajamarca</option>
+            <option value="Cajabamba" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">Cajabamba</option>
+            <option value="Celendín" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">Celendín</option>
+            <option value="Chota" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">Chota</option>
+            <option value="Contumazá" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">Contumazá</option>
+            <option value="Cutervo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">Cutervo</option>
+            <option value="Hualgayoc" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">Hualgayoc</option>
+            <option value="Jaén" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">Jaén</option>
+            <option value="San Ignacio" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">San Ignacio</option>
+            <option value="San Marcos" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">San Marcos</option>
+            <option value="San Miguel" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">San Miguel</option>
+            <option value="San Pablo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">San Pablo</option>
+            <option value="Santa Cruz" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cajamarca'">Santa Cruz</option>
+            
+            <!-- Provincias de Callao -->
+            <option value="Callao" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Callao'">Callao</option>
+            
+            <!-- Provincias de Cusco -->
+            <option value="Cusco" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Cusco</option>
+            <option value="Acomayo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Acomayo</option>
+            <option value="Anta" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Anta</option>
+            <option value="Calca" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Calca</option>
+            <option value="Canas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Canas</option>
+            <option value="Canchis" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Canchis</option>
+            <option value="Chumbivilcas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Chumbivilcas</option>
+            <option value="Espinar" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Espinar</option>
+            <option value="La Convención" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">La Convención</option>
+            <option value="Paruro" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Paruro</option>
+            <option value="Paucartambo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Paucartambo</option>
+            <option value="Quispicanchi" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Quispicanchi</option>
+            <option value="Urubamba" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Cusco'">Urubamba</option>
+            
+            <!-- Provincias de Huancavelica -->
+            <option value="Huancavelica" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huancavelica'">Huancavelica</option>
+            <option value="Acobamba" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huancavelica'">Acobamba</option>
+            <option value="Angaraes" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huancavelica'">Angaraes</option>
+            <option value="Castrovirreyna" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huancavelica'">Castrovirreyna</option>
+            <option value="Churcampa" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huancavelica'">Churcampa</option>
+            <option value="Colcabamba" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huancavelica'">Colcabamba</option>
+            <option value="Huaytará" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huancavelica'">Huaytará</option>
+            <option value="Tayacaja" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huancavelica'">Tayacaja</option>
+            
+            <!-- Provincias de Huánuco -->
+            <option value="Huánuco" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Huánuco</option>
+            <option value="Ambo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Ambo</option>
+            <option value="Dos de Mayo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Dos de Mayo</option>
+            <option value="Huacaybamba" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Huacaybamba</option>
+            <option value="Huamalíes" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Huamalíes</option>
+            <option value="Leoncio Prado" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Leoncio Prado</option>
+            <option value="Marañón" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Marañón</option>
+            <option value="Pachitea" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Pachitea</option>
+            <option value="Puerto Inca" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Puerto Inca</option>
+            <option value="Lauricocha" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Lauricocha</option>
+            <option value="Yarowilca" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Huánuco'">Yarowilca</option>
+            
+            <!-- Provincias de Ica -->
+            <option value="Ica" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ica'">Ica</option>
+            <option value="Chincha" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ica'">Chincha</option>
+            <option value="Nazca" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ica'">Nazca</option>
+            <option value="Palpa" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ica'">Palpa</option>
+            <option value="Pisco" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ica'">Pisco</option>
+            
+            <!-- Provincias de Junín -->
+            <option value="Huancayo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Junín'">Huancayo</option>
+            <option value="Concepción" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Junín'">Concepción</option>
+            <option value="Chanchamayo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Junín'">Chanchamayo</option>
+            <option value="Jauja" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Junín'">Jauja</option>
+            <option value="Junín" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Junín'">Junín</option>
+            <option value="Satipo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Junín'">Satipo</option>
+            <option value="Tarma" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Junín'">Tarma</option>
+            <option value="Yauli" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Junín'">Yauli</option>
+            <option value="Chupaca" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Junín'">Chupaca</option>
+            
+            <!-- Provincias de La Libertad -->
+            <option value="Trujillo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Trujillo</option>
+            <option value="Ascope" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Ascope</option>
+            <option value="Bolívar" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Bolívar</option>
+            <option value="Chepén" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Chepén</option>
+            <option value="Julcán" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Julcán</option>
+            <option value="Otuzco" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Otuzco</option>
+            <option value="Pacasmayo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Pacasmayo</option>
+            <option value="Pataz" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Pataz</option>
+            <option value="Sánchez Carrión" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Sánchez Carrión</option>
+            <option value="Santiago de Chuco" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Santiago de Chuco</option>
+            <option value="Gran Chimú" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Gran Chimú</option>
+            <option value="Virú" *ngIf="formularioSAC.paso_2.departamento_empresa === 'La Libertad'">Virú</option>
+            
+            <!-- Provincias de Lambayeque -->
+            <option value="Chiclayo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lambayeque'">Chiclayo</option>
+            <option value="Ferreñafe" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lambayeque'">Ferreñafe</option>
+            <option value="Lambayeque" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lambayeque'">Lambayeque</option>
+            
+            <!-- Provincias de Lima -->
+            <option value="Lima" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lima'">Lima</option>
+            <option value="Barranca" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lima'">Barranca</option>
+            <option value="Cajatambo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lima'">Cajatambo</option>
+            <option value="Canta" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lima'">Canta</option>
+            <option value="Cañete" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lima'">Cañete</option>
+            <option value="Huaral" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lima'">Huaral</option>
+            <option value="Huarochirí" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lima'">Huarochirí</option>
+            <option value="Huaura" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lima'">Huaura</option>
+            <option value="Oyón" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lima'">Oyón</option>
+            <option value="Yauyos" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Lima'">Yauyos</option>
+            
+            <!-- Provincias de Loreto -->
+            <option value="Maynas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Loreto'">Maynas</option>
+            <option value="Alto Amazonas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Loreto'">Alto Amazonas</option>
+            <option value="Loreto" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Loreto'">Loreto</option>
+            <option value="Mariscal Ramón Castilla" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Loreto'">Mariscal Ramón Castilla</option>
+            <option value="Requena" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Loreto'">Requena</option>
+            <option value="Ucayali" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Loreto'">Ucayali</option>
+            <option value="Datem del Marañón" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Loreto'">Datem del Marañón</option>
+            <option value="Putumayo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Loreto'">Putumayo</option>
+            
+            <!-- Provincias de Madre de Dios -->
+            <option value="Tambopata" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Madre de Dios'">Tambopata</option>
+            <option value="Manu" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Madre de Dios'">Manu</option>
+            <option value="Tahuamanu" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Madre de Dios'">Tahuamanu</option>
+            
+            <!-- Provincias de Moquegua -->
+            <option value="Mariscal Nieto" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Moquegua'">Mariscal Nieto</option>
+            <option value="General Sánchez Cerro" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Moquegua'">General Sánchez Cerro</option>
+            <option value="Ilo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Moquegua'">Ilo</option>
+            
+            <!-- Provincias de Pasco -->
+            <option value="Pasco" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Pasco'">Pasco</option>
+            <option value="Daniel Alcides Carrión" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Pasco'">Daniel Alcides Carrión</option>
+            <option value="Oxapampa" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Pasco'">Oxapampa</option>
+            
+            <!-- Provincias de Piura -->
+            <option value="Piura" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Piura'">Piura</option>
+            <option value="Ayabaca" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Piura'">Ayabaca</option>
+            <option value="Huancabamba" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Piura'">Huancabamba</option>
+            <option value="Morropón" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Piura'">Morropón</option>
+            <option value="Paita" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Piura'">Paita</option>
+            <option value="Sullana" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Piura'">Sullana</option>
+            <option value="Talara" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Piura'">Talara</option>
+            <option value="Sechura" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Piura'">Sechura</option>
+            
+            <!-- Provincias de Puno -->
+            <option value="Puno" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">Puno</option>
+            <option value="Azángaro" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">Azángaro</option>
+            <option value="Carabaya" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">Carabaya</option>
+            <option value="Chucuito" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">Chucuito</option>
+            <option value="El Collao" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">El Collao</option>
+            <option value="Huancané" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">Huancané</option>
+            <option value="Lampa" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">Lampa</option>
+            <option value="Melgar" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">Melgar</option>
+            <option value="Moho" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">Moho</option>
+            <option value="San Antonio de Putina" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">San Antonio de Putina</option>
+            <option value="San Román" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">San Román</option>
+            <option value="Sandia" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">Sandia</option>
+            <option value="Yunguyo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Puno'">Yunguyo</option>
+            
+            <!-- Provincias de San Martín -->
+            <option value="Moyobamba" *ngIf="formularioSAC.paso_2.departamento_empresa === 'San Martín'">Moyobamba</option>
+            <option value="Bellavista" *ngIf="formularioSAC.paso_2.departamento_empresa === 'San Martín'">Bellavista</option>
+            <option value="El Dorado" *ngIf="formularioSAC.paso_2.departamento_empresa === 'San Martín'">El Dorado</option>
+            <option value="Huallaga" *ngIf="formularioSAC.paso_2.departamento_empresa === 'San Martín'">Huallaga</option>
+            <option value="Lamas" *ngIf="formularioSAC.paso_2.departamento_empresa === 'San Martín'">Lamas</option>
+            <option value="Mariscal Cáceres" *ngIf="formularioSAC.paso_2.departamento_empresa === 'San Martín'">Mariscal Cáceres</option>
+            <option value="Picota" *ngIf="formularioSAC.paso_2.departamento_empresa === 'San Martín'">Picota</option>
+            <option value="Rioja" *ngIf="formularioSAC.paso_2.departamento_empresa === 'San Martín'">Rioja</option>
+            <option value="San Martín" *ngIf="formularioSAC.paso_2.departamento_empresa === 'San Martín'">San Martín</option>
+            <option value="Tocache" *ngIf="formularioSAC.paso_2.departamento_empresa === 'San Martín'">Tocache</option>
+            
+            <!-- Provincias de Tacna -->
+            <option value="Tacna" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Tacna'">Tacna</option>
+            <option value="Candarave" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Tacna'">Candarave</option>
+            <option value="Jorge Basadre" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Tacna'">Jorge Basadre</option>
+            <option value="Tarata" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Tacna'">Tarata</option>
+            
+            <!-- Provincias de Tumbes -->
+            <option value="Tumbes" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Tumbes'">Tumbes</option>
+            <option value="Contralmirante Villar" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Tumbes'">Contralmirante Villar</option>
+            <option value="Zarumilla" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Tumbes'">Zarumilla</option>
+            
+            <!-- Provincias de Ucayali -->
+            <option value="Coronel Portillo" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ucayali'">Coronel Portillo</option>
+            <option value="Atalaya" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ucayali'">Atalaya</option>
+            <option value="Padre Abad" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ucayali'">Padre Abad</option>
+            <option value="Purús" *ngIf="formularioSAC.paso_2.departamento_empresa === 'Ucayali'">Purús</option>
+          </select>
         </div>
         <div class="form-group">
           <label>Objetivo de la Empresa <span class="required">*</span></label>
@@ -175,7 +450,7 @@
       
       <!-- Paso 4: Capital y Aportes -->
       <div *ngSwitchCase="3">
-        <h3>Capital y Aportes</h3>
+        <h3>Capital Total y Aportes del Titular</h3>
         
         <!-- Campo de capital calculado automáticamente -->
         <div class="form-group">
@@ -252,11 +527,11 @@
         <h3>Confirmación</h3>
         <div class="form-group">
           <label>Ciudad <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="formularioSAC.paso_6.ciudad" placeholder="Ingrese la ciudad">
+          <input type="text" [(ngModel)]="formularioSAC.paso_6.ciudad" placeholder="Ingrese la ciudad" readonly>
         </div>
         <div class="form-group">
           <label>Fecha de Registro</label>
-          <input type="date" [(ngModel)]="formularioSAC.paso_6.fecha_registro">
+          <input type="date" [(ngModel)]="formularioSAC.paso_6.fecha_registro" readonly>
         </div>
         <div class="confirmation-message">
           <p>Por favor revise cuidadosamente toda la información antes de finalizar.</p>
@@ -379,5 +654,6 @@
       <h3>Felicitaciones</h3>
       <p>Tu empresa ({{nombreEmpresa}}) será registrada en un plazo no mayor a 10 días.</p>
       <p>Atento a tu correo, el notario te citará a firmar.</p>
+      <p>"Revisa tu pestaña de Citas"</p>
     </div>
 </div>

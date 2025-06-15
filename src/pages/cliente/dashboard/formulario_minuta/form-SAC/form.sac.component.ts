@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient , HttpHeaders} from '@angular/common/http';
@@ -88,7 +88,7 @@ export enum TipoFormularioSAC {
   templateUrl: './form.sac.component.html',
   styleUrls: ['./form.sac.component.css']
 })
-export class FormSacComponent implements OnInit {
+export class FormSacComponent implements OnInit, OnChanges {
   @Input() userData: any;
   @Input() nombreEmpresa: string = '';
   @Input() estadoReserva: string = '';
@@ -183,8 +183,8 @@ export class FormSacComponent implements OnInit {
   
   // Datos de pago
   metodosPago: MetodoPago[] = [
-    { id: 1, nombre: 'Tarjeta de Crédito', imagen: 'public/assets/visa.svg' },
-    { id: 2, nombre: 'PayPal..  Proximamente', imagen: 'public/assets/paypal.svg' },
+    { id: 1, nombre: 'Tarjeta de Crédito', imagen: 'assets/visa.svg' },
+    { id: 2, nombre: 'PayPal..  Proximamente', imagen: 'assets/paypal.svg' },
   ];
   metodoPagoSeleccionado: number | null = null;
   pagoConfirmado: boolean = false;
@@ -196,44 +196,58 @@ export class FormSacComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.nombreEmpresa) {
-      this.formularioSAC.paso_2.nombre_empresa = this.nombreEmpresa;
-    }
-    // Verificar si ya pagó
-    if (this.pago2) {
-      this.mostrarFormulario = false;
-      this.formularioEnviado = true;
-      this.pagoConfirmado = true;
-      this.estadoTramiteChange.emit('Finalizado');
-      this.porcentajeProgresoChange.emit(100);
-      this.estadoPagoChange.emit('Completado');
-      this.pagoActualChange.emit(2);
-    } else {
-      this.verificarEstadoReserva();
-      this.configurarTipoFormulario();
-    }
-  }
-  
-  ngOnChanges(): void {
+    console.log('FormSacComponent - ngOnInit - pago2:', this.pago2);
     
     if (this.nombreEmpresa) {
       this.formularioSAC.paso_2.nombre_empresa = this.nombreEmpresa;
     }
- // Verificar si ya pagó
-    if (this.pago2) {
-    this.mostrarFormulario = false;
-    this.formularioEnviado = true;
-    this.pagoConfirmado = true;
-    this.estadoTramiteChange.emit('Finalizado');
-    this.porcentajeProgresoChange.emit(100);
-    this.estadoPagoChange.emit('Completado');
-    this.pagoActualChange.emit(2);
-    } else {
-    this.verificarEstadoReserva();
+    this.inicializarSociosPorDefecto();
+    this.verificarEstadoPago2();
     this.configurarTipoFormulario();
-}
+    
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // Este método se ejecuta cada vez que cambian los inputs
+    if (changes['pago2']) {
+      console.log('FormSacComponent - ngOnChanges - pago2 cambió:', this.pago2);
+      this.verificarEstadoPago2();
+    }
+    
+    if (changes['nombreEmpresa'] && this.nombreEmpresa) {
+      this.formularioSAC.paso_2.nombre_empresa = this.nombreEmpresa;
+    }
+  }
+
+  private verificarEstadoPago2(): void {
+    // Verificar si ya pagó
+    if (this.pago2) {
+      console.log('FormSacComponent - Pago2 confirmado, ocultando formulario');
+      this.mostrarFormulario = false;
+      this.formularioEnviado = true;
+      this.pagoConfirmado = true;
+      this.estadoTramiteChange.emit('En Proceso');
+      this.porcentajeProgresoChange.emit(75);
+      this.estadoPagoChange.emit('Completado');
+      this.pagoActualChange.emit(2);
+    } else {
+      console.log('FormSacComponent - Pago2 pendiente, mostrando formulario');
+      this.verificarEstadoReserva();
+    }
+  }
+
   
+
+
+  private inicializarSociosPorDefecto(): void {
+    // Limpiar el array actual
+    this.formularioSAC.paso_3 = [];
+    
+    // Agregar 2 socios por defecto
+    for (let i = 0; i < 2; i++) {
+      this.agregarSocio();
+    }
+  }
 
 //funcion para configurar el tipo de formulario segun tipo de aporte
 private configurarTipoFormulario(): void {
@@ -545,6 +559,11 @@ private configurarTipoFormulario(): void {
     });
     this.calcularCapitalTotal();
   }
+
+  onDepartamentoChange() {
+    // Limpiar la provincia cuando cambie el departamento
+    this.formularioSAC.paso_2.provincia_empresa = '';
+  }
   
   eliminarAporte(index: number): void {
     if (this.tipoFormularioSeleccionado === TipoFormularioSAC.SACBD && 
@@ -585,6 +604,24 @@ private configurarTipoFormulario(): void {
   
   confirmarPago(): void {
     if (this.metodoPagoSeleccionado) {
+      // === DEBUGGING COMPLETO ===
+      console.log('=== ESTADO COMPLETO DEL FORMULARIO ===');
+      console.log('Paso Actual:', this.pasoActual);
+      console.log('Paso 1 - Datos Personales:', this.formularioSAC.paso_1);
+      console.log('Paso 2 - Datos Empresa:', this.formularioSAC.paso_2);
+      console.log('Paso 3 - Socios (length):', this.formularioSAC.paso_3.length);
+      console.log('Paso 3 - Socios (datos):', this.formularioSAC.paso_3);
+      console.log('Paso 4 - Capital:', this.formularioSAC.paso_4);
+      console.log('Paso 5 - Apoderado:', this.formularioSAC.paso_5);
+      console.log('Paso 6 - Registro:', this.formularioSAC.paso_6);
+      console.log('Objeto completo formularioSAC:', JSON.stringify(this.formularioSAC, null, 2));
+      console.log('nombreEmpresa variable:', this.nombreEmpresa);
+      
+      // Verificar si el usuario ha navegado por todos los pasos
+      console.log('¿Ha completado todos los pasos?', this.pasoActual >= 5);
+      
+      // === FIN DEBUGGING ===
+      
       // Crear objeto con los datos del pago
       const datosPago = {
         dni_cliente: this.dniUsuario,
@@ -614,7 +651,7 @@ private configurarTipoFormulario(): void {
           ).subscribe({
             next: (formResponse) => {
               console.log('Formulario SAC enviado exitosamente:', formResponse);
-              this.estadoTramiteChange.emit('Enviado');
+              this.estadoTramiteChange.emit('En Proceso');
               this.porcentajeProgresoChange.emit(75);
               
               // Actualizar estado del pago

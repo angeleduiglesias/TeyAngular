@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -9,38 +9,50 @@ import { Router } from '@angular/router';
   templateUrl: './estado-pagos.component.html',
   styleUrls: ['./estado-pagos.component.css']
 })
-export class EstadoPagosComponent implements OnInit {
+export class EstadoPagosComponent implements OnInit, OnChanges {
   @Input() pago1: boolean = false;
   @Input() pago2: boolean = false;
   @Input() fechaPago1 : Date = new Date();
   @Input() fechaPago2 : Date = new Date();
 
-  pagos = [
-    { id: 1, nombre: 'Reserva de nombre', pagado: false },
-    { id: 2, nombre: 'Entrega de Minuta', pagado: false }
-  ];
 
-  constructor(private router: Router) {}
+  pagos: any[] = [];
 
   ngOnInit(): void {
-    // Asignar los valores booleanos recibidos
-    this.pagos[0].pagado = this.pago1;
-    this.pagos[1].pagado = this.pago2;
-    this.fechaPago1 = this.fechaPago1;
-    this.fechaPago2 = this.fechaPago2;
+    console.log('EstadoPagosComponent - Valores recibidos:');
+    console.log('pago1:', this.pago1);
+    console.log('pago2:', this.pago2);
+    this.actualizarPagos();
   }
 
-  irAPagar(pagoId: number): void {
-    this.router.navigate(['/pagos'], { queryParams: { id: pagoId } });
+  ngOnChanges(changes: SimpleChanges): void {
+    // Este método se ejecuta cada vez que cambian los inputs
+    if (changes['pago1'] || changes['pago2'] || changes['fechaPago1'] || changes['fechaPago2']) {
+      console.log('EstadoPagosComponent - Cambios detectados:');
+      console.log('pago1:', this.pago1);
+      console.log('pago2:', this.pago2);
+      this.actualizarPagos();
+    }
   }
 
-  getNombrePagoActual(): string {
-    const index = this.pagos.findIndex(p => !p.pagado);
-    return index !== -1 ? this.pagos[index].nombre : '';
-  }
-
-  getNombreSiguientePago(): string {
-    const index = this.pagos.findIndex(p => !p.pagado);
-    return index + 1 < this.pagos.length ? this.pagos[index + 1].nombre : '';
+  private actualizarPagos(): void {
+    this.pagos = [
+      {
+        numero: 1,
+        nombre:'Reserva de Nombre',
+        pagado: this.pago1,
+        fecha: this.fechaPago1
+      },
+      {
+        numero: 2,
+        nombre: 'LLenado Minuta',
+        pagado: this.pago2,
+        fecha: this.fechaPago2
+      }
+    ];
+    
+    console.log('EstadoPagosComponent - Valores asignados:');
+    console.log('pagos[0].pagado:', this.pagos[0].pagado);
+    console.log('pagos[1].pagado:', this.pagos[1].pagado);
   }
 }

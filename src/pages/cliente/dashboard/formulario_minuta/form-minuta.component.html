@@ -51,6 +51,7 @@
     <app-form-sac 
       *ngIf="tipoEmpresaSeleccionado === tiposEmpresa.SAC"
       [pago2]="pago2"
+      [nombreEmpresa]="nombreEmpresa"
       (estadoTramiteChange)="onEstadoTramiteChange($event)"
       (porcentajeProgresoChange)="onPorcentajeProgresoChange($event)"
       (estadoPagoChange)="onEstadoPagoChange($event)"

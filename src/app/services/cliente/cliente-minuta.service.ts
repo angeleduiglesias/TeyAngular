@@ -16,7 +16,14 @@ import {
 
 // Interfaz genérica para el envío de datos de la minuta
 export interface MinutaRequest {
-  formulario:  FormularioSAC;
+formulario: {
+  paso_1: any;
+  paso_2: any;
+  paso_3: any[];
+  paso_4: any;
+  paso_5: any;
+  paso_6: any;
+};
 }
 
 @Injectable({
@@ -54,8 +61,15 @@ export class ClienteMinutaService {
     
     // Preparar los datos a enviar
     const data: MinutaRequest = {
-      formulario: formularioData,
-    };
+    formulario: {
+      paso_1: formularioData.paso_1,
+      paso_2: formularioData.paso_2,
+      paso_3: formularioData.paso_3,
+      paso_4: formularioData.paso_4,
+      paso_5: formularioData.paso_5,
+      paso_6: formularioData.paso_6,
+    }
+  };
 
       // Usar un solo endpoint para ambos tipos
       const endpoint = `${environment.apiUrl}/api/cliente/minuta`;

@@ -17,7 +17,7 @@
         
         <div class="payment-due-date">
           <i class="calendar-icon"></i>
-          <span>Fecha de pago: {{fechaPago1}}</span>
+          <span>Fecha de pago: {{fechaPago1 ? (fechaPago1| date): 'No disponible'}}</span>
         </div>
       </div>
       
@@ -39,7 +39,7 @@
         
         <div class="payment-due-date">
           <i class="calendar-icon"></i>
-          <span>Fecha de Pago: {{fechaPago2}}</span>
+          <span>Fecha de Pago: {{fechaPago2 ? (fechaPago2| date) : 'No disponible'}}</span>
         </div>
       </div>
       

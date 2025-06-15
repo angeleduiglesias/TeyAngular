@@ -56,12 +56,12 @@ export class ClienteDashboardComponent implements OnInit {
   // Datos del trámite
   estado_tramite: TramiteData = {
     fecha_inicio: new Date(),
-    estado: 'En Proceso',  //solo son datos de prueba
-    progreso: 50  //solo son datos de prueba
+    estado: '',  //solo son datos de prueba
+    progreso: 0  //solo son datos de prueba
   }
   // Datos de pagos
   estado_pagos: PagoData = {
-    pago1: true, 
+    pago1: false, 
     fecha_pago1: new Date(), 
     fecha_pago2: new Date(), //solo son datos de prueba
     pago2: false //solo son datos de prueba
@@ -113,39 +113,44 @@ export class ClienteDashboardComponent implements OnInit {
     this.cargando = true;
     this.error = '';
     
-    // Obtener el ID del usuario desde el servicio de autenticación
-   
     this.DashboardClienteInformation.getDashboardData()
       .subscribe({
         next: (response) => {
           console.log('Datos recibidos del dashboard:', response);
+          
           // Actualizar datos del trámite
-          this.estado_tramite = response.estado_tramite;
-          this.estado_documento = response.estado_documento;
-          this.estado_pagos = response.estado_pagos;
-
+          if (response.estado_tramite) {
+            this.estado_tramite = response.estado_tramite;
+          }
+          
+          // Actualizar datos del documento
+          if (response.estado_documento) {
+            this.estado_documento = response.estado_documento;
+          }
+          
+          // CORREGIR: Actualizar datos de pagos SIEMPRE cuando vengan del backend
+          if (response.estado_pagos !== undefined && response.estado_pagos !== null) {
+            this.estado_pagos = {
+              pago1: response.estado_pagos.pago1,
+              pago2: response.estado_pagos.pago2,
+              fecha_pago1: response.estado_pagos.fecha_pago1,
+              fecha_pago2: response.estado_pagos.fecha_pago2
+            };
+            console.log('Datos de pagos actualizados desde backend:', this.estado_pagos);
+          }
+          
+          console.log('Estado final de tramite:', this.estado_tramite);
+          console.log('Estado final de pagos:', this.estado_pagos);
           this.cargando = false;
         },
         error: (error) => {
           console.error('Error al cargar datos del dashboard:', error);
           this.error = 'No se pudieron cargar los datos. Por favor, intenta nuevamente.';
           this.cargando = false;
-          
-          // Usar datos simulados en caso de error (para desarrollo)
-          this.simularDatos();
         }
       });
   }
   
-  // Método para simular datos (solo para desarrollo)
-  private simularDatos(): void {
-    // Simulación: después de 1 segundo, recibimos los datos
-    setTimeout(() => {
-      this.nombreEmpresa = 'Mi Empresa EIRL';
-      this.nombreEmpresa = this.nombreEmpresa;
-      
-    });
-  }
   
   actualizarEstadoTramite(estado: string): void {
     this.estado_tramite.estado = estado;

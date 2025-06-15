@@ -28,7 +28,7 @@ export class AdminPaymentsComponent implements OnInit {
   sortDirection: 'asc' | 'desc' = 'asc';
 
     // Variables para filtros
-  selectedStatusFilter: string = '';
+  selectedPaymentsFilter: string = '';
 
   constructor(
     private router: Router,
@@ -82,9 +82,9 @@ export class AdminPaymentsComponent implements OnInit {
     let tempFiltered = [...this.payments];
     
     // Aplicar filtro por estado si está seleccionado
-    if (this.selectedStatusFilter) {
+    if (this.selectedPaymentsFilter) {
       tempFiltered = tempFiltered.filter(payment => 
-        payment.estado_pago === this.selectedStatusFilter
+        payment.tipo_pago.toLowerCase() === this.selectedPaymentsFilter.toLowerCase()
       );
     }
     
@@ -129,8 +129,8 @@ export class AdminPaymentsComponent implements OnInit {
   }
 
    // Métodos de filtrado
-   filterByStatus(status: string): void {
-    this.selectedStatusFilter = status;
+   filterByPayment(paymentType: string): void {
+    this.selectedPaymentsFilter = paymentType;
     this.currentPage = 1;
     this.applyFilter();
   }

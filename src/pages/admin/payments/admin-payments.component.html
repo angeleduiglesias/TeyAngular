@@ -7,25 +7,25 @@
         <div class="filters-row">
           <!-- Filtro por Estado del Trámite -->
           <div class="filter-group">
-            <label class="filter-label">Estado Pago:</label>
+            <label class="filter-label">Tipo de pago:</label>
             <div class="filter-buttons">
               <button 
                 class="filter-btn" 
-                [class.active]="selectedStatusFilter === ''"
-                (click)="filterByStatus('')">
+                [class.active]="selectedPaymentsFilter === ''"
+                (click)="filterByPayment('')">
                 <i class="fas fa-list"></i> Todos
               </button>
               <button 
                 class="filter-btn status-completed" 
-                [class.active]="selectedStatusFilter === 'Completado'"
-                (click)="filterByStatus('Completado')">
-                <i class="fas fa-check-circle"></i> Pagado
+                [class.active]="selectedPaymentsFilter === 'reserva nombre'"
+                (click)="filterByPayment('reserva nombre')">
+                <i class="fas fa-check-circle"></i> Reserva Nombre
               </button>
               <button 
                 class="filter-btn status-pending" 
-                [class.active]="selectedStatusFilter === 'En proceso'"
-                (click)="filterByStatus('En proceso')">
-                <i class="fas fa-clock"></i> En Proceso
+                [class.active]="selectedPaymentsFilter === 'llenado minuta'"
+                (click)="filterByPayment('llenado minuta')">
+                <i class="fas fa-clock"></i> Llenado Minuta
               </button>
             </div>
           </div>
