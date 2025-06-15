@@ -13,6 +13,9 @@ interface Documento {
   estado: 'pendiente' | 'aprobado';
 }
 
+//cuando yo cargo el doc firmado del notario, cuadno se da en subir te mando un post 
+//para tramite estado finalizado 
+
 @Component({
   selector: 'app-documento-revision',
   standalone: true,

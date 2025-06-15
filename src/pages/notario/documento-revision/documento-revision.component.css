@@ -22,7 +22,7 @@
 }
 
 .btn-back:hover {
-  color: #1E3A8A;
+  color: #4285f4;
 }
 
 .documento-header {
@@ -30,7 +30,7 @@
 }
 
 .documento-header h1 {
-  color: #1E3A8A;
+  color: #4285f4;
   font-size: 28px;
   margin: 0 0 10px 0;
   font-weight: 600;
@@ -63,14 +63,14 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #1E3A8A;
+  color: #4285f4;
   font-size: 20px;
   margin: 0 0 8px 0;
   font-weight: 600;
 }
 
 .section-header p {
-  color: #6c757d;
+  color: #4285f4;
   font-size: 14px;
   margin: 0;
 }
@@ -128,7 +128,7 @@
 }
 
 .upload-area:hover {
-  border-color: #1E3A8A;
+  border-color: #4285f4;
 }
 
 .upload-placeholder {
@@ -152,7 +152,7 @@
 .btn-finalizar {
   width: 100%;
   padding: 12px;
-  background-color: #1E3A8A;
+  background-color:#4285f4;
   color: white;
   border: none;
   border-radius: 5px;

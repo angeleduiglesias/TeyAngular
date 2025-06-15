@@ -7,7 +7,7 @@ export interface Cita {
   fecha_cita: Date;
   hora_cita: string;
   nombre_notario: string;
-  asunto: string;
+  descripcion: string;
   estado: string;
 }
 
@@ -42,10 +42,7 @@ export class ClienteCitasComponent implements OnInit {
     this.clienteCitasService.obtenerCitas().subscribe({
       next: (citas) => {
         // Convertir las fechas de string a Date si es necesario
-        this.citas = citas.map(cita => ({
-          ...cita,
-          fecha_cita: new Date(cita.fecha_cita)
-        }));
+        this.citas =citas;
         this.loading = false;
       },
       error: (error) => {
@@ -60,7 +57,7 @@ export class ClienteCitasComponent implements OnInit {
             fecha_cita: new Date(new Date().setDate(new Date().getDate() + 2)),
             hora_cita: '10:00 AM',
             nombre_notario: 'Dr. Juan Pérez',
-            asunto: 'Firma de constitución de empresa',
+            descripcion: 'Firma de constitución de empresa',
             estado: 'Programada'
           },
           {
@@ -68,7 +65,7 @@ export class ClienteCitasComponent implements OnInit {
             fecha_cita: new Date(new Date().setDate(new Date().getDate() + 5)),
             hora_cita: '3:30 PM',
             nombre_notario: 'Dra. María Rodríguez',
-            asunto: 'Revisión de documentos',
+            descripcion: 'Revisión de documentos',
             estado: 'Pendiente'
           },
           {
@@ -76,7 +73,7 @@ export class ClienteCitasComponent implements OnInit {
             fecha_cita: new Date(new Date().setDate(new Date().getDate() - 10)),
             hora_cita: '11:15 AM',
             nombre_notario: 'Dr. Carlos Mendoza',
-            asunto: 'Legalización de documentos',
+            descripcion: 'Legalización de documentos',
             estado: 'Completada'
           }
         ];

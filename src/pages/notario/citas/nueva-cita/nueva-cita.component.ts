@@ -19,7 +19,7 @@ export class NuevaCitaComponent implements OnInit {
     fecha: '',
     hora: '',
     direccion: 'Av. Principal 123, Oficina 405', // Dirección predeterminada
-    notas: '',
+    notas: '', // cambiar a descripcion 
     telefono: ''
   };
 
@@ -50,7 +50,7 @@ export class NuevaCitaComponent implements OnInit {
 
     // Establecer fecha predeterminada (mañana)
     const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setDate(tomorrow.getDate() + 5);
     this.cita.fecha = this.formatDate(tomorrow);
   }
 
@@ -75,12 +75,12 @@ export class NuevaCitaComponent implements OnInit {
     // Preparar datos para el servicio
     const citaData: NewCita = {
       documento_id: this.cita.documentoId,
-      cliente: this.cita.cliente,
+      nombre_cliente: this.cita.cliente,
       tipo_documento: this.cita.tipoDocumento,
-      fecha: this.cita.fecha,
-      hora: this.cita.hora,
+      fecha_cita: this.cita.fecha,
+      hora_cita: this.cita.hora,
       direccion: this.cita.direccion,
-      notas: this.cita.notas,
+      descripcion: this.cita.notas,
       telefono: this.cita.telefono
     };
 

@@ -7,17 +7,17 @@ import { NotarioDashboardService } from '../../../app/services/notario/notario-d
 export interface Documento {
   documento_id: number;
   tipo_documento: string;
-  cliente: string;
+  nombre_cliente: string;
   fecha_inicio: string;
-  telefono?:string;
+  telefono:string;
   estado: 'pendiente' | 'aprobado';
-  cita_programada?: boolean;
+  cita_programada: boolean;
 }
 
 export interface Cita {
   cita_id: number;
   documento_id: number;
-  cliente: string;
+  nombre_cliente: string;
   tipo_documento: string;
   fecha: string;
   hora: string;
@@ -41,23 +41,25 @@ export class NotarioDashboardComponent implements OnInit {
     {
       documento_id: 1,
       tipo_documento: 'Minuta EIRL',
-      cliente: 'María González',
+      nombre_cliente: 'María González',
       fecha_inicio: '15/05/2025',
       telefono: '1234567890',
-      estado: 'pendiente'
+      estado: 'pendiente',
+      cita_programada: false
     },
     {
       documento_id: 2,
       tipo_documento: 'Minuta SAC',
-      cliente: 'Juan Pérez',
+      nombre_cliente: 'Juan Pérez',
       fecha_inicio: '14/05/2025',
-     telefono: '9876543210',
-      estado: 'pendiente'
+      telefono: '9876543210',
+      estado: 'pendiente',
+      cita_programada: false
     },
     {
       documento_id: 3,
       tipo_documento: 'Minuta EIRL',
-      cliente: 'Carlos Rodríguez',
+      nombre_cliente: 'Carlos Rodríguez',
       fecha_inicio: '12/05/2025',
       telefono: '5555555555',
       estado: 'pendiente',
@@ -66,18 +68,20 @@ export class NotarioDashboardComponent implements OnInit {
     {
       documento_id: 4,
       tipo_documento: 'Acta Constitutiva',
-      cliente: 'Empresas XYZ',
+      nombre_cliente: 'Empresas XYZ',
       fecha_inicio: '10/05/2025',
       telefono: '9999999999',
-      estado: 'pendiente'
+      estado: 'pendiente',
+      cita_programada: false
     },
     {
       documento_id: 5,
       tipo_documento: 'Contrato de Arrendamiento',
-      cliente: 'Ana Martínez',
+      nombre_cliente: 'Ana Martínez',
       fecha_inicio: '08/05/2025',
       telefono: '7777777777',
-      estado: 'pendiente'
+      estado: 'pendiente',
+      cita_programada: false
     }
   ];
 
@@ -86,7 +90,7 @@ export class NotarioDashboardComponent implements OnInit {
     {
       cita_id: 1,
       documento_id: 3,
-      cliente: 'Carlos Rodríguez',
+      nombre_cliente: 'Carlos Rodríguez',
       tipo_documento: 'Testamento',
       fecha: '19 de mayo de 2025',
       hora: '10:30',
@@ -152,7 +156,7 @@ export class NotarioDashboardComponent implements OnInit {
       this.router.navigate(['/notario/citas/nueva'], { 
         queryParams: { 
           documentoId: id,
-          cliente: documento.cliente,
+          cliente: documento.nombre_cliente,
           tipoDocumento: documento.tipo_documento,
           Telefono: documento.telefono
         } 

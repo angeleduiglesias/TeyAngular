@@ -6,7 +6,7 @@ export interface Documento {
   documento_id: number;
   enlace_documento: string;
   nombre_documento: string;
-  tipo: string;
+  tipo_documento: string;
   fecha_carga: Date;
 }
 
@@ -50,21 +50,21 @@ export class ClienteDocumentosComponent implements OnInit {
           {
             documento_id: 1,
             nombre_documento: 'Constitución de empresa',
-            tipo: 'PDF',
+            tipo_documento: 'PDF',
             fecha_carga: new Date(),
             enlace_documento: 'URL_ADDRESS.example.com/constitucion.pdf'
           },
           {
             documento_id: 2,
             nombre_documento: 'Contrato de arrendamiento',
-            tipo: 'PDF',
+            tipo_documento: 'PDF',
             fecha_carga: new Date(),
             enlace_documento: 'URL_ADDRESS.example.com/contrato.pdf'
           },
           {
             documento_id: 3,
             nombre_documento: 'Declaración jurada',
-            tipo: 'PDF',
+            tipo_documento: 'PDF',
             fecha_carga: new Date(new Date().setDate(new Date().getDate() - 10)),
             enlace_documento: 'URL_ADDRESS.example.com/declaracion.pdf'
           }

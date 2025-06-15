@@ -8,12 +8,12 @@ import { AuthService } from '../auth-service';
 // Interfaz para los datos de la cita
 export interface NewCita {
   documento_id: number;
-  cliente: string;
+  nombre_cliente: string;
   tipo_documento: string;
-  fecha: string;
-  hora: string;
+  fecha_cita: string;
+  hora_cita: string;
   direccion: string;
-  notas?: string;
+  descripcion: string;
   telefono: string;
 }
 
@@ -26,12 +26,6 @@ export interface Citas {
     tipo_empresa: string;
   }
 
-// Interfaz para la respuesta del servidor
-export interface CitaResponse {
-  success: boolean;
-  message: string;
-  id_cita?: number;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +42,7 @@ export class NotarioNuevacitaService {
    * @param citaData Datos de la cita a crear
    * @returns Observable con la respuesta del servidor
    */
-  crearCita(citaData: NewCita): Observable<CitaResponse> {
+  crearCita(citaData: NewCita): Observable<any> {
     // Obtener el token de autenticación
     const token = this.authService.getToken();
     
@@ -65,7 +59,7 @@ export class NotarioNuevacitaService {
     console.log('Datos de la cita:', citaData);
     
     // Realizar la petición POST
-    return this.http.post<CitaResponse>(endpoint, citaData, { headers })
+    return this.http.post<any>(endpoint, citaData, { headers })
       .pipe(
         catchError(error => {
           console.log('Error al crear la cita:', error);
@@ -102,7 +96,7 @@ export class NotarioNuevacitaService {
    * @param citaId ID de la cita a eliminar
    * @returns Observable con la respuesta del servidor
    */
-  eliminarCita(citaId: number): Observable<CitaResponse> {
+  eliminarCita(citaId: number): Observable<any> {
     const token = this.authService.getToken();
     
     const headers = new HttpHeaders({
@@ -114,7 +108,7 @@ export class NotarioNuevacitaService {
     
     console.log('Eliminando cita en endpoint:', endpoint);
     
-    return this.http.delete<CitaResponse>(endpoint, { headers })
+    return this.http.delete<any>(endpoint, { headers })
       .pipe(
         catchError(error => {
           console.log('Error al eliminar la cita:', error);

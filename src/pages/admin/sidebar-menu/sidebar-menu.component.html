@@ -46,10 +46,6 @@
         <span *ngIf="!collapsed">Pagos</span>
     </div>
 
-    <div class="menu-item" [class.active]="currentRoute === '/admin/reportes'" (click)="navigateTo('/admin/reportes')" tabindex="0" (keydown.enter)="navigateTo('/admin/reportes')">
-      <i class="fas fa-chart-bar"></i>
-      <span *ngIf="!collapsed">Reportes</span>
-    </div>
     <div class="menu-item" [class.active]="currentRoute === '/admin/configuracion'" (click)="navigateTo('/admin/configuracion')" tabindex="0" (keydown.enter)="navigateTo('/admin/configuracion')">
       <i class="fas fa-cog"></i>
       <span *ngIf="!collapsed">Configuración</span>

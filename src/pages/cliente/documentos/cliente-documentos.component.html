@@ -26,7 +26,7 @@
         <tbody>
           <tr *ngFor="let documento of documentos">
             <td>{{ documento.nombre_documento }}</td>
-            <td>{{ documento.tipo }}</td>
+            <td>{{ documento.tipo_documento }}</td>
             <td>{{ documento.fecha_carga | date:'dd/MM/yyyy' }}</td>
             <td class="actions">
               <button class="action-btn view" (click)="viewDocument(documento.documento_id)" title="Ver documento">

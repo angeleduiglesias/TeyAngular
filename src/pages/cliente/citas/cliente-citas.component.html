@@ -38,7 +38,7 @@
         <div class="cita-detalles">
           <div class="cita-hora"><i class="fas fa-clock"></i> {{ cita.hora_cita }}</div>
           <div class="cita-notario"><i class="fas fa-user"></i> {{ cita.nombre_notario }}</div>
-          <div class="cita-asunto">{{ cita.asunto }}</div>
+          <div class="cita-asunto">{{ cita.descripcion }}</div>
           <div class="cita-estado">
             <span class="estado-badge" [ngClass]="getEstadoClass(cita.estado)">
               {{ cita.estado }}
@@ -67,7 +67,7 @@
             <td>{{ cita.fecha_cita | date:'dd/MM/yyyy' }}</td>
             <td>{{ cita.hora_cita }}</td>
             <td>{{ cita.nombre_notario }}</td>
-            <td>{{ cita.asunto }}</td>
+            <td>{{ cita.descripcion }}</td>
             <td>
               <span class="estado-badge" [ngClass]="getEstadoClass(cita.estado)">
                 {{ cita.estado }}
