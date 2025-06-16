@@ -258,11 +258,13 @@ private configurarTipoFormulario(): void {
       this.tipoFormularioSeleccionado = TipoFormularioSAC.SACBND; // Bienes No Dinerarios
     }
     
-    // Actualizar la descripción del aporte del primer socio
-    if (this.formularioSAC.paso_3.length > 0 && this.formularioSAC.paso_3[0].aportes.length > 0) {
-      const nuevaDescripcion = this.tipoFormularioSeleccionado === TipoFormularioSAC.SACBD ? 'Aporte en efectivo' : '';
-      this.formularioSAC.paso_3[0].aportes[0].descripcion = nuevaDescripcion;
-    }
+    // Actualizar la descripción del aporte de TODOS los socios
+    this.formularioSAC.paso_3.forEach((socio, index) => {
+      if (socio.aportes.length > 0) {
+        const nuevaDescripcion = this.tipoFormularioSeleccionado === TipoFormularioSAC.SACBD ? 'Aporte en efectivo' : '';
+        socio.aportes[0].descripcion = nuevaDescripcion;
+      }
+    });
     
     // Actualizar la descripción del aporte en el paso 4 (Capital y Aportes)
     if (this.formularioSAC.paso_4.aportes.length > 0) {
@@ -529,6 +531,13 @@ private configurarTipoFormulario(): void {
   
   // Métodos para gestionar aportes de socios (versión actualizada con cálculo automático)
   agregarAporteSocio(socioIndex: number): void {
+    // Agregar validación para bienes dinerarios
+    if (this.tipoFormularioSeleccionado === TipoFormularioSAC.SACBD && 
+        this.formularioSAC.paso_3[socioIndex].aportes.length >= 1) {
+      alert('Para bienes dinerarios solo se permite un aporte en efectivo por socio');
+      return;
+    }
+    
     const nuevaDescripcion = this.tipoFormularioSeleccionado === TipoFormularioSAC.SACBD ? 'Aporte en efectivo' : '';
     
     this.formularioSAC.paso_3[socioIndex].aportes.push({

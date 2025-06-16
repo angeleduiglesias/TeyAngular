@@ -436,7 +436,9 @@
                   Eliminar
                 </button>
               </div>
-              <button class="btn-add-small" (click)="agregarAporteSocio(i)">
+              <button class="btn-add-small" 
+                      (click)="agregarAporteSocio(i)"
+                      *ngIf="!(tipoFormularioSeleccionado === tiposFormulario.SACBD && socio.aportes.length >= 1)">
                 Agregar Aporte
               </button>
             </div>
