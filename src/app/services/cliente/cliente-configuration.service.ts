@@ -63,7 +63,7 @@ export class ClienteConfigurationService {
       'Content-Type': 'application/json'
     });
     
-    const endpoint = `${environment.apiUrl}/api/cliente/actualizar-email`;
+    const endpoint = `${environment.apiUrl}/api/cliente/cambioEmail`;
     const body = { email: nuevoEmail };
     
     console.log('Actualizando email:', nuevoEmail);
@@ -90,7 +90,7 @@ export class ClienteConfigurationService {
       'Content-Type': 'application/json'
     });
     
-    const endpoint = `${environment.apiUrl}/api/cliente/actualizar-telefono`;
+    const endpoint = `${environment.apiUrl}/api/cliente/cambioPhone`;
     const body = { telefono: nuevoTelefono };
     
     console.log('Actualizando teléfono:', nuevoTelefono);

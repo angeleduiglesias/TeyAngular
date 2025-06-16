@@ -4,7 +4,7 @@ import { ClienteCitasService } from '../../../app/services/cliente/cliente-citas
 
 export interface Cita {
   cita_id: number;
-  fecha_cita: Date;
+  fecha_cita: string;
   hora_cita: string;
   nombre_notario: string;
   descripcion: string;
@@ -54,7 +54,7 @@ export class ClienteCitasComponent implements OnInit {
         this.citas = [
           {
             cita_id: 1,
-            fecha_cita: new Date(new Date().setDate(new Date().getDate() + 2)),
+            fecha_cita:'18 de junio de 2025',
             hora_cita: '10:00 AM',
             nombre_notario: 'Dr. Juan Pérez',
             descripcion: 'Firma de constitución de empresa',
@@ -62,7 +62,7 @@ export class ClienteCitasComponent implements OnInit {
           },
           {
             cita_id: 2,
-            fecha_cita: new Date(new Date().setDate(new Date().getDate() + 5)),
+            fecha_cita: '19 de junio de 2025',
             hora_cita: '3:30 PM',
             nombre_notario: 'Dra. María Rodríguez',
             descripcion: 'Revisión de documentos',
@@ -70,7 +70,7 @@ export class ClienteCitasComponent implements OnInit {
           },
           {
             cita_id: 3,
-            fecha_cita: new Date(new Date().setDate(new Date().getDate() - 10)),
+            fecha_cita: '18 de junio de 2025',
             hora_cita: '11:15 AM',
             nombre_notario: 'Dr. Carlos Mendoza',
             descripcion: 'Legalización de documentos',
@@ -111,9 +111,16 @@ export class ClienteCitasComponent implements OnInit {
   }
 
   // Verificar si una cita es próxima (en los próximos 3 días)
-  esProxima(fecha: Date): boolean {
+  esProxima(fechaString: string): boolean {
     const hoy = new Date();
-    const diferenciaDias = Math.floor((fecha.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
+    const fechaCita = new Date(fechaString);
+    
+    // Validar que la fecha sea válida
+    if (isNaN(fechaCita.getTime())) {
+      return false;
+    }
+    
+    const diferenciaDias = Math.floor((fechaCita.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24));
     return diferenciaDias >= 0 && diferenciaDias <= 3;
   }
 

@@ -16,11 +16,6 @@
     >Programadas</button>
     <button 
       class="filtro-btn" 
-      [class.active]="filtroActivo === 'pendiente'" 
-      (click)="filtrarCitas('pendiente')"
-    >Pendientes</button>
-    <button 
-      class="filtro-btn" 
       [class.active]="filtroActivo === 'completada'" 
       (click)="filtrarCitas('completada')"
     >Completadas</button>
@@ -32,8 +27,8 @@
     <div class="proximas-cards">
       <div class="cita-card proxima" *ngFor="let cita of citas | slice:0:3">
         <div class="cita-fecha">
-          <div class="dia">{{ cita.fecha_cita | date:'dd' }}</div>
-          <div class="mes">{{ cita.fecha_cita | date:'MMM' | uppercase }}</div>
+          <div class="dia">{{ cita.fecha_cita }}</div>
+          <div class="mes">{{ cita.fecha_cita }}</div>
         </div>
         <div class="cita-detalles">
           <div class="cita-hora"><i class="fas fa-clock"></i> {{ cita.hora_cita }}</div>
@@ -64,7 +59,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let cita of citasFiltradas">
-            <td>{{ cita.fecha_cita | date:'dd/MM/yyyy' }}</td>
+            <td>{{ cita.fecha_cita }}</td>
             <td>{{ cita.hora_cita }}</td>
             <td>{{ cita.nombre_notario }}</td>
             <td>{{ cita.descripcion }}</td>
