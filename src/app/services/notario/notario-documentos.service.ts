@@ -74,4 +74,62 @@ export class NotarioDocumentosService {
         })
       );
   }
+
+  /**
+   * Sube un documento firmado por el notario
+   * @param documentoId ID del documento original
+   * @param archivo Archivo firmado a subir
+   * @returns Observable con la respuesta del servidor
+   */
+  subirDocumentoFirmado(documentoId: number, archivo: File): Observable<any> {
+    const token = this.authService.getToken();
+    
+    // Crear FormData para enviar el archivo
+    const formData = new FormData();
+    formData.append('documento_firmado', archivo);
+    formData.append('documento_id', documentoId.toString());
+    
+    // Configurar headers (no incluir Content-Type para FormData)
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    
+    return this.http.post(`${environment.apiUrl}/api/notario/documentos/${documentoId}/firmar`, formData, { headers })
+    .pipe(
+        map(response => {
+          console.log('Documento firmado subido exitosamente:', response);
+          return response;
+        }),
+        catchError(error => {
+          console.error('Error al subir documento firmado:', error);
+          return throwError(() => error);
+        })
+      );
+  }
+
+  /**
+   * Finaliza el trámite marcándolo como completado
+   * @param documentoId ID del documento
+   * @returns Observable con la respuesta del servidor
+   */
+  finalizarTramite(documentoId: number): Observable<any> {
+    const token = this.authService.getToken();
+    
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    };
+    
+    return this.http.post(`${environment.apiUrl}/api/notario/documentos/${documentoId}/finalizar`, {}, { headers })
+    .pipe(
+        map(response => {
+          console.log('Trámite finalizado exitosamente:', response);
+          return response;
+        }),
+        catchError(error => {
+          console.error('Error al finalizar trámite:', error);
+          return throwError(() => error);
+        })
+      );
+  }
 }

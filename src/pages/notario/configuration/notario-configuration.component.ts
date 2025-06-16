@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../app/services/auth-service';
 import { Router } from '@angular/router';
-import { ClienteConfigurationService } from '../../../app/services/cliente/cliente-configuration.service';
+import { NotarioConfigurationService } from '../../../app/services/notario/notario-configuration.service';
 import { NotarioNombreService } from '../../../app/services/notario/notario-nombre.service';
 
 @Component({
@@ -35,7 +35,7 @@ export class NotarioConfigurationComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private configService: ClienteConfigurationService,
+    private configService: NotarioConfigurationService,
     private NotarioNombreService: NotarioNombreService
   ) {}
   

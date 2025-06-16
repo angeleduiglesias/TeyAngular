@@ -1,5 +1,15 @@
 <!-- Font Awesome 6 Free -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- Mensajes de estado -->
+<div class="mensaje-exito" *ngIf="mensajeExito">
+  <i class="fa fa-check-circle"></i> {{ mensajeExito }}
+</div>
+
+<div class="mensaje-error" *ngIf="mensajeError">
+  <i class="fa fa-exclamation-circle"></i> {{ mensajeError }}
+</div>
+
 <div class="documento-revision-container">
   <div class="back-button">
     <button class="btn-back" (click)="volverAlPanel()"><i class="fas fa-arrow-left"></i> Volver al panel</button>
@@ -24,7 +34,7 @@
         </div>
       </div>
       
-      <button class="btn-download">
+      <button class="btn-download" (click)="descargarDocumento()">
         <i class="fas fa-download"></i> Descargar Documento Original
       </button>
     </div>
@@ -35,17 +45,70 @@
         <p>Suba el documento firmado y complete el proceso</p>
       </div>
       
-      <div class="upload-area">
-        <div class="upload-placeholder">
-          <i class="fas fa-upload"></i>
-          <p>Subir documento firmado</p>
-          <span class="upload-hint">Arrastre y suelte o haga clic para seleccionar</span>
+      <!-- Input file personalizado -->
+      <div class="custom-file-upload">
+        <!-- Input oculto -->
+        <input 
+          type="file" 
+          id="documentoInput"
+          class="file-input-hidden"
+          (change)="subirDocumento($event)"
+          accept=".pdf,.doc,.docx"
+          [disabled]="subiendoArchivo"
+        >
+        
+        <!-- Área de drop personalizada -->
+        <div class="drop-zone" 
+             (click)="abrirSelectorArchivos()"
+             (dragover)="onDragOver($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event)"
+             [class.dragover]="isDragOver">
+          <div class="drop-zone-content">
+            <i class="fas fa-cloud-upload-alt drop-zone-icon"></i>
+            <p class="drop-zone-text">Subir documento firmado</p>
+            <p class="drop-zone-hint">Arrastra y suelta tu archivo aquí o haz clic para seleccionar</p>
+            <small style="color: #adb5bd;">Formatos: PDF, DOC, DOCX (máx. 10MB)</small>
+          </div>
         </div>
+        
+        <!-- Botón personalizado alternativo -->
+        <button class="file-upload-button" 
+                (click)="abrirSelectorArchivos()"
+                [disabled]="subiendoArchivo">
+          <i class="fas fa-upload"></i>
+          <span *ngIf="!subiendoArchivo">Seleccionar archivo</span>
+          <span *ngIf="subiendoArchivo">Subiendo...</span>
+        </button>
       </div>
       
-      <button class="btn-finalizar">
-        <i class="fas fa-check"></i> Finalizar Proceso
+      <!-- Estado de carga -->
+      <div class="upload-loading" *ngIf="subiendoArchivo">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner"></i>
+        </div>
+        <p class="loading-text">Subiendo documento...</p>
+      </div>
+      
+      <!-- Archivo seleccionado -->
+      <div class="selected-file" *ngIf="archivoSeleccionado && !subiendoArchivo">
+        <i class="fas fa-file-alt file-icon"></i>
+        <div class="file-details">
+          <p class="file-name">{{ archivoSeleccionado.name }}</p>
+          <p class="file-size">{{ (archivoSeleccionado.size / 1024 / 1024).toFixed(2) }} MB</p>
+        </div>
+        <button class="remove-file-btn" (click)="limpiarArchivo()" title="Quitar archivo">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <button class="btn-finalizar" [disabled]="!archivoSeleccionado || subiendoArchivo">
+        <i class="fas fa-check"></i> 
+        <span *ngIf="!subiendoArchivo">Finalizar Proceso</span>
+        <span *ngIf="subiendoArchivo">Procesando...</span>
       </button>
     </div>
   </div>
 </div>
+
+
