@@ -21,6 +21,10 @@ export class ActividadRecienteComponent implements OnInit {
   mostrarModal: boolean = false;
   reservaSeleccionada: ReservaNombre | null = null;
 
+  // Variables para el archivo
+  archivoSeleccionado: File | null = null;
+  nombreArchivo: string = '';
+
   constructor(private cambiarNombreService: CambiarNombreService) {}
   
   ngOnInit(): void {
@@ -42,6 +46,9 @@ export class ActividadRecienteComponent implements OnInit {
   iniciarEdicion(id: number, nombreActual: string | null): void {
     this.empresaEditando = id;
     this.nuevoNombreEmpresa = nombreActual || '';
+    // Limpiar archivo al iniciar edición
+    this.archivoSeleccionado = null;
+    this.nombreArchivo = '';
   }
 
   // Propiedad para mensajes de notificación
@@ -60,12 +67,38 @@ export class ActividadRecienteComponent implements OnInit {
     }, 3000);
   }
   
+  // Método para manejar la selección de archivo
+  onArchivoSeleccionado(event: any): void {
+    const archivo = event.target.files[0];
+    if (archivo) {
+      this.archivoSeleccionado = archivo;
+      this.nombreArchivo = archivo.name;
+    }
+  }
+
+  // Método para limpiar el archivo seleccionado
+  limpiarArchivo(): void {
+    this.archivoSeleccionado = null;
+    this.nombreArchivo = '';
+    // Limpiar el input file
+    const fileInput = document.getElementById('archivoInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+
   guardarEdicion(id: number): void {
     // Buscar la reserva por ID
     const reserva = this.reservasNombre.find(r => r.id === id || r.cliente_id === id);
     if (reserva && this.nuevoNombreEmpresa.trim()) {
       // Guardar el nombre para usarlo en la petición
       const nuevoNombre = this.nuevoNombreEmpresa.trim();
+      
+      // Aquí puedes agregar lógica para manejar el archivo si es necesario
+      if (this.archivoSeleccionado) {
+        console.log('Archivo seleccionado:', this.archivoSeleccionado.name);
+        // TODO: Implementar lógica para subir el archivo al servidor
+      }
       
       // Enviar la actualización al backend
       const cliente_id = reserva.cliente_id || id;
@@ -79,9 +112,10 @@ export class ActividadRecienteComponent implements OnInit {
             // Mostrar notificación de éxito
             this.mostrarNotificacion('Nombre de empresa actualizado correctamente', 'exito');
             
-            // Finalizar edición
+            // Finalizar edición y limpiar archivo
             this.empresaEditando = null;
             this.nuevoNombreEmpresa = '';
+            this.limpiarArchivo();
           },
           error: (error: any) => {
             console.error('Error al actualizar el nombre de la empresa:', error);
@@ -93,6 +127,7 @@ export class ActividadRecienteComponent implements OnInit {
       // Finalizar edición sin cambios si no hay reserva o el nombre está vacío
       this.empresaEditando = null;
       this.nuevoNombreEmpresa = '';
+      this.limpiarArchivo();
       // Mostrar notificación informativa
       this.mostrarNotificacion('No se realizaron cambios en el nombre', 'info');
     }
@@ -101,6 +136,7 @@ export class ActividadRecienteComponent implements OnInit {
   cancelarEdicion(): void {
     this.empresaEditando = null;
     this.nuevoNombreEmpresa = '';
+    this.limpiarArchivo();
   }
 
   verDetalles(id: number): void {

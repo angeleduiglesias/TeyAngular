@@ -23,6 +23,27 @@
                 autocomplete="off"
               >
             </div>
+            
+            <!-- Nuevo campo para subir archivo -->
+            <div class="edicion-campo">
+              <label for="archivoInput"><strong>Archivo:</strong></label>
+              <div class="archivo-container">
+                <input 
+                  type="file" 
+                  id="archivoInput"
+                  (change)="onArchivoSeleccionado($event)"
+                  class="archivo-input"
+                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                >
+                <div class="archivo-info" *ngIf="nombreArchivo">
+                  <span class="archivo-nombre">{{ nombreArchivo }}</span>
+                  <button type="button" class="btn-limpiar-archivo" (click)="limpiarArchivo()" title="Quitar archivo">
+                    <i class="fa fa-times"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
             <div class="edicion-botones">
               <button class="btn-guardar" (click)="guardarEdicion(getReservaId(reserva))">Guardar</button>
               <button class="btn-cancelar" (click)="cancelarEdicion()">Cancelar</button>
