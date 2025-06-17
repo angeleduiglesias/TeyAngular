@@ -43,6 +43,11 @@ export class NotarioDocumentosComponent implements OnInit {
   // Variable para controlar el estado de carga
   cargando: boolean = false;
   error: string = '';
+  
+  // Variables para toast notifications
+  showToast: boolean = false;
+  toastMessage: string = '';
+  toastIcon: string = '';
 
   constructor(private notarioDocumentosService: NotarioDocumentosService
     , private router: Router
@@ -241,15 +246,16 @@ export class NotarioDocumentosComponent implements OnInit {
         if (documento && documento.enlace_documento) {
           // Abrir el documento en una nueva pestaña
           window.open(documento.enlace_documento, '_blank', 'noopener,noreferrer');
+          this.showToastMessage('Documento abierto correctamente', 'fa-check-circle');
         } else {
           // Mostrar mensaje de error si no hay enlace
           console.error('Enlace del documento no disponible');
-          alert('Error: No se pudo abrir el documento. El enlace no está disponible.');
+          this.showToastMessage('Error: El enlace del documento no está disponible', 'fa-times-circle');
         }
       },
       error: (error) => {
         console.error('Error al obtener documento:', error);
-        alert('Error: No se pudo cargar el documento desde el servidor.');
+        this.showToastMessage('Error: No se pudo cargar el documento desde el servidor', 'fa-times-circle');
       }
     });
   }
@@ -285,12 +291,22 @@ export class NotarioDocumentosComponent implements OnInit {
         window.URL.revokeObjectURL(url);
         
         console.log(`Documento ${id} descargado exitosamente`);
+        this.showToastMessage('Documento descargado exitosamente', 'fa-download');
       },
       error: (error) => {
         console.error('Error al descargar documento:', error);
-        alert('Error: No se pudo descargar el documento desde el servidor.');
+        this.showToastMessage('Error: No se pudo descargar el documento desde el servidor', 'fa-times-circle');
       }
     });
   }
 
+  showToastMessage(message: string, icon: string): void {
+    this.toastMessage = message;
+    this.toastIcon = icon;
+    this.showToast = true;
+    
+    setTimeout(() => {
+      this.showToast = false;
+    }, 3000);
+  }
 }

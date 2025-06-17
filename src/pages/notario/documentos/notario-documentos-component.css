@@ -507,3 +507,57 @@
     height: 40px;
   }
 }
+
+/* Toast para mensajes */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  color: #333;
+  padding: 15px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(20px);
+  max-width: 350px;
+  border-left: 4px solid #28a745;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toast-content i {
+  font-size: 18px;
+  color: #42b483;
+}
+
+.toast-content i.fa-check-circle {
+  color: #28a745;
+}
+
+.toast-content i.fa-download {
+  color: #42b483;
+}
+
+.toast-content i.fa-times-circle {
+  color: #dc3545;
+}
+
+.toast-content i.fa-exclamation-circle {
+  color: #ffc107;
+}

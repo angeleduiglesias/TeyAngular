@@ -88,6 +88,7 @@ export class NotarioDocumentosService {
     const formData = new FormData();
     formData.append('documento_firmado', archivo);
     formData.append('documento_id', documentoId.toString());
+    formData.append('nombre_documento', archivo.name);
     
     // Configurar headers (no incluir Content-Type para FormData)
     const headers = new HttpHeaders({
