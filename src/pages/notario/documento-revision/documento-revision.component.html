@@ -23,7 +23,7 @@
   <div class="documento-content">
     <div class="documento-section">
       <div class="section-header">
-        <h2><i class="fas fa-file-alt"></i> Documento Original</h2>
+        <h2><i class="fas fa-file-alt"></i> Documento Minuta</h2>
         <p>Revise el documento enviado por el cliente</p>
       </div>
       
@@ -34,8 +34,8 @@
         </div>
       </div>
       
-      <button class="btn-download" (click)="descargarDocumento()">
-        <i class="fas fa-download"></i> Descargar Documento Original
+      <button class="btn-download-improved" (click)="descargarDocumento()">
+        <i class="fas fa-download"></i> Descargar Documento de Minuta
       </button>
     </div>
     
@@ -90,7 +90,7 @@
         <p class="loading-text">Subiendo documento...</p>
       </div>
       
-      <!-- Archivo seleccionado -->
+      <!-- Archivo seleccionado (MANTENER SOLO ESTA SECCIÓN) -->
       <div class="selected-file" *ngIf="archivoSeleccionado && !subiendoArchivo">
         <i class="fas fa-file-alt file-icon"></i>
         <div class="file-details">
@@ -102,11 +102,28 @@
         </button>
       </div>
       
-      <button class="btn-finalizar" [disabled]="!archivoSeleccionado || subiendoArchivo">
-        <i class="fas fa-check"></i> 
-        <span *ngIf="!subiendoArchivo">Finalizar Proceso</span>
-        <span *ngIf="subiendoArchivo">Procesando...</span>
-      </button>
+      <!-- ELIMINAR ESTA SECCIÓN DUPLICADA:
+      <div class="selected-file-info" *ngIf="archivoSeleccionado && !subiendoArchivo">
+        <div class="file-info">
+          <i class="fas fa-file-pdf"></i>
+          <span class="file-name">{{ archivoSeleccionado.name }}</span>
+          <span class="file-size">({{ (archivoSeleccionado.size / 1024 / 1024).toFixed(2) }} MB)</span>
+          <button class="clear-file-btn" (click)="limpiarArchivo()" type="button">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      -->
+      
+      <!-- Botón para finalizar el trámite -->
+      <div class="finalize-section" *ngIf="archivoSeleccionado && !subiendoArchivo">
+        <button class="btn-finalizar" 
+                (click)="finalizarTramiteConDocumento()"
+                [disabled]="subiendoArchivo">
+          <i class="fas fa-check"></i>
+          Finalizar Trámite
+        </button>
+      </div>
     </div>
   </div>
 </div>

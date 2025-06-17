@@ -108,26 +108,45 @@ export class NotarioDocumentosService {
   }
 
   /**
-   * Finaliza el trámite marcándolo como completado
-   * @param documentoId ID del documento
-   * @returns Observable con la respuesta del servidor
+   * Descarga un documento por su ID
+   * @param documentoId ID del documento a descargar
+   * @returns Observable con el blob del archivo
    */
-  finalizarTramite(documentoId: number): Observable<any> {
+  descargarDocumento(documentoId: number): Observable<Blob> {
+    const token = this.authService.getToken();
+    
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    
+    return this.http.get(`${environment.apiUrl}/api/notario/documentos/${documentoId}/descargar`, {
+      headers,
+      responseType: 'blob'
+    })
+    .pipe(
+      catchError(error => {
+        console.error('Error al descargar documento:', error);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  /**
+   * Muestra un documento específico por ID usando el endpoint mostrar
+   * @param documentoId ID del documento a mostrar
+   * @returns Observable con el documento
+   */
+  mostrarDocumento(documentoId: number): Observable<Documento> {
     const token = this.authService.getToken();
     
     const headers = {
       'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
     };
     
-    return this.http.post(`${environment.apiUrl}/api/notario/documentos/${documentoId}/finalizar`, {}, { headers })
+    return this.http.get<Documento>(`${environment.apiUrl}/api/notario/documentos/${documentoId}/mostrar`, { headers })
     .pipe(
-        map(response => {
-          console.log('Trámite finalizado exitosamente:', response);
-          return response;
-        }),
         catchError(error => {
-          console.error('Error al finalizar trámite:', error);
+          console.error('Error al mostrar documento:', error);
           return throwError(() => error);
         })
       );

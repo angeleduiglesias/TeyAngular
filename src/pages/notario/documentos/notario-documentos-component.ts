@@ -235,17 +235,23 @@ export class NotarioDocumentosComponent implements OnInit {
   verDocumento(id: number): void {
     console.log(`Ver documento ${id}`);
     
-    // Buscar el documento por ID
-    const documento = this.documentosOriginales.find(doc => doc.documento_id === id);
-    
-    if (documento && documento.enlace_documento) {
-      // Abrir el documento en una nueva pestaña
-      window.open(documento.enlace_documento, '_blank', 'noopener,noreferrer');
-    } else {
-      // Mostrar mensaje de error si no se encuentra el documento
-      console.error('Documento no encontrado o enlace no disponible');
-      alert('Error: No se pudo abrir el documento. El enlace no está disponible.');
-    }
+    // Usar el servicio para obtener el documento desde el backend
+    this.notarioDocumentosService.mostrarDocumento(id).subscribe({
+      next: (documento) => {
+        if (documento && documento.enlace_documento) {
+          // Abrir el documento en una nueva pestaña
+          window.open(documento.enlace_documento, '_blank', 'noopener,noreferrer');
+        } else {
+          // Mostrar mensaje de error si no hay enlace
+          console.error('Enlace del documento no disponible');
+          alert('Error: No se pudo abrir el documento. El enlace no está disponible.');
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener documento:', error);
+        alert('Error: No se pudo cargar el documento desde el servidor.');
+      }
+    });
   }
 
   validarDocumento(id: number): void {
@@ -258,26 +264,33 @@ export class NotarioDocumentosComponent implements OnInit {
   descargarDocumento(id: number): void {
     console.log(`Descargar documento ${id}`);
     
-    // Buscar el documento por ID
-    const documento = this.documentosOriginales.find(doc => doc.documento_id === id);
-    
-    if (documento && documento.enlace_documento) {
-      // Crear un enlace temporal para descargar
-      const link = document.createElement('a');
-      link.href = documento.enlace_documento;
-      link.download = documento.nombre_documento || 'documento.pdf';
-      link.target = '_blank';
-      
-      // Agregar al DOM, hacer clic y remover
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      console.log(`Descargando documento: ${documento.nombre_documento}`);
-    } else {
-      console.error('Documento no encontrado o enlace no disponible');
-      alert('Error: No se pudo descargar el documento. El enlace no está disponible.');
-    }
+    // Usar el servicio para descargar el documento desde el backend
+    this.notarioDocumentosService.descargarDocumento(id).subscribe({
+      next: (blob: Blob) => {
+        // Crear URL del blob
+        const url = window.URL.createObjectURL(blob);
+        
+        // Crear enlace temporal para descargar
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `documento_${id}.pdf`; // Nombre por defecto
+        link.target = '_blank';
+        
+        // Agregar al DOM, hacer clic y remover
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Limpiar la URL del blob
+        window.URL.revokeObjectURL(url);
+        
+        console.log(`Documento ${id} descargado exitosamente`);
+      },
+      error: (error) => {
+        console.error('Error al descargar documento:', error);
+        alert('Error: No se pudo descargar el documento desde el servidor.');
+      }
+    });
   }
 
 }

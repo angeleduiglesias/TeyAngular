@@ -333,9 +333,9 @@
 .btn-download {
   width: 100%;
   padding: 12px;
-  background-color: #f8f9fa;
-  color: #495057;
-  border: 1px solid #dee2e6;
+  background-color: #4285f4;
+  color: white;
+  border: none;
   border-radius: 5px;
   font-size: 14px;
   cursor: pointer;
@@ -343,11 +343,106 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  transition: all 0.3s;
+  transition: background-color 0.3s;
 }
 
 .btn-download:hover {
-  background-color: #e9ecef;
+  background-color: #152a63;
+}
+
+/* Botón de descarga mejorado */
+.btn-download-improved {
+  width: 100%;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #17a2b8, #138496);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
+}
+
+.btn-download-improved:hover {
+  background: linear-gradient(135deg, #138496, #117a8b);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.4);
+}
+
+.btn-download-improved:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(23, 162, 184, 0.3);
+}
+
+.btn-download-improved i {
+  font-size: 16px;
+}
+
+/* Mejorar las notificaciones toast existentes */
+.mensaje-exito, .mensaje-error {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 16px 24px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 500;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  animation: slideInBounce 0.4s ease-out;
+  min-width: 320px;
+  backdrop-filter: blur(10px);
+}
+
+.mensaje-exito {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border-left: 4px solid #ffffff;
+}
+
+.mensaje-error {
+  background: linear-gradient(135deg, #dc3545, #e74c3c);
+  border-left: 4px solid #ffffff;
+}
+
+.mensaje-exito i, .mensaje-error i {
+  font-size: 18px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+@keyframes slideInBounce {
+  0% {
+    transform: translateX(100%) scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-10px) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive para toasts */
+@media (max-width: 768px) {
+  .mensaje-exito, .mensaje-error {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    min-width: auto;
+    margin: 0;
+  }
 }
 
 .upload-area {

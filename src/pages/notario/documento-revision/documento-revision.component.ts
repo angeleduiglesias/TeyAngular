@@ -97,22 +97,47 @@ export class DocumentoRevisionComponent implements OnInit {
   }
 
   descargarDocumento(): void {
-    if (this.documento && this.documento.enlace_documento) {
-      // Crear un enlace temporal para descargar
-      const link = document.createElement('a');
-      link.href = this.documento.enlace_documento;
-      link.download = this.documento.nombre_documento || 'documento.pdf';
-      link.target = '_blank';
-      
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    if (!this.documentoId) {
+      this.mostrarError('No hay ID de documento disponible');
+      return;
     }
+  
+    this.notarioDocumentosService.descargarDocumento(this.documentoId)
+      .subscribe({
+        next: (blob) => {
+          // Crear URL del blob
+          const url = window.URL.createObjectURL(blob);
+          
+          // Crear enlace temporal para descargar
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = this.documento?.nombre_documento || 'documento.pdf';
+          link.target = '_blank';
+          
+          // Ejecutar descarga
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          // Limpiar URL del blob
+          window.URL.revokeObjectURL(url);
+          
+          // Mostrar mensaje de éxito
+          this.mostrarExito('Documento descargado exitosamente');
+        },
+        error: (error) => {
+          console.error('Error al descargar documento:', error);
+          this.mostrarError('Error al descargar el documento. Intente nuevamente.');
+        }
+      });
   }
 
+
+
+  
   subirDocumento(event: any): void {
     const file = event.target.files[0];
-    if (file && this.documentoId) {
+    if (file) {
       // Validar tipo de archivo
       const tiposPermitidos = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
       if (!tiposPermitidos.includes(file.type)) {
@@ -127,43 +152,36 @@ export class DocumentoRevisionComponent implements OnInit {
         return;
       }
       
+      // Solo guardar el archivo seleccionado, NO subirlo aún
       this.archivoSeleccionado = file;
-      this.subiendoArchivo = true;
       this.limpiarMensajes();
+      this.mostrarExito(`Archivo seleccionado: ${file.name}`);
       
-      console.log('Subiendo documento firmado:', file.name);
-      
-      // Subir el documento firmado
-      this.notarioDocumentosService.subirDocumentoFirmado(this.documentoId, file)
-        .subscribe({
-          next: (response) => {
-            console.log('Documento subido exitosamente:', response);
-            this.mostrarExito('Documento firmado subido exitosamente');
-            
-            // Finalizar el trámite automáticamente
-            this.finalizarTramite();
-          },
-          error: (error) => {
-            console.error('Error al subir documento:', error);
-            this.mostrarError('Error al subir el documento. Intente nuevamente.');
-            this.subiendoArchivo = false;
-          }
-        });
+      console.log('Archivo seleccionado:', file.name);
     } else {
       this.mostrarError('Por favor seleccione un archivo válido');
     }
   }
   
   /**
-   * Finaliza el trámite marcándolo como completado
+   * Finaliza el trámite subiendo el documento y marcándolo como completado
    */
-  private finalizarTramite(): void {
-    if (!this.documentoId) return;
+  finalizarTramiteConDocumento(): void {
+    if (!this.documentoId || !this.archivoSeleccionado) {
+      this.mostrarError('Debe seleccionar un archivo antes de finalizar');
+      return;
+    }
     
-    this.notarioDocumentosService.finalizarTramite(this.documentoId)
+    this.subiendoArchivo = true;
+    this.limpiarMensajes();
+    
+    console.log('Finalizando trámite con documento:', this.archivoSeleccionado.name);
+    
+    // Solo subir el documento firmado (que ya finaliza automáticamente)
+    this.notarioDocumentosService.subirDocumentoFirmado(this.documentoId, this.archivoSeleccionado)
       .subscribe({
         next: (response) => {
-          console.log('Trámite finalizado:', response);
+          console.log('Documento subido exitosamente:', response);
           this.mostrarExito('Trámite finalizado exitosamente');
           this.subiendoArchivo = false;
           
@@ -172,14 +190,14 @@ export class DocumentoRevisionComponent implements OnInit {
             this.documento.estado = 'aprobado';
           }
           
-          // Redirigir después de 2 segundos
+          // Redirigir después de un breve delay
           setTimeout(() => {
-            this.router.navigate(['/notario/dashboard']);
+            this.router.navigate(['/notario/documentos']);
           }, 2000);
         },
         error: (error) => {
-          console.error('Error al finalizar trámite:', error);
-          this.mostrarError('Documento subido pero error al finalizar trámite');
+          console.error('Error al subir documento:', error);
+          this.mostrarError('Error al subir el documento. Intente nuevamente.');
           this.subiendoArchivo = false;
         }
       });
@@ -286,7 +304,6 @@ private subirArchivoAlServidor(file: File): void {
     .subscribe({
       next: (response) => {
         this.mostrarExito('Documento firmado subido exitosamente');
-        this.finalizarTramite();
       },
       error: (error) => {
         this.mostrarError('Error al subir el documento. Intente nuevamente.');
@@ -294,7 +311,6 @@ private subirArchivoAlServidor(file: File): void {
       }
     });
 }
-
 /**
  * Abre el selector de archivos
  */
