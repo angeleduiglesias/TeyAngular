@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClienteDocumentosService } from '../../../app/services/cliente/cliente-documentos.service';
+import { FormatTextPipe } from '../../../app/format-text.pipe';
 
 export interface Documento {
   documento_id: number;
@@ -13,7 +14,7 @@ export interface Documento {
 @Component({
   selector: 'app-cliente-documentos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormatTextPipe],
   templateUrl: './cliente-documentos.component.html',
   styleUrl: './cliente-documentos.component.css'
 })
@@ -61,13 +62,6 @@ export class ClienteDocumentosComponent implements OnInit {
             fecha_carga: new Date(),
             enlace_documento: 'URL_ADDRESS.example.com/contrato.pdf'
           },
-          {
-            documento_id: 3,
-            nombre_documento: 'Declaración jurada',
-            tipo_documento: 'PDF',
-            fecha_carga: new Date(new Date().setDate(new Date().getDate() - 10)),
-            enlace_documento: 'URL_ADDRESS.example.com/declaracion.pdf'
-          }
         ];
       }
     });
