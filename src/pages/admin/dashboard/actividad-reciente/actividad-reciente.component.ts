@@ -102,7 +102,7 @@ export class ActividadRecienteComponent implements OnInit {
       
       // Enviar la actualización al backend
       const cliente_id = reserva.cliente_id || id;
-      this.cambiarNombreService.cambiarNombreEmpresa(cliente_id, nuevoNombre)
+      this.cambiarNombreService.cambiarNombreEmpresa(cliente_id, nuevoNombre, this.archivoSeleccionado!)
         .subscribe({
           next: (response: any) => {
             // Solo actualizar el nombre localmente si la petición fue exitosa

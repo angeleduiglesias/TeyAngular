@@ -66,7 +66,7 @@ export class ClienteDocumentosService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    
+
     return this.http.get(`${environment.apiUrl}/api/cliente/documentos/${documentoId}/descargar`, {
       headers,
       responseType: 'blob'
@@ -77,6 +77,7 @@ export class ClienteDocumentosService {
       })
     );
   }
+
 
   /**
    * Obtiene la URL para visualizar un documento
